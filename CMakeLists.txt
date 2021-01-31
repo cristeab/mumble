@@ -25,7 +25,6 @@ set (translations OFF)
 set (RELEASE_ID ${RELEASE_ID})
 set (BUILD_NUMBER ${BUILD_NUMBER})
 set (CMAKE_INSTALL_PREFIX ${INSTALL_PATH})
-set (CMAKE_BUILD_TYPE Release)
 
 set(BUILD_NUMBER CACHE STRING "The build number of the current build. Will be used in Mumble's version to make sure newer builds upgrade older installations properly.")
 set(RELEASE_ID CACHE STRING "The ID of the current release (used for representation in the UI and the updater)")
