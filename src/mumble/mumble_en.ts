@@ -2161,7 +2161,7 @@ Speak loudly, as when you are annoyed or excited. Decrease the volume in the sou
     <message numerus="yes">
         <source>Ban List - %n Ban(s)</source>
         <translation type="unfinished">
-            <numerusform></numerusform><numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
@@ -2533,153 +2533,6 @@ Are you sure you wish to replace your certificate?
     </message>
     <message>
         <source>&lt;p&gt;Mumble can use certificates to authenticate with servers. Using certificates avoids passwords, meaning you don&apos;t need to disclose any password to the remote site. It also enables very easy user registration and a client side friends list independent of servers.&lt;/p&gt;&lt;p&gt;While Mumble can work without certificates, the majority of servers will expect you to have one.&lt;/p&gt;&lt;p&gt;Creating a new certificate automatically is sufficient for most use cases. But Mumble also supports certificates representing trust in the users ownership of an email address. These certificates are issued by third parties. For more information see our &lt;a href=&quot;http://mumble.info/certificate.php&quot;&gt;user certificate documentation&lt;/a&gt;. &lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ChanACL</name>
-    <message>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Traverse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Speak</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mute/Deafen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Make channel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Make temporary</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Link channel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This represents no privileges.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This represents total access to the channel, including the ability to change group and ACL information. This privilege implies all other privileges.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This represents the permission to traverse the channel. If a user is denied this privilege, he will be unable to access this channel and any sub-channels in any way, regardless of other permissions in the sub-channels.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This represents the permission to join the channel. If you have a hierarchical channel structure, you might want to give everyone Traverse, but restrict Enter in the root of your hierarchy.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This represents the permission to speak in a channel. Users without this privilege will be suppressed by the server (seen as muted), and will be unable to speak until they are unmuted by someone with the appropriate privileges.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This represents the permission to whisper to this channel from the outside. This works exactly like the &lt;i&gt;speak&lt;/i&gt; privilege, but applies to packets spoken with the Whisper key held down. This may be used to broadcast to a hierarchy of channels without linking.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This represents the permission to mute and deafen other users. Once muted, a user will stay muted until he is unmuted by another privileged user or reconnects to the server.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This represents the permission to move a user to another channel or kick him from the server. To actually move the user, either the moving user must have Move privileges in the destination channel, or the user must normally be allowed to enter the channel. Users with this privilege can move users into channels the target user normally wouldn&apos;t have permission to enter.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This represents the permission to make sub-channels. The user making the sub-channel will be added to the admin group of the sub-channel.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This represents the permission to make a temporary subchannel. The user making the sub-channel will be added to the admin group of the sub-channel. Temporary channels are not stored and disappear when the last user leaves.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This represents the permission to link channels. Users in linked channels hear each other, as long as the speaking user has the &lt;i&gt;speak&lt;/i&gt; privilege in the channel of the listener. You need the link privilege in both channels to create a link, but just in either channel to remove it.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This represents the permission to write text messages to other users in this channel.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This represents the permission to forcibly remove users from the server.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This represents the permission to permanently remove users from the server.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This represents the permission to register and unregister users on the server.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This represents the permission to register oneself on the server.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Whisper</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Move</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text message</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Kick</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ban</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Register User</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Register Self</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Write ACL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This represents the permission to use the listen-feature allowing to listen to a channel without being in it.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Listen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This represents the permission to reset the comment or avatar of a user.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reset User Content</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7500,7 +7353,7 @@ An access token is a text string, which can be used as a password for very simpl
     <message numerus="yes">
         <source>Registered users: %n account(s)</source>
         <translation type="unfinished">
-            <numerusform></numerusform><numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>

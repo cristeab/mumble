@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="nl">
 <context>
     <name>ACLEditor</name>
     <message>
@@ -1133,6 +1135,14 @@ Waarde bepaalt het maximale aantal toegestane gebruikers in het kanaal. Mits waa
         <source>Idle action</source>
         <translation>Actie bij inactiviteit</translation>
     </message>
+    <message>
+        <source>Access to the microphone was denied. Please allow Mumble to use the microphone by changing the settings in System Preferences -&gt; Security &amp; Privacy -&gt; Privacy -&gt; Microphone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Access to the microphone was denied. Please check that your operating system&apos;s microphone settings allow Mumble to use the microphone.</source>
+        <translation type="unfinished">Haperende microfoontoegang. Dubbelcheck dat je microfooninstellingen van je besturingssysteem Mumble toestaan de microfoon te gebruiken.</translation>
+    </message>
 </context>
 <context>
     <name>AudioOutput</name>
@@ -1538,7 +1548,7 @@ Waarde bepaalt het maximale aantal toegestane gebruikers in het kanaal. Mits waa
     </message>
     <message>
         <source>This shows the peak power of the speakers in the last frame (20 ms). Unless you are using a multi-channel sampling method (such as ASIO) with speaker channels configured, this will be 0. If you have such a setup configured, and this still shows 0 while you&apos;re playing audio from other programs, your setup is not working.</source>
-        <oldsource>This shows the peak power in the last frame (20 ms) of the speakers. Unless you are using a multi-channel sampling method (such as ASIO) with speaker channels configured, this will be 0. If you have such a setup configured, and this still shows 0 while you're playing audio from other programs, your setup is not working.</oldsource>
+        <oldsource>This shows the peak power in the last frame (20 ms) of the speakers. Unless you are using a multi-channel sampling method (such as ASIO) with speaker channels configured, this will be 0. If you have such a setup configured, and this still shows 0 while you&apos;re playing audio from other programs, your setup is not working.</oldsource>
         <translation>Toont luidsprekers-piekmeting uit laatste frame (20 ms). Tenzij je gebruikmaakt van multi-kanaal ondervindingsmethode (zoals ASIO) met luidsprekerkanalen geconfigureerd, is dit 0. Als je zo&apos;n opstelling ingesteld hebt, en geeft 0 weer terwijl andere programma&apos;s geluid afspelen kloppen je instellingen niet.</translation>
     </message>
     <message>
@@ -1755,7 +1765,7 @@ Waarde bepaalt het maximale aantal toegestane gebruikers in het kanaal. Mits waa
     </message>
     <message>
         <source>&lt;p&gt;
-To keep latency to an absolute minimum, it's important to buffer as little audio as possible on the soundcard. However, many soundcards report that they require a much smaller buffer than what they can actually work with, so the only way to set this value is to try and fail.
+To keep latency to an absolute minimum, it&apos;s important to buffer as little audio as possible on the soundcard. However, many soundcards report that they require a much smaller buffer than what they can actually work with, so the only way to set this value is to try and fail.
 &lt;/p&gt;
 &lt;p&gt;
 You should hear a voice sample. Change the slider below to the lowest value which gives &lt;b&gt;no&lt;/b&gt; interruptions or jitter in the sound. Please note that local echo is disabled during this test.
@@ -1778,7 +1788,7 @@ Je moet een stemvoorbeeld horen. Verander de schuifregelaar naar de ↓ waarde w
     </message>
     <message>
         <source>&lt;p&gt;
-Open your sound control panel and go to the recording settings. Make sure the microphone is selected as active input with maximum recording volume. If there's an option to enable a &quot;Microphone boost&quot; make sure it's checked.
+Open your sound control panel and go to the recording settings. Make sure the microphone is selected as active input with maximum recording volume. If there&apos;s an option to enable a &quot;Microphone boost&quot; make sure it&apos;s checked.
 &lt;/p&gt;
 &lt;p&gt;
 Speak loudly, as when you are annoyed or excited. Decrease the volume in the sound control panel until the bar below stays as high as possible in the blue and green but &lt;b&gt;not&lt;/b&gt; the red zone while you speak.
@@ -1808,7 +1818,7 @@ Luid spreken, zoals zijnde geïrriteerd/opgewonden. Verlaag geluidsconfiguraties
 Congratulations. You should now be ready to enjoy a richer sound experience with Mumble.
 &lt;/p&gt;
 &lt;p&gt;
-Mumble is under continuous development, and the development team wants to focus on the features that benefit the most users. To this end, Mumble supports submitting anonymous statistics about your configuration to the developers. These statistics are essential for future development, and also make sure the features you use aren't deprecated.
+Mumble is under continuous development, and the development team wants to focus on the features that benefit the most users. To this end, Mumble supports submitting anonymous statistics about your configuration to the developers. These statistics are essential for future development, and also make sure the features you use aren&apos;t deprecated.
 &lt;/p&gt;
 </source>
         <translation>&lt;p&gt;
@@ -1860,7 +1870,7 @@ Mumble wordt doorontwikkeld gericht op functionaliteit waar meeste gebruikers be
     </message>
     <message>
         <source>Next you need to adjust the following slider. The first few utterances you say should end up in the green area (definitive speech). While talking, you should stay inside the yellow (might be speech) and when you&apos;re not talking, everything should be in the red (definitively not speech).</source>
-        <oldsource>Next you need to adjust the following two sliders. The first few utterances you say should end up in the green area (definitive speech). While talking, you should stay inside the yellow (might be speech) and when you're not talking, everything should be in the red (definitively not speech).</oldsource>
+        <oldsource>Next you need to adjust the following two sliders. The first few utterances you say should end up in the green area (definitive speech). While talking, you should stay inside the yellow (might be speech) and when you&apos;re not talking, everything should be in the red (definitively not speech).</oldsource>
         <translation>Je moet nu volgende schuifjes verschuiven. Eerste paar uitingen die je doet moeten in de groene zone eindigen (vastgestelde spraak). Tijdens praten, moet het geel blijven (mogelijke spraak) en als je niet praat; rood blijven (nooit spraak).</translation>
     </message>
     <message>
@@ -1953,14 +1963,14 @@ Mumble wordt doorontwikkeld gericht op functionaliteit waar meeste gebruikers be
     </message>
     <message>
         <source>&lt;p&gt;
-Open your sound control panel and go to the recording settings. Make sure the microphone is selected as active input with maximum recording volume. If there's an option to enable a &quot;Microphone boost&quot; make sure it's checked.
+Open your sound control panel and go to the recording settings. Make sure the microphone is selected as active input with maximum recording volume. If there&apos;s an option to enable a &quot;Microphone boost&quot; make sure it&apos;s checked.
 &lt;/p&gt;
 &lt;p&gt;
 Speak loudly, as when you are annoyed or excited. Decrease the volume in the sound control panel until the bar below stays as high as possible in the striped and the empty but &lt;b&gt;not&lt;/b&gt; the crisscrossed zone while you speak.
 &lt;/p&gt;
 </source>
         <oldsource>&lt;p&gt;
-Open your sound control panel and go to the recording settings. Make sure the microphone is selected as active input with maximum recording volume. If there's an option to enable a &quot;Microphone boost&quot; make sure it's checked.
+Open your sound control panel and go to the recording settings. Make sure the microphone is selected as active input with maximum recording volume. If there&apos;s an option to enable a &quot;Microphone boost&quot; make sure it&apos;s checked.
 &lt;/p&gt;
 &lt;p&gt;
 Speak loudly, as when you are annoyed or excited. Decrease the volume in the sound control panel until the bar below stays as high as possible in the striped and the empty but &lt;b&gt;not&lt;/b&gt; the criss-crossed zone while you speak.
@@ -2177,7 +2187,10 @@ Luid spreken, zoals zijnde geïrriteerd/opgewonden. Verlaag geluidsconfiguraties
     </message>
     <message numerus="yes">
         <source>Ban List - %n Ban(s)</source>
-        <translation><numerusform>Banlijst - %n Ban</numerusform><numerusform>Banlijst - %n Ban(s)</numerusform></translation>
+        <translation>
+            <numerusform>Banlijst - %n Ban</numerusform>
+            <numerusform>Banlijst - %n Ban(s)</numerusform>
+        </translation>
     </message>
     <message>
         <source>Search</source>
@@ -2445,7 +2458,7 @@ Luid spreken, zoals zijnde geïrriteerd/opgewonden. Verlaag geluidsconfiguraties
         <source>&lt;p&gt;You already have a certificate stored in Mumble, and you are about to replace it.&lt;/p&gt;
 &lt;p&gt;If you are upgrading to a certificate issued to you by a trusted CA and the email addresses match your current certificate, this is completely safe, and servers you connect to will automatically recognize the strong certificate for your email address.
 &lt;/p&gt;
-&lt;p&gt;If this is not the case, you will no longer be recognized by any server you previously have authenticated with. If you haven't been registered on any server yet, this is nothing to worry about.
+&lt;p&gt;If this is not the case, you will no longer be recognized by any server you previously have authenticated with. If you haven&apos;t been registered on any server yet, this is nothing to worry about.
 &lt;/p&gt;
 &lt;p&gt;
 Are you sure you wish to replace your certificate?
@@ -2563,147 +2576,147 @@ Zeker dat je jouw certificaat wilt vervangen?
     <name>ChanACL</name>
     <message>
         <source>None</source>
-        <translation>Geen</translation>
+        <translation type="vanished">Geen</translation>
     </message>
     <message>
         <source>Traverse</source>
-        <translation>Doorkruisen</translation>
+        <translation type="vanished">Doorkruisen</translation>
     </message>
     <message>
         <source>Enter</source>
-        <translation>Toetreden</translation>
+        <translation type="vanished">Toetreden</translation>
     </message>
     <message>
         <source>Speak</source>
-        <translation>Spreken</translation>
+        <translation type="vanished">Spreken</translation>
     </message>
     <message>
         <source>Mute/Deafen</source>
-        <translation>Dempen/Doven</translation>
+        <translation type="vanished">Dempen/Doven</translation>
     </message>
     <message>
         <source>Make channel</source>
-        <translation>Kanaal maken</translation>
+        <translation type="vanished">Kanaal maken</translation>
     </message>
     <message>
         <source>Make temporary</source>
-        <translation>Tijdelijk maken</translation>
+        <translation type="vanished">Tijdelijk maken</translation>
     </message>
     <message>
         <source>Link channel</source>
-        <translation>Kanaal koppelen</translation>
+        <translation type="vanished">Kanaal koppelen</translation>
     </message>
     <message>
         <source>This represents no privileges.</source>
-        <translation>Geen machtigingen.</translation>
+        <translation type="vanished">Geen machtigingen.</translation>
     </message>
     <message>
         <source>This represents total access to the channel, including the ability to change group and ACL information. This privilege implies all other privileges.</source>
-        <translation>Volledige toegang tot kanaal, inclusief recht om groep- en ACL-informatie te wijzigen. Deze machtiging impliceert alle andere machtigingen.</translation>
+        <translation type="vanished">Volledige toegang tot kanaal, inclusief recht om groep- en ACL-informatie te wijzigen. Deze machtiging impliceert alle andere machtigingen.</translation>
     </message>
     <message>
         <source>This represents the permission to traverse the channel. If a user is denied this privilege, he will be unable to access this channel and any sub-channels in any way, regardless of other permissions in the sub-channels.</source>
-        <translation>Toestemming om kanaal te doorkruisen. Als gebruiker wordt geweigerd, wordt in ieder (↳)-kanaal doorgang onmogelijk (andere ↳-kanaal-rechten onafhankelijk).</translation>
+        <translation type="vanished">Toestemming om kanaal te doorkruisen. Als gebruiker wordt geweigerd, wordt in ieder (↳)-kanaal doorgang onmogelijk (andere ↳-kanaal-rechten onafhankelijk).</translation>
     </message>
     <message>
         <source>This represents the permission to join the channel. If you have a hierarchical channel structure, you might want to give everyone Traverse, but restrict Enter in the root of your hierarchy.</source>
-        <translation>Toestemming kanaal toe te treden. Met hiërarchische kanaalstructuur hebt wil je misschien iedereen laten doorkruisen en toetreden beperken tot hiërarchie-stam.</translation>
+        <translation type="vanished">Toestemming kanaal toe te treden. Met hiërarchische kanaalstructuur hebt wil je misschien iedereen laten doorkruisen en toetreden beperken tot hiërarchie-stam.</translation>
     </message>
     <message>
         <source>This represents the permission to speak in a channel. Users without this privilege will be suppressed by the server (seen as muted), and will be unable to speak until they are unmuted by someone with the appropriate privileges.</source>
-        <translation>Toestemming om in kanaal te spreken. Gebruikers zonder dit recht worden onderdrukt door server (zijnde gedempt); kunnen niet spreken totdat demping wordt opgeheven door bevoegde.</translation>
+        <translation type="vanished">Toestemming om in kanaal te spreken. Gebruikers zonder dit recht worden onderdrukt door server (zijnde gedempt); kunnen niet spreken totdat demping wordt opgeheven door bevoegde.</translation>
     </message>
     <message>
         <source>This represents the permission to whisper to this channel from the outside. This works exactly like the &lt;i&gt;speak&lt;/i&gt; privilege, but applies to packets spoken with the Whisper key held down. This may be used to broadcast to a hierarchy of channels without linking.</source>
-        <translation>Toestemming te fluisteren → kanaal (van buitenaf). Werkt net als het &lt;i&gt;spreken&lt;/a&gt;-recht, maar geldt voor Fluisteren-toets ingedrukt. Kan dienen om te zenden naar kanaalhiërarchie zonder te koppelen.</translation>
+        <translation type="vanished">Toestemming te fluisteren → kanaal (van buitenaf). Werkt net als het &lt;i&gt;spreken&lt;/a&gt;-recht, maar geldt voor Fluisteren-toets ingedrukt. Kan dienen om te zenden naar kanaalhiërarchie zonder te koppelen.</translation>
     </message>
     <message>
         <source>This represents the permission to mute and deafen other users. Once muted, a user will stay muted until he is unmuted by another privileged user or reconnects to the server.</source>
-        <translation>Toestemming om anderen te dempen/doven. Eenmaal gedempt, blijft gedempt tot ontdempt door bevoegde of totdat gebruikers opnieuw met server verbinden.</translation>
+        <translation type="vanished">Toestemming om anderen te dempen/doven. Eenmaal gedempt, blijft gedempt tot ontdempt door bevoegde of totdat gebruikers opnieuw met server verbinden.</translation>
     </message>
     <message>
         <source>This represents the permission to move a user to another channel or kick him from the server. To actually move the user, either the moving user must have Move privileges in the destination channel, or the user must normally be allowed to enter the channel. Users with this privilege can move users into channels the target user normally wouldn&apos;t have permission to enter.</source>
-        <translation>Toestemming om gebruikers naar andere kanalen te verplaatsen of (permanent weg) te schoppen. Om gebruikers te verplaatsen; vereist dat verplaatsende: Verplaatsen-recht heeft (bestemmingkanaal) of gebruiker moet toetreden-kanaalrecht hebben. Gebruikers met dit recht kunnen gebruikers verplaatsen naar kanalen waarin gebruiker (normaal) niet toe mag toetreden.</translation>
+        <translation type="vanished">Toestemming om gebruikers naar andere kanalen te verplaatsen of (permanent weg) te schoppen. Om gebruikers te verplaatsen; vereist dat verplaatsende: Verplaatsen-recht heeft (bestemmingkanaal) of gebruiker moet toetreden-kanaalrecht hebben. Gebruikers met dit recht kunnen gebruikers verplaatsen naar kanalen waarin gebruiker (normaal) niet toe mag toetreden.</translation>
     </message>
     <message>
         <source>This represents the permission to make sub-channels. The user making the sub-channel will be added to the admin group of the sub-channel.</source>
-        <translation>Toestemming om ↳-kanalen te creëren. Gebruikers die ↳-kanalen creëren komen in de beheerdersgroep van desbetreffende ↳-kanalen.</translation>
+        <translation type="vanished">Toestemming om ↳-kanalen te creëren. Gebruikers die ↳-kanalen creëren komen in de beheerdersgroep van desbetreffende ↳-kanalen.</translation>
     </message>
     <message>
         <source>This represents the permission to make a temporary subchannel. The user making the sub-channel will be added to the admin group of the sub-channel. Temporary channels are not stored and disappear when the last user leaves.</source>
-        <translation>Toestemming tijdelijke ↳-kanalen te creëren. Sub-kanaal creërende gebruikers worden toegevoegd aan de beheerdersgroep van een nieuw ↳-kanaal. Tijdelijke kanalen  verdwijnen wanneer laatste gebruiker verlaat.</translation>
+        <translation type="vanished">Toestemming tijdelijke ↳-kanalen te creëren. Sub-kanaal creërende gebruikers worden toegevoegd aan de beheerdersgroep van een nieuw ↳-kanaal. Tijdelijke kanalen  verdwijnen wanneer laatste gebruiker verlaat.</translation>
     </message>
     <message>
         <source>This represents the permission to link channels. Users in linked channels hear each other, as long as the speaking user has the &lt;i&gt;speak&lt;/i&gt; privilege in the channel of the listener. You need the link privilege in both channels to create a link, but just in either channel to remove it.</source>
-        <translation>Toestemming om kanalen te koppelen. Gebruikers van gekoppelde kanalen horen elkaar, zolang sprekende gebruiker het &lt;i&gt;spreken&lt;/i&gt;-recht in kanaal van de luisteraar heeft. Je moet het koppelingsrecht in beide kanalen hebben om een koppeling te creëren, en slechts in een enkel kanaal om te ontkoppelen.</translation>
+        <translation type="vanished">Toestemming om kanalen te koppelen. Gebruikers van gekoppelde kanalen horen elkaar, zolang sprekende gebruiker het &lt;i&gt;spreken&lt;/i&gt;-recht in kanaal van de luisteraar heeft. Je moet het koppelingsrecht in beide kanalen hebben om een koppeling te creëren, en slechts in een enkel kanaal om te ontkoppelen.</translation>
     </message>
     <message>
         <source>This represents the permission to write text messages to other users in this channel.</source>
-        <translation>Toestemming tekstberichten naar andere kanaalgebruikers te schrijven.</translation>
+        <translation type="vanished">Toestemming tekstberichten naar andere kanaalgebruikers te schrijven.</translation>
     </message>
     <message>
         <source>This represents the permission to forcibly remove users from the server.</source>
-        <translation>Het recht om bepaalde gebruikers uit server te gooien.</translation>
+        <translation type="vanished">Het recht om bepaalde gebruikers uit server te gooien.</translation>
     </message>
     <message>
         <source>This represents the permission to permanently remove users from the server.</source>
-        <translation>Het recht gebruikers op server te bannen.</translation>
+        <translation type="vanished">Het recht gebruikers op server te bannen.</translation>
     </message>
     <message>
         <source>This represents the permission to register and unregister users on the server.</source>
-        <translation>Toestemming om gebruikers te (ont)registreren (server).</translation>
+        <translation type="vanished">Toestemming om gebruikers te (ont)registreren (server).</translation>
     </message>
     <message>
         <source>This represents the permission to register oneself on the server.</source>
-        <translation>Recht dat iemand zichzelf zelf op server kan registeren.</translation>
+        <translation type="vanished">Recht dat iemand zichzelf zelf op server kan registeren.</translation>
     </message>
     <message>
         <source>Whisper</source>
-        <translation>Fluisteren</translation>
+        <translation type="vanished">Fluisteren</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation>Verplaatsen</translation>
+        <translation type="vanished">Verplaatsen</translation>
     </message>
     <message>
         <source>Text message</source>
-        <translation>Tekstbericht</translation>
+        <translation type="vanished">Tekstbericht</translation>
     </message>
     <message>
         <source>Kick</source>
-        <translation>Schoppen</translation>
+        <translation type="vanished">Schoppen</translation>
     </message>
     <message>
         <source>Ban</source>
-        <translation>Bannen</translation>
+        <translation type="vanished">Bannen</translation>
     </message>
     <message>
         <source>Register User</source>
-        <translation>Gebruiker registreren</translation>
+        <translation type="vanished">Gebruiker registreren</translation>
     </message>
     <message>
         <source>Register Self</source>
-        <translation>Jezelf registeren</translation>
+        <translation type="vanished">Jezelf registeren</translation>
     </message>
     <message>
         <source>Write ACL</source>
-        <translation>ACL&apos;s schrijven</translation>
+        <translation type="vanished">ACL&apos;s schrijven</translation>
     </message>
     <message>
         <source>This represents the permission to use the listen-feature allowing to listen to a channel without being in it.</source>
-        <translation>Dit schetst de toestemming om de luisterfunctie te gebruiken.</translation>
+        <translation type="vanished">Dit schetst de toestemming om de luisterfunctie te gebruiken.</translation>
     </message>
     <message>
         <source>Listen</source>
-        <translation>Luisteren</translation>
+        <translation type="vanished">Luisteren</translation>
     </message>
     <message>
         <source>This represents the permission to reset the comment or avatar of a user.</source>
-        <translation>Representeert recht om commentaar of een avatar van gebruiker te resetten.</translation>
+        <translation type="vanished">Representeert recht om commentaar of een avatar van gebruiker te resetten.</translation>
     </message>
     <message>
         <source>Reset User Content</source>
-        <translation>Gebruikersinhoud wissen</translation>
+        <translation type="vanished">Gebruikersinhoud wissen</translation>
     </message>
 </context>
 <context>
@@ -2724,6 +2737,10 @@ Zeker dat je jouw certificaat wilt vervangen?
     <message>
         <source>Unable to send image %1: too large.</source>
         <translation>Het versturen van %1 mislukdoemt: te grote bestandsomvang van het plaatje.</translation>
+    </message>
+    <message>
+        <source>This server does not allow sending images.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3050,7 +3067,7 @@ Zeker dat je jouw certificaat wilt vervangen?
         <source>&lt;b&gt;Address&lt;/b&gt;&lt;br/&gt;
 Internet address of the server. This can be a normal hostname, an IPv4/IPv6 address or a Bonjour service identifier. Bonjour service identifiers have to be prefixed with a &apos;@&apos; to be recognized by Mumble.</source>
         <oldsource>&lt;b&gt;Address&lt;/b&gt;&lt;/br&gt;
-Internet address of the server. This can be a normal hostname, an ipv4/6 address or a bonjour service identifier. Bonjour service identifiers have to be prefixed with a '@' to be recognized by Mumble.</oldsource>
+Internet address of the server. This can be a normal hostname, an ipv4/6 address or a bonjour service identifier. Bonjour service identifiers have to be prefixed with a &apos;@&apos; to be recognized by Mumble.</oldsource>
         <translation>&lt;b&gt;Adres&lt;/b&gt;&lt;br/&gt;
 Internetadres van server zijnde normale hostnaam, IPv4/IPv6-adres of Bonjour-service-ID. Bonjour-service-ID&apos;s beginnen verplicht met een @.</translation>
     </message>
@@ -3163,7 +3180,7 @@ Naam van server. Zelfgekozen naam van server die in serverlijst wordt weergegeve
     <name>CoreAudioSystem</name>
     <message>
         <source>Default Device</source>
-        <translation>Standaardapparaat</translation>
+        <translation type="vanished">Standaardapparaat</translation>
     </message>
 </context>
 <context>
@@ -3226,7 +3243,7 @@ Naam van server. Zelfgekozen naam van server die in serverlijst wordt weergegeve
     <name>Database</name>
     <message>
         <source>The database &apos;%1&apos; is read-only. Mumble cannot store server settings (i.e. SSL certificates) until you fix this problem.</source>
-        <oldsource>The database '%1' is read-only. Mumble can not store server settings (ie. SSL certificates) until you fix this problem.</oldsource>
+        <oldsource>The database &apos;%1&apos; is read-only. Mumble can not store server settings (ie. SSL certificates) until you fix this problem.</oldsource>
         <translation>Database &apos;%1&apos; is alleen-lezen. Mumble slaat o.a. SSL-certificaten niet op tot je het probleem oplost.</translation>
     </message>
     <message>
@@ -4349,6 +4366,14 @@ Deze instelling geldt voor nieuwe berichten, vermits getoonden conformeren aan h
         <source>Show local user&apos;s listeners (ears)</source>
         <translation>Toon eigen luisteraars (descartheldjes)</translation>
     </message>
+    <message>
+        <source>Hide the username for each user if they have a nickname.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show nicknames only</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -4634,12 +4659,12 @@ Deze instelling geldt voor nieuwe berichten, vermits getoonden conformeren aan h
     </message>
     <message>
         <source>&lt;center&gt;Type message to channel &apos;%1&apos; here&lt;/center&gt;</source>
-        <oldsource>Type message to channel '%1' here</oldsource>
+        <oldsource>Type message to channel &apos;%1&apos; here</oldsource>
         <translation>&lt;center&gt;Bericht naar kanaal &apos;%1&apos; (hier typen)&lt;/center&gt;</translation>
     </message>
     <message>
         <source>&lt;center&gt;Type message to user &apos;%1&apos; here&lt;/center&gt;</source>
-        <oldsource>Type message to user '%1' here</oldsource>
+        <oldsource>Type message to user &apos;%1&apos; here</oldsource>
         <translation>&lt;center&gt;Bericht naar gebruiker &apos;%1&apos; (hier typen)&lt;/center&gt;</translation>
     </message>
     <message>
@@ -5704,7 +5729,7 @@ Otherwise abort and check your certificate and username.</source>
         <source>Usage: mumble rpc &lt;action&gt; [options]
 
 It is possible to remote control a running instance of Mumble by using
-the 'mumble rpc' command.
+the &apos;mumble rpc&apos; command.
 
 Valid actions are:
   mute
@@ -6179,7 +6204,7 @@ Valid options are:
   -c, --config
                 Specify an alternative configuration file.
                 If you use this to run multiple instances of Mumble at once,
-                make sure to set an alternative 'database' value in the config.
+                make sure to set an alternative &apos;database&apos; value in the config.
   -n, --noidentity
                 Suppress loading of identity files (i.e., certificates.)
   -jn, --jackname &lt;arg&gt;
@@ -6248,6 +6273,18 @@ Valide opties zijn:
         <source>Hide/show main window</source>
         <comment>Global Shortcut</comment>
         <translation>Vers(t)op hoofdvenster</translation>
+    </message>
+    <message>
+        <source>&amp;Set Nickname...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set a local nickname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets a local nickname for another user.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6530,7 +6567,7 @@ Gebruikersnaam om te authenticeren. Indien je anoniem wilt verbinden; leeglaten.
         <translation>Voorkomt dat Mumble informatie over het besturingssysteem naar de Mumble server en web servers worden gestuurd.</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Don't send OS information to servers&lt;/b&gt;&lt;br/&gt;
+        <source>&lt;b&gt;Don&apos;t send OS information to servers&lt;/b&gt;&lt;br/&gt;
 Prevents the client from sending potentially identifying information about the operating system to the Mumble server and web servers.</source>
         <translation>&lt;b&gt;Stuur geen OS informatie naar servers&lt;/b&gt;&lt;br/&gt;
 Voorkomt dat Mumble potentieel identificerende informatie over het besturingssysteem stuurt naar de Mumble server en web servers.</translation>
@@ -7180,7 +7217,7 @@ Gemixte galm-tegengang bundelt geluidsuitgangen naar monotoom stramen en paast d
 Multikanaalsechouitsluiting kost meer processorkracht; probeer gemixt eerst.</translation>
     </message>
     <message>
-        <source>&lt;p&gt;If you're using Linux this is most likely because you are using a version from your distribution's package repository that have their own update cycles.&lt;/p&gt;&lt;p&gt;If you want to always have the most recent Mumble version, you should consider using a different method of installation.
+        <source>&lt;p&gt;If you&apos;re using Linux this is most likely because you are using a version from your distribution&apos;s package repository that have their own update cycles.&lt;/p&gt;&lt;p&gt;If you want to always have the most recent Mumble version, you should consider using a different method of installation.
 See &lt;a href=&quot;https://wiki.mumble.info/wiki/Installing_Mumble&quot;&gt;the Mumble wiki&lt;/a&gt; for what alternatives there are.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Als je Linux gebruikt is dit waarschijnlijkste omdat je een versie gebruikt van je distributie&apos;s pakket-repositoir welke eigen update-cycleringen hebben.&lt;/p&gt;&lt;p&gt;Als je altijd de meest recente Mumble-versie wilt hebben, bedien je een verschillende methode van installatie in acht nemen.
 Zie &lt;a href=&quot;https://wiki.mumble.info/wiki/Installing_Mumble&quot;&gt;de Mumble wiki&lt;/a&gt; over welke alternatieven er zijn.&lt;/p&gt;</translation>
@@ -7248,6 +7285,10 @@ Zie &lt;a href=&quot;https://wiki.mumble.info/wiki/Installing_Mumble&quot;&gt;de
     <message>
         <source>Do you really want to reset all settings (not only the ones currently visible) to their default value?</source>
         <translation>Wil je echt alle instellingen resetten (niet louter die momenteel zichtbaar zijn) naar &apos;hun&apos; standaardwaarden?</translation>
+    </message>
+    <message>
+        <source>Local Nickname Adjustment...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7525,7 +7566,7 @@ Zie &lt;a href=&quot;https://wiki.mumble.info/wiki/Installing_Mumble&quot;&gt;de
     <message>
         <source>&lt;b&gt;This is an editable list of access tokens on the connected server.&lt;/b&gt;
 &lt;br /&gt;
-An access token is a text string, which can be used as a password for very simple access management on channels. Mumble will remember the tokens you've used and resend them to the server next time you reconnect, so you don't have to enter these every time.
+An access token is a text string, which can be used as a password for very simple access management on channels. Mumble will remember the tokens you&apos;ve used and resend them to the server next time you reconnect, so you don&apos;t have to enter these every time.
 </source>
         <translation>&lt;b&gt;Bewerkbare servertoegangssleutellijst.&lt;/b&gt;
 &lt;br /&gt;
@@ -7592,7 +7633,10 @@ Toegangssleutels zijn tekenreeksen; zijnden wachtwoorden t.b.v. simpel kanaaltoe
     </message>
     <message numerus="yes">
         <source>Registered users: %n account(s)</source>
-        <translation><numerusform>Geregistreerde gebruiker: %n account</numerusform><numerusform>Geregistreerde gebruikers: %n accounts</numerusform></translation>
+        <translation>
+            <numerusform>Geregistreerde gebruiker: %n account</numerusform>
+            <numerusform>Geregistreerde gebruikers: %n accounts</numerusform>
+        </translation>
     </message>
     <message>
         <source>Search</source>
@@ -7785,6 +7829,25 @@ Toegangssleutels zijn tekenreeksen; zijnden wachtwoorden t.b.v. simpel kanaaltoe
     </message>
 </context>
 <context>
+    <name>UserLocalNicknameDialog</name>
+    <message>
+        <source>Local nickname for other users</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Adjust the nickname of other users locally&lt;/b&gt;&lt;br /&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User nickname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Adjusting local nickname for %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>UserLocalVolumeDialog</name>
     <message>
         <source>Local volume for other users</source>
@@ -7937,6 +8000,22 @@ Toegangssleutels zijn tekenreeksen; zijnden wachtwoorden t.b.v. simpel kanaaltoe
     <message>
         <source>Cannot perform this movement automatically, please reset the numeric sorting indicators or adjust it manually.</source>
         <translation>Kan handeling niet vanzelf uitvoeren; éérst numerieke sorteerindicatoren herstellen óf handmatig aanpassen.</translation>
+    </message>
+    <message>
+        <source>Talking while being muted on your end</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This is a channel listener. The corresponding user hears everything you say in this channel.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Channel has access restrictions so that you can&apos;t enter it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Channel has access restrictions but you can enter nonetheless</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

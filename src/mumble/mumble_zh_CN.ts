@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="zh_CN">
 <context>
     <name>ACLEditor</name>
     <message>
@@ -1134,6 +1136,14 @@ This value allows you to set the maximum number of users allowed in the channel.
         <source>Idle action</source>
         <translation>空闲操作</translation>
     </message>
+    <message>
+        <source>Access to the microphone was denied. Please allow Mumble to use the microphone by changing the settings in System Preferences -&gt; Security &amp; Privacy -&gt; Privacy -&gt; Microphone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Access to the microphone was denied. Please check that your operating system&apos;s microphone settings allow Mumble to use the microphone.</source>
+        <translation type="unfinished">访问麦克风的权限被拒绝。请您检查操作系统的麦克风设置，允许 Mumble 使用麦克风。</translation>
+    </message>
 </context>
 <context>
     <name>AudioOutput</name>
@@ -1539,7 +1549,7 @@ This value allows you to set the maximum number of users allowed in the channel.
     </message>
     <message>
         <source>This shows the peak power of the speakers in the last frame (20 ms). Unless you are using a multi-channel sampling method (such as ASIO) with speaker channels configured, this will be 0. If you have such a setup configured, and this still shows 0 while you&apos;re playing audio from other programs, your setup is not working.</source>
-        <oldsource>This shows the peak power in the last frame (20 ms) of the speakers. Unless you are using a multi-channel sampling method (such as ASIO) with speaker channels configured, this will be 0. If you have such a setup configured, and this still shows 0 while you're playing audio from other programs, your setup is not working.</oldsource>
+        <oldsource>This shows the peak power in the last frame (20 ms) of the speakers. Unless you are using a multi-channel sampling method (such as ASIO) with speaker channels configured, this will be 0. If you have such a setup configured, and this still shows 0 while you&apos;re playing audio from other programs, your setup is not working.</oldsource>
         <translation>显示最后一帧（20 毫秒）扬声器的峰值功率。除非您配置了扬声器通道的多通道采样方法（例如 ASIO），否则将为 0。如果您进行了这样的配置，并且当您用其他应用程序播放音频时仍然显示 0，则说明您的设置无效。</translation>
     </message>
     <message>
@@ -1756,7 +1766,7 @@ This value allows you to set the maximum number of users allowed in the channel.
     </message>
     <message>
         <source>&lt;p&gt;
-To keep latency to an absolute minimum, it's important to buffer as little audio as possible on the soundcard. However, many soundcards report that they require a much smaller buffer than what they can actually work with, so the only way to set this value is to try and fail.
+To keep latency to an absolute minimum, it&apos;s important to buffer as little audio as possible on the soundcard. However, many soundcards report that they require a much smaller buffer than what they can actually work with, so the only way to set this value is to try and fail.
 &lt;/p&gt;
 &lt;p&gt;
 You should hear a voice sample. Change the slider below to the lowest value which gives &lt;b&gt;no&lt;/b&gt; interruptions or jitter in the sound. Please note that local echo is disabled during this test.
@@ -1780,7 +1790,7 @@ You should hear a voice sample. Change the slider below to the lowest value whic
     </message>
     <message>
         <source>&lt;p&gt;
-Open your sound control panel and go to the recording settings. Make sure the microphone is selected as active input with maximum recording volume. If there's an option to enable a &quot;Microphone boost&quot; make sure it's checked.
+Open your sound control panel and go to the recording settings. Make sure the microphone is selected as active input with maximum recording volume. If there&apos;s an option to enable a &quot;Microphone boost&quot; make sure it&apos;s checked.
 &lt;/p&gt;
 &lt;p&gt;
 Speak loudly, as when you are annoyed or excited. Decrease the volume in the sound control panel until the bar below stays as high as possible in the blue and green but &lt;b&gt;not&lt;/b&gt; the red zone while you speak.
@@ -1810,7 +1820,7 @@ Speak loudly, as when you are annoyed or excited. Decrease the volume in the sou
 Congratulations. You should now be ready to enjoy a richer sound experience with Mumble.
 &lt;/p&gt;
 &lt;p&gt;
-Mumble is under continuous development, and the development team wants to focus on the features that benefit the most users. To this end, Mumble supports submitting anonymous statistics about your configuration to the developers. These statistics are essential for future development, and also make sure the features you use aren't deprecated.
+Mumble is under continuous development, and the development team wants to focus on the features that benefit the most users. To this end, Mumble supports submitting anonymous statistics about your configuration to the developers. These statistics are essential for future development, and also make sure the features you use aren&apos;t deprecated.
 &lt;/p&gt;
 </source>
         <translation>&lt;p&gt;
@@ -1863,7 +1873,7 @@ Mumble 仍在持续开发中，开发团队希望能专注于大多数用户需�
     </message>
     <message>
         <source>Next you need to adjust the following slider. The first few utterances you say should end up in the green area (definitive speech). While talking, you should stay inside the yellow (might be speech) and when you&apos;re not talking, everything should be in the red (definitively not speech).</source>
-        <oldsource>Next you need to adjust the following two sliders. The first few utterances you say should end up in the green area (definitive speech). While talking, you should stay inside the yellow (might be speech) and when you're not talking, everything should be in the red (definitively not speech).</oldsource>
+        <oldsource>Next you need to adjust the following two sliders. The first few utterances you say should end up in the green area (definitive speech). While talking, you should stay inside the yellow (might be speech) and when you&apos;re not talking, everything should be in the red (definitively not speech).</oldsource>
         <translation>然后我们来调节下方的滑块，使您说的前几个音节能让上方的指示条达到绿色区域（明确发言）；当您正在说话时，指示条应该在黄色区域（疑似发言）；当您不说话时，指示条应该处于红色区域（明确不发言）。</translation>
     </message>
     <message>
@@ -1956,14 +1966,14 @@ Mumble 仍在持续开发中，开发团队希望能专注于大多数用户需�
     </message>
     <message>
         <source>&lt;p&gt;
-Open your sound control panel and go to the recording settings. Make sure the microphone is selected as active input with maximum recording volume. If there's an option to enable a &quot;Microphone boost&quot; make sure it's checked.
+Open your sound control panel and go to the recording settings. Make sure the microphone is selected as active input with maximum recording volume. If there&apos;s an option to enable a &quot;Microphone boost&quot; make sure it&apos;s checked.
 &lt;/p&gt;
 &lt;p&gt;
 Speak loudly, as when you are annoyed or excited. Decrease the volume in the sound control panel until the bar below stays as high as possible in the striped and the empty but &lt;b&gt;not&lt;/b&gt; the crisscrossed zone while you speak.
 &lt;/p&gt;
 </source>
         <oldsource>&lt;p&gt;
-Open your sound control panel and go to the recording settings. Make sure the microphone is selected as active input with maximum recording volume. If there's an option to enable a &quot;Microphone boost&quot; make sure it's checked.
+Open your sound control panel and go to the recording settings. Make sure the microphone is selected as active input with maximum recording volume. If there&apos;s an option to enable a &quot;Microphone boost&quot; make sure it&apos;s checked.
 &lt;/p&gt;
 &lt;p&gt;
 Speak loudly, as when you are annoyed or excited. Decrease the volume in the sound control panel until the bar below stays as high as possible in the striped and the empty but &lt;b&gt;not&lt;/b&gt; the criss-crossed zone while you speak.
@@ -2180,7 +2190,9 @@ Speak loudly, as when you are annoyed or excited. Decrease the volume in the sou
     </message>
     <message numerus="yes">
         <source>Ban List - %n Ban(s)</source>
-        <translation><numerusform>封禁列表 - %n 个封禁</numerusform></translation>
+        <translation>
+            <numerusform>封禁列表 - %n 个封禁</numerusform>
+        </translation>
     </message>
     <message>
         <source>Search</source>
@@ -2448,7 +2460,7 @@ Speak loudly, as when you are annoyed or excited. Decrease the volume in the sou
         <source>&lt;p&gt;You already have a certificate stored in Mumble, and you are about to replace it.&lt;/p&gt;
 &lt;p&gt;If you are upgrading to a certificate issued to you by a trusted CA and the email addresses match your current certificate, this is completely safe, and servers you connect to will automatically recognize the strong certificate for your email address.
 &lt;/p&gt;
-&lt;p&gt;If this is not the case, you will no longer be recognized by any server you previously have authenticated with. If you haven't been registered on any server yet, this is nothing to worry about.
+&lt;p&gt;If this is not the case, you will no longer be recognized by any server you previously have authenticated with. If you haven&apos;t been registered on any server yet, this is nothing to worry about.
 &lt;/p&gt;
 &lt;p&gt;
 Are you sure you wish to replace your certificate?
@@ -2567,147 +2579,147 @@ Are you sure you wish to replace your certificate?
     <name>ChanACL</name>
     <message>
         <source>None</source>
-        <translation>无</translation>
+        <translation type="vanished">无</translation>
     </message>
     <message>
         <source>Traverse</source>
-        <translation>通过</translation>
+        <translation type="vanished">通过</translation>
     </message>
     <message>
         <source>Enter</source>
-        <translation>进入</translation>
+        <translation type="vanished">进入</translation>
     </message>
     <message>
         <source>Speak</source>
-        <translation>说话</translation>
+        <translation type="vanished">说话</translation>
     </message>
     <message>
         <source>Mute/Deafen</source>
-        <translation>禁言/禁听</translation>
+        <translation type="vanished">禁言/禁听</translation>
     </message>
     <message>
         <source>Make channel</source>
-        <translation>创建频道</translation>
+        <translation type="vanished">创建频道</translation>
     </message>
     <message>
         <source>Make temporary</source>
-        <translation>创建临时频道</translation>
+        <translation type="vanished">创建临时频道</translation>
     </message>
     <message>
         <source>Link channel</source>
-        <translation>链接频道</translation>
+        <translation type="vanished">链接频道</translation>
     </message>
     <message>
         <source>This represents no privileges.</source>
-        <translation>表示没有任何权限。</translation>
+        <translation type="vanished">表示没有任何权限。</translation>
     </message>
     <message>
         <source>This represents total access to the channel, including the ability to change group and ACL information. This privilege implies all other privileges.</source>
-        <translation>允许完全控制频道，包括改变分组和 ACL 信息。此权限包含了所有其他权限。</translation>
+        <translation type="vanished">允许完全控制频道，包括改变分组和 ACL 信息。此权限包含了所有其他权限。</translation>
     </message>
     <message>
         <source>This represents the permission to traverse the channel. If a user is denied this privilege, he will be unable to access this channel and any sub-channels in any way, regardless of other permissions in the sub-channels.</source>
-        <translation>允许通过频道。如果用户不具有此权限，他将无法进入此频道和所有子频道，即使他拥有子频道的其他权限。</translation>
+        <translation type="vanished">允许通过频道。如果用户不具有此权限，他将无法进入此频道和所有子频道，即使他拥有子频道的其他权限。</translation>
     </message>
     <message>
         <source>This represents the permission to join the channel. If you have a hierarchical channel structure, you might want to give everyone Traverse, but restrict Enter in the root of your hierarchy.</source>
-        <translation>允许进入频道。如果您设定了分级频道结构，则可能需要授予所有人通过权限，但限制根频道的进入权限。</translation>
+        <translation type="vanished">允许进入频道。如果您设定了分级频道结构，则可能需要授予所有人通过权限，但限制根频道的进入权限。</translation>
     </message>
     <message>
         <source>This represents the permission to speak in a channel. Users without this privilege will be suppressed by the server (seen as muted), and will be unable to speak until they are unmuted by someone with the appropriate privileges.</source>
-        <translation>允许在频道内说话。用户如果没有此权限，将会在此频道内被服务器禁言（关闭麦克风），直到被具有相关权限的人解除禁言。</translation>
+        <translation type="vanished">允许在频道内说话。用户如果没有此权限，将会在此频道内被服务器禁言（关闭麦克风），直到被具有相关权限的人解除禁言。</translation>
     </message>
     <message>
         <source>This represents the permission to whisper to this channel from the outside. This works exactly like the &lt;i&gt;speak&lt;/i&gt; privilege, but applies to packets spoken with the Whisper key held down. This may be used to broadcast to a hierarchy of channels without linking.</source>
-        <translation>允许在频道外时对此频道发送密语。与&lt;i&gt;说话&lt;/i&gt;权限类似。但仅当用户按下密语键时才有效。此功能可以在不链接频道的情况下向多级频道广播内容。</translation>
+        <translation type="vanished">允许在频道外时对此频道发送密语。与&lt;i&gt;说话&lt;/i&gt;权限类似。但仅当用户按下密语键时才有效。此功能可以在不链接频道的情况下向多级频道广播内容。</translation>
     </message>
     <message>
         <source>This represents the permission to mute and deafen other users. Once muted, a user will stay muted until he is unmuted by another privileged user or reconnects to the server.</source>
-        <translation>允许关闭其他用户的麦克风（禁言）和扬声器（禁听）。一旦被禁言，用户将一直处于麦克风关闭状态，直到被其他拥有权限的用户解除或者重新连接服务器。</translation>
+        <translation type="vanished">允许关闭其他用户的麦克风（禁言）和扬声器（禁听）。一旦被禁言，用户将一直处于麦克风关闭状态，直到被其他拥有权限的用户解除或者重新连接服务器。</translation>
     </message>
     <message>
         <source>This represents the permission to move a user to another channel or kick him from the server. To actually move the user, either the moving user must have Move privileges in the destination channel, or the user must normally be allowed to enter the channel. Users with this privilege can move users into channels the target user normally wouldn&apos;t have permission to enter.</source>
-        <translation>允许将用户移动到另一个频道或者将其踢出服务器。对于移动操作，需要移动者拥有目标频道的移动权限，或者被移动者拥有进入目标频道的权限。拥有此权限的用户可以将没有进入某个频道权限的用户移动到该频道。</translation>
+        <translation type="vanished">允许将用户移动到另一个频道或者将其踢出服务器。对于移动操作，需要移动者拥有目标频道的移动权限，或者被移动者拥有进入目标频道的权限。拥有此权限的用户可以将没有进入某个频道权限的用户移动到该频道。</translation>
     </message>
     <message>
         <source>This represents the permission to make sub-channels. The user making the sub-channel will be added to the admin group of the sub-channel.</source>
-        <translation>允许创建子频道。用户可以创建一个子频道并被加入子频道的 admin（管理员）组。</translation>
+        <translation type="vanished">允许创建子频道。用户可以创建一个子频道并被加入子频道的 admin（管理员）组。</translation>
     </message>
     <message>
         <source>This represents the permission to make a temporary subchannel. The user making the sub-channel will be added to the admin group of the sub-channel. Temporary channels are not stored and disappear when the last user leaves.</source>
-        <translation>允许创建临时子频道。用户可以创建一个临时子频道并被加入其 admin（管理员）组。临时频道不会一直存在，在最后一名用户离开后，临时频道就会消失。</translation>
+        <translation type="vanished">允许创建临时子频道。用户可以创建一个临时子频道并被加入其 admin（管理员）组。临时频道不会一直存在，在最后一名用户离开后，临时频道就会消失。</translation>
     </message>
     <message>
         <source>This represents the permission to link channels. Users in linked channels hear each other, as long as the speaking user has the &lt;i&gt;speak&lt;/i&gt; privilege in the channel of the listener. You need the link privilege in both channels to create a link, but just in either channel to remove it.</source>
-        <translation>允许链接频道。只要说话的用户拥有对应频道的说话权限，被链接的频道内的用户就可以听到彼此的说话。您需要同时拥有两个频道的链接权限才能创建频道链接，但是只要拥有其中一个频道的链接权限就能删除此链接。</translation>
+        <translation type="vanished">允许链接频道。只要说话的用户拥有对应频道的说话权限，被链接的频道内的用户就可以听到彼此的说话。您需要同时拥有两个频道的链接权限才能创建频道链接，但是只要拥有其中一个频道的链接权限就能删除此链接。</translation>
     </message>
     <message>
         <source>This represents the permission to write text messages to other users in this channel.</source>
-        <translation>允许在频道内发送文字消息给其他用户。</translation>
+        <translation type="vanished">允许在频道内发送文字消息给其他用户。</translation>
     </message>
     <message>
         <source>This represents the permission to forcibly remove users from the server.</source>
-        <translation>允许强制用户离开服务器。</translation>
+        <translation type="vanished">允许强制用户离开服务器。</translation>
     </message>
     <message>
         <source>This represents the permission to permanently remove users from the server.</source>
-        <translation>允许永久阻止用户进入服务器。</translation>
+        <translation type="vanished">允许永久阻止用户进入服务器。</translation>
     </message>
     <message>
         <source>This represents the permission to register and unregister users on the server.</source>
-        <translation>允许在服务器上为其他用户注册和取消注册。</translation>
+        <translation type="vanished">允许在服务器上为其他用户注册和取消注册。</translation>
     </message>
     <message>
         <source>This represents the permission to register oneself on the server.</source>
-        <translation>允许用户在服务器上注册自己。</translation>
+        <translation type="vanished">允许用户在服务器上注册自己。</translation>
     </message>
     <message>
         <source>Whisper</source>
-        <translation>密语</translation>
+        <translation type="vanished">密语</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation>移动用户</translation>
+        <translation type="vanished">移动用户</translation>
     </message>
     <message>
         <source>Text message</source>
-        <translation>文字消息</translation>
+        <translation type="vanished">文字消息</translation>
     </message>
     <message>
         <source>Kick</source>
-        <translation>踢出用户</translation>
+        <translation type="vanished">踢出用户</translation>
     </message>
     <message>
         <source>Ban</source>
-        <translation>封禁用户</translation>
+        <translation type="vanished">封禁用户</translation>
     </message>
     <message>
         <source>Register User</source>
-        <translation>注册用户</translation>
+        <translation type="vanished">注册用户</translation>
     </message>
     <message>
         <source>Register Self</source>
-        <translation>注册自己</translation>
+        <translation type="vanished">注册自己</translation>
     </message>
     <message>
         <source>Write ACL</source>
-        <translation>编辑 ACL</translation>
+        <translation type="vanished">编辑 ACL</translation>
     </message>
     <message>
         <source>This represents the permission to use the listen-feature allowing to listen to a channel without being in it.</source>
-        <translation>允许用户在频道之外监听此频道。</translation>
+        <translation type="vanished">允许用户在频道之外监听此频道。</translation>
     </message>
     <message>
         <source>Listen</source>
-        <translation>监听</translation>
+        <translation type="vanished">监听</translation>
     </message>
     <message>
         <source>This represents the permission to reset the comment or avatar of a user.</source>
-        <translation>允许用户重置其他用户的简介或头像。</translation>
+        <translation type="vanished">允许用户重置其他用户的简介或头像。</translation>
     </message>
     <message>
         <source>Reset User Content</source>
-        <translation>重置用户信息</translation>
+        <translation type="vanished">重置用户信息</translation>
     </message>
 </context>
 <context>
@@ -2728,6 +2740,10 @@ Are you sure you wish to replace your certificate?
     <message>
         <source>Unable to send image %1: too large.</source>
         <translation>无法发送图片 %1：图片过大。</translation>
+    </message>
+    <message>
+        <source>This server does not allow sending images.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3054,7 +3070,7 @@ Are you sure you wish to replace your certificate?
         <source>&lt;b&gt;Address&lt;/b&gt;&lt;br/&gt;
 Internet address of the server. This can be a normal hostname, an IPv4/IPv6 address or a Bonjour service identifier. Bonjour service identifiers have to be prefixed with a &apos;@&apos; to be recognized by Mumble.</source>
         <oldsource>&lt;b&gt;Address&lt;/b&gt;&lt;/br&gt;
-Internet address of the server. This can be a normal hostname, an ipv4/6 address or a bonjour service identifier. Bonjour service identifiers have to be prefixed with a '@' to be recognized by Mumble.</oldsource>
+Internet address of the server. This can be a normal hostname, an ipv4/6 address or a bonjour service identifier. Bonjour service identifiers have to be prefixed with a &apos;@&apos; to be recognized by Mumble.</oldsource>
         <translation>&lt;b&gt;地址&lt;/b&gt;&lt;br/&gt;
 服务器的 Internet 地址，可以是普通的主机名、IPv4/IPv6 地址或者一个 Bonjour 服务 ID。Bonjour 服务 ID 必须以“@”为前缀，Mumble 才能识别。</translation>
     </message>
@@ -3167,7 +3183,7 @@ Label of the server. This is what the server will be named like in your server l
     <name>CoreAudioSystem</name>
     <message>
         <source>Default Device</source>
-        <translation>默认设备</translation>
+        <translation type="vanished">默认设备</translation>
     </message>
 </context>
 <context>
@@ -3230,7 +3246,7 @@ Label of the server. This is what the server will be named like in your server l
     <name>Database</name>
     <message>
         <source>The database &apos;%1&apos; is read-only. Mumble cannot store server settings (i.e. SSL certificates) until you fix this problem.</source>
-        <oldsource>The database '%1' is read-only. Mumble can not store server settings (ie. SSL certificates) until you fix this problem.</oldsource>
+        <oldsource>The database &apos;%1&apos; is read-only. Mumble can not store server settings (ie. SSL certificates) until you fix this problem.</oldsource>
         <translation>数据库“%1”是只读的。在修复此错误前，Mumble 将无法保存服务器设置（即 SSL 证书）。</translation>
     </message>
     <message>
@@ -4354,6 +4370,14 @@ The setting only applies for new messages, the already shown ones will retain th
         <source>Show local user&apos;s listeners (ears)</source>
         <translation>显示本地用户的监听者</translation>
     </message>
+    <message>
+        <source>Hide the username for each user if they have a nickname.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show nicknames only</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -4639,12 +4663,12 @@ The setting only applies for new messages, the already shown ones will retain th
     </message>
     <message>
         <source>&lt;center&gt;Type message to channel &apos;%1&apos; here&lt;/center&gt;</source>
-        <oldsource>Type message to channel '%1' here</oldsource>
+        <oldsource>Type message to channel &apos;%1&apos; here</oldsource>
         <translation>&lt;center&gt;在此输入发送到频道“%1”的消息&lt;/center&gt;</translation>
     </message>
     <message>
         <source>&lt;center&gt;Type message to user &apos;%1&apos; here&lt;/center&gt;</source>
-        <oldsource>Type message to user '%1' here</oldsource>
+        <oldsource>Type message to user &apos;%1&apos; here</oldsource>
         <translation>&lt;center&gt;在此输入发送给用户“%1”的消息&lt;/center&gt;</translation>
     </message>
     <message>
@@ -5709,7 +5733,7 @@ Otherwise abort and check your certificate and username.</source>
         <source>Usage: mumble rpc &lt;action&gt; [options]
 
 It is possible to remote control a running instance of Mumble by using
-the 'mumble rpc' command.
+the &apos;mumble rpc&apos; command.
 
 Valid actions are:
   mute
@@ -6186,7 +6210,7 @@ Valid options are:
   -c, --config
                 Specify an alternative configuration file.
                 If you use this to run multiple instances of Mumble at once,
-                make sure to set an alternative 'database' value in the config.
+                make sure to set an alternative &apos;database&apos; value in the config.
   -n, --noidentity
                 Suppress loading of identity files (i.e., certificates.)
   -jn, --jackname &lt;arg&gt;
@@ -6253,6 +6277,18 @@ mumble://[&lt;用户名&gt;[:&lt;密码&gt;]@]&lt;主机名&gt;[:&lt;端口&gt;]
         <source>Hide/show main window</source>
         <comment>Global Shortcut</comment>
         <translation>隐藏/显示主界面</translation>
+    </message>
+    <message>
+        <source>&amp;Set Nickname...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set a local nickname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets a local nickname for another user.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6534,7 +6570,7 @@ mumble://[&lt;用户名&gt;[:&lt;密码&gt;]@]&lt;主机名&gt;[:&lt;端口&gt;]
         <translation>阻止向 Mumble 服务器和网页服务器发送操作系统信息</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Don't send OS information to servers&lt;/b&gt;&lt;br/&gt;
+        <source>&lt;b&gt;Don&apos;t send OS information to servers&lt;/b&gt;&lt;br/&gt;
 Prevents the client from sending potentially identifying information about the operating system to the Mumble server and web servers.</source>
         <translation>&lt;b&gt;请勿向服务器发送操作系统信息&lt;/b&gt;&lt;br/&gt;
 阻止客户端向 Mumble 服务器和网页服务器发送潜在的操作系统识别信息。</translation>
@@ -7184,7 +7220,7 @@ Multichannel echo cancellation requires more CPU, so you should try mixed first<
 多通道回声消除需要更多 CPU 资源，所以您应该先尝试混合回声消除。</translation>
     </message>
     <message>
-        <source>&lt;p&gt;If you're using Linux this is most likely because you are using a version from your distribution's package repository that have their own update cycles.&lt;/p&gt;&lt;p&gt;If you want to always have the most recent Mumble version, you should consider using a different method of installation.
+        <source>&lt;p&gt;If you&apos;re using Linux this is most likely because you are using a version from your distribution&apos;s package repository that have their own update cycles.&lt;/p&gt;&lt;p&gt;If you want to always have the most recent Mumble version, you should consider using a different method of installation.
 See &lt;a href=&quot;https://wiki.mumble.info/wiki/Installing_Mumble&quot;&gt;the Mumble wiki&lt;/a&gt; for what alternatives there are.&lt;/p&gt;</source>
         <translation>&lt;p&gt;如果您正在使用 Linux，这很可能是因为您使用的版本来自发行版的软件包仓库，它们有自己的更新周期。&lt;/p&gt;&lt;p&gt;如果您希望始终使用最新版本的 Mumble，就应该考虑使用其他安装方式。
 阅读 &lt;a href=&quot;https://wiki.mumble.info/wiki/Installing_Mumble&quot;&gt;Mumble Wiki&lt;/a&gt; 了解具体方式。&lt;/p&gt;</translation>
@@ -7252,6 +7288,10 @@ See &lt;a href=&quot;https://wiki.mumble.info/wiki/Installing_Mumble&quot;&gt;th
     <message>
         <source>Do you really want to reset all settings (not only the ones currently visible) to their default value?</source>
         <translation>您确定要将所有设置（不仅包括当前可见部分）为默认值吗？</translation>
+    </message>
+    <message>
+        <source>Local Nickname Adjustment...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7529,7 +7569,7 @@ See &lt;a href=&quot;https://wiki.mumble.info/wiki/Installing_Mumble&quot;&gt;th
     <message>
         <source>&lt;b&gt;This is an editable list of access tokens on the connected server.&lt;/b&gt;
 &lt;br /&gt;
-An access token is a text string, which can be used as a password for very simple access management on channels. Mumble will remember the tokens you've used and resend them to the server next time you reconnect, so you don't have to enter these every time.
+An access token is a text string, which can be used as a password for very simple access management on channels. Mumble will remember the tokens you&apos;ve used and resend them to the server next time you reconnect, so you don&apos;t have to enter these every time.
 </source>
         <translation>&lt;b&gt;这是包含已连接服务器上访问令牌的可编辑列表。&lt;/b&gt;
 &lt;br /&gt;
@@ -7597,7 +7637,9 @@ An access token is a text string, which can be used as a password for very simpl
     </message>
     <message numerus="yes">
         <source>Registered users: %n account(s)</source>
-        <translation><numerusform>已注册用户：%n 个帐户</numerusform></translation>
+        <translation>
+            <numerusform>已注册用户：%n 个帐户</numerusform>
+        </translation>
     </message>
     <message>
         <source>Search</source>
@@ -7790,6 +7832,25 @@ An access token is a text string, which can be used as a password for very simpl
     </message>
 </context>
 <context>
+    <name>UserLocalNicknameDialog</name>
+    <message>
+        <source>Local nickname for other users</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Adjust the nickname of other users locally&lt;/b&gt;&lt;br /&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User nickname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Adjusting local nickname for %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>UserLocalVolumeDialog</name>
     <message>
         <source>Local volume for other users</source>
@@ -7942,6 +8003,22 @@ An access token is a text string, which can be used as a password for very simpl
     <message>
         <source>Cannot perform this movement automatically, please reset the numeric sorting indicators or adjust it manually.</source>
         <translation>无法自动完成移动操作，请重设或手动调整位置序号。</translation>
+    </message>
+    <message>
+        <source>Talking while being muted on your end</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This is a channel listener. The corresponding user hears everything you say in this channel.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Channel has access restrictions so that you can&apos;t enter it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Channel has access restrictions but you can enter nonetheless</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

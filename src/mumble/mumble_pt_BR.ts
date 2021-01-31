@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="pt_BR" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="pt_BR">
 <context>
     <name>ACLEditor</name>
     <message>
@@ -1134,6 +1136,14 @@ Este valor permite que você especifique o número máximo de usuárias permitid
         <source>Idle action</source>
         <translation>Ação de ócio</translation>
     </message>
+    <message>
+        <source>Access to the microphone was denied. Please allow Mumble to use the microphone by changing the settings in System Preferences -&gt; Security &amp; Privacy -&gt; Privacy -&gt; Microphone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Access to the microphone was denied. Please check that your operating system&apos;s microphone settings allow Mumble to use the microphone.</source>
+        <translation type="unfinished">Acesso ao microfone foi negado. Por favor verifique que as configurações do microfone em seu sistema operativo permitem que o Mumble utilize o microfone.</translation>
+    </message>
 </context>
 <context>
     <name>AudioOutput</name>
@@ -1539,7 +1549,7 @@ Este valor permite que você especifique o número máximo de usuárias permitid
     </message>
     <message>
         <source>This shows the peak power of the speakers in the last frame (20 ms). Unless you are using a multi-channel sampling method (such as ASIO) with speaker channels configured, this will be 0. If you have such a setup configured, and this still shows 0 while you&apos;re playing audio from other programs, your setup is not working.</source>
-        <oldsource>This shows the peak power in the last frame (20 ms) of the speakers. Unless you are using a multi-channel sampling method (such as ASIO) with speaker channels configured, this will be 0. If you have such a setup configured, and this still shows 0 while you're playing audio from other programs, your setup is not working.</oldsource>
+        <oldsource>This shows the peak power in the last frame (20 ms) of the speakers. Unless you are using a multi-channel sampling method (such as ASIO) with speaker channels configured, this will be 0. If you have such a setup configured, and this still shows 0 while you&apos;re playing audio from other programs, your setup is not working.</oldsource>
         <translation>Mostra o pico de potência dos alto-falantes no último quadro (20ms). A menos que você esteja usando um método de amostra multicanal (como ASIO) com alto-falantes configurados, isto será 0. Se você possui tal instalação configurada, e isto ainda mostra 0 enquanto você está tocando áudio de outros programas, sua configuração não está funcionando.</translation>
     </message>
     <message>
@@ -1756,7 +1766,7 @@ Este valor permite que você especifique o número máximo de usuárias permitid
     </message>
     <message>
         <source>&lt;p&gt;
-To keep latency to an absolute minimum, it's important to buffer as little audio as possible on the soundcard. However, many soundcards report that they require a much smaller buffer than what they can actually work with, so the only way to set this value is to try and fail.
+To keep latency to an absolute minimum, it&apos;s important to buffer as little audio as possible on the soundcard. However, many soundcards report that they require a much smaller buffer than what they can actually work with, so the only way to set this value is to try and fail.
 &lt;/p&gt;
 &lt;p&gt;
 You should hear a voice sample. Change the slider below to the lowest value which gives &lt;b&gt;no&lt;/b&gt; interruptions or jitter in the sound. Please note that local echo is disabled during this test.
@@ -1779,7 +1789,7 @@ Você deve ouvir um exemplo de fala. Mude a barra deslizante abaixo para o menor
     </message>
     <message>
         <source>&lt;p&gt;
-Open your sound control panel and go to the recording settings. Make sure the microphone is selected as active input with maximum recording volume. If there's an option to enable a &quot;Microphone boost&quot; make sure it's checked.
+Open your sound control panel and go to the recording settings. Make sure the microphone is selected as active input with maximum recording volume. If there&apos;s an option to enable a &quot;Microphone boost&quot; make sure it&apos;s checked.
 &lt;/p&gt;
 &lt;p&gt;
 Speak loudly, as when you are annoyed or excited. Decrease the volume in the sound control panel until the bar below stays as high as possible in the blue and green but &lt;b&gt;not&lt;/b&gt; the red zone while you speak.
@@ -1809,7 +1819,7 @@ Fale alto, como quando você está incomodado ou animado. Diminua o volume no pa
 Congratulations. You should now be ready to enjoy a richer sound experience with Mumble.
 &lt;/p&gt;
 &lt;p&gt;
-Mumble is under continuous development, and the development team wants to focus on the features that benefit the most users. To this end, Mumble supports submitting anonymous statistics about your configuration to the developers. These statistics are essential for future development, and also make sure the features you use aren't deprecated.
+Mumble is under continuous development, and the development team wants to focus on the features that benefit the most users. To this end, Mumble supports submitting anonymous statistics about your configuration to the developers. These statistics are essential for future development, and also make sure the features you use aren&apos;t deprecated.
 &lt;/p&gt;
 </source>
         <translation>&lt;p&gt;
@@ -1862,7 +1872,7 @@ O Mumble está sob constante desenvolvimento, e a equipe de desenvolvimento quer
     </message>
     <message>
         <source>Next you need to adjust the following slider. The first few utterances you say should end up in the green area (definitive speech). While talking, you should stay inside the yellow (might be speech) and when you&apos;re not talking, everything should be in the red (definitively not speech).</source>
-        <oldsource>Next you need to adjust the following two sliders. The first few utterances you say should end up in the green area (definitive speech). While talking, you should stay inside the yellow (might be speech) and when you're not talking, everything should be in the red (definitively not speech).</oldsource>
+        <oldsource>Next you need to adjust the following two sliders. The first few utterances you say should end up in the green area (definitive speech). While talking, you should stay inside the yellow (might be speech) and when you&apos;re not talking, everything should be in the red (definitively not speech).</oldsource>
         <translation>A seguir você precisa ajustar a seguinte barra de rolagem. As primeiras palavras que você falar devem chegar a área verde (definitivamente fala). Enquanto você fala você deve ficar dentro do amarelo (pode ser fala) e quando você não estiver falando tudo deve ficar no vermelho (definitivamente não é fala).</translation>
     </message>
     <message>
@@ -1955,14 +1965,14 @@ O Mumble está sob constante desenvolvimento, e a equipe de desenvolvimento quer
     </message>
     <message>
         <source>&lt;p&gt;
-Open your sound control panel and go to the recording settings. Make sure the microphone is selected as active input with maximum recording volume. If there's an option to enable a &quot;Microphone boost&quot; make sure it's checked.
+Open your sound control panel and go to the recording settings. Make sure the microphone is selected as active input with maximum recording volume. If there&apos;s an option to enable a &quot;Microphone boost&quot; make sure it&apos;s checked.
 &lt;/p&gt;
 &lt;p&gt;
 Speak loudly, as when you are annoyed or excited. Decrease the volume in the sound control panel until the bar below stays as high as possible in the striped and the empty but &lt;b&gt;not&lt;/b&gt; the crisscrossed zone while you speak.
 &lt;/p&gt;
 </source>
         <oldsource>&lt;p&gt;
-Open your sound control panel and go to the recording settings. Make sure the microphone is selected as active input with maximum recording volume. If there's an option to enable a &quot;Microphone boost&quot; make sure it's checked.
+Open your sound control panel and go to the recording settings. Make sure the microphone is selected as active input with maximum recording volume. If there&apos;s an option to enable a &quot;Microphone boost&quot; make sure it&apos;s checked.
 &lt;/p&gt;
 &lt;p&gt;
 Speak loudly, as when you are annoyed or excited. Decrease the volume in the sound control panel until the bar below stays as high as possible in the striped and the empty but &lt;b&gt;not&lt;/b&gt; the criss-crossed zone while you speak.
@@ -2179,7 +2189,10 @@ Fale alto, como quando você está incomodado ou animado. Diminua o volume no pa
     </message>
     <message numerus="yes">
         <source>Ban List - %n Ban(s)</source>
-        <translation><numerusform>Lista de Banidos - %n Banimento(s)</numerusform><numerusform>Lista de Banidas - %n Banimento(s)</numerusform></translation>
+        <translation>
+            <numerusform>Lista de Banidos - %n Banimento(s)</numerusform>
+            <numerusform>Lista de Banidas - %n Banimento(s)</numerusform>
+        </translation>
     </message>
     <message>
         <source>Search</source>
@@ -2447,7 +2460,7 @@ Fale alto, como quando você está incomodado ou animado. Diminua o volume no pa
         <source>&lt;p&gt;You already have a certificate stored in Mumble, and you are about to replace it.&lt;/p&gt;
 &lt;p&gt;If you are upgrading to a certificate issued to you by a trusted CA and the email addresses match your current certificate, this is completely safe, and servers you connect to will automatically recognize the strong certificate for your email address.
 &lt;/p&gt;
-&lt;p&gt;If this is not the case, you will no longer be recognized by any server you previously have authenticated with. If you haven't been registered on any server yet, this is nothing to worry about.
+&lt;p&gt;If this is not the case, you will no longer be recognized by any server you previously have authenticated with. If you haven&apos;t been registered on any server yet, this is nothing to worry about.
 &lt;/p&gt;
 &lt;p&gt;
 Are you sure you wish to replace your certificate?
@@ -2566,147 +2579,147 @@ Você tem certeza de que quer substituir o seu certificado?
     <name>ChanACL</name>
     <message>
         <source>None</source>
-        <translation>Nenhum</translation>
+        <translation type="vanished">Nenhum</translation>
     </message>
     <message>
         <source>Traverse</source>
-        <translation>Percorrer</translation>
+        <translation type="vanished">Percorrer</translation>
     </message>
     <message>
         <source>Enter</source>
-        <translation>Entrar</translation>
+        <translation type="vanished">Entrar</translation>
     </message>
     <message>
         <source>Speak</source>
-        <translation>Falar</translation>
+        <translation type="vanished">Falar</translation>
     </message>
     <message>
         <source>Mute/Deafen</source>
-        <translation>Emudecer/Ensurdecer</translation>
+        <translation type="vanished">Emudecer/Ensurdecer</translation>
     </message>
     <message>
         <source>Make channel</source>
-        <translation>Criar canal</translation>
+        <translation type="vanished">Criar canal</translation>
     </message>
     <message>
         <source>Make temporary</source>
-        <translation>Criar temporário</translation>
+        <translation type="vanished">Criar temporário</translation>
     </message>
     <message>
         <source>Link channel</source>
-        <translation>Vincular canal</translation>
+        <translation type="vanished">Vincular canal</translation>
     </message>
     <message>
         <source>This represents no privileges.</source>
-        <translation>No representa nenhum privilégio.</translation>
+        <translation type="vanished">No representa nenhum privilégio.</translation>
     </message>
     <message>
         <source>This represents total access to the channel, including the ability to change group and ACL information. This privilege implies all other privileges.</source>
-        <translation>Representa acesso total ao canal, incluindo a habilidade de mudar informações de grupo e LCA. Este privilégio implica todos outros privilégios.</translation>
+        <translation type="vanished">Representa acesso total ao canal, incluindo a habilidade de mudar informações de grupo e LCA. Este privilégio implica todos outros privilégios.</translation>
     </message>
     <message>
         <source>This represents the permission to traverse the channel. If a user is denied this privilege, he will be unable to access this channel and any sub-channels in any way, regardless of other permissions in the sub-channels.</source>
-        <translation>Representa a permissão de percorrer o canal. Se esse privilégio é negado a uma usuária, ela não conseguirá acessar o canal ou qualquer subcanal de modo algum, independentemente de outras permissões nos subcanais.</translation>
+        <translation type="vanished">Representa a permissão de percorrer o canal. Se esse privilégio é negado a uma usuária, ela não conseguirá acessar o canal ou qualquer subcanal de modo algum, independentemente de outras permissões nos subcanais.</translation>
     </message>
     <message>
         <source>This represents the permission to join the channel. If you have a hierarchical channel structure, you might want to give everyone Traverse, but restrict Enter in the root of your hierarchy.</source>
-        <translation>Representa a permissão de entrar no canal. Se você possui uma estrutura hierárquica de canais, você pode querer conceder Percorrer para todas as pessoas mas, restringir Entrar na raiz de sua hierarquia.</translation>
+        <translation type="vanished">Representa a permissão de entrar no canal. Se você possui uma estrutura hierárquica de canais, você pode querer conceder Percorrer para todas as pessoas mas, restringir Entrar na raiz de sua hierarquia.</translation>
     </message>
     <message>
         <source>This represents the permission to speak in a channel. Users without this privilege will be suppressed by the server (seen as muted), and will be unable to speak until they are unmuted by someone with the appropriate privileges.</source>
-        <translation>Representa a permissão de falar em um canal. Usuárias sem este privilégio serão suprimidas pelo servidor (vista como muda), e serão incapazes de falar até serem desemudecidas por alguém com os privilégios apropriados.</translation>
+        <translation type="vanished">Representa a permissão de falar em um canal. Usuárias sem este privilégio serão suprimidas pelo servidor (vista como muda), e serão incapazes de falar até serem desemudecidas por alguém com os privilégios apropriados.</translation>
     </message>
     <message>
         <source>This represents the permission to whisper to this channel from the outside. This works exactly like the &lt;i&gt;speak&lt;/i&gt; privilege, but applies to packets spoken with the Whisper key held down. This may be used to broadcast to a hierarchy of channels without linking.</source>
-        <translation>Representa a permissão de sussurrar para esse canal a partir de fora. Isto funciona exatamente como o privilégio &lt;i&gt;falar&lt;/i&gt;, mas se aplica a pacotes falados com a tecla de Sussurro pressionada. Isso pode ser usado para transmitir para uma hierarquia de canais sem vinculá-los.</translation>
+        <translation type="vanished">Representa a permissão de sussurrar para esse canal a partir de fora. Isto funciona exatamente como o privilégio &lt;i&gt;falar&lt;/i&gt;, mas se aplica a pacotes falados com a tecla de Sussurro pressionada. Isso pode ser usado para transmitir para uma hierarquia de canais sem vinculá-los.</translation>
     </message>
     <message>
         <source>This represents the permission to mute and deafen other users. Once muted, a user will stay muted until he is unmuted by another privileged user or reconnects to the server.</source>
-        <translation>Representa a permissão de emudecer e ensurdecer outras usuárias. Uma vez emudecida, uma usuária permanecerá assim até ser desemudecida por usuária com privilégios ou, ao reconectar com o servidor.</translation>
+        <translation type="vanished">Representa a permissão de emudecer e ensurdecer outras usuárias. Uma vez emudecida, uma usuária permanecerá assim até ser desemudecida por usuária com privilégios ou, ao reconectar com o servidor.</translation>
     </message>
     <message>
         <source>This represents the permission to move a user to another channel or kick him from the server. To actually move the user, either the moving user must have Move privileges in the destination channel, or the user must normally be allowed to enter the channel. Users with this privilege can move users into channels the target user normally wouldn&apos;t have permission to enter.</source>
-        <translation>Representa a permissão de mover uma usuária para outro canal ou expulsá-la do servidor. Para realmente mover a usuária, ou a usuária deve possuir o privilégio Mover no canal destino, ou a usuária deve ser normalmente permitida de entrar no canal. Usuárias com este privilégio podem mover usuárias para canais onde a usuária normalmente não teria permissão para entrar.</translation>
+        <translation type="vanished">Representa a permissão de mover uma usuária para outro canal ou expulsá-la do servidor. Para realmente mover a usuária, ou a usuária deve possuir o privilégio Mover no canal destino, ou a usuária deve ser normalmente permitida de entrar no canal. Usuárias com este privilégio podem mover usuárias para canais onde a usuária normalmente não teria permissão para entrar.</translation>
     </message>
     <message>
         <source>This represents the permission to make sub-channels. The user making the sub-channel will be added to the admin group of the sub-channel.</source>
-        <translation>Representa a permissão de criar subcanais. A usuária criando o subcanal vai ser adicionada ao grupo admin do subcanal.</translation>
+        <translation type="vanished">Representa a permissão de criar subcanais. A usuária criando o subcanal vai ser adicionada ao grupo admin do subcanal.</translation>
     </message>
     <message>
         <source>This represents the permission to make a temporary subchannel. The user making the sub-channel will be added to the admin group of the sub-channel. Temporary channels are not stored and disappear when the last user leaves.</source>
-        <translation>Representa a permissão de criar um subcanal temporário. A usuária que criar o subcanal será adicionada ao grupo admin do subcanal. Canais temporários não são armazenados, e desaparecem quando a última usuária sair dele.</translation>
+        <translation type="vanished">Representa a permissão de criar um subcanal temporário. A usuária que criar o subcanal será adicionada ao grupo admin do subcanal. Canais temporários não são armazenados, e desaparecem quando a última usuária sair dele.</translation>
     </message>
     <message>
         <source>This represents the permission to link channels. Users in linked channels hear each other, as long as the speaking user has the &lt;i&gt;speak&lt;/i&gt; privilege in the channel of the listener. You need the link privilege in both channels to create a link, but just in either channel to remove it.</source>
-        <translation>Representa a permissão de vincular canais. Usuárias em canais vinculados podem escutar umas as outras, desde que a usuária falando possua privilégio &lt;i&gt;falar&lt;/i&gt; no canal da ouvinte. Você precisa do privilégio vincular em ambos os canais criar um vínculo, mas apenas em um deles para desfazer.</translation>
+        <translation type="vanished">Representa a permissão de vincular canais. Usuárias em canais vinculados podem escutar umas as outras, desde que a usuária falando possua privilégio &lt;i&gt;falar&lt;/i&gt; no canal da ouvinte. Você precisa do privilégio vincular em ambos os canais criar um vínculo, mas apenas em um deles para desfazer.</translation>
     </message>
     <message>
         <source>This represents the permission to write text messages to other users in this channel.</source>
-        <translation>Representa a permissão de escrever mensagens de texto para outras usuárias nesse canal.</translation>
+        <translation type="vanished">Representa a permissão de escrever mensagens de texto para outras usuárias nesse canal.</translation>
     </message>
     <message>
         <source>This represents the permission to forcibly remove users from the server.</source>
-        <translation>Representa a permissão de remover usuários do servidor à força.</translation>
+        <translation type="vanished">Representa a permissão de remover usuários do servidor à força.</translation>
     </message>
     <message>
         <source>This represents the permission to permanently remove users from the server.</source>
-        <translation>Representa a permissão de remover usuários permanentemente do servidor.</translation>
+        <translation type="vanished">Representa a permissão de remover usuários permanentemente do servidor.</translation>
     </message>
     <message>
         <source>This represents the permission to register and unregister users on the server.</source>
-        <translation>Representa a permissão de registrar e eliminar usuários do servidor.</translation>
+        <translation type="vanished">Representa a permissão de registrar e eliminar usuários do servidor.</translation>
     </message>
     <message>
         <source>This represents the permission to register oneself on the server.</source>
-        <translation>Representa a permissão de se registrar no servidor.</translation>
+        <translation type="vanished">Representa a permissão de se registrar no servidor.</translation>
     </message>
     <message>
         <source>Whisper</source>
-        <translation>Sussurrar</translation>
+        <translation type="vanished">Sussurrar</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation>Mover</translation>
+        <translation type="vanished">Mover</translation>
     </message>
     <message>
         <source>Text message</source>
-        <translation>Mensagem de texto</translation>
+        <translation type="vanished">Mensagem de texto</translation>
     </message>
     <message>
         <source>Kick</source>
-        <translation>Expulsar</translation>
+        <translation type="vanished">Expulsar</translation>
     </message>
     <message>
         <source>Ban</source>
-        <translation>Banir</translation>
+        <translation type="vanished">Banir</translation>
     </message>
     <message>
         <source>Register User</source>
-        <translation>Registrar usuário</translation>
+        <translation type="vanished">Registrar usuário</translation>
     </message>
     <message>
         <source>Register Self</source>
-        <translation>Registrar-se</translation>
+        <translation type="vanished">Registrar-se</translation>
     </message>
     <message>
         <source>Write ACL</source>
-        <translation>Escrever LCA</translation>
+        <translation type="vanished">Escrever LCA</translation>
     </message>
     <message>
         <source>This represents the permission to use the listen-feature allowing to listen to a channel without being in it.</source>
-        <translation>Isso representa a permissão para usar o recurso de ouvinte, permitindo ouvir um canal sem se juntar a ele.</translation>
+        <translation type="vanished">Isso representa a permissão para usar o recurso de ouvinte, permitindo ouvir um canal sem se juntar a ele.</translation>
     </message>
     <message>
         <source>Listen</source>
-        <translation>Ouvir</translation>
+        <translation type="vanished">Ouvir</translation>
     </message>
     <message>
         <source>This represents the permission to reset the comment or avatar of a user.</source>
-        <translation>Isso representa a permissão de resetar o comentário ou avatar de uma usuária</translation>
+        <translation type="vanished">Isso representa a permissão de resetar o comentário ou avatar de uma usuária</translation>
     </message>
     <message>
         <source>Reset User Content</source>
-        <translation>Resetar Conteúdo de Usuárias</translation>
+        <translation type="vanished">Resetar Conteúdo de Usuárias</translation>
     </message>
 </context>
 <context>
@@ -2727,6 +2740,10 @@ Você tem certeza de que quer substituir o seu certificado?
     <message>
         <source>Unable to send image %1: too large.</source>
         <translation>Impossível enviar imagem %1: grande demais.</translation>
+    </message>
+    <message>
+        <source>This server does not allow sending images.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3053,7 +3070,7 @@ Você tem certeza de que quer substituir o seu certificado?
         <source>&lt;b&gt;Address&lt;/b&gt;&lt;br/&gt;
 Internet address of the server. This can be a normal hostname, an IPv4/IPv6 address or a Bonjour service identifier. Bonjour service identifiers have to be prefixed with a &apos;@&apos; to be recognized by Mumble.</source>
         <oldsource>&lt;b&gt;Address&lt;/b&gt;&lt;/br&gt;
-Internet address of the server. This can be a normal hostname, an ipv4/6 address or a bonjour service identifier. Bonjour service identifiers have to be prefixed with a '@' to be recognized by Mumble.</oldsource>
+Internet address of the server. This can be a normal hostname, an ipv4/6 address or a bonjour service identifier. Bonjour service identifiers have to be prefixed with a &apos;@&apos; to be recognized by Mumble.</oldsource>
         <translation>&lt;b&gt;Endereço&lt;/b&gt;&lt;br/&gt;
 Endereço de internet do servidor. Isto pode ser um nome de host normal, um endereço IPv4/IPv6 ou um identificador de serviços Bonjour. Identificadores de serviço Bonjour devem ser prefixados com &apos;@&apos; para serem reconhecidos pelo Mumble.</translation>
     </message>
@@ -3166,7 +3183,7 @@ Etiqueta do favorito. É como o favorito será exibido na lista de favoritos, e 
     <name>CoreAudioSystem</name>
     <message>
         <source>Default Device</source>
-        <translation>Dispositivo padrão</translation>
+        <translation type="vanished">Dispositivo padrão</translation>
     </message>
 </context>
 <context>
@@ -3229,7 +3246,7 @@ Etiqueta do favorito. É como o favorito será exibido na lista de favoritos, e 
     <name>Database</name>
     <message>
         <source>The database &apos;%1&apos; is read-only. Mumble cannot store server settings (i.e. SSL certificates) until you fix this problem.</source>
-        <oldsource>The database '%1' is read-only. Mumble can not store server settings (ie. SSL certificates) until you fix this problem.</oldsource>
+        <oldsource>The database &apos;%1&apos; is read-only. Mumble can not store server settings (ie. SSL certificates) until you fix this problem.</oldsource>
         <translation>A base de dados &apos;%1&apos; é somente leitura. O Mumble não pode salvar as configurações do servidor (ex. certificados TLS) até você resolver este problema.</translation>
     </message>
     <message>
@@ -4353,6 +4370,14 @@ Essa configuração só se aplica para novas mensagens. As mensagens já exibida
         <source>Show local user&apos;s listeners (ears)</source>
         <translation>Exibir ouvintes do usuário local (orelhas)</translation>
     </message>
+    <message>
+        <source>Hide the username for each user if they have a nickname.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show nicknames only</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -4638,12 +4663,12 @@ Essa configuração só se aplica para novas mensagens. As mensagens já exibida
     </message>
     <message>
         <source>&lt;center&gt;Type message to channel &apos;%1&apos; here&lt;/center&gt;</source>
-        <oldsource>Type message to channel '%1' here</oldsource>
+        <oldsource>Type message to channel &apos;%1&apos; here</oldsource>
         <translation>&lt;center&gt;Digite a mensagem para o canal &apos;%1&apos; aqui&lt;/center&gt;</translation>
     </message>
     <message>
         <source>&lt;center&gt;Type message to user &apos;%1&apos; here&lt;/center&gt;</source>
-        <oldsource>Type message to user '%1' here</oldsource>
+        <oldsource>Type message to user &apos;%1&apos; here</oldsource>
         <translation>&lt;center&gt;Digite a mensagem para o usuário &apos;%1&apos; aqui&lt;/center&gt;</translation>
     </message>
     <message>
@@ -5711,7 +5736,7 @@ seu certificado e nome de usuário.</translation>
         <source>Usage: mumble rpc &lt;action&gt; [options]
 
 It is possible to remote control a running instance of Mumble by using
-the 'mumble rpc' command.
+the &apos;mumble rpc&apos; command.
 
 Valid actions are:
   mute
@@ -6190,7 +6215,7 @@ Valid options are:
   -c, --config
                 Specify an alternative configuration file.
                 If you use this to run multiple instances of Mumble at once,
-                make sure to set an alternative 'database' value in the config.
+                make sure to set an alternative &apos;database&apos; value in the config.
   -n, --noidentity
                 Suppress loading of identity files (i.e., certificates.)
   -jn, --jackname &lt;arg&gt;
@@ -6261,6 +6286,18 @@ Opções válidas são:
         <source>Hide/show main window</source>
         <comment>Global Shortcut</comment>
         <translation>Ocultar/exibir a janela principal</translation>
+    </message>
+    <message>
+        <source>&amp;Set Nickname...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set a local nickname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets a local nickname for another user.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6542,7 +6579,7 @@ Opções válidas são:
         <translation>Evitar o envio de informações sobre o SO para servidores e web servidores Mumble</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Don't send OS information to servers&lt;/b&gt;&lt;br/&gt;
+        <source>&lt;b&gt;Don&apos;t send OS information to servers&lt;/b&gt;&lt;br/&gt;
 Prevents the client from sending potentially identifying information about the operating system to the Mumble server and web servers.</source>
         <translation>&lt;b&gt;Não envie informação de SO para servidores&lt;/b&gt;&lt;br/&gt;
 Evita que o cliente envie informações potencialmente capazes de identificação sobre o sistema operativo para servidores e web servidores Mumble.</translation>
@@ -7192,7 +7229,7 @@ Cancelamento de eco mistura todas as saídas de alto-falante em um fluxo mono e 
 Cancelamento de eco multicanais exige mais CPU, então você deveria tentar o misto primeiro.</translation>
     </message>
     <message>
-        <source>&lt;p&gt;If you're using Linux this is most likely because you are using a version from your distribution's package repository that have their own update cycles.&lt;/p&gt;&lt;p&gt;If you want to always have the most recent Mumble version, you should consider using a different method of installation.
+        <source>&lt;p&gt;If you&apos;re using Linux this is most likely because you are using a version from your distribution&apos;s package repository that have their own update cycles.&lt;/p&gt;&lt;p&gt;If you want to always have the most recent Mumble version, you should consider using a different method of installation.
 See &lt;a href=&quot;https://wiki.mumble.info/wiki/Installing_Mumble&quot;&gt;the Mumble wiki&lt;/a&gt; for what alternatives there are.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Se você utiliza Linux isso mais provavlemente é devido à versão do repositório de pacotes da sua distribuição, que possuem seus próprios ciclos de atualização.&lt;/p&gt;&lt;p&gt;Se você quer ter sempre a versão mais recente do Mumble, você deve considerar utilizar um método alternativo de instalação.
 Consulte a &lt;a href=&quot;https://wiki.mumble.info/wiki/Installing_Mumble&quot;&gt;wiki do Mumble&lt;/a&gt; para conhecer alternativas existentes.&lt;/p&gt;</translation>
@@ -7260,6 +7297,10 @@ Consulte a &lt;a href=&quot;https://wiki.mumble.info/wiki/Installing_Mumble&quot
     <message>
         <source>Do you really want to reset all settings (not only the ones currently visible) to their default value?</source>
         <translation>Você realmente deseja reiniciar todas as configurações (não somente as visíveis) aos seus valores padrões?</translation>
+    </message>
+    <message>
+        <source>Local Nickname Adjustment...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7537,7 +7578,7 @@ Consulte a &lt;a href=&quot;https://wiki.mumble.info/wiki/Installing_Mumble&quot
     <message>
         <source>&lt;b&gt;This is an editable list of access tokens on the connected server.&lt;/b&gt;
 &lt;br /&gt;
-An access token is a text string, which can be used as a password for very simple access management on channels. Mumble will remember the tokens you've used and resend them to the server next time you reconnect, so you don't have to enter these every time.
+An access token is a text string, which can be used as a password for very simple access management on channels. Mumble will remember the tokens you&apos;ve used and resend them to the server next time you reconnect, so you don&apos;t have to enter these every time.
 </source>
         <translation>&lt;b&gt;Esta é uma lista editável de credenciais de acesso no servidor conectado.&lt;/b&gt;
 &lt;br /&gt;
@@ -7604,7 +7645,10 @@ Uma credencial de acesso é uma cadeia de caracteres de texto, que podem ser usa
     </message>
     <message numerus="yes">
         <source>Registered users: %n account(s)</source>
-        <translation><numerusform>Usuários registrados: %n conta(s)</numerusform><numerusform>Usuários registrados: %n conta(s)</numerusform></translation>
+        <translation>
+            <numerusform>Usuários registrados: %n conta(s)</numerusform>
+            <numerusform>Usuários registrados: %n conta(s)</numerusform>
+        </translation>
     </message>
     <message>
         <source>Search</source>
@@ -7797,6 +7841,25 @@ Uma credencial de acesso é uma cadeia de caracteres de texto, que podem ser usa
     </message>
 </context>
 <context>
+    <name>UserLocalNicknameDialog</name>
+    <message>
+        <source>Local nickname for other users</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Adjust the nickname of other users locally&lt;/b&gt;&lt;br /&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User nickname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Adjusting local nickname for %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>UserLocalVolumeDialog</name>
     <message>
         <source>Local volume for other users</source>
@@ -7949,6 +8012,22 @@ Uma credencial de acesso é uma cadeia de caracteres de texto, que podem ser usa
     <message>
         <source>Cannot perform this movement automatically, please reset the numeric sorting indicators or adjust it manually.</source>
         <translation>Impossível realizar este movimento automaticamente, por favor redefina os indicadores de ordenação numérica ou ajuste manualmente.</translation>
+    </message>
+    <message>
+        <source>Talking while being muted on your end</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This is a channel listener. The corresponding user hears everything you say in this channel.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Channel has access restrictions so that you can&apos;t enter it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Channel has access restrictions but you can enter nonetheless</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
