@@ -2642,31 +2642,31 @@ Are you sure you wish to replace your certificate?
     </message>
     <message>
         <source>Whisper</source>
-        <translation>Шепнене</translation>
+        <translation type="vanished">Шепнене</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation>Преместване</translation>
+        <translation type="vanished">Преместване</translation>
     </message>
     <message>
         <source>Text message</source>
-        <translation>Текстово съобщение</translation>
+        <translation type="vanished">Текстово съобщение</translation>
     </message>
     <message>
         <source>Kick</source>
-        <translation>Изритване</translation>
+        <translation type="vanished">Изритване</translation>
     </message>
     <message>
         <source>Ban</source>
-        <translation>Поставяне на забрана</translation>
+        <translation type="vanished">Поставяне на забрана</translation>
     </message>
     <message>
         <source>Register User</source>
-        <translation>Регистриране на потребител</translation>
+        <translation type="vanished">Регистриране на потребител</translation>
     </message>
     <message>
         <source>Register Self</source>
-        <translation>Регистриране на себе си</translation>
+        <translation type="vanished">Регистриране на себе си</translation>
     </message>
     <message>
         <source>Write ACL</source>

@@ -2571,7 +2571,7 @@ Are you sure you wish to replace your certificate?
     <name>ChanACL</name>
     <message>
         <source>None</source>
-        <translation>None</translation>
+        <translation type="vanished">None</translation>
     </message>
     <message>
         <source>Traverse</source>
@@ -2579,19 +2579,19 @@ Are you sure you wish to replace your certificate?
     </message>
     <message>
         <source>Enter</source>
-        <translation>엔터</translation>
+        <translation type="vanished">엔터</translation>
     </message>
     <message>
         <source>Speak</source>
-        <translation>말하기</translation>
+        <translation type="vanished">말하기</translation>
     </message>
     <message>
         <source>Mute/Deafen</source>
-        <translation>발언 금지/청취 금지</translation>
+        <translation type="vanished">발언 금지/청취 금지</translation>
     </message>
     <message>
         <source>Make channel</source>
-        <translation>채널 만들기</translation>
+        <translation type="vanished">채널 만들기</translation>
     </message>
     <message>
         <source>Make temporary</source>
@@ -2599,7 +2599,7 @@ Are you sure you wish to replace your certificate?
     </message>
     <message>
         <source>Link channel</source>
-        <translation>채널 링크</translation>
+        <translation type="vanished">채널 링크</translation>
     </message>
     <message>
         <source>This represents no privileges.</source>
@@ -2667,27 +2667,27 @@ Are you sure you wish to replace your certificate?
     </message>
     <message>
         <source>Whisper</source>
-        <translation>귓속말</translation>
+        <translation type="vanished">귓속말</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation>이동</translation>
+        <translation type="vanished">이동</translation>
     </message>
     <message>
         <source>Text message</source>
-        <translation>텍스트 메세지</translation>
+        <translation type="vanished">텍스트 메세지</translation>
     </message>
     <message>
         <source>Kick</source>
-        <translation>강퇴</translation>
+        <translation type="vanished">강퇴</translation>
     </message>
     <message>
         <source>Ban</source>
-        <translation>밴</translation>
+        <translation type="vanished">밴</translation>
     </message>
     <message>
         <source>Register User</source>
-        <translation>유저 등록</translation>
+        <translation type="vanished">유저 등록</translation>
     </message>
     <message>
         <source>Register Self</source>
@@ -2695,7 +2695,7 @@ Are you sure you wish to replace your certificate?
     </message>
     <message>
         <source>Write ACL</source>
-        <translation>ACL 쓰기</translation>
+        <translation type="vanished">ACL 쓰기</translation>
     </message>
     <message>
         <source>This represents the permission to use the listen-feature allowing to listen to a channel without being in it.</source>

@@ -2640,7 +2640,7 @@ Are you sure you wish to replace your certificate?
     </message>
     <message>
         <source>Whisper</source>
-        <translation>悄悄話</translation>
+        <translation type="vanished">悄悄話</translation>
     </message>
     <message>
         <source>Move</source>

@@ -2549,7 +2549,7 @@ Are you sure you wish to replace your certificate?
     <name>ChanACL</name>
     <message>
         <source>None</source>
-        <translation>Dim</translation>
+        <translation type="vanished">Dim</translation>
     </message>
     <message>
         <source>Traverse</source>
@@ -2569,7 +2569,7 @@ Are you sure you wish to replace your certificate?
     </message>
     <message>
         <source>Make channel</source>
-        <translation>Creu sianel</translation>
+        <translation type="vanished">Creu sianel</translation>
     </message>
     <message>
         <source>Make temporary</source>
@@ -2649,7 +2649,7 @@ Are you sure you wish to replace your certificate?
     </message>
     <message>
         <source>Move</source>
-        <translation>Symud</translation>
+        <translation type="vanished">Symud</translation>
     </message>
     <message>
         <source>Text message</source>

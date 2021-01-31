@@ -2595,7 +2595,7 @@ Ar tikrai norite pakeisti savo liudijimą?
     </message>
     <message>
         <source>Make channel</source>
-        <translation>Kurti kanalą</translation>
+        <translation type="vanished">Kurti kanalą</translation>
     </message>
     <message>
         <source>Make temporary</source>
@@ -2675,7 +2675,7 @@ Ar tikrai norite pakeisti savo liudijimą?
     </message>
     <message>
         <source>Move</source>
-        <translation>Perkelti</translation>
+        <translation type="vanished">Perkelti</translation>
     </message>
     <message>
         <source>Text message</source>
@@ -2683,19 +2683,19 @@ Ar tikrai norite pakeisti savo liudijimą?
     </message>
     <message>
         <source>Kick</source>
-        <translation>Išmesti</translation>
+        <translation type="vanished">Išmesti</translation>
     </message>
     <message>
         <source>Ban</source>
-        <translation>Uždrausti</translation>
+        <translation type="vanished">Uždrausti</translation>
     </message>
     <message>
         <source>Register User</source>
-        <translation>Registruoti naudotoją</translation>
+        <translation type="vanished">Registruoti naudotoją</translation>
     </message>
     <message>
         <source>Register Self</source>
-        <translation>Registruoti save</translation>
+        <translation type="vanished">Registruoti save</translation>
     </message>
     <message>
         <source>Write ACL</source>

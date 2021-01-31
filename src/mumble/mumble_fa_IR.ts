@@ -2644,23 +2644,23 @@ Are you sure you wish to replace your certificate?
     </message>
     <message>
         <source>Move</source>
-        <translation>انتقال</translation>
+        <translation type="vanished">انتقال</translation>
     </message>
     <message>
         <source>Text message</source>
-        <translation>پیغام متنی</translation>
+        <translation type="vanished">پیغام متنی</translation>
     </message>
     <message>
         <source>Kick</source>
-        <translation>بیرون انداختن</translation>
+        <translation type="vanished">بیرون انداختن</translation>
     </message>
     <message>
         <source>Ban</source>
-        <translation>ممنوع</translation>
+        <translation type="vanished">ممنوع</translation>
     </message>
     <message>
         <source>Register User</source>
-        <translation>کاربر ثبت شده</translation>
+        <translation type="vanished">کاربر ثبت شده</translation>
     </message>
     <message>
         <source>Register Self</source>

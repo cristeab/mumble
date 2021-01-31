@@ -2585,75 +2585,75 @@ Are you sure you wish to replace your certificate?
     <name>ChanACL</name>
     <message>
         <source>None</source>
-        <translation>无</translation>
+        <translation type="vanished">无</translation>
     </message>
     <message>
         <source>Traverse</source>
-        <translation>通过</translation>
+        <translation type="vanished">通过</translation>
     </message>
     <message>
         <source>Enter</source>
-        <translation>进入</translation>
+        <translation type="vanished">进入</translation>
     </message>
     <message>
         <source>Speak</source>
-        <translation>说话</translation>
+        <translation type="vanished">说话</translation>
     </message>
     <message>
         <source>Mute/Deafen</source>
-        <translation>禁言/禁听</translation>
+        <translation type="vanished">禁言/禁听</translation>
     </message>
     <message>
         <source>Make channel</source>
-        <translation>创建频道</translation>
+        <translation type="vanished">创建频道</translation>
     </message>
     <message>
         <source>Make temporary</source>
-        <translation>创建临时频道</translation>
+        <translation type="vanished">创建临时频道</translation>
     </message>
     <message>
         <source>Link channel</source>
-        <translation>链接频道</translation>
+        <translation type="vanished">链接频道</translation>
     </message>
     <message>
         <source>This represents no privileges.</source>
-        <translation>表示没有任何权限。</translation>
+        <translation type="vanished">表示没有任何权限。</translation>
     </message>
     <message>
         <source>This represents total access to the channel, including the ability to change group and ACL information. This privilege implies all other privileges.</source>
-        <translation>允许完全控制频道，包括改变分组和 ACL 信息。此权限包含了所有其他权限。</translation>
+        <translation type="vanished">允许完全控制频道，包括改变分组和 ACL 信息。此权限包含了所有其他权限。</translation>
     </message>
     <message>
         <source>This represents the permission to traverse the channel. If a user is denied this privilege, he will be unable to access this channel and any sub-channels in any way, regardless of other permissions in the sub-channels.</source>
-        <translation>允许通过频道。如果用户不具有此权限，他将无法进入此频道和所有子频道，即使他拥有子频道的其他权限。</translation>
+        <translation type="vanished">允许通过频道。如果用户不具有此权限，他将无法进入此频道和所有子频道，即使他拥有子频道的其他权限。</translation>
     </message>
     <message>
         <source>This represents the permission to join the channel. If you have a hierarchical channel structure, you might want to give everyone Traverse, but restrict Enter in the root of your hierarchy.</source>
-        <translation>允许进入频道。如果您设定了分级频道结构，则可能需要授予所有人通过权限，但限制根频道的进入权限。</translation>
+        <translation type="vanished">允许进入频道。如果您设定了分级频道结构，则可能需要授予所有人通过权限，但限制根频道的进入权限。</translation>
     </message>
     <message>
         <source>This represents the permission to speak in a channel. Users without this privilege will be suppressed by the server (seen as muted), and will be unable to speak until they are unmuted by someone with the appropriate privileges.</source>
-        <translation>允许在频道内说话。用户如果没有此权限，将会在此频道内被服务器禁言（关闭麦克风），直到被具有相关权限的人解除禁言。</translation>
+        <translation type="vanished">允许在频道内说话。用户如果没有此权限，将会在此频道内被服务器禁言（关闭麦克风），直到被具有相关权限的人解除禁言。</translation>
     </message>
     <message>
         <source>This represents the permission to whisper to this channel from the outside. This works exactly like the &lt;i&gt;speak&lt;/i&gt; privilege, but applies to packets spoken with the Whisper key held down. This may be used to broadcast to a hierarchy of channels without linking.</source>
-        <translation>允许在频道外时对此频道发送密语。与&lt;i&gt;说话&lt;/i&gt;权限类似。但仅当用户按下密语键时才有效。此功能可以在不链接频道的情况下向多级频道广播内容。</translation>
+        <translation type="vanished">允许在频道外时对此频道发送密语。与&lt;i&gt;说话&lt;/i&gt;权限类似。但仅当用户按下密语键时才有效。此功能可以在不链接频道的情况下向多级频道广播内容。</translation>
     </message>
     <message>
         <source>This represents the permission to mute and deafen other users. Once muted, a user will stay muted until he is unmuted by another privileged user or reconnects to the server.</source>
-        <translation>允许关闭其他用户的麦克风（禁言）和扬声器（禁听）。一旦被禁言，用户将一直处于麦克风关闭状态，直到被其他拥有权限的用户解除或者重新连接服务器。</translation>
+        <translation type="vanished">允许关闭其他用户的麦克风（禁言）和扬声器（禁听）。一旦被禁言，用户将一直处于麦克风关闭状态，直到被其他拥有权限的用户解除或者重新连接服务器。</translation>
     </message>
     <message>
         <source>This represents the permission to move a user to another channel or kick him from the server. To actually move the user, either the moving user must have Move privileges in the destination channel, or the user must normally be allowed to enter the channel. Users with this privilege can move users into channels the target user normally wouldn&apos;t have permission to enter.</source>
-        <translation>允许将用户移动到另一个频道或者将其踢出服务器。对于移动操作，需要移动者拥有目标频道的移动权限，或者被移动者拥有进入目标频道的权限。拥有此权限的用户可以将没有进入某个频道权限的用户移动到该频道。</translation>
+        <translation type="vanished">允许将用户移动到另一个频道或者将其踢出服务器。对于移动操作，需要移动者拥有目标频道的移动权限，或者被移动者拥有进入目标频道的权限。拥有此权限的用户可以将没有进入某个频道权限的用户移动到该频道。</translation>
     </message>
     <message>
         <source>This represents the permission to make sub-channels. The user making the sub-channel will be added to the admin group of the sub-channel.</source>
-        <translation>允许创建子频道。用户可以创建一个子频道并被加入子频道的 admin（管理员）组。</translation>
+        <translation type="vanished">允许创建子频道。用户可以创建一个子频道并被加入子频道的 admin（管理员）组。</translation>
     </message>
     <message>
         <source>This represents the permission to make a temporary subchannel. The user making the sub-channel will be added to the admin group of the sub-channel. Temporary channels are not stored and disappear when the last user leaves.</source>
-        <translation>允许创建临时子频道。用户可以创建一个临时子频道并被加入其 admin（管理员）组。临时频道不会一直存在，在最后一名用户离开后，临时频道就会消失。</translation>
+        <translation type="vanished">允许创建临时子频道。用户可以创建一个临时子频道并被加入其 admin（管理员）组。临时频道不会一直存在，在最后一名用户离开后，临时频道就会消失。</translation>
     </message>
     <message>
         <source>This represents the permission to link channels. Users in linked channels hear each other, as long as the speaking user has the &lt;i&gt;speak&lt;/i&gt; privilege in the channel of the listener. You need the link privilege in both channels to create a link, but just in either channel to remove it.</source>
@@ -2661,71 +2661,71 @@ Are you sure you wish to replace your certificate?
     </message>
     <message>
         <source>This represents the permission to write text messages to other users in this channel.</source>
-        <translation>允许在频道内发送文字消息给其他用户。</translation>
+        <translation type="vanished">允许在频道内发送文字消息给其他用户。</translation>
     </message>
     <message>
         <source>This represents the permission to forcibly remove users from the server.</source>
-        <translation>允许强制用户离开服务器。</translation>
+        <translation type="vanished">允许强制用户离开服务器。</translation>
     </message>
     <message>
         <source>This represents the permission to permanently remove users from the server.</source>
-        <translation>允许永久阻止用户进入服务器。</translation>
+        <translation type="vanished">允许永久阻止用户进入服务器。</translation>
     </message>
     <message>
         <source>This represents the permission to register and unregister users on the server.</source>
-        <translation>允许在服务器上为其他用户注册和取消注册。</translation>
+        <translation type="vanished">允许在服务器上为其他用户注册和取消注册。</translation>
     </message>
     <message>
         <source>This represents the permission to register oneself on the server.</source>
-        <translation>允许用户在服务器上注册自己。</translation>
+        <translation type="vanished">允许用户在服务器上注册自己。</translation>
     </message>
     <message>
         <source>Whisper</source>
-        <translation>密语</translation>
+        <translation type="vanished">密语</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation>移动用户</translation>
+        <translation type="vanished">移动用户</translation>
     </message>
     <message>
         <source>Text message</source>
-        <translation>文字消息</translation>
+        <translation type="vanished">文字消息</translation>
     </message>
     <message>
         <source>Kick</source>
-        <translation>踢出用户</translation>
+        <translation type="vanished">踢出用户</translation>
     </message>
     <message>
         <source>Ban</source>
-        <translation>封禁用户</translation>
+        <translation type="vanished">封禁用户</translation>
     </message>
     <message>
         <source>Register User</source>
-        <translation>注册用户</translation>
+        <translation type="vanished">注册用户</translation>
     </message>
     <message>
         <source>Register Self</source>
-        <translation>注册自己</translation>
+        <translation type="vanished">注册自己</translation>
     </message>
     <message>
         <source>Write ACL</source>
-        <translation>编辑 ACL</translation>
+        <translation type="vanished">编辑 ACL</translation>
     </message>
     <message>
         <source>This represents the permission to use the listen-feature allowing to listen to a channel without being in it.</source>
-        <translation>允许用户在频道之外监听此频道。</translation>
+        <translation type="vanished">允许用户在频道之外监听此频道。</translation>
     </message>
     <message>
         <source>Listen</source>
-        <translation>监听</translation>
+        <translation type="vanished">监听</translation>
     </message>
     <message>
         <source>This represents the permission to reset the comment or avatar of a user.</source>
-        <translation>允许用户重置其他用户的简介或头像。</translation>
+        <translation type="vanished">允许用户重置其他用户的简介或头像。</translation>
     </message>
     <message>
         <source>Reset User Content</source>
-        <translation>重置用户信息</translation>
+        <translation type="vanished">重置用户信息</translation>
     </message>
 </context>
 <context>

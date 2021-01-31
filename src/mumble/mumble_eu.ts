@@ -2555,27 +2555,27 @@ Are you sure you wish to replace your certificate?
     <name>ChanACL</name>
     <message>
         <source>None</source>
-        <translation>Bat ere ez</translation>
+        <translation type="vanished">Bat ere ez</translation>
     </message>
     <message>
         <source>Traverse</source>
-        <translation>Zeharkatu</translation>
+        <translation type="vanished">Zeharkatu</translation>
     </message>
     <message>
         <source>Enter</source>
-        <translation>Sartu</translation>
+        <translation type="vanished">Sartu</translation>
     </message>
     <message>
         <source>Speak</source>
-        <translation>Hitz egin</translation>
+        <translation type="vanished">Hitz egin</translation>
     </message>
     <message>
         <source>Mute/Deafen</source>
-        <translation>Isildu/Gortu</translation>
+        <translation type="vanished">Isildu/Gortu</translation>
     </message>
     <message>
         <source>Make channel</source>
-        <translation>Kanala sortu</translation>
+        <translation type="vanished">Kanala sortu</translation>
     </message>
     <message>
         <source>Make temporary</source>
@@ -2583,11 +2583,11 @@ Are you sure you wish to replace your certificate?
     </message>
     <message>
         <source>Link channel</source>
-        <translation>Kanala lotu</translation>
+        <translation type="vanished">Kanala lotu</translation>
     </message>
     <message>
         <source>This represents no privileges.</source>
-        <translation>Baimen eza adierazten du</translation>
+        <translation type="vanished">Baimen eza adierazten du</translation>
     </message>
     <message>
         <source>This represents total access to the channel, including the ability to change group and ACL information. This privilege implies all other privileges.</source>
@@ -2631,7 +2631,7 @@ Are you sure you wish to replace your certificate?
     </message>
     <message>
         <source>This represents the permission to write text messages to other users in this channel.</source>
-        <translation>Honek, erabiltzaileei testu mezuak bidaltzeko baimena adierazten du kanal honetan.</translation>
+        <translation type="vanished">Honek, erabiltzaileei testu mezuak bidaltzeko baimena adierazten du kanal honetan.</translation>
     </message>
     <message>
         <source>This represents the permission to forcibly remove users from the server.</source>
@@ -2639,44 +2639,44 @@ Are you sure you wish to replace your certificate?
     </message>
     <message>
         <source>This represents the permission to permanently remove users from the server.</source>
-        <translation>Honek, zerbitzaritik erabiltzaileak ezabatzeko baimena 
+        <translation type="vanished">Honek, zerbitzaritik erabiltzaileak ezabatzeko baimena 
 adierazten du.</translation>
     </message>
     <message>
         <source>This represents the permission to register and unregister users on the server.</source>
-        <translation>Honek zerbitzarian erabiltzaileak erregistratzeko baimena adierazten du.</translation>
+        <translation type="vanished">Honek zerbitzarian erabiltzaileak erregistratzeko baimena adierazten du.</translation>
     </message>
     <message>
         <source>This represents the permission to register oneself on the server.</source>
-        <translation>Honek bere burua zerbitzarian erregistratzeko baimena adierazten du.</translation>
+        <translation type="vanished">Honek bere burua zerbitzarian erregistratzeko baimena adierazten du.</translation>
     </message>
     <message>
         <source>Whisper</source>
-        <translation>Marmarra</translation>
+        <translation type="vanished">Marmarra</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation>Mugitu</translation>
+        <translation type="vanished">Mugitu</translation>
     </message>
     <message>
         <source>Text message</source>
-        <translation>Testu Mezua</translation>
+        <translation type="vanished">Testu Mezua</translation>
     </message>
     <message>
         <source>Kick</source>
-        <translation>Ostikatu</translation>
+        <translation type="vanished">Ostikatu</translation>
     </message>
     <message>
         <source>Ban</source>
-        <translation>Kanporatu</translation>
+        <translation type="vanished">Kanporatu</translation>
     </message>
     <message>
         <source>Register User</source>
-        <translation>Erregistratu erabiltzailea</translation>
+        <translation type="vanished">Erregistratu erabiltzailea</translation>
     </message>
     <message>
         <source>Register Self</source>
-        <translation>Erregistratu zure burua</translation>
+        <translation type="vanished">Erregistratu zure burua</translation>
     </message>
     <message>
         <source>Write ACL</source>

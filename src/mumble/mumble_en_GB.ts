@@ -2614,11 +2614,11 @@ Are you sure you wish to replace your certificate?
     </message>
     <message>
         <source>This represents total access to the channel, including the ability to change group and ACL information. This privilege implies all other privileges.</source>
-        <translation>This represents total access to the channel, including the ability to change group and ACL information. This privilege implies all other privileges.</translation>
+        <translation type="vanished">This represents total access to the channel, including the ability to change group and ACL information. This privilege implies all other privileges.</translation>
     </message>
     <message>
         <source>This represents the permission to traverse the channel. If a user is denied this privilege, he will be unable to access this channel and any sub-channels in any way, regardless of other permissions in the sub-channels.</source>
-        <translation>This represents the permission to traverse the channel. If users are denied this privilege, they will be unable to access this channel and any sub-channels in any way, regardless of other permissions in the sub-channels.</translation>
+        <translation type="vanished">This represents the permission to traverse the channel. If users are denied this privilege, they will be unable to access this channel and any sub-channels in any way, regardless of other permissions in the sub-channels.</translation>
     </message>
     <message>
         <source>This represents the permission to join the channel. If you have a hierarchical channel structure, you might want to give everyone Traverse, but restrict Enter in the root of your hierarchy.</source>
@@ -2626,7 +2626,7 @@ Are you sure you wish to replace your certificate?
     </message>
     <message>
         <source>This represents the permission to speak in a channel. Users without this privilege will be suppressed by the server (seen as muted), and will be unable to speak until they are unmuted by someone with the appropriate privileges.</source>
-        <translation>This represents the permission to speak in a channel. Users without this privilege will be suppressed by the server (seen as muted), and will be unable to speak until they are unmuted by someone with the appropriate privileges.</translation>
+        <translation type="vanished">This represents the permission to speak in a channel. Users without this privilege will be suppressed by the server (seen as muted), and will be unable to speak until they are unmuted by someone with the appropriate privileges.</translation>
     </message>
     <message>
         <source>This represents the permission to whisper to this channel from the outside. This works exactly like the &lt;i&gt;speak&lt;/i&gt; privilege, but applies to packets spoken with the Whisper key held down. This may be used to broadcast to a hierarchy of channels without linking.</source>
@@ -2634,11 +2634,11 @@ Are you sure you wish to replace your certificate?
     </message>
     <message>
         <source>This represents the permission to mute and deafen other users. Once muted, a user will stay muted until he is unmuted by another privileged user or reconnects to the server.</source>
-        <translation>This represents the permission to mute and deafen other users. Once muted, users will stay muted until they are unmuted by another privileged user or reconnects to the server.</translation>
+        <translation type="vanished">This represents the permission to mute and deafen other users. Once muted, users will stay muted until they are unmuted by another privileged user or reconnects to the server.</translation>
     </message>
     <message>
         <source>This represents the permission to move a user to another channel or kick him from the server. To actually move the user, either the moving user must have Move privileges in the destination channel, or the user must normally be allowed to enter the channel. Users with this privilege can move users into channels the target user normally wouldn&apos;t have permission to enter.</source>
-        <translation>This represents the permission to move users to another channel or kick them from the server. To actually move the user, either the moving user must have Move privileges in the destination channel, or the user must normally be allowed to enter the channel. Users with this privilege can move users into channels the target user normally wouldn&apos;t have permission to enter.</translation>
+        <translation type="vanished">This represents the permission to move users to another channel or kick them from the server. To actually move the user, either the moving user must have Move privileges in the destination channel, or the user must normally be allowed to enter the channel. Users with this privilege can move users into channels the target user normally wouldn&apos;t have permission to enter.</translation>
     </message>
     <message>
         <source>This represents the permission to make sub-channels. The user making the sub-channel will be added to the admin group of the sub-channel.</source>

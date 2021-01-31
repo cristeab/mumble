@@ -2550,35 +2550,35 @@ Are you sure you wish to replace your certificate?
     <name>ChanACL</name>
     <message>
         <source>None</source>
-        <translation>Neniu</translation>
+        <translation type="vanished">Neniu</translation>
     </message>
     <message>
         <source>Traverse</source>
-        <translation>Trairi</translation>
+        <translation type="vanished">Trairi</translation>
     </message>
     <message>
         <source>Enter</source>
-        <translation>Eniri</translation>
+        <translation type="vanished">Eniri</translation>
     </message>
     <message>
         <source>Speak</source>
-        <translation>Paroli</translation>
+        <translation type="vanished">Paroli</translation>
     </message>
     <message>
         <source>Mute/Deafen</source>
-        <translation>Mutigi/Surdigi</translation>
+        <translation type="vanished">Mutigi/Surdigi</translation>
     </message>
     <message>
         <source>Make channel</source>
-        <translation>Fari kanalon</translation>
+        <translation type="vanished">Fari kanalon</translation>
     </message>
     <message>
         <source>Make temporary</source>
-        <translation>Dumtempigi</translation>
+        <translation type="vanished">Dumtempigi</translation>
     </message>
     <message>
         <source>Link channel</source>
-        <translation>Ligi kanalon</translation>
+        <translation type="vanished">Ligi kanalon</translation>
     </message>
     <message>
         <source>This represents no privileges.</source>
@@ -2646,31 +2646,31 @@ Are you sure you wish to replace your certificate?
     </message>
     <message>
         <source>Whisper</source>
-        <translation>Flustri</translation>
+        <translation type="vanished">Flustri</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation>Movi</translation>
+        <translation type="vanished">Movi</translation>
     </message>
     <message>
         <source>Text message</source>
-        <translation>Tekst-mesaĝo</translation>
+        <translation type="vanished">Tekst-mesaĝo</translation>
     </message>
     <message>
         <source>Kick</source>
-        <translation>Forpeli</translation>
+        <translation type="vanished">Forpeli</translation>
     </message>
     <message>
         <source>Ban</source>
-        <translation>Forbari</translation>
+        <translation type="vanished">Forbari</translation>
     </message>
     <message>
         <source>Register User</source>
-        <translation>Registrigi Uzanton</translation>
+        <translation type="vanished">Registrigi Uzanton</translation>
     </message>
     <message>
         <source>Register Self</source>
-        <translation>Registriĝi</translation>
+        <translation type="vanished">Registriĝi</translation>
     </message>
     <message>
         <source>Write ACL</source>

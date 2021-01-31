@@ -2569,7 +2569,7 @@ Are you sure you wish to replace your certificate?
     </message>
     <message>
         <source>Make channel</source>
-        <translation>انشاء قناة</translation>
+        <translation type="vanished">انشاء قناة</translation>
     </message>
     <message>
         <source>Make temporary</source>
@@ -2577,7 +2577,7 @@ Are you sure you wish to replace your certificate?
     </message>
     <message>
         <source>Link channel</source>
-        <translation>ربط قناة</translation>
+        <translation type="vanished">ربط قناة</translation>
     </message>
     <message>
         <source>This represents no privileges.</source>
@@ -2681,7 +2681,7 @@ Are you sure you wish to replace your certificate?
     </message>
     <message>
         <source>Listen</source>
-        <translation>استمع</translation>
+        <translation type="vanished">استمع</translation>
     </message>
     <message>
         <source>This represents the permission to reset the comment or avatar of a user.</source>
