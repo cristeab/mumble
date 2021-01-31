@@ -19,7 +19,7 @@ public class ClientInstaller : MumbleInstall {
 		string upgradeGuid = "D269FC55-4F2C-4285-9AA9-4D034AF305C4";
 		string[] binaries = null;
 		string[] plugins = {
-			"amongus.dll",
+			/*"amongus.dll",
 			"aoc.dll",
 			"arma2.dll",
 			"bf1.dll",
@@ -64,7 +64,7 @@ public class ClientInstaller : MumbleInstall {
 			"ut2004.dll",
 			"wolfet.dll",
 			"wow.dll",
-			"wow_x64.dll"
+			"wow_x64.dll"*/
 		};
 
 		string[] licenses = {
@@ -86,11 +86,11 @@ public class ClientInstaller : MumbleInstall {
 				"speex.dll",
 				"mumble.exe",
 				"mumble_app.dll",
-				"mumble_ol.dll",
+				/*"mumble_ol.dll",
 				"mumble_ol_helper.exe",
 				"mumble_ol_helper_x64.exe",
 				"mumble_ol_x64.dll",
-				"mumble-g15-helper.exe"
+				"mumble-g15-helper.exe"*/
 			};
 		} else if (arch == "x86") {
 			// 32 bit
@@ -102,9 +102,9 @@ public class ClientInstaller : MumbleInstall {
 				"speex.dll",
 				"mumble.exe",
 				"mumble_app.dll",
-				"mumble_ol.dll",
+				/*"mumble_ol.dll",
 				"mumble_ol_helper.exe",
-				"mumble-g15-helper.exe"
+				"mumble-g15-helper.exe"*/
 			};
 		}
 
