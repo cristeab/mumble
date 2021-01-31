@@ -8,6 +8,25 @@ cmake_minimum_required(VERSION 3.15)
 cmake_policy(SET CMP0079 NEW)
 cmake_policy(SET CMP0091 NEW)
 
+# set from the beginning client options
+set (BUILD_NUMBER 0)
+set (RELEASE_ID 0)
+
+set (VCPKG_TARGET_TRIPLET x64-windows-static-md)
+set (static ON)
+set (client ON)
+set (server OFF)
+set (zeroconf OFF)
+set (dbus OFF)
+set (overlay OFF)
+set (plugins OFF)
+set (packaging ON)
+set (translations OFF)
+set (RELEASE_ID ${RELEASE_ID})
+set (BUILD_NUMBER ${BUILD_NUMBER})
+set (CMAKE_INSTALL_PREFIX ${INSTALL_PATH})
+set (CMAKE_BUILD_TYPE Release)
+
 set(BUILD_NUMBER CACHE STRING "The build number of the current build. Will be used in Mumble's version to make sure newer builds upgrade older installations properly.")
 set(RELEASE_ID CACHE STRING "The ID of the current release (used for representation in the UI and the updater)")
 
