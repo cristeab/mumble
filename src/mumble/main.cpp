@@ -49,6 +49,8 @@
 #include <QtWidgets/QMessageBox>
 #include <QLocale>
 #include <QScreen>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
 
 #ifdef USE_DBUS
 #	include <QtDBus/QDBusInterface>
@@ -619,10 +621,13 @@ int main(int argc, char **argv) {
 	a.processEvents();
 
 	// Main Window
-	Global::get().mw = new MainWindow(nullptr);
-	Global::get().mw->show();
+    QQmlApplicationEngine engine;
+    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
-	Global::get().talkingUI = new TalkingUI();
+    //g.mw = new MainWindow(nullptr);
+    //g.mw->show();
+
+	g.talkingUI = new TalkingUI();
 
 	// Set TalkingUI's position
 	Global::get().talkingUI->move(getTalkingUIPosition());

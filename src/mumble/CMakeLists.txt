@@ -67,6 +67,10 @@ endif()
 
 find_pkg(Qt5
 	COMPONENTS
+                Core
+                Qml
+                Quick
+                Gui
 		Concurrent
 		Sql
 		Svg
@@ -362,6 +366,10 @@ endif()
 target_link_libraries(mumble
 	PRIVATE
 		shared
+                Qt5::Core
+                Qt5::Qml
+                Qt5::Quick
+                Qt5::Gui
 		Qt5::Concurrent
 		Qt5::Sql
 		Qt5::Svg
