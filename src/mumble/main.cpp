@@ -50,6 +50,8 @@
 #include <QtGui/QDesktopServices>
 #include <QtWidgets/QMessageBox>
 #include <QScreen>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
 
 #ifdef USE_DBUS
 #	include <QtDBus/QDBusInterface>
@@ -575,8 +577,11 @@ int main(int argc, char **argv) {
 	a.processEvents();
 
 	// Main Window
-	g.mw = new MainWindow(nullptr);
-	g.mw->show();
+    QQmlApplicationEngine engine;
+    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+
+    //g.mw = new MainWindow(nullptr);
+    //g.mw->show();
 
 	g.talkingUI = new TalkingUI();
 

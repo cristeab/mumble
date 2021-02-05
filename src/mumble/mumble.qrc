@@ -17,5 +17,17 @@
         <file alias="UserLeftChannel.ogg">../../samples/UserLeftChannel.ogg</file>
         <file alias="UserMutedYouOrByYou.ogg">../../samples/UserMutedYouOrByYou.ogg</file>
         <file alias="RecordingStateChanged.ogg">../../samples/RecordingStateChanged.ogg</file>
+        <file alias="certificate.svg">../../img/certificate.svg</file>
+        <file alias="key.svg">../../img/key.svg</file>
+        <file alias="microphone.svg">../../img/microphone.svg</file>
+        <file alias="server.svg">../../img/server.svg</file>
+        <file alias="volume.svg">../../img/volume.svg</file>
+        <file alias="main.qml">../../qml/main.qml</file>
+        <file alias="server.qml">../../qml/server.qml</file>
+        <file alias="microphone.qml">../../qml/microphone.qml</file>
+        <file alias="speaker.qml">../../qml/speaker.qml</file>
+        <file alias="password.qml">../../qml/password.qml</file>
+        <file alias="certificate.qml">../../qml/certificate.qml</file>
+        <file alias="qtquickcontrols2.conf">../../qml/qtquickcontrols2.conf</file>
     </qresource>
 </RCC>
