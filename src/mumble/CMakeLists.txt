@@ -284,7 +284,7 @@ else()
 	if(WIN32)
 		target_sources(${CMAKE_PROJECT_NAME}
 			PRIVATE
-				"mumble.appcompat.manifest"
+				"bubbles.appcompat.manifest"
 				"${MUMBLE_RC}"
 		)
 
@@ -331,7 +331,7 @@ endif()
 
 target_compile_definitions(${CMAKE_PROJECT_NAME}
 	PRIVATE
-		"BUBBLES"
+		"MUMBLE"
 		"USE_OPUS"
 		"QT_RESTRICTED_CAST_FROM_ASCII"
 )
