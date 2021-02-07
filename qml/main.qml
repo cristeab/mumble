@@ -21,7 +21,7 @@ ApplicationWindow {
             verticalCenter: parent.verticalCenter
         }
         width: 60
-        spacing: Theme.windowMargin / 2
+        spacing: 0
 
         Repeater {
             model: bar.names.length
@@ -37,7 +37,7 @@ ApplicationWindow {
                 }
                 font.pointSize: 5
                 width: bar.width
-                height: width
+                height: width + 2 * Theme.windowMargin
                 background: Rectangle {
                     color: Theme.backgroundColor
                 }
