@@ -1,10 +1,11 @@
 import QtQuick 2.12
+import QtQuick.Controls.Material 2.12
 
 pragma Singleton
 
 QtObject {
-    readonly property color backgroundColor: "white"
-    readonly property color tabButtonColor: "#7a756b"
-    readonly property color tabButtonColorSel: "black"
+    readonly property color backgroundColor: Material.background
+    readonly property color tabButtonColor: "white"
+    readonly property color tabButtonColorSel: "lightblue"
     readonly property real windowMargin: 10
 }
