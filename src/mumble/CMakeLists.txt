@@ -989,3 +989,47 @@ if(wasapi)
 		set_property(TARGET mumble APPEND_STRING PROPERTY LINK_FLAGS " /DELAYLOAD:avrt.dll")
 	endif()
 endif()
+
+#installer setup
+if (CMAKE_BUILD_TYPE MATCHES "^[Rr]elease")
+    set(CPACK_PACKAGE_NAME ${CMAKE_PROJECT_NAME})
+    set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "${PROJECT_DESCRIPTION}")
+    set(CPACK_PACKAGE_DESCRIPTION_FILE ${CMAKE_SOURCE_DIR}/README.md)
+    set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
+    set(CPACK_RESOURCE_FILE_README ${CMAKE_SOURCE_DIR}/README.md)
+    set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/LICENSE)
+    set(CPACK_PACKAGE_CONTACT "TODO")
+    set(CPACK_STRIP_FILES ${CMAKE_PROJECT_NAME})
+    set(VC_REDIST_FILENAME "vc_redist.x64.exe")
+    set(CPACK_GENERATOR "NSIS64")
+    set(CPACK_NSIS_EXECUTABLES_DIRECTORY ".")
+    set(CPACK_NSIS_MUI_FINISHPAGE_RUN "${CMAKE_PROJECT_NAME}.exe")
+    set(CPACK_PACKAGE_INSTALL_DIRECTORY "${CMAKE_PROJECT_NAME}")
+    set(CPACK_NSIS_CONTACT "${CPACK_PACKAGE_CONTACT}")
+    set(CPACK_NSIS_INSTALLED_ICON_NAME "${CMAKE_PROJECT_NAME}.exe")
+    set(CPACK_NSIS_MUI_ICON "${CMAKE_SOURCE_DIR}/icons/bubbles.ico")
+    set(CPACK_NSIS_MUI_UNIICON "${CMAKE_SOURCE_DIR}/icons/bubbles.ico")
+    set(CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL ON)
+    set(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}\\\\img\\\\bubbles.bmp")
+    set(CPACK_NSIS_URL_INFO_ABOUT "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}")
+    set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "ExecWait '\\\"$INSTDIR\\\\${VC_REDIST_FILENAME}\\\" /install /passive /norestart'
+          CreateShortCut \\\"$DESKTOP\\\\${CMAKE_PROJECT_NAME}.lnk\\\" \\\"$INSTDIR\\\\${CMAKE_PROJECT_NAME}.exe\\\" \\\"\\\" \\\"$INSTDIR\\\\bubbles.ico\\\"
+          CreateShortCut \\\"$SMPROGRAMS\\\\${CMAKE_PROJECT_NAME}.lnk\\\" \\\"$INSTDIR\\\\${CMAKE_PROJECT_NAME}.exe\\\" \\\"\\\" \\\"$INSTDIR\\\\bubbles.ico\\\"")
+    set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "Delete \\\"$DESKTOP\\\\${CMAKE_PROJECT_NAME}.lnk\\\"
+          Delete \\\"$SMPROGRAMS\\\\${CMAKE_PROJECT_NAME}.lnk\\\"")
+
+    find_program(WINDEPLOYQT windeployqt PATHS ${Qt5_ROOT}/bin/)
+    install(PROGRAMS "${CMAKE_SOURCE_DIR}/build/${CMAKE_PROJECT_NAME}.exe" DESTINATION .)
+    install(FILES ${CMAKE_SOURCE_DIR}/img/logo.ico DESTINATION .)
+
+    add_custom_target(windeployqt
+          COMMAND ${WINDEPLOYQT}
+          --dir ${CMAKE_INSTALL_PREFIX}/deploy
+          --release
+          --compiler-runtime
+          --qmldir ${CMAKE_SOURCE_DIR}/qml
+          ${CMAKE_PROJECT_NAME}.exe
+          COMMENT "Preparing Qt runtime dependencies")
+    install(DIRECTORY ${PROJECT_BINARY_DIR}/deploy/ DESTINATION .)
+    include(CPack)
+endif()

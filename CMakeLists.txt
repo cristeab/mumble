@@ -43,8 +43,8 @@ endif()
 string(TIMESTAMP MUMBLE_BUILD_YEAR "%Y")
 
 project(Bubbles
-	VERSION "1.4.0.${BUILD_NUMBER}"
-	DESCRIPTION "Open source, low-latency, high quality voice chat."
+        VERSION "1.0.0.${BUILD_NUMBER}"
+        DESCRIPTION "Low-latency VoIP client"
         HOMEPAGE_URL "TODO"
 	LANGUAGES "C" "CXX"
 )
