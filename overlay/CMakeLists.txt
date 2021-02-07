@@ -131,7 +131,7 @@ else()
 			${CMAKE_CURRENT_BINARY_DIR}
 	)
 
-	install(TARGETS overlay RUNTIME DESTINATION "${MUMBLE_INSTALL_EXECUTABLEDIR}" COMPONENT mumble_client)
+	#install(TARGETS overlay RUNTIME DESTINATION "${MUMBLE_INSTALL_EXECUTABLEDIR}" COMPONENT mumble_client)
 endif()
 
 if(64_BIT AND NOT BUILD_OVERLAY_XCOMPILE)
@@ -194,7 +194,7 @@ if(64_BIT AND MSVC)
 			INSTALL_COMMAND ""
 		)
 	endif()
-	install(FILES ${CMAKE_BINARY_DIR}/mumble_ol.dll ${CMAKE_BINARY_DIR}/mumble_ol_helper.exe DESTINATION . COMPONENT mumble_client)
+	# install(FILES ${CMAKE_BINARY_DIR}/mumble_ol.dll ${CMAKE_BINARY_DIR}/mumble_ol_helper.exe DESTINATION . COMPONENT mumble_client)
 endif()
 
 add_subdirectory(overlay_exe)

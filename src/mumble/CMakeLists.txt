@@ -285,7 +285,7 @@ if(static AND WIN32)
 
 	add_subdirectory("${SHARED_SOURCE_DIR}/mumble_exe" "${CMAKE_BINARY_DIR}/mumble_exe")
 else()
-	add_executable(${CMAKE_PROJECT_NAME} ${MUMBLE_SOURCES})
+	add_executable(${CMAKE_PROJECT_NAME} WIN32 ${MUMBLE_SOURCES})
 
 	if(WIN32)
 		target_sources(${CMAKE_PROJECT_NAME}
@@ -323,16 +323,16 @@ set_target_properties(${CMAKE_PROJECT_NAME}
 )
 
 if(WIN32)
-	install(TARGETS ${CMAKE_PROJECT_NAME} RUNTIME DESTINATION "${MUMBLE_INSTALL_EXECUTABLEDIR}" COMPONENT mumble_client)
+	#install(TARGETS ${CMAKE_PROJECT_NAME} RUNTIME DESTINATION "${MUMBLE_INSTALL_EXECUTABLEDIR}" COMPONENT mumble_client)
 else()
 	if(NOT APPLE)
-		install(TARGETS ${CMAKE_PROJECT_NAME} RUNTIME DESTINATION "${MUMBLE_INSTALL_EXECUTABLEDIR}" COMPONENT mumble_client)
+		#install(TARGETS ${CMAKE_PROJECT_NAME} RUNTIME DESTINATION "${MUMBLE_INSTALL_EXECUTABLEDIR}" COMPONENT mumble_client)
 	else()
-		install(TARGETS ${CMAKE_PROJECT_NAME} BUNDLE DESTINATION "${MUMBLE_INSTALL_EXECUTABLEDIR}" COMPONENT mumble_client)
+		#install(TARGETS ${CMAKE_PROJECT_NAME} BUNDLE DESTINATION "${MUMBLE_INSTALL_EXECUTABLEDIR}" COMPONENT mumble_client)
 	endif()
 
 	# Install Mumble man files
-	install(FILES "${CMAKE_SOURCE_DIR}/man/mumble.1" DESTINATION "${MUMBLE_INSTALL_MANDIR}" COMPONENT doc)
+	#install(FILES "${CMAKE_SOURCE_DIR}/man/mumble.1" DESTINATION "${MUMBLE_INSTALL_MANDIR}" COMPONENT doc)
 endif()
 
 target_compile_definitions(${CMAKE_PROJECT_NAME}
@@ -556,7 +556,7 @@ if(bundled-opus)
 		set_target_properties(opus PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 	endif()
 
-	install_library(opus mumble_client)
+	install_library(opus ${CMAKE_PROJECT_NAME})
 else()
 	find_pkg(opus REQUIRED)
 	target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${opus_INCLUDE_DIRS})
@@ -594,7 +594,7 @@ if(bundled-celt)
 		set_target_properties(celt PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 	endif()
 
-	install_library(celt mumble_client)
+	install_library(celt ${CMAKE_PROJECT_NAME})
 else()
 	find_pkg(celt REQUIRED)
 	target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${celt_INCLUDE_DIRS})
@@ -616,7 +616,7 @@ if(bundled-speex)
 		set_target_properties(speex PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 	endif()
 
-	install_library(speex mumble_client)
+	install_library(speex ${CMAKE_PROJECT_NAME})
 else()
 	find_pkg(speex REQUIRED)
 	find_pkg(speexdsp REQUIRED)
@@ -645,7 +645,7 @@ if(rnnoise)
 		set_target_properties(rnnoise PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 	endif()
 
-	install_library(rnnoise mumble_client)
+	install_library(rnnoise ${CMAKE_PROJECT_NAME})
 endif()
 
 if(qtspeech)
@@ -1040,7 +1040,7 @@ if (CMAKE_BUILD_TYPE MATCHES "^[Rr]elease")
           --release
           --compiler-runtime
           --qmldir ${CMAKE_SOURCE_DIR}/qml
-          ${CMAKE_PROJECT_NAME}.exe
+          ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.exe
           COMMENT "Preparing Qt runtime dependencies")
     install(DIRECTORY ${CMAKE_INSTALL_PREFIX}/ DESTINATION .)
     include(CPack)

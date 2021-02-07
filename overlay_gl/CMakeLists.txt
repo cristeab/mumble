@@ -90,7 +90,7 @@ if(NOT APPLE)
 					"-lrt"
 			)
 			# install 32bit overlay library
-			install(TARGETS overlay_gl_x86 LIBRARY DESTINATION "${MUMBLE_INSTALL_LIBDIR}")
+			#install(TARGETS overlay_gl_x86 LIBRARY DESTINATION "${MUMBLE_INSTALL_LIBDIR}")
 		endif()
 	endif()
 else()
@@ -120,10 +120,10 @@ else()
 endif()
 
 # install native overlay library
-install(TARGETS overlay_gl LIBRARY DESTINATION "${MUMBLE_INSTALL_LIBDIR}")
+#install(TARGETS overlay_gl LIBRARY DESTINATION "${MUMBLE_INSTALL_LIBDIR}")
 
 # install overlay script
-install(PROGRAMS "${CMAKE_SOURCE_DIR}/scripts/mumble-overlay" DESTINATION "${MUMBLE_INSTALL_SCRIPTDIR}")
+#install(PROGRAMS "${CMAKE_SOURCE_DIR}/scripts/mumble-overlay" DESTINATION "${MUMBLE_INSTALL_SCRIPTDIR}")
 
 # install overlay man-files
-install(FILES "${CMAKE_SOURCE_DIR}/man/mumble-overlay.1" DESTINATION "${MUMBLE_INSTALL_MANDIR}" COMPONENT doc)
+#install(FILES "${CMAKE_SOURCE_DIR}/man/mumble-overlay.1" DESTINATION "${MUMBLE_INSTALL_MANDIR}" COMPONENT doc)
