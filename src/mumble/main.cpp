@@ -676,7 +676,7 @@ int main(int argc, char **argv) {
 
 	Audio::start();
 
-	a.setQuitOnLastWindowClosed(false);
+    a.setQuitOnLastWindowClosed(true);
 
 	// Configuration updates
 	bool runaudiowizard = false;
