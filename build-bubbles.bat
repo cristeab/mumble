@@ -25,6 +25,11 @@ if %errorlevel% neq 0 (
     exit /b %errorlevel%
 )
 
+ninja windeployqt
+if %errorlevel% neq 0 (
+    popd
+    exit /b %errorlevel%
+)
 ninja package
 if %errorlevel% neq 0 (
     popd
