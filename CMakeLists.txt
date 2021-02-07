@@ -42,10 +42,10 @@ endif()
 # Get compilation year
 string(TIMESTAMP MUMBLE_BUILD_YEAR "%Y")
 
-project(Mumble
+project(Bubbles
 	VERSION "1.4.0.${BUILD_NUMBER}"
 	DESCRIPTION "Open source, low-latency, high quality voice chat."
-	HOMEPAGE_URL "https://www.mumble.info"
+        HOMEPAGE_URL "TODO"
 	LANGUAGES "C" "CXX"
 )
 
@@ -167,8 +167,7 @@ if(packaging)
 		)
 		
 		file(COPY 
-			${CMAKE_SOURCE_DIR}/icons/mumble.ico
-			${CMAKE_SOURCE_DIR}/icons/murmur.ico
+                        ${CMAKE_SOURCE_DIR}/icons/bubbles.ico
 			DESTINATION 
 				${CMAKE_BINARY_DIR}/installer/icons
 		)
