@@ -1033,7 +1033,8 @@ if (CMAKE_BUILD_TYPE MATCHES "^[Rr]elease")
     install(PROGRAMS "${CMAKE_SOURCE_DIR}/build/${CMAKE_PROJECT_NAME}.exe" DESTINATION .)
     install(FILES ${CMAKE_SOURCE_DIR}/icons/bubbles.ico DESTINATION .)
 
-    add_custom_target(windeployqt
+    add_custom_target(windeployqt ALL
+          DEPENDS ${CMAKE_PROJECT_NAME}.exe
           COMMAND ${WINDEPLOYQT}
           --dir ${CMAKE_INSTALL_PREFIX}
           --release
