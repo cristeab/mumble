@@ -126,12 +126,14 @@ AudioWizard::AudioWizard(QWidget *p) : QWizard(p) {
 	abAmplify->qcInside = Qt::green;
 	abAmplify->qcAbove  = Qt::red;
 
-	for (const auto &shortcut : Global::get().s.qlShortcuts) {
-		if (shortcut.iIndex == Global::get().mw->gsPushTalk->idx) {
-			pttButtons = shortcut.qlButtons;
-			break;
-		}
-	}
+    if (nullptr != Global::get().mw) {
+	    for (const auto &shortcut : Global::get().s.qlShortcuts) {
+		    if (shortcut.iIndex == Global::get().mw->gsPushTalk->idx) {
+			    pttButtons = shortcut.qlButtons;
+			    break;
+		    }
+	    }
+    }
 
 	if (Global::get().s.atTransmit == Settings::PushToTalk)
 		qrPTT->setChecked(true);
@@ -419,7 +421,9 @@ void AudioWizard::accept() {
 
 		if (qrbNotificationTTS->isChecked()) {
 			Global::get().s.bTTS = true;
-			Global::get().mw->qaAudioTTS->setChecked(true);
+            if (nullptr != Global::get().mw) {
+			    Global::get().mw->qaAudioTTS->setChecked(true);
+            }
 		}
 	}
 
@@ -624,7 +628,7 @@ void AudioWizard::on_qpbPTT_clicked() {
 	QList< Shortcut > shortcuts;
 	bool found = false;
 	for (auto &shortcut : Global::get().s.qlShortcuts) {
-		if (shortcut.iIndex == Global::get().mw->gsPushTalk->idx) {
+		if ((nullptr != Global::get().mw) && (shortcut.iIndex == Global::get().mw->gsPushTalk->idx)) {
 			if (pttButtons.isEmpty()) {
 				continue;
 			}

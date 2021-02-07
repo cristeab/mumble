@@ -51,7 +51,9 @@ AboutDialog::AboutDialog(QWidget *p) : QDialog(p) {
 	QWidget *about = new QWidget(qtwTab);
 
 	QLabel *icon = new QLabel(about);
-	icon->setPixmap(Global::get().mw->qiIcon.pixmap(Global::get().mw->qiIcon.actualSize(QSize(128, 128))));
+    if (nullptr != Global::get().mw) {
+        icon->setPixmap(Global::get().mw->qiIcon.pixmap(g.mw->qiIcon.actualSize(QSize(128, 128))));
+    }
 
 	QLabel *text = new QLabel(about);
 	text->setTextInteractionFlags(Qt::TextBrowserInteraction);

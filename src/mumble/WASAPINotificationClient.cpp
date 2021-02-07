@@ -166,7 +166,9 @@ WASAPINotificationClient::WASAPINotificationClient() : QObject(), pEnumerator(0)
 		return;
 	}
 
-	Global::get().mw->connect(this, SIGNAL(doResetAudio()), SLOT(onResetAudio()), Qt::QueuedConnection);
+    if (nullptr != Global::get().mw) {
+	    Global::get().mw->connect(this, SIGNAL(doResetAudio()), SLOT(onResetAudio()), Qt::QueuedConnection);
+    }
 
 	pEnumerator->RegisterEndpointNotificationCallback(this);
 }

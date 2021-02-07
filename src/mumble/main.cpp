@@ -97,7 +97,7 @@ QPoint getTalkingUIPosition() {
 	if (Global::get().s.qpTalkingUI_Position != Settings::UNSPECIFIED_POSITION && positionIsOnScreen(Global::get().s.qpTalkingUI_Position)) {
 		// Restore last position
 		talkingUIPos = Global::get().s.qpTalkingUI_Position;
-	} else {
+	} else if (nullptr != Global::get().mw) {
 		// Place the TalkingUI next to the MainWindow by default
 		const QPoint mainWindowPos = Global::get().mw->pos();
 		const int horizontalBuffer = 10;
@@ -636,12 +636,14 @@ int main(int argc, char **argv) {
 	// window's frame to be included in the positioning calculation on X11 (at least using KDE Plasma)
 	Global::get().talkingUI->setVisible(Global::get().s.bShowTalkingUI);
 
-	QObject::connect(Global::get().mw, &MainWindow::userAddedChannelListener, Global::get().talkingUI, &TalkingUI::on_channelListenerAdded);
-	QObject::connect(Global::get().mw, &MainWindow::userRemovedChannelListener, Global::get().talkingUI, &TalkingUI::on_channelListenerRemoved);
-	QObject::connect(&ChannelListener::get(), &ChannelListener::localVolumeAdjustmentsChanged, Global::get().talkingUI,
+    if (nullptr != Global::get().mw) {
+	    QObject::connect(Global::get().mw, &MainWindow::userAddedChannelListener, Global::get().talkingUI, &TalkingUI::on_channelListenerAdded);
+	    QObject::connect(Global::get().mw, &MainWindow::userRemovedChannelListener, Global::get().talkingUI, &TalkingUI::on_channelListenerRemoved);
+	    QObject::connect(&ChannelListener::get(), &ChannelListener::localVolumeAdjustmentsChanged, Global::get().talkingUI,
 					 &TalkingUI::on_channelListenerLocalVolumeAdjustmentChanged);
 
-	QObject::connect(Global::get().mw, &MainWindow::serverSynchronized, Global::get().talkingUI, &TalkingUI::on_serverSynchronized);
+	    QObject::connect(Global::get().mw, &MainWindow::serverSynchronized, Global::get().talkingUI, &TalkingUI::on_serverSynchronized);
+    }
 
 	// Initialize logger
 	// Log::log() needs the MainWindow to already exist. Thus creating the Log instance
@@ -657,9 +659,11 @@ int main(int argc, char **argv) {
 #endif
 
 #ifdef USE_DBUS
-	new MumbleDBus(Global::get().mw);
-	QDBusConnection::sessionBus().registerObject(QLatin1String("/"), Global::get().mw);
-	QDBusConnection::sessionBus().registerService(QLatin1String("net.sourceforge.mumble.mumble"));
+    if (nullptr != Global::get().mw) {
+	    new MumbleDBus(Global::get().mw);
+	    QDBusConnection::sessionBus().registerObject(QLatin1String("/"), Global::get().mw);
+	    QDBusConnection::sessionBus().registerService(QLatin1String("net.sourceforge.mumble.mumble"));
+    }
 #endif
 
 	SocketRPC *srpc = new SocketRPC(QLatin1String("Mumble"));
@@ -691,7 +695,7 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	if (runaudiowizard) {
+	if (runaudiowizard && (nullptr != Global::get().mw)) {
 		AudioWizard *aw = new AudioWizard(Global::get().mw);
 		aw->exec();
 		delete aw;
@@ -708,7 +712,7 @@ int main(int argc, char **argv) {
 			if (CertWizard::validateCert(kp))
 				Global::get().s.kpCertificate = kp;
 		}
-		if (!CertWizard::validateCert(Global::get().s.kpCertificate)) {
+		if (!CertWizard::validateCert(Global::get().s.kpCertificate) && (nullptr != Global::get().mw)) {
 			CertWizard *cw = new CertWizard(Global::get().mw);
 			cw->exec();
 			delete cw;
@@ -730,7 +734,7 @@ int main(int argc, char **argv) {
 
 #ifdef QT_NO_DEBUG
 	// Only perform the version-check for non-debug builds
-	if (Global::get().s.bUpdateCheck) {
+	if (Global::get().s.bUpdateCheck && (nullptr != Global::get().mw)) {
 		// Use different settings for the version checks depending on whether this is a snapshot build
 		// or a normal release build
 #	ifndef SNAPSHOT_BUILD
@@ -742,23 +746,27 @@ int main(int argc, char **argv) {
 #	endif
 	}
 #else
-	Global::get().mw->msgBox(MainWindow::tr("Skipping version check in debug mode."));
+    if (nullptr != Global::get().mw) {
+	    Global::get().mw->msgBox(MainWindow::tr("Skipping version check in debug mode."));
+    }
 #endif
 	if (Global::get().s.bPluginCheck) {
 		Global::get().p->checkUpdates();
 	}
 
-	if (url.isValid()) {
-		OpenURLEvent *oue = new OpenURLEvent(url);
-		qApp->postEvent(Global::get().mw, oue);
+    if (nullptr != Global::get().mw) {
+	    if (url.isValid()) {
+		    OpenURLEvent *oue = new OpenURLEvent(url);
+		    qApp->postEvent(Global::get().mw, oue);
 #ifdef Q_OS_MAC
-	} else if (!a.quLaunchURL.isEmpty()) {
-		OpenURLEvent *oue = new OpenURLEvent(a.quLaunchURL);
-		qApp->postEvent(Global::get().mw, oue);
+	    } else if (!a.quLaunchURL.isEmpty()) {
+		    OpenURLEvent *oue = new OpenURLEvent(a.quLaunchURL);
+		    qApp->postEvent(Global::get().mw, oue);
 #endif
-	} else {
-		Global::get().mw->on_qaServerConnect_triggered(true);
-	}
+	    } else {
+		    Global::get().mw->on_qaServerConnect_triggered(true);
+        }
+    }
 
 	if (!Global::get().bQuit)
 		res = a.exec();

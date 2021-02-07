@@ -223,7 +223,7 @@ void UserView::keyPressEvent(QKeyEvent *ev) {
 void UserView::nodeActivated(const QModelIndex &idx) {
 	UserModel *um = static_cast< UserModel * >(model());
 	ClientUser *p = um->getUser(idx);
-	if (p) {
+	if (p && (nullptr != Global::get().mw)) {
 		Global::get().mw->openTextMessageDialog(p);
 		return;
 	}

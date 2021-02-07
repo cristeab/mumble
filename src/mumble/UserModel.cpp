@@ -398,12 +398,15 @@ QString UserModel::stringIndex(const QModelIndex &idx) const {
 }
 
 QModelIndex UserModel::getSelectedIndex() const {
-	QTreeView *v = Global::get().mw->qtvUsers;
-	if (v) {
-		QItemSelectionModel *sel = v->selectionModel();
+    if (nullptr != Global::get().mw) {
+	    QTreeView *v = Global::get().mw->qtvUsers;
+	    if (v) {
+		    QItemSelectionModel *sel = v->selectionModel();
 
-		return sel->currentIndex();
-	}
+                return sel->currentIndex();
+            }
+        }
+    }
 
 	return QModelIndex();
 }
@@ -461,13 +464,13 @@ QVariant UserModel::data(const QModelIndex &idx, int role) const {
 				}
 				break;
 			case Qt::FontRole:
-				if ((idx.column() == 0) && (p->uiSession == Global::get().uiSession)) {
+				if ((idx.column() == 0) && (p->uiSession == Global::get().uiSession) && (nullptr != Global::get().mw)) {
 					QFont f = Global::get().mw->font();
 					f.setBold(!f.bold());
 					f.setItalic(item->isListener);
 					return f;
 				}
-				if (item->isListener) {
+				if (item->isListener && (nullptr != Global::get().mw)) {
 					QFont f = Global::get().mw->font();
 					f.setItalic(true);
 					return f;
@@ -556,7 +559,7 @@ QVariant UserModel::data(const QModelIndex &idx, int role) const {
 				if (Global::get().uiSession) {
 					Channel *home = ClientUser::get(Global::get().uiSession)->cChannel;
 
-					if ((c == home) || qsLinked.contains(c)) {
+					if ((c == home) || qsLinked.contains(c) && (nullptr != Global::get().mw)) {
 						QFont f = Global::get().mw->font();
 						if (qsLinked.count() > 1)
 							f.setItalic(!f.italic());
@@ -868,6 +871,9 @@ ModelItem *UserModel::moveItem(ModelItem *oldparent, ModelItem *newparent, Model
 	// Check whether the moved item is currently selected and if so, store it as a persistent
 	// model index in active. Also clear the selection as we're going to mess with the active
 	// item.
+    if (nullptr == Global::get().mw) {
+        return newItem;
+    }
 	QTreeView *v             = Global::get().mw->qtvUsers;
 	QItemSelectionModel *sel = v->selectionModel();
 	QPersistentModelIndex active;
@@ -962,13 +968,18 @@ void UserModel::expandAll(Channel *c) {
 		chans.push(c);
 		c = c->cParent;
 	}
-	while (!chans.isEmpty()) {
-		c = chans.pop();
-		Global::get().mw->qtvUsers->setExpanded(index(c), true);
-	}
+    if (nullptr != Global::get().mw) {
+	    while (!chans.isEmpty()) {
+		    c = chans.pop();
+		    Global::get().mw->qtvUsers->setExpanded(index(c), true);
+	    }
+    }
 }
 
 void UserModel::collapseEmpty(Channel *c) {
+    if (nullptr == g.mw) {
+        return;
+    }
 	while (c) {
 		ModelItem *mi = ModelItem::c_qhChannels.value(c);
 		if (mi->iUsers == 0)
@@ -1167,14 +1178,14 @@ void UserModel::setComment(ClientUser *cu, const QString &comment) {
 			if (cu->uiSession == uiSessionComment) {
 				uiSessionComment   = 0;
 				item->bCommentSeen = false;
-				if (bClicked) {
+				if (bClicked && (nullptr != Global::get().mw)) {
 					QRect r = Global::get().mw->qtvUsers->visualRect(index(cu));
 					QWhatsThis::showText(Global::get().mw->qtvUsers->viewport()->mapToGlobal(r.bottomRight()),
 										 data(index(cu, 0), Qt::ToolTipRole).toString(), Global::get().mw->qtvUsers);
 				} else {
 					QToolTip::showText(QCursor::pos(), data(index(cu, 0), Qt::ToolTipRole).toString(), Global::get().mw->qtvUsers);
 				}
-			} else if (cu->uiSession == ~uiSessionComment) {
+            } else if ((cu->uiSession == ~uiSessionComment) && (nullptr != g.mw)) {
 				uiSessionComment = 0;
 				if (cu->uiSession == Global::get().uiSession) {
 					QTimer::singleShot(0, Global::get().mw, SLOT(on_qaSelfComment_triggered()));
@@ -1233,10 +1244,10 @@ void UserModel::setComment(Channel *c, const QString &comment) {
 				iChannelDescription = -1;
 				item->bCommentSeen  = false;
 				if (bClicked) {
-					QRect r = Global::get().mw->qtvUsers->visualRect(index(c));
-					QWhatsThis::showText(Global::get().mw->qtvUsers->viewport()->mapToGlobal(r.bottomRight()),
-										 data(index(c, 0), Qt::ToolTipRole).toString(), Global::get().mw->qtvUsers);
-				} else {
+					QRect r = g.mw->qtvUsers->visualRect(index(c));
+					QWhatsThis::showText(g.mw->qtvUsers->viewport()->mapToGlobal(r.bottomRight()),
+										 data(index(c, 0), Qt::ToolTipRole).toString(), g.mw->qtvUsers);
+				} else if (nullptr != Global::get().mw) {
 					QToolTip::showText(QCursor::pos(), data(index(c, 0), Qt::ToolTipRole).toString(), Global::get().mw->qtvUsers);
 				}
 			} else {
@@ -1338,7 +1349,7 @@ Channel *UserModel::addChannel(int id, Channel *p, const QString &name) {
 	citem->qlChildren.insert(row, item);
 	endInsertRows();
 
-	if (Global::get().s.ceExpand == Settings::AllChannels)
+	if (Global::get().s.ceExpand == Settings::AllChannels && (nullptr != Global::get().mw))
 		Global::get().mw->qtvUsers->setExpanded(index(item), true);
 
 	return c;
@@ -1411,7 +1422,7 @@ bool UserModel::isChannelListener(const QModelIndex &idx) const {
 void UserModel::setSelectedChannelListener(unsigned int userSession, int channelID) {
 	QModelIndex idx = channelListenerIndex(ClientUser::get(userSession), Channel::get(channelID));
 
-	if (!idx.isValid()) {
+    if (!idx.isValid() || (nullptr == g.mw)) {
 		return;
 	}
 
@@ -1602,7 +1613,7 @@ ClientUser *UserModel::getSelectedUser() const {
 void UserModel::setSelectedUser(unsigned int session) {
 	QModelIndex idx = index(ClientUser::get(session));
 
-	if (!idx.isValid()) {
+    if (!idx.isValid() || (nullptr == g.mw)) {
 		return;
 	}
 
@@ -1646,7 +1657,7 @@ Channel *UserModel::getSelectedChannel() const {
 void UserModel::setSelectedChannel(int id) {
 	QModelIndex idx = index(Channel::get(id));
 
-	if (!idx.isValid()) {
+    if (!idx.isValid() || (nullptr == g.mw)) {
 		return;
 	}
 
@@ -1773,13 +1784,16 @@ bool UserModel::dropMimeData(const QMimeData *md, Qt::DropAction, int row, int c
 		int ret;
 		switch (Global::get().s.ceUserDrag) {
 			case Settings::Ask:
-				ret =
-					QMessageBox::question(Global::get().mw, QLatin1String("Mumble"), tr("Are you sure you want to drag this user?"),
+                if (nullptr != Global::get().mw) {
+				    ret =
+					    QMessageBox::question(Global::get().mw, QLatin1String("Mumble"), tr("Are you sure you want to drag this user?"),
 										  QMessageBox::Yes, QMessageBox::No);
+                }
 
-				if (ret == QMessageBox::No)
-					return false;
-				break;
+                if (ret == QMessageBox::No)
+                    return false;
+            }
+            break;
 			case Settings::DoNothing:
 				Global::get().l->log(Log::Information,
 						 MainWindow::tr("You have User Dragging set to \"Do Nothing\" so the user wasn't moved."));
@@ -1797,13 +1811,15 @@ bool UserModel::dropMimeData(const QMimeData *md, Qt::DropAction, int row, int c
 		int ret;
 		switch (Global::get().s.ceChannelDrag) {
 			case Settings::Ask:
-				ret = QMessageBox::question(Global::get().mw, QLatin1String("Mumble"),
+                if (nullptr != Global::get().mw) {
+				    ret = QMessageBox::question(Global::get().mw, QLatin1String("Mumble"),
 											tr("Are you sure you want to drag this channel?"), QMessageBox::Yes,
 											QMessageBox::No);
-
-				if (ret == QMessageBox::No)
-					return false;
-				break;
+                }
+                if (ret == QMessageBox::No)
+                    return false;
+            }
+            break;
 			case Settings::DoNothing:
 				Global::get().l->log(
 					Log::Information,
@@ -1901,7 +1917,7 @@ bool UserModel::dropMimeData(const QMimeData *md, Qt::DropAction, int row, int c
 						inewpos = upper->iPosition + (abs(lower->iPosition) - abs(upper->iPosition)) / 2;
 					} else {
 						// Not enough space, other channels have to be moved
-						if (static_cast< long long >(pi->channelAt(ilast)->iPosition) + 40 > INT_MAX) {
+						if (static_cast< long long >(pi->channelAt(ilast)->iPosition) + 40 > INT_MAX && (nullptr != Global::get().mw)) {
 							QMessageBox::critical(Global::get().mw, QLatin1String("Mumble"),
 												  tr("Cannot perform this movement automatically, please reset the "
 													 "numeric sorting indicators or adjust it manually."));
@@ -1922,12 +1938,15 @@ bool UserModel::dropMimeData(const QMimeData *md, Qt::DropAction, int row, int c
 			}
 		}
 
-		if (inewpos > INT_MAX || inewpos < INT_MIN) {
-			QMessageBox::critical(Global::get().mw, QLatin1String("Mumble"),
+        if (nullptr != Global::get().mw) {
+		    if (inewpos > INT_MAX || inewpos < INT_MIN) {
+			    QMessageBox::critical(Global::get().mw, QLatin1String("Mumble"),
 								  tr("Cannot perform this movement automatically, please reset the numeric sorting "
 									 "indicators or adjust it manually."));
-			return false;
-		}
+                    return false;
+                }
+            }
+        }
 
 		MumbleProto::ChannelState mpcs;
 		mpcs.set_channel_id(iId);

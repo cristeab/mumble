@@ -601,7 +601,9 @@ void Plugins::checkUpdates() {
 
 	WebFetch::fetch(QLatin1String("update"), url, this, SLOT(fetchedUpdatePAPlugins(QByteArray, QUrl)));
 #else
-	Global::get().mw->msgBox(tr("Skipping plugin update in debug mode."));
+    if (nullptr != Global::get().mw) {
+	    Global::get().mw->msgBox(tr("Skipping plugin update in debug mode."));
+    }
 #endif
 }
 
@@ -770,14 +772,18 @@ void Plugins::fetchedPAPluginDL(QByteArray data, QUrl url) {
 				if (f.open(QIODevice::WriteOnly)) {
 					f.write(data);
 					f.close();
-					Global::get().mw->msgBox(tr("Downloaded new or updated plugin to %1.").arg(f.fileName().toHtmlEscaped()));
+                    if (nullptr != Global::get().mw) {
+					    Global::get().mw->msgBox(tr("Downloaded new or updated plugin to %1.").arg(f.fileName().toHtmlEscaped()));
+                    }
 				} else {
 					f.setFileName(qsUserPlugins + QLatin1String("/") + fname);
 					if (f.open(QIODevice::WriteOnly)) {
 						f.write(data);
 						f.close();
-						Global::get().mw->msgBox(tr("Downloaded new or updated plugin to %1.").arg(f.fileName().toHtmlEscaped()));
-					} else {
+                        if (nullptr != Global::get().mw) {
+						    Global::get().mw->msgBox(tr("Downloaded new or updated plugin to %1.").arg(f.fileName().toHtmlEscaped()));
+                        }
+					} else if (nullptr != Global::get().mw) {
 						Global::get().mw->msgBox(tr("Failed to install new plugin to %1.").arg(f.fileName().toHtmlEscaped()));
 					}
 				}

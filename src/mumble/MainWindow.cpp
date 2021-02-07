@@ -879,7 +879,7 @@ static void recreateServerHandler() {
 	ChannelListener::setInitialServerSyncDone(false);
 
 	ServerHandlerPtr sh = Global::get().sh;
-	if (sh && sh->isRunning()) {
+	if (sh && sh->isRunning() && (nullptr != Global::get().mw)) {
 		Global::get().mw->on_qaServerDisconnect_triggered();
 		sh->disconnect();
 		sh->wait();
@@ -894,11 +894,13 @@ static void recreateServerHandler() {
 	sh = ServerHandlerPtr(new ServerHandler());
 	sh->moveToThread(sh.get());
 	Global::get().sh = sh;
-	Global::get().mw->connect(sh.get(), SIGNAL(connected()), Global::get().mw, SLOT(serverConnected()));
-	Global::get().mw->connect(sh.get(), SIGNAL(disconnected(QAbstractSocket::SocketError, QString)), Global::get().mw,
+    if (nullptr != Global::get().mw) {
+	    Global::get().mw->connect(sh.get(), SIGNAL(connected()), Global::get().mw, SLOT(serverConnected()));
+	    Global::get().mw->connect(sh.get(), SIGNAL(disconnected(QAbstractSocket::SocketError, QString)), Global::get().mw,
 				  SLOT(serverDisconnected(QAbstractSocket::SocketError, QString)));
-	Global::get().mw->connect(sh.get(), SIGNAL(error(QAbstractSocket::SocketError, QString)), Global::get().mw,
+	    Global::get().mw->connect(sh.get(), SIGNAL(error(QAbstractSocket::SocketError, QString)), Global::get().mw,
 				  SLOT(resolverError(QAbstractSocket::SocketError, QString)));
+    }
 
 	QObject::connect(sh.get(), &ServerHandler::disconnected, Global::get().talkingUI, &TalkingUI::on_serverDisconnected);
 }
@@ -3070,7 +3072,7 @@ void MainWindow::on_gsCycleTransmitMode_triggered(bool down, QVariant) {
 }
 
 void MainWindow::on_gsToggleMainWindowVisibility_triggered(bool down, QVariant) {
-	if (down) {
+	if (down && (nullptr != Global::get().mw)) {
 		if (Global::get().mw->isVisible()) {
 			Global::get().mw->hide();
 		} else {

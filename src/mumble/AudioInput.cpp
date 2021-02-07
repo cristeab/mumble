@@ -280,8 +280,10 @@ AudioInput::AudioInput() : opusBuffer(Global::get().s.iFramesPerPacket * (SAMPLE
 
 	bRunning = true;
 
-	connect(this, SIGNAL(doDeaf()), Global::get().mw->qaAudioDeaf, SLOT(trigger()), Qt::QueuedConnection);
-	connect(this, SIGNAL(doMute()), Global::get().mw->qaAudioMute, SLOT(trigger()), Qt::QueuedConnection);
+    if (nullptr != Global::get().mw) {
+        connect(this, SIGNAL(doDeaf()), Global::get().mw->qaAudioDeaf, SLOT(trigger()), Qt::QueuedConnection);
+        connect(this, SIGNAL(doMute()), Global::get().mw->qaAudioMute, SLOT(trigger()), Qt::QueuedConnection);
+    }
 }
 
 AudioInput::~AudioInput() {

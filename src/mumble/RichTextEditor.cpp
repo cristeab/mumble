@@ -228,6 +228,9 @@ void RichTextEditor::on_qaLink_triggered() {
 }
 
 void RichTextEditor::on_qaImage_triggered() {
+    if (nullptr != Global::get().mw) {
+        return;
+    }
 	QPair< QByteArray, QImage > choice = Global::get().mw->openImageFile();
 
 	QByteArray &qba = choice.first;

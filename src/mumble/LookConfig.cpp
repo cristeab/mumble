@@ -271,7 +271,9 @@ void LookConfig::save() const {
 }
 
 void LookConfig::accept() const {
-	Global::get().mw->setShowDockTitleBars((Global::get().s.wlWindowLayout == Settings::LayoutCustom) && !Global::get().s.bLockLayout);
+    if (nullptr != Global::get().mw) {
+	    Global::get().mw->setShowDockTitleBars((Global::get().s.wlWindowLayout == Settings::LayoutCustom) && !Global::get().s.bLockLayout);
+    }
 }
 
 void LookConfig::themeDirectoryChanged() {

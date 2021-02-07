@@ -601,7 +601,7 @@ BOOL GlobalShortcutWin::EnumDevicesCB(LPCDIDEVICEINSTANCE pdidi, LPVOID pContext
 }
 
 void GlobalShortcutWin::timeTicked() {
-	if (Global::get().mw->uiNewHardware != uiHardwareDevices) {
+	if ((nullptr != Global::get().mw) && (Global::get().mw->uiNewHardware != uiHardwareDevices)) {
 		uiHardwareDevices = Global::get().mw->uiNewHardware;
 
 		XInputCheck_ClearDeviceCache();

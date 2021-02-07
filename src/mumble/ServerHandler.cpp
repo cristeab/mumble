@@ -425,7 +425,9 @@ void ServerHandler::run() {
 		connect(ticker, SIGNAL(timeout()), this, SLOT(sendPing()));
 		ticker->start(Global::get().s.iPingIntervalMsec);
 
-		Global::get().mw->rtLast = MumbleProto::Reject_RejectType_None;
+        if (nullptr != Global::get().mw) {
+		    Global::get().mw->rtLast = MumbleProto::Reject_RejectType_None;
+        }
 
 		accUDP = accTCP = accClean;
 
@@ -624,7 +626,7 @@ void ServerHandler::message(unsigned int msgType, const QByteArray &qbaMsg) {
 			if (((connection->csCrypt->uiRemoteGood == 0) || (connection->csCrypt->uiGood == 0)) && bUdp
 				&& (tTimestamp.elapsed() > 20000000ULL)) {
 				bUdp = false;
-				if (!NetworkConfig::TcpModeEnabled()) {
+                if (!NetworkConfig::TcpModeEnabled() && (nullptr != g.mw)) {
 					if ((connection->csCrypt->uiRemoteGood == 0) && (connection->csCrypt->uiGood == 0))
 						Global::get().mw->msgBox(
 							tr("UDP packets cannot be sent to or received from the server. Switching to TCP mode."));
@@ -637,7 +639,7 @@ void ServerHandler::message(unsigned int msgType, const QByteArray &qbaMsg) {
 				}
 			} else if (!bUdp && (connection->csCrypt->uiRemoteGood > 3) && (connection->csCrypt->uiGood > 3)) {
 				bUdp = true;
-				if (!NetworkConfig::TcpModeEnabled()) {
+				if (!NetworkConfig::TcpModeEnabled() && (nullptr != Global::get().mw)) {
 					Global::get().mw->msgBox(
 						tr("UDP packets can be sent to and received from the server. Switching back to UDP mode."));
 
@@ -647,7 +649,9 @@ void ServerHandler::message(unsigned int msgType, const QByteArray &qbaMsg) {
 		}
 	} else {
 		ServerHandlerMessageEvent *shme = new ServerHandlerMessageEvent(qbaMsg, msgType, false);
-		QApplication::postEvent(Global::get().mw, shme);
+        if (nullptr != Global::get().mw) {
+		    QApplication::postEvent(Global::get().mw, shme);
+        }
 	}
 }
 

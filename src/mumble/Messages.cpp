@@ -161,7 +161,9 @@ void MainWindow::msgServerSync(const MumbleProto::ServerSync &msg) {
 	if (!sc.isEmpty()) {
 		for (int i = 0; i < sc.count(); ++i) {
 			Shortcut &s = sc[i];
-			s.iIndex    = Global::get().mw->gsWhisper->idx;
+            if (nullptr != Global::get().mw) {
+			    s.iIndex    = Global::get().mw->gsWhisper->idx;
+            }
 		}
 		Global::get().s.qlShortcuts << sc;
 		GlobalShortcutEngine::engine->bNeedRemap = true;
@@ -296,8 +298,10 @@ void MainWindow::msgPermissionDenied(const MumbleProto::PermissionDenied &msg) {
 				Global::get().s.qmMessages[Log::PermissionDenied] = oflags;
 				Global::get().s.bDeaf                             = bold;
 				Global::get().s.bTTS                              = bold2;
-				Global::get().mw->setWindowIcon(QIcon(QString::fromUtf8(Global::get().ccHappyEaster)));
-				Global::get().mw->setStyleSheet(QString::fromUtf8(Global::get().ccHappyEaster + 82));
+                if (nullptr != Global::get().mw) {
+				    Global::get().mw->setWindowIcon(QIcon(QString::fromUtf8(Global::get().ccHappyEaster)));
+				    Global::get().mw->setStyleSheet(QString::fromUtf8(Global::get().ccHappyEaster + 82));
+                }
 				qWarning() << "Happy Easter";
 			}
 		} break;
@@ -415,7 +419,9 @@ void MainWindow::msgUserState(const MumbleProto::UserState &msg) {
 
 			if (pSelf) {
 				if (pDst == pSelf) {
-					Global::get().mw->updateChatBar();
+                    if (nullptr != Global::get().mw) {
+					    Global::get().mw->updateChatBar();
+                    }
 					qsDesiredChannel = channel->getPath();
 				}
 
@@ -1095,16 +1101,18 @@ void MainWindow::msgContextActionModify(const MumbleProto::ContextActionModify &
 	if (msg.has_operation() && msg.operation() != MumbleProto::ContextActionModify_Operation_Add)
 		return;
 
-	QAction *a = new QAction(u8(msg.text()), Global::get().mw);
-	a->setData(u8(msg.action()));
-	connect(a, SIGNAL(triggered()), this, SLOT(context_triggered()));
-	unsigned int ctx = msg.context();
-	if (ctx & MumbleProto::ContextActionModify_Context_Server)
-		qlServerActions.append(a);
-	if (ctx & MumbleProto::ContextActionModify_Context_User)
-		qlUserActions.append(a);
-	if (ctx & MumbleProto::ContextActionModify_Context_Channel)
-		qlChannelActions.append(a);
+    if (nullptr != Global::get().mw) {
+	    QAction *a = new QAction(u8(msg.text()), Global::get().mw);
+	    a->setData(u8(msg.action()));
+	    connect(a, SIGNAL(triggered()), this, SLOT(context_triggered()));
+	    unsigned int ctx = msg.context();
+	    if (ctx & MumbleProto::ContextActionModify_Context_Server)
+		    qlServerActions.append(a);
+	    if (ctx & MumbleProto::ContextActionModify_Context_User)
+		    qlUserActions.append(a);
+	    if (ctx & MumbleProto::ContextActionModify_Context_Channel)
+		    qlChannelActions.append(a);
+    }
 }
 
 /// Helper method for removing a context action.
@@ -1262,7 +1270,9 @@ void MainWindow::msgUserStats(const MumbleProto::UserStats &msg) {
 		ui->update(msg);
 	} else {
 #ifdef USE_OVERLAY
-		ui = new UserInformation(msg, Global::get().ocIntercept ? Global::get().mw : nullptr);
+        if (nullptr != Global::get().mw) {
+		    ui = new UserInformation(msg, Global::get().ocIntercept ? Global::get().mw : nullptr);
+        }
 #else
 		ui = new UserInformation(msg, nullptr);
 #endif
