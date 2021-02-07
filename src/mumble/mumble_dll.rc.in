@@ -30,13 +30,13 @@ VS_VERSION_INFO VERSIONINFO
 		BEGIN
 			BLOCK "040904E4"
 			BEGIN
-				VALUE "CompanyName", "The Mumble Developers"
-				VALUE "FileDescription", "Mumble - Low-latency VoIP client"
+                VALUE "CompanyName", "The Developers"
+                VALUE "FileDescription", "Low-latency VoIP client"
 				VALUE "FileVersion", "@PROJECT_VERSION@"
 				VALUE "ProductVersion", "@PROJECT_VERSION@"
-				VALUE "LegalCopyright", "Copyright (c) 2005-@MUMBLE_BUILD_YEAR@ The Mumble Developers"
-				VALUE "OriginalFilename", "mumble_app.dll"
-				VALUE "ProductName", "Mumble"
+                VALUE "LegalCopyright", "Copyright (c) 2005-@MUMBLE_BUILD_YEAR@ The Developers"
+                VALUE "OriginalFilename", "bubbles_app.dll"
+                VALUE "ProductName", "Bubbles"
 #ifdef SNAPSHOT_BUILD
 				VALUE "SpecialBuild", "Snapshot development release"
 #endif
