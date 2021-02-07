@@ -329,14 +329,14 @@ if(ice)
 	file(COPY "Murmur.ice" DESTINATION ${CMAKE_BINARY_DIR})
 endif()
 
-install(TARGETS murmur RUNTIME DESTINATION "${MUMBLE_INSTALL_EXECUTABLEDIR}" COMPONENT mumble_server)
+#install(TARGETS murmur RUNTIME DESTINATION "${MUMBLE_INSTALL_EXECUTABLEDIR}" COMPONENT mumble_server)
 
 file(COPY "${CMAKE_SOURCE_DIR}/scripts/murmur.ini" DESTINATION ${CMAKE_BINARY_DIR})
 
 if(UNIX)
 	# Install Murmur man files
-	install(FILES "${CMAKE_SOURCE_DIR}/man/murmurd.1" DESTINATION "${MUMBLE_INSTALL_MANDIR}" COMPONENT doc)
-	install(FILES "${CMAKE_SOURCE_DIR}/man/murmur-user-wrapper.1" DESTINATION "${MUMBLE_INSTALL_MANDIR}" COMPONENT doc)
+	#install(FILES "${CMAKE_SOURCE_DIR}/man/murmurd.1" DESTINATION "${MUMBLE_INSTALL_MANDIR}" COMPONENT doc)
+	#install(FILES "${CMAKE_SOURCE_DIR}/man/murmur-user-wrapper.1" DESTINATION "${MUMBLE_INSTALL_MANDIR}" COMPONENT doc)
 endif()
 
 if(packaging)

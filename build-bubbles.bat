@@ -4,6 +4,7 @@ set BUILD_NUMBER=0
 set RELEASE_ID=0
 
 rmdir /S /Q build
+rmdir /S /Q "%INSTALL_PATH%" 
 mkdir build
 pushd build
 

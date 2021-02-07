@@ -44,7 +44,7 @@ endif()
 
 target_link_libraries(mumble_exe PRIVATE shlwapi.lib)
 
-install(TARGETS mumble_exe RUNTIME DESTINATION "${MUMBLE_INSTALL_EXECUTABLEDIR}" COMPONENT mumble_client)
+# install(TARGETS mumble_exe RUNTIME DESTINATION "${MUMBLE_INSTALL_EXECUTABLEDIR}" COMPONENT mumble_client)
 
 if(packaging)
 	set(overlay ON)
