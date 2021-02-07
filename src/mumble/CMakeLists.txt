@@ -1024,12 +1024,12 @@ if (CMAKE_BUILD_TYPE MATCHES "^[Rr]elease")
 
     add_custom_target(windeployqt
           COMMAND ${WINDEPLOYQT}
-          --dir ${PROJECT_BINARY_DIR}/deploy
+          --dir ${CMAKE_INSTALL_PREFIX}
           --release
           --compiler-runtime
           --qmldir ${CMAKE_SOURCE_DIR}/qml
           ${CMAKE_PROJECT_NAME}.exe
           COMMENT "Preparing Qt runtime dependencies")
-    install(DIRECTORY ${PROJECT_BINARY_DIR}/deploy/ DESTINATION .)
+    install(DIRECTORY ${CMAKE_INSTALL_PREFIX}/ DESTINATION .)
     include(CPack)
 endif()
