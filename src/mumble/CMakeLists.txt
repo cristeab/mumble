@@ -1010,7 +1010,7 @@ if (CMAKE_BUILD_TYPE MATCHES "^[Rr]elease")
     set(CPACK_NSIS_MUI_ICON "${CMAKE_SOURCE_DIR}/icons/bubbles.ico")
     set(CPACK_NSIS_MUI_UNIICON "${CMAKE_SOURCE_DIR}/icons/bubbles.ico")
     set(CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL ON)
-    set(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}\\\\img\\\\bubbles.bmp")
+    set(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}\\\\icons\\\\bubbles.bmp")
     set(CPACK_NSIS_URL_INFO_ABOUT "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}")
     set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "ExecWait '\\\"$INSTDIR\\\\${VC_REDIST_FILENAME}\\\" /install /passive /norestart'
           CreateShortCut \\\"$DESKTOP\\\\${CMAKE_PROJECT_NAME}.lnk\\\" \\\"$INSTDIR\\\\${CMAKE_PROJECT_NAME}.exe\\\" \\\"\\\" \\\"$INSTDIR\\\\bubbles.ico\\\"
