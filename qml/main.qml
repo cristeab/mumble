@@ -7,4 +7,56 @@ ApplicationWindow {
     width: 800
     height: 600
     visible: true
+
+    TabBar {
+        id: bar
+
+        property int currentButtonIndex: 0
+        readonly property var names: [qsTr("Servers"), qsTr("Audio Input"), qsTr("Audio Output"), qsTr("Password Manager"), qsTr("Certificate Manager")]
+        readonly property var icons: ["qrc:/img/server.svg", "qrc:/img/microphone.svg", "qrc:/img/volume.svg", "qrc:/img/key.svg", "qrc:/img/certificate.svg"]
+        readonly property var pages: ["qrc:/qml/Servers.qml", "qrc:/qml/AudioInput.qml", "qrc:/qml/AudioOutput.qml", "qrc:/qml/PasswordManager.qml", "qrc:/qml/CertificateManager.qml"]
+
+        anchors {
+            top: parent.top
+            left: parent.left
+            bottom: parent.bottom
+        }
+        width: 40
+        position: TabBar.Header
+        spacing: 0
+
+        Repeater {
+            model: bar.names.length
+            TabButton {
+                id: tabButton
+                property bool isSelected: bar.currentButtonIndex === index
+                property color textColor: isSelected ? Theme.tabButtonColorSel : Theme.tabButtonColor
+                display: AbstractButton.TextUnderIcon
+                text: "<font color='" + tabButton.textColor + "'>" + bar.names[index] + "</font>"
+                icon {
+                    source: bar.icons[index]
+                    color: tabButton.textColor
+                }
+                width: bar.width / bar.names.length
+                background: Rectangle {
+                    color: Theme.backgroundColor
+                }
+                onClicked: {
+                    bar.currentButtonIndex = index
+                    tabView.replace(bar.pages[index])
+                }
+            }
+        }
+    }
+    StackView {
+        id: tabView
+        anchors {
+            top: parent.top
+            bottom: parent.bottom
+            left: bar.right
+            right: parent.right
+        }
+        width: parent.width
+        initialItem: "qrc:/qml/Servers.qml"
+    }
 }

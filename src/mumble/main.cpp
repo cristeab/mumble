@@ -615,14 +615,14 @@ int main(int argc, char **argv) {
 
 	Global::get().lcd = new LCD();
 
-	// Process any waiting events before initializing our MainWindow.
+    // Process any waiting events before initializing our M ainWindow.
 	// The mumble:// URL support for Mac OS X happens through AppleEvents,
 	// so we need to loop a little before we begin.
 	a.processEvents();
 
 	// Main Window
     QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
 
     //g.mw = new MainWindow(nullptr);
     //g.mw->show();
