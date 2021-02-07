@@ -29,6 +29,7 @@
         <file alias="qml/PasswordManager.qml">../../qml/PasswordManager.qml</file>
         <file alias="qml/CertificateManager.qml">../../qml/CertificateManager.qml</file>
         <file alias="qml/Theme.qml">../../qml/Theme.qml</file>
+        <file alias="qml/qmldir">../../qml/qmldir</file>
         <file alias="qtquickcontrols2.conf">../../qml/qtquickcontrols2.conf</file>
     </qresource>
 </RCC>

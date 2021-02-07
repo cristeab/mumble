@@ -8,7 +8,7 @@ ApplicationWindow {
     height: 600
     visible: true
 
-    TabBar {
+    Column {
         id: bar
 
         property int currentButtonIndex: 0
@@ -18,11 +18,11 @@ ApplicationWindow {
 
         anchors {
             top: parent.top
+            topMargin: Theme.windowMargin
             left: parent.left
             bottom: parent.bottom
         }
-        width: 40
-        position: TabBar.Header
+        width: 50
         spacing: 0
 
         Repeater {
@@ -31,19 +31,23 @@ ApplicationWindow {
                 id: tabButton
                 property bool isSelected: bar.currentButtonIndex === index
                 property color textColor: isSelected ? Theme.tabButtonColorSel : Theme.tabButtonColor
-                display: AbstractButton.TextUnderIcon
-                text: "<font color='" + tabButton.textColor + "'>" + bar.names[index] + "</font>"
+                display: AbstractButton.IconOnly
                 icon {
                     source: bar.icons[index]
                     color: tabButton.textColor
                 }
-                width: bar.width / bar.names.length
+                width: bar.width
+                height: width
                 background: Rectangle {
                     color: Theme.backgroundColor
                 }
                 onClicked: {
                     bar.currentButtonIndex = index
                     tabView.replace(bar.pages[index])
+                }
+                ToolTip {
+                    visible: tabButton.hovered
+                    text: bar.names[index]
                 }
             }
         }
