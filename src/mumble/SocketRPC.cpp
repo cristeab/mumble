@@ -102,7 +102,7 @@ void SocketRPCClient::processXml() {
 		if (iter != qmRequest.constEnd())
 			qmReply.insert(iter.key(), iter.value());
 
-		if (request.nodeName() == QLatin1String("focus")) {
+        if ((request.nodeName() == QLatin1String("focus")) && (nullptr != g.mw)) {
 			g.mw->show();
 			g.mw->raise();
 			g.mw->activateWindow();
@@ -112,7 +112,7 @@ void SocketRPCClient::processXml() {
 			iter = qmRequest.find(QLatin1String("mute"));
 			if (iter != qmRequest.constEnd()) {
 				bool set = iter.value().toBool();
-				if (set != g.s.bMute) {
+                if ((set != g.s.bMute) && (nullptr != g.mw)) {
 					g.mw->qaAudioMute->setChecked(!set);
 					g.mw->qaAudioMute->trigger();
 				}
@@ -120,13 +120,13 @@ void SocketRPCClient::processXml() {
 			iter = qmRequest.find(QLatin1String("unmute"));
 			if (iter != qmRequest.constEnd()) {
 				bool set = iter.value().toBool();
-				if (set == g.s.bMute) {
+                if ((set == g.s.bMute) && (nullptr != g.mw)) {
 					g.mw->qaAudioMute->setChecked(set);
 					g.mw->qaAudioMute->trigger();
 				}
 			}
 			iter = qmRequest.find(QLatin1String("togglemute"));
-			if (iter != qmRequest.constEnd()) {
+            if ((iter != qmRequest.constEnd()) && (nullptr != g.mw)) {
 				bool set = iter.value().toBool();
 				if (set == g.s.bMute) {
 					g.mw->qaAudioMute->setChecked(set);
@@ -139,7 +139,7 @@ void SocketRPCClient::processXml() {
 			iter = qmRequest.find(QLatin1String("deaf"));
 			if (iter != qmRequest.constEnd()) {
 				bool set = iter.value().toBool();
-				if (set != g.s.bDeaf) {
+                if ((set != g.s.bDeaf) && (nullptr != g.mw)) {
 					g.mw->qaAudioDeaf->setChecked(!set);
 					g.mw->qaAudioDeaf->trigger();
 				}
@@ -147,13 +147,13 @@ void SocketRPCClient::processXml() {
 			iter = qmRequest.find(QLatin1String("undeaf"));
 			if (iter != qmRequest.constEnd()) {
 				bool set = iter.value().toBool();
-				if (set == g.s.bDeaf) {
+                if ((set == g.s.bDeaf) && (nullptr != g.mw)) {
 					g.mw->qaAudioDeaf->setChecked(set);
 					g.mw->qaAudioDeaf->trigger();
 				}
 			}
 			iter = qmRequest.find(QLatin1String("toggledeaf"));
-			if (iter != qmRequest.constEnd()) {
+            if ((iter != qmRequest.constEnd()) && (nullptr != g.mw)) {
 				bool set = iter.value().toBool();
 				if (set == g.s.bDeaf) {
 					g.mw->qaAudioDeaf->setChecked(set);
@@ -195,7 +195,9 @@ void SocketRPCClient::processXml() {
 				QUrl u = iter.value().toUrl();
 				if (u.isValid() && u.scheme() == QLatin1String("mumble")) {
 					OpenURLEvent *oue = new OpenURLEvent(u);
-					qApp->postEvent(g.mw, oue);
+                    if (nullptr != g.mw) {
+                        qApp->postEvent(g.mw, oue);
+                    }
 					ack = true;
 				}
 			} else {

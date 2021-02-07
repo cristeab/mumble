@@ -270,7 +270,9 @@ void LogConfig::accept() const {
 #ifndef USE_NO_TTS
 	g.l->tts->setVolume(s.iTTSVolume);
 #endif
-	g.mw->qteLog->document()->setMaximumBlockCount(s.iMaxLogBlocks);
+    if (nullptr != g.mw) {
+        g.mw->qteLog->document()->setMaximumBlockCount(s.iMaxLogBlocks);
+    }
 }
 
 void LogConfig::on_qtwMessages_itemChanged(QTreeWidgetItem *i, int column) {
@@ -552,9 +554,11 @@ QString Log::imageToImg(QImage img, int maxSize) {
 QString Log::validHtml(const QString &html, QTextCursor *tc) {
 	LogDocument qtd;
 
-	QRectF qr = Screen::screenFromWidget(*g.mw)->availableGeometry();
-	qtd.setTextWidth(qr.width() / 2);
-	qtd.setDefaultStyleSheet(qApp->styleSheet());
+    if (nullptr != g.mw) {
+        QRectF qr = Screen::screenFromWidget(*g.mw)->availableGeometry();
+        qtd.setTextWidth(qr.width() / 2);
+        qtd.setDefaultStyleSheet(qApp->styleSheet());
+    }
 
 	// Call documentLayout on our LogDocument to ensure
 	// it has a layout backing it. With a layout set on
@@ -636,7 +640,7 @@ void Log::log(MsgType mt, const QString &console, const QString &terse, bool own
 	quint32 flags = g.s.qmMessages.value(mt);
 
 	// Message output on console
-	if ((flags & Settings::LogConsole)) {
+    if ((flags & Settings::LogConsole) && (nullptr != g.mw)) {
 		QTextCursor tc = g.mw->qteLog->textCursor();
 
 		// We copy the value from the settings in order to make sure that
@@ -699,9 +703,9 @@ void Log::log(MsgType mt, const QString &console, const QString &terse, bool own
 	}
 
 	if (!ownMessage) {
-		if (!(g.mw->isActiveWindow() && g.mw->qdwLog->isVisible())) {
+        if ((nullptr != g.mw) && !(g.mw->isActiveWindow() && g.mw->qdwLog->isVisible())) {
 			// Message notification with window highlight
-			if (flags & Settings::LogHighlight) {
+            if (flags & Settings::LogHighlight && (nullptr != g.mw)) {
 				QApplication::alert(g.mw);
 			}
 
@@ -794,7 +798,7 @@ void Log::processDeferredLogs() {
 
 // Post a notification using the MainWindow's QSystemTrayIcon.
 void Log::postQtNotification(MsgType mt, const QString &plain) {
-	if (g.mw->qstiIcon->isSystemTrayAvailable() && g.mw->qstiIcon->supportsMessages()) {
+    if ((nullptr != g.mw) && g.mw->qstiIcon->isSystemTrayAvailable() && g.mw->qstiIcon->supportsMessages()) {
 		QSystemTrayIcon::MessageIcon msgIcon;
 		switch (mt) {
 			case DebugInfo:

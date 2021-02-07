@@ -165,9 +165,11 @@ void GlobalShortcutWin::run() {
 	}
 
 	// Wait for MainWindow's constructor to finish before we enumerate DirectInput devices.
-	// We need to do this because adding a new device requires a Window handle. (SetCooperativeLevel())
-	while (!g.mw)
-		this->yieldCurrentThread();
+    // We need to do this because adding a new device requires a Window handle. (SetCooperativeLevel())
+    if (nullptr != g.mw) {
+        while (!g.mw)
+            this->yieldCurrentThread();
+    }
 
 #ifdef USE_GKEY
 	if (g.s.bEnableGKey) {
@@ -605,7 +607,7 @@ BOOL GlobalShortcutWin::EnumDevicesCB(LPCDIDEVICEINSTANCE pdidi, LPVOID pContext
 }
 
 void GlobalShortcutWin::timeTicked() {
-	if (g.mw->uiNewHardware != uiHardwareDevices) {
+    if ((nullptr != g.mw) && (g.mw->uiNewHardware != uiHardwareDevices)) {
 		uiHardwareDevices = g.mw->uiNewHardware;
 
 		XInputCheck_ClearDeviceCache();

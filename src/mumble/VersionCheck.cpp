@@ -87,6 +87,9 @@ void VersionCheck::performRequest() {
 }
 
 void VersionCheck::fetched(QByteArray a, QUrl url) {
+    if (nullptr == g.mw) {
+        return;
+    }
 	if (!a.isNull()) {
 		if (!a.isEmpty()) {
 #ifdef SNAPSHOT_BUILD

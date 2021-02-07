@@ -127,12 +127,14 @@ AudioWizard::AudioWizard(QWidget *p) : QWizard(p) {
 	abAmplify->qcAbove  = Qt::red;
 
 	// Trigger
-	foreach (const Shortcut &s, g.s.qlShortcuts) {
-		if (s.iIndex == g.mw->gsPushTalk->idx) {
-			skwPTT->setShortcut(s.qlButtons);
-			break;
-		}
-	}
+    if (nullptr != g.mw) {
+        foreach (const Shortcut &s, g.s.qlShortcuts) {
+            if (s.iIndex == g.mw->gsPushTalk->idx) {
+                skwPTT->setShortcut(s.qlButtons);
+                break;
+            }
+        }
+    }
 
 	if (g.s.atTransmit == Settings::PushToTalk)
 		qrPTT->setChecked(true);
@@ -418,7 +420,9 @@ void AudioWizard::accept() {
 
 		if (qrbNotificationTTS->isChecked()) {
 			g.s.bTTS = true;
-			g.mw->qaAudioTTS->setChecked(true);
+            if (nullptr != g.mw) {
+                g.mw->qaAudioTTS->setChecked(true);
+            }
 		}
 	}
 
@@ -613,7 +617,7 @@ void AudioWizard::on_skwPTT_keySet(bool valid, bool last) {
 		QList< Shortcut > ql;
 		bool found = false;
 		foreach (Shortcut s, g.s.qlShortcuts) {
-			if (s.iIndex == g.mw->gsPushTalk->idx) {
+            if ((nullptr != g.mw) && (s.iIndex == g.mw->gsPushTalk->idx)) {
 				if (buttons.isEmpty())
 					continue;
 				else if (!found) {
@@ -623,7 +627,7 @@ void AudioWizard::on_skwPTT_keySet(bool valid, bool last) {
 			}
 			ql << s;
 		}
-		if (!found && !buttons.isEmpty()) {
+        if ((nullptr != g.mw) && !found && !buttons.isEmpty()) {
 			Shortcut s;
 			s.iIndex    = g.mw->gsPushTalk->idx;
 			s.bSuppress = false;

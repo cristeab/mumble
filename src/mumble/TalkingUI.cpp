@@ -233,8 +233,10 @@ void TalkingUI::setupUI() {
 	// properly and as the TalkingUI doesn't provide context help anyways, this is not a big loss.
 	setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-	connect(g.mw->qtvUsers->selectionModel(), &QItemSelectionModel::currentChanged, this,
-			&TalkingUI::on_mainWindowSelectionChanged);
+    if (nullptr != g.mw) {
+        connect(g.mw->qtvUsers->selectionModel(), &QItemSelectionModel::currentChanged, this,
+                &TalkingUI::on_mainWindowSelectionChanged);
+    }
 }
 
 void TalkingUI::setFontSize(MultiStyleWidgetWrapper &widgetWrapper) {

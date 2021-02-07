@@ -100,7 +100,7 @@ QPoint getTalkingUIPosition() {
 	if (g.s.qpTalkingUI_Position != Settings::UNSPECIFIED_POSITION && positionIsOnScreen(g.s.qpTalkingUI_Position)) {
 		// Restore last position
 		talkingUIPos = g.s.qpTalkingUI_Position;
-	} else {
+    } else if (nullptr != g.mw) {
 		// Place the TalkingUI next to the MainWindow by default
 		const QPoint mainWindowPos = g.mw->pos();
 		const int horizontalBuffer = 10;
@@ -592,12 +592,14 @@ int main(int argc, char **argv) {
 	// window's frame to be included in the positioning calculation on X11 (at least using KDE Plasma)
 	g.talkingUI->setVisible(g.s.bShowTalkingUI);
 
-	QObject::connect(g.mw, &MainWindow::userAddedChannelListener, g.talkingUI, &TalkingUI::on_channelListenerAdded);
-	QObject::connect(g.mw, &MainWindow::userRemovedChannelListener, g.talkingUI, &TalkingUI::on_channelListenerRemoved);
-	QObject::connect(&ChannelListener::get(), &ChannelListener::localVolumeAdjustmentsChanged, g.talkingUI,
-					 &TalkingUI::on_channelListenerLocalVolumeAdjustmentChanged);
+    if (nullptr != g.mw) {
+        QObject::connect(g.mw, &MainWindow::userAddedChannelListener, g.talkingUI, &TalkingUI::on_channelListenerAdded);
+        QObject::connect(g.mw, &MainWindow::userRemovedChannelListener, g.talkingUI, &TalkingUI::on_channelListenerRemoved);
+        QObject::connect(&ChannelListener::get(), &ChannelListener::localVolumeAdjustmentsChanged, g.talkingUI,
+                         &TalkingUI::on_channelListenerLocalVolumeAdjustmentChanged);
 
-	QObject::connect(g.mw, &MainWindow::serverSynchronized, g.talkingUI, &TalkingUI::on_serverSynchronized);
+        QObject::connect(g.mw, &MainWindow::serverSynchronized, g.talkingUI, &TalkingUI::on_serverSynchronized);
+    }
 
 	// Initialize logger
 	// Log::log() needs the MainWindow to already exist. Thus creating the Log instance
@@ -613,9 +615,11 @@ int main(int argc, char **argv) {
 #endif
 
 #ifdef USE_DBUS
-	new MumbleDBus(g.mw);
-	QDBusConnection::sessionBus().registerObject(QLatin1String("/"), g.mw);
-	QDBusConnection::sessionBus().registerService(QLatin1String("net.sourceforge.mumble.mumble"));
+    if (nullptr != g.mw) {
+        new MumbleDBus(g.mw);
+        QDBusConnection::sessionBus().registerObject(QLatin1String("/"), g.mw);
+        QDBusConnection::sessionBus().registerService(QLatin1String("net.sourceforge.mumble.mumble"));
+    }
 #endif
 
 	SocketRPC *srpc = new SocketRPC(QLatin1String("Mumble"));
@@ -647,7 +651,7 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	if (runaudiowizard) {
+    if (runaudiowizard && (nullptr != g.mw)) {
 		AudioWizard *aw = new AudioWizard(g.mw);
 		aw->exec();
 		delete aw;
@@ -664,7 +668,8 @@ int main(int argc, char **argv) {
 			if (CertWizard::validateCert(kp))
 				g.s.kpCertificate = kp;
 		}
-		if (!CertWizard::validateCert(g.s.kpCertificate)) {
+        if (!CertWizard::validateCert(g.s.kpCertificate) &&
+                (nullptr != g.mw)) {
 			CertWizard *cw = new CertWizard(g.mw);
 			cw->exec();
 			delete cw;
@@ -686,7 +691,7 @@ int main(int argc, char **argv) {
 
 #ifdef QT_NO_DEBUG
 	// Only perform the version-check for non-debug builds
-	if (g.s.bUpdateCheck) {
+    if (g.s.bUpdateCheck && (nullptr != g.mw)) {
 		// Use different settings for the version checks depending on whether this is a snapshot build
 		// or a normal release build
 #	ifndef SNAPSHOT_BUILD
@@ -698,23 +703,27 @@ int main(int argc, char **argv) {
 #	endif
 	}
 #else
-	g.mw->msgBox(MainWindow::tr("Skipping version check in debug mode."));
+    if (nullptr != g.mw) {
+        g.mw->msgBox(MainWindow::tr("Skipping version check in debug mode."));
+    }
 #endif
 	if (g.s.bPluginCheck) {
 		g.p->checkUpdates();
 	}
 
-	if (url.isValid()) {
-		OpenURLEvent *oue = new OpenURLEvent(url);
-		qApp->postEvent(g.mw, oue);
+    if (nullptr != g.mw) {
+        if (url.isValid()) {
+            OpenURLEvent *oue = new OpenURLEvent(url);
+            qApp->postEvent(g.mw, oue);
 #ifdef Q_OS_MAC
-	} else if (!a.quLaunchURL.isEmpty()) {
-		OpenURLEvent *oue = new OpenURLEvent(a.quLaunchURL);
-		qApp->postEvent(g.mw, oue);
+        } else if (!a.quLaunchURL.isEmpty()) {
+            OpenURLEvent *oue = new OpenURLEvent(a.quLaunchURL);
+            qApp->postEvent(g.mw, oue);
 #endif
-	} else {
-		g.mw->on_qaServerConnect_triggered(true);
-	}
+        } else if (nullptr != g.mw) {
+            g.mw->on_qaServerConnect_triggered(true);
+        }
+    }
 
 	if (!g.bQuit)
 		res = a.exec();

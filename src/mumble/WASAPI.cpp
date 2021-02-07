@@ -481,7 +481,7 @@ void WASAPIInput::run() {
 										 nullptr);
 		if (FAILED(hr)) {
 			qWarning("WASAPIInput: Mic Initialize failed: hr=0x%08lx", hr);
-			if (hr == E_ACCESSDENIED) {
+            if ((hr == E_ACCESSDENIED) && (nullptr != g.mw)) {
 				WASAPIInputRegistrar::hasOSPermissionDenied = true;
 				g.mw->msgBox(tr("Access to the microphone was denied. Please check that your operating system's "
 								"microphone settings allow Mumble to use the microphone."));

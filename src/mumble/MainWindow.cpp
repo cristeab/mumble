@@ -882,7 +882,7 @@ static void recreateServerHandler() {
 	ChannelListener::setInitialServerSyncDone(false);
 
 	ServerHandlerPtr sh = g.sh;
-	if (sh && sh->isRunning()) {
+    if (sh && sh->isRunning() && (nullptr != g.mw)) {
 		g.mw->on_qaServerDisconnect_triggered();
 		sh->disconnect();
 		sh->wait();
@@ -897,11 +897,13 @@ static void recreateServerHandler() {
 	sh = ServerHandlerPtr(new ServerHandler());
 	sh->moveToThread(sh.get());
 	g.sh = sh;
-	g.mw->connect(sh.get(), SIGNAL(connected()), g.mw, SLOT(serverConnected()));
-	g.mw->connect(sh.get(), SIGNAL(disconnected(QAbstractSocket::SocketError, QString)), g.mw,
-				  SLOT(serverDisconnected(QAbstractSocket::SocketError, QString)));
-	g.mw->connect(sh.get(), SIGNAL(error(QAbstractSocket::SocketError, QString)), g.mw,
-				  SLOT(resolverError(QAbstractSocket::SocketError, QString)));
+    if (nullptr != g.mw) {
+        g.mw->connect(sh.get(), SIGNAL(connected()), g.mw, SLOT(serverConnected()));
+        g.mw->connect(sh.get(), SIGNAL(disconnected(QAbstractSocket::SocketError, QString)), g.mw,
+                      SLOT(serverDisconnected(QAbstractSocket::SocketError, QString)));
+        g.mw->connect(sh.get(), SIGNAL(error(QAbstractSocket::SocketError, QString)), g.mw,
+                      SLOT(resolverError(QAbstractSocket::SocketError, QString)));
+    }
 
 	QObject::connect(sh.get(), &ServerHandler::disconnected, g.talkingUI, &TalkingUI::on_serverDisconnected);
 }
@@ -3059,7 +3061,7 @@ void MainWindow::on_gsCycleTransmitMode_triggered(bool down, QVariant) {
 }
 
 void MainWindow::on_gsToggleMainWindowVisibility_triggered(bool down, QVariant) {
-	if (down) {
+    if (down && (nullptr != g.mw)) {
 		if (g.mw->isVisible()) {
 			g.mw->hide();
 		} else {
