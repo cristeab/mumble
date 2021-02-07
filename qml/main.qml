@@ -17,13 +17,11 @@ ApplicationWindow {
         readonly property var pages: ["qrc:/qml/Servers.qml", "qrc:/qml/AudioInput.qml", "qrc:/qml/AudioOutput.qml", "qrc:/qml/PasswordManager.qml", "qrc:/qml/CertificateManager.qml"]
 
         anchors {
-            top: parent.top
-            topMargin: Theme.windowMargin
             left: parent.left
-            bottom: parent.bottom
+            verticalCenter: parent.verticalCenter
         }
-        width: 50
-        spacing: 0
+        width: 60
+        spacing: Theme.windowMargin / 2
 
         Repeater {
             model: bar.names.length
@@ -31,11 +29,13 @@ ApplicationWindow {
                 id: tabButton
                 property bool isSelected: bar.currentButtonIndex === index
                 property color textColor: isSelected ? Theme.tabButtonColorSel : Theme.tabButtonColor
-                display: AbstractButton.IconOnly
+                display: AbstractButton.TextUnderIcon
+                text: "<font color='" + tabButton.textColor + "'>" + bar.names[index] + "</font>"
                 icon {
                     source: bar.icons[index]
                     color: tabButton.textColor
                 }
+                font.pointSize: 5
                 width: bar.width
                 height: width
                 background: Rectangle {
