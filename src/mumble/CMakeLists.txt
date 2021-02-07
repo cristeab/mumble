@@ -1034,8 +1034,8 @@ if (CMAKE_BUILD_TYPE MATCHES "^[Rr]elease")
     install(PROGRAMS "${CMAKE_SOURCE_DIR}/build/${CMAKE_PROJECT_NAME}.exe" DESTINATION .)
     install(FILES ${CMAKE_SOURCE_DIR}/icons/bubbles.ico DESTINATION .)
 
-    install(FILES ${Qt5_ROOT}/../../Tools/OpenSSL/Win_x64/bin/libcrypto-1_1-x64.dll .)
-    install(FILES ${Qt5_ROOT}/../../Tools/OpenSSL/Win_x64/bin/libssl-1_1-x64.dll .)
+    install(FILES ${Qt5_ROOT}/../../Tools/OpenSSL/Win_x64/bin/libcrypto-1_1-x64.dll DESTINATION .)
+    install(FILES ${Qt5_ROOT}/../../Tools/OpenSSL/Win_x64/bin/libssl-1_1-x64.dll DESTINATION .)
 
     add_custom_target(windeployqt ALL
           DEPENDS ${CMAKE_PROJECT_NAME}.exe
