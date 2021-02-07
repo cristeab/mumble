@@ -42,6 +42,7 @@
 #include "Themes.h"
 #include "UserLockFile.h"
 #include "VersionCheck.h"
+#include "Servers.h"
 
 #include <QtCore/QLibraryInfo>
 #include <QtCore/QProcess>
@@ -579,7 +580,15 @@ int main(int argc, char **argv) {
 	// Main Window
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
-
+    //set properties
+    QQmlContext *context = engine.rootContext();//registered properties are available to all components
+    if (nullptr != context) {
+        auto *srv = new Servers();
+        context->setContextProperty(srv->objectName(), srv);
+    } else {
+        qDebug() << "Cannot get root context";
+        return EXIT_FAILURE;
+    }
     //g.mw = new MainWindow(nullptr);
     //g.mw->show();
 
@@ -622,9 +631,9 @@ int main(int argc, char **argv) {
     }
 #endif
 
-	SocketRPC *srpc = new SocketRPC(QLatin1String("Mumble"));
+    SocketRPC *srpc = new SocketRPC(QLatin1String("Bubbles"));
 
-	g.l->log(Log::Information, MainWindow::tr("Welcome to Mumble."));
+    g.l->log(Log::Information, MainWindow::tr("Welcome to Bubbles."));
 
 	// Plugins
 	g.p = new Plugins(nullptr);

@@ -8,13 +8,12 @@ Page {
         id: srvTbl
         anchors {
             top: parent.top
-            topMargin: Theme.windowMargin
+            topMargin: 8 * Theme.windowMargin
             left: parent.left
-            leftMargin: Theme.windowMargin
+            leftMargin: 2 * Theme.windowMargin
             bottom: connectBtn.top
             bottomMargin: Theme.windowMargin
         }
-        width: 400
     }
     CustomButton {
         id: connectBtn

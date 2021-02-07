@@ -236,6 +236,8 @@ set(MUMBLE_SOURCES
 	"WebFetch.h"
 	"XMLTools.cpp"
 	"XMLTools.h"
+        "Servers.cpp"
+        "Servers.h"
 
 	"widgets/CompletablePage.cpp"
 	"widgets/CompletablePage.h"

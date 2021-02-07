@@ -12,7 +12,6 @@ Button {
         color: control.textColor
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        font.pointSize: Theme.buttonFontSize
     }
     background: Rectangle {
         color: control.pressed?Qt.darker(control.backgroundColor):control.backgroundColor
