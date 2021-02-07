@@ -1031,11 +1031,11 @@ if (CMAKE_BUILD_TYPE MATCHES "^[Rr]elease")
 
     find_program(WINDEPLOYQT windeployqt PATHS ${Qt5_ROOT}/bin/)
     install(PROGRAMS "${CMAKE_SOURCE_DIR}/build/${CMAKE_PROJECT_NAME}.exe" DESTINATION .)
-    install(FILES ${CMAKE_SOURCE_DIR}/img/logo.ico DESTINATION .)
+    install(FILES ${CMAKE_SOURCE_DIR}/icons/bubbles.ico DESTINATION .)
 
     add_custom_target(windeployqt
           COMMAND ${WINDEPLOYQT}
-          --dir ${CMAKE_INSTALL_PREFIX}/deploy
+          --dir ${PROJECT_BINARY_DIR}/deploy
           --release
           --compiler-runtime
           --qmldir ${CMAKE_SOURCE_DIR}/qml
