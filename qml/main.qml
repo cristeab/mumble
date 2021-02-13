@@ -3,6 +3,8 @@ import QtQuick.Controls 2.12
 import QtQuick.Window 2.12
 
 ApplicationWindow {
+    id: appWin
+
     title: qsTr("Bubbles")
     width: 800
     height: 600
@@ -62,5 +64,25 @@ ApplicationWindow {
         }
         width: parent.width
         initialItem: "qrc:/qml/Servers.qml"
+    }
+
+    Loader {
+        id: addEditServerDlg
+
+        function addNewServer() {
+            servers.resetServer()
+            addEditServerDlg.active = true
+            addEditServerDlg.item.visible = true
+            addEditServerDlg.item.serverIndex = -1
+        }
+        function editServer() {
+            addEditServerDlg.active = true
+            addEditServerDlg.item.visible = true
+            addEditServerDlg.item.serverIndex = 0
+        }
+
+        anchors.fill: parent
+        active: false
+        source: "qrc:/qml/dialog/AddEditServer.qml"
     }
 }
