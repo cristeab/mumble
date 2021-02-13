@@ -7,6 +7,7 @@ QtObject {
     readonly property real windowMargin: 10
 
     readonly property real labelFontSize: 10
+    readonly property real titleFontSize: 12
 
     readonly property color backgroundColor: "#C2CCDA"
     readonly property color tabButtonColor: "#130039"
