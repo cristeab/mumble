@@ -12,6 +12,8 @@ Row {
     property alias validator: controlTextField.validator
 
     spacing: 5
+    width: parent.width
+    height: childrenRect.height
 
     onEditTextChanged: control.error = false
 

@@ -623,7 +623,6 @@ int main(int argc, char **argv) {
 
 	// Main Window
     QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
     //set properties
     QQmlContext *context = engine.rootContext();//registered properties are available to all components
     if (nullptr != context) {
@@ -633,6 +632,7 @@ int main(int argc, char **argv) {
         qDebug() << "Cannot get root context";
         return EXIT_FAILURE;
     }
+    engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
     //g.mw = new MainWindow(nullptr);
     //g.mw->show();
 
