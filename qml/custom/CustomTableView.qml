@@ -4,8 +4,11 @@ import ".."
 
 TableView {
     id: controlTable
+
     readonly property int delegateHeight: 35
     readonly property var columnWidths: [200, 100, 100]
+
+    visible: 0 < controlTable.rows
 
     Row {
         id: columnsHeader
