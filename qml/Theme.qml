@@ -8,12 +8,12 @@ QtObject {
 
     readonly property real labelFontSize: 10
 
-    readonly property color backgroundColor: Material.background
-    readonly property color tabButtonColor: "white"
-    readonly property color tabButtonColorSel: "lightblue"
+    readonly property color backgroundColor: "#C2CCDA"
+    readonly property color tabButtonColor: "#130039"
+    readonly property color tabButtonColorSel: "#0F80FE"
     readonly property color buttonBlueColor: "#0F80FE"
     readonly property color tableBackgroundColor: "#13151E"
-    readonly property color tableSelectedBackgroundColor: Material.accent
+    readonly property color tableSelectedBackgroundColor: "#0F80FE"
     readonly property color errorColor: "red"
-    readonly property color textColor: "white"
+    readonly property color textColor: "#130039"
 }

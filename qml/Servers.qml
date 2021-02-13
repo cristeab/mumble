@@ -4,6 +4,11 @@ import "custom"
 
 Page {
     id: control
+
+    background: Rectangle {
+        color: Theme.backgroundColor
+    }
+
     CustomTableView {
         id: srvTbl
         anchors {
@@ -22,7 +27,6 @@ Page {
             bottom: parent.bottom
             bottomMargin: Theme.windowMargin
         }
-        backgroundColor: Theme.buttonBlueColor
         text: qsTr("Connect")
         onClicked: {
             //TODO
@@ -35,14 +39,10 @@ Page {
         }
         spacing: Theme.windowMargin
         CustomButton {
-            backgroundColor: "lightgray"
-            textColor: "black"
             text: qsTr("Add New...")
             onClicked: addEditServerDlg.addNewServer()
         }
         CustomButton {
-            backgroundColor: "lightgray"
-            textColor: "black"
             text: qsTr("Edit...")
             onClicked: addEditServerDlg.editServer()
         }
