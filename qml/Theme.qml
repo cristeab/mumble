@@ -13,6 +13,7 @@ QtObject {
     readonly property color tabButtonColorSel: "lightblue"
     readonly property color buttonBlueColor: "#0F80FE"
     readonly property color tableBackgroundColor: "#13151E"
+    readonly property color tableSelectedBackgroundColor: Material.accent
     readonly property color errorColor: "red"
     readonly property color textColor: "white"
 }
