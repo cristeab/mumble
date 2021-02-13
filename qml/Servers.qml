@@ -38,17 +38,13 @@ Page {
             backgroundColor: "lightgray"
             textColor: "black"
             text: qsTr("Add New...")
-            onClicked: {
-                //TODO
-            }
+            onClicked: addEditServerDlg.addNewServer()
         }
         CustomButton {
             backgroundColor: "lightgray"
             textColor: "black"
             text: qsTr("Edit...")
-            onClicked: {
-                //TODO
-            }
+            onClicked: addEditServerDlg.editServer()
         }
     }
 }

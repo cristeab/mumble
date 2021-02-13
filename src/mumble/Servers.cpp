@@ -3,14 +3,6 @@
 Servers::Servers(QObject *parent) : QAbstractTableModel(parent)
 {
     setObjectName("servers");
-    init();
-}
-
-void Servers::init()
-{
-    _servers.append({ "Example 1", 3, 2, 10 });
-    _servers.append({ "Example 2", 5, 0, 10 });
-    _servers.append({ "Example 3", 2, 3, 20 });
 }
 
 int Servers::rowCount(const QModelIndex&) const
@@ -79,4 +71,24 @@ QVariant Servers::headerData(int section, Qt::Orientation orientation, int role)
         }
     }
     return hdr;
+}
+
+void Servers::changeServer(int index)
+{
+    emit layoutAboutToBeChanged();
+    if (isValidIndex(index)) {
+        auto &server = _servers[index];
+        server.address = _address;
+        server.port = _port;
+        server.username = _username;
+        server.name = _label;
+    } else {
+        ServerItem server;
+        server.address = _address;
+        server.port = _port;
+        server.username = _username;
+        server.name = _label;
+        _servers.append(server);
+    }
+    emit layoutChanged();
 }
