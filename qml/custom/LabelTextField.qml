@@ -23,10 +23,6 @@ Row {
         width: 100
         elide: Text.ElideRight
         color: control.error ? Theme.errorColor : Theme.textColor
-        font {
-            italic: true
-            pointSize: Theme.labelFontSize
-        }
     }
     CustomTextField {
         id: controlTextField

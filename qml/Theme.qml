@@ -16,4 +16,5 @@ QtObject {
     readonly property color tableSelectedBackgroundColor: "#0F80FE"
     readonly property color errorColor: "red"
     readonly property color textColor: "#130039"
+    readonly property color borderColor: "#8D007B"
 }
