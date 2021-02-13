@@ -97,6 +97,21 @@ Dialog {
         }
     }
 
+    header: Rectangle {
+        color: Theme.backgroundColor
+        Label {
+            text: control.title
+            color: Theme.textColor
+            font {
+                bold: true
+                pointSize: Theme.titleFontSize
+            }
+            topPadding: Theme.windowMargin
+            leftPadding: Theme.windowMargin
+            bottomPadding: Theme.windowMargin
+        }
+    }
+
     footer: DialogButtonBox {
         CustomButton {
             text: qsTr("OK")
@@ -104,7 +119,7 @@ Dialog {
         }
         CustomButton {
             text: qsTr("Cancel")
-            DialogButtonBox.buttonRole: DialogButtonBox.DestructiveRole
+            DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
         }
         background: Rectangle {
             color: Theme.backgroundColor
