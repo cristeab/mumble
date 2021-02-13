@@ -8,8 +8,8 @@ Dialog {
 
     property int serverIndex: -1
 
-    implicitWidth: 300
-    implicitHeight: 400
+    implicitWidth: 400
+    implicitHeight: dlgColumn.height + 120
     x: (appWin.width-width)/2
     y: (appWin.height-height)/2
     standardButtons: Dialog.Ok | Dialog.Cancel
