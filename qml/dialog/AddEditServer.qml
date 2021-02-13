@@ -8,16 +8,6 @@ Dialog {
 
     property int serverIndex: -1
 
-    implicitWidth: 400
-    implicitHeight: dlgColumn.height + 120
-    x: (appWin.width-width)/2
-    y: (appWin.height-height)/2
-    standardButtons: Dialog.Ok | Dialog.Cancel
-    title: (-1 === control.serverIndex) ? qsTr("Add Server") : qsTr("Edit Server")
-    modal: true
-    visible: false
-    closePolicy: Popup.NoAutoClose
-
     function validate() {
         if ("" === servers.address) {
             address.error = true
@@ -38,6 +28,18 @@ Dialog {
         }
         return true
     }
+
+    background: Rectangle {
+        color: Theme.backgroundColor
+    }
+    implicitWidth: 400
+    implicitHeight: dlgColumn.height + 120
+    x: (appWin.width-width)/2
+    y: (appWin.height-height)/2
+    title: (-1 === control.serverIndex) ? qsTr("Add Server") : qsTr("Edit Server")
+    modal: true
+    visible: false
+    closePolicy: Popup.NoAutoClose
 
     onAccepted: {
         if (!control.validate()) {
@@ -92,6 +94,20 @@ Dialog {
             editText: servers.label
             placeholderText: qsTr("Local server label")
             onEditTextChanged: servers.label = editText
+        }
+    }
+
+    footer: DialogButtonBox {
+        CustomButton {
+            text: qsTr("OK")
+            DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
+        }
+        CustomButton {
+            text: qsTr("Cancel")
+            DialogButtonBox.buttonRole: DialogButtonBox.DestructiveRole
+        }
+        background: Rectangle {
+            color: Theme.backgroundColor
         }
     }
 }
