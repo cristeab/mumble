@@ -17,9 +17,10 @@ Row {
 
     Label {
         id: controlLabel
+        anchors.verticalCenter: controlTextField.verticalCenter
         width: 100
         elide: Text.ElideRight
-        color: control.error ? Theme.errorColor : "black"
+        color: control.error ? Theme.errorColor : Theme.textColor
         font {
             italic: true
             pointSize: Theme.labelFontSize

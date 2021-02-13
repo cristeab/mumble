@@ -8,8 +8,8 @@ Dialog {
 
     property int serverIndex: -1
 
-    implicitWidth: appWin.width - 2 * Theme.windowMargin
-    implicitHeight: appWin.height - 2 * Theme.windowMargin
+    implicitWidth: 300
+    implicitHeight: 400
     x: (appWin.width-width)/2
     y: (appWin.height-height)/2
     standardButtons: Dialog.Ok | Dialog.Cancel
@@ -44,6 +44,8 @@ Dialog {
     onRejected: addEditServerDlg.active = false
 
     Column {
+        id: dlgColumn
+        anchors.fill: parent
         spacing: Theme.windowMargin
 
         LabelTextField {

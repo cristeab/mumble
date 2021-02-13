@@ -6,7 +6,7 @@ pragma Singleton
 QtObject {
     readonly property real windowMargin: 10
 
-    readonly property real labelFontSize: 12
+    readonly property real labelFontSize: 10
 
     readonly property color backgroundColor: Material.background
     readonly property color tabButtonColor: "white"
@@ -14,4 +14,5 @@ QtObject {
     readonly property color buttonBlueColor: "#0F80FE"
     readonly property color tableBackgroundColor: "#13151E"
     readonly property color errorColor: "red"
+    readonly property color textColor: "white"
 }
