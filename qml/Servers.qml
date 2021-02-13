@@ -16,6 +16,8 @@ Page {
             topMargin: 8 * Theme.windowMargin
             left: parent.left
             leftMargin: 2 * Theme.windowMargin
+            right: parent.right
+            rightMargin: 2 * Theme.windowMargin
             bottom: connectBtn.top
             bottomMargin: Theme.windowMargin
         }
