@@ -45,8 +45,10 @@ Dialog {
 
     Column {
         id: dlgColumn
-        anchors.fill: parent
+        width: parent.width
         spacing: Theme.windowMargin
+
+        Component.onCompleted: console.log("height " + height)
 
         LabelTextField {
             id: address
