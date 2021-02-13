@@ -6,8 +6,8 @@ TableView {
     id: controlTable
 
     readonly property int delegateHeight: 35
-    readonly property var columnWidths: [200, 100, 100]
-    property int currentRow: -1
+    readonly property var columnWidths: [0.6 * controlTable.width, 0.2 * controlTable.width, 0.2 * controlTable.width]
+    property int currentRow: 0
 
     visible: 0 < controlTable.rows
 
@@ -46,6 +46,7 @@ TableView {
         property int row: index % controlTable.rows
         padding: Theme.windowMargin
         text: display
+        color: Theme.textColor2
         height: controlTable.delegateHeight
         clip: true
         elide: Text.ElideRight
@@ -57,13 +58,7 @@ TableView {
         }
         MouseArea {
             anchors.fill: parent
-            onClicked: {
-                if (controlTable.currentRow === controlDelegate.row) {
-                    controlTable.currentRow = -1
-                } else {
-                    controlTable.currentRow = controlDelegate.row
-                }
-            }
+            onClicked: controlTable.currentRow = controlDelegate.row
         }
     }
 }
