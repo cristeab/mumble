@@ -7,6 +7,7 @@ TableView {
 
     readonly property int delegateHeight: 35
     readonly property var columnWidths: [200, 100, 100]
+    property int currentRow: -1
 
     visible: 0 < controlTable.rows
 
@@ -41,6 +42,8 @@ TableView {
     columnSpacing: 0
     rowSpacing: 0
     delegate:  Label {
+        id: controlDelegate
+        property int row: index % controlTable.rows
         padding: Theme.windowMargin
         text: display
         height: controlTable.delegateHeight
@@ -49,6 +52,18 @@ TableView {
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         rightPadding: Theme.windowMargin
-        background: Rectangle { color: Theme.tableBackgroundColor }
+        background: Rectangle {
+            color: (controlDelegate.row !== controlTable.currentRow) ? Theme.tableBackgroundColor : Theme.tableSelectedBackgroundColor
+        }
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                if (controlTable.currentRow === controlDelegate.row) {
+                    controlTable.currentRow = -1
+                } else {
+                    controlTable.currentRow = controlDelegate.row
+                }
+            }
+        }
     }
 }
