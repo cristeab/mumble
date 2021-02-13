@@ -10,6 +10,10 @@ ApplicationWindow {
     height: 600
     visible: true
 
+    background: Rectangle {
+        color: Theme.backgroundColor
+    }
+
     Column {
         id: bar
 
@@ -31,7 +35,7 @@ ApplicationWindow {
                 id: tabButton
                 property bool isSelected: bar.currentButtonIndex === index
                 property color textColor: isSelected ? Theme.tabButtonColorSel : Theme.tabButtonColor
-                display: AbstractButton.TextUnderIcon
+                display: AbstractButton.IconOnly
                 text: "<font color='" + tabButton.textColor + "'>" + bar.names[index] + "</font>"
                 icon {
                     source: bar.icons[index]

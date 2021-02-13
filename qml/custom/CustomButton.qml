@@ -4,19 +4,25 @@ import ".."
 
 Button {
     id: control
-    property color backgroundColor: "black"
-    property color textColor: "white"
+    property color backgroundColor: Theme.backgroundColor
+    property color textColor: Theme.textColor
     contentItem: Label {
         anchors.centerIn: parent
         text: control.text
         color: control.textColor
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
+        leftPadding: Theme.windowMargin / 2
+        rightPadding: Theme.windowMargin / 2
     }
     background: Rectangle {
-        color: control.pressed?Qt.darker(control.backgroundColor):control.backgroundColor
-        height: control.height
-        width: control.width
-        radius: 3
+        color: control.pressed ? Qt.darker(control.backgroundColor) : control.backgroundColor
+        //height: control.height
+        //width: control.width
+        radius: height / 2
+        border {
+            width: 2
+            color: control.textColor
+        }
     }
 }
