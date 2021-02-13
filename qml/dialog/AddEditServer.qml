@@ -61,7 +61,7 @@ Dialog {
             editText: servers.address
             placeholderText: "127.0.0.1"
             validator: RegExpValidator {
-                regExp:  /^((?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\.){0,3}(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])$/
+                regExp: /^((?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\.){0,3}(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])$/
             }
             onEditTextChanged: {
                 servers.address = editText
