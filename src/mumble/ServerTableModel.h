@@ -67,7 +67,7 @@ public:
 
 private:
     enum { NAME = 0, DELAY, USERS, COLUMN_COUNT };
-    enum { TICK_PERIOD_MS = 50, TICK_THRESHOLD_US = 1000000ULL };
+    enum { TICK_PERIOD_MS = 500, TICK_THRESHOLD_US = 1000000ULL };
     bool isValidIndex(int index) const {
         return ((index >= 0) && (index < _servers.count()));
     }
