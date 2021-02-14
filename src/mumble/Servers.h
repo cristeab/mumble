@@ -51,5 +51,8 @@ private:
     bool isValidIndex(int index) const {
         return ((index >= 0) && (index < _servers.count()));
     }
+    void load();
+    void save();
+
     QVector<ServerItem> _servers;
 };
