@@ -5,8 +5,7 @@ import ".."
 TableView {
     id: controlTable
 
-    readonly property int delegateHeight: 35
-    readonly property var columnWidths: [0.6 * controlTable.width, 0.2 * controlTable.width, 0.2 * controlTable.width]
+    readonly property var columnWidths: [440, 120, 120]
     property int currentRow: 0
 
     visible: 0 < controlTable.rows
@@ -20,7 +19,6 @@ TableView {
             model: controlTable.columns > 0 ? controlTable.columns : 1
             Label {
                 width: controlTable.columnWidthProvider(modelData) - (modelData === 2 ? 0 : 2)
-                height: controlTable.delegateHeight
                 text: servers.headerData(modelData, Qt.Horizontal)
                 color: "white"
                 font.pixelSize: 15
@@ -35,24 +33,25 @@ TableView {
     columnWidthProvider: function (column) {
         return controlTable.columnWidths[column]
     }
-    width: 400 + (controlTable.columns - 1) * Theme.windowMargin
     model: servers
     clip: true
     boundsBehavior: ListView.StopAtBounds
     columnSpacing: 0
-    rowSpacing: 0
+    rowSpacing: 2
     delegate:  Label {
         id: controlDelegate
+
         property int row: index % controlTable.rows
+        property int col: index / controlTable.rows
+
         padding: Theme.windowMargin
+        //width: controlTable.columnWidthProvider(col)
         text: display
         color: Theme.textColor2
-        height: controlTable.delegateHeight
         clip: true
         elide: Text.ElideRight
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        rightPadding: Theme.windowMargin
         background: Rectangle {
             color: (controlDelegate.row !== controlTable.currentRow) ? Theme.tableBackgroundColor : Theme.tableSelectedBackgroundColor
         }

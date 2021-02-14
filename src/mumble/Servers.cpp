@@ -1,8 +1,11 @@
 #include "Servers.h"
+#include "Database.h"
+#include "Global.h"
 
 Servers::Servers(QObject *parent) : QAbstractTableModel(parent)
 {
     setObjectName("servers");
+    load();
 }
 
 int Servers::rowCount(const QModelIndex&) const
@@ -91,4 +94,39 @@ void Servers::changeServer(int index)
         _servers.append(server);
     }
     emit layoutChanged();
+    save();
+}
+
+void Servers::load()
+{
+    if (nullptr == g.db) {
+        qCritical() << "Cannot access db";
+        return;
+    }
+    auto items = g.db->getFavorites();
+    emit layoutAboutToBeChanged();
+    for (const auto &it: items) {
+        ServerItem srvItem;
+        srvItem.name = it.qsName;
+        srvItem.address = it.qsUrl;
+        srvItem.port = it.usPort;
+        srvItem.username = it.qsUsername;
+        _servers << srvItem;
+    }
+    emit layoutChanged();
+}
+
+void Servers::save()
+{
+    if (nullptr == g.db) {
+        qCritical() << "Cannot access db";
+        return;
+    }
+    for (const auto &it: _servers) {
+        FavoriteServer favSrv;
+        favSrv.qsName = it.name;
+        favSrv.qsUrl = it.address;
+        favSrv.usPort = it.port;
+        favSrv.qsUsername = it.username;
+    }
 }
