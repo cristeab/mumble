@@ -155,6 +155,7 @@ void ServerTableModel::load()
         srvItem.port = it.usPort;
         srvItem.username = it.qsUsername;
         _servers << srvItem;
+        startDns(&_servers.last());
     }
     emit layoutChanged();
 }
