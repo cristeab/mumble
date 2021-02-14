@@ -1,24 +1,24 @@
-#include "Servers.h"
+#include "ServerTableModel.h"
 #include "Database.h"
 #include "Global.h"
 
-Servers::Servers(QObject *parent) : QAbstractTableModel(parent)
+ServerTableModel::ServerTableModel(QObject *parent) : QAbstractTableModel(parent)
 {
     setObjectName("servers");
     load();
 }
 
-int Servers::rowCount(const QModelIndex&) const
+int ServerTableModel::rowCount(const QModelIndex&) const
 {
     return _servers.size();
 }
 
-int Servers::columnCount(const QModelIndex&) const
+int ServerTableModel::columnCount(const QModelIndex&) const
 {
     return COLUMN_COUNT;
 }
 
-QVariant Servers::data(const QModelIndex &index, int role) const
+QVariant ServerTableModel::data(const QModelIndex &index, int role) const
 {
     QVariant out;
     const auto row = index.row();
@@ -49,13 +49,13 @@ QVariant Servers::data(const QModelIndex &index, int role) const
     return out;
 }
 
-QHash<int, QByteArray> Servers::roleNames() const
+QHash<int, QByteArray> ServerTableModel::roleNames() const
 {
     return { { Qt::DisplayRole, "display" },
              { Qt::EditRole, "edit" } };
 }
 
-QVariant Servers::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant ServerTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     QString hdr;
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
@@ -76,7 +76,7 @@ QVariant Servers::headerData(int section, Qt::Orientation orientation, int role)
     return hdr;
 }
 
-void Servers::changeServer(int index)
+void ServerTableModel::changeServer(int index)
 {
     emit layoutAboutToBeChanged();
     if (isValidIndex(index)) {
@@ -97,7 +97,7 @@ void Servers::changeServer(int index)
     save();
 }
 
-void Servers::load()
+void ServerTableModel::load()
 {
     if (nullptr == g.db) {
         qCritical() << "Cannot access db";
@@ -116,7 +116,7 @@ void Servers::load()
     emit layoutChanged();
 }
 
-void Servers::save()
+void ServerTableModel::save()
 {
     if (nullptr == g.db) {
         qCritical() << "Cannot access db";

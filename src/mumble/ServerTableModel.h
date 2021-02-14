@@ -5,7 +5,7 @@
 #include <qqml.h>
 #include <QVector>
 
-class Servers : public QAbstractTableModel
+class ServerTableModel : public QAbstractTableModel
 {
     Q_OBJECT
     QML_ELEMENT
@@ -30,7 +30,7 @@ public:
         QString username;
     };
 
-    explicit Servers(QObject *parent = nullptr);
+    explicit ServerTableModel(QObject *parent = nullptr);
 
     Q_INVOKABLE void resetServer(int index) {
         if (isValidIndex(index)) {

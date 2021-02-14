@@ -43,7 +43,7 @@
 #include "Themes.h"
 #include "UserLockFile.h"
 #include "VersionCheck.h"
-#include "Servers.h"
+#include "ServerTableModel.h"
 
 #include <QtCore/QProcess>
 #include <QtGui/QDesktopServices>
@@ -626,7 +626,7 @@ int main(int argc, char **argv) {
     //set properties
     QQmlContext *context = engine.rootContext();//registered properties are available to all components
     if (nullptr != context) {
-        auto *srv = new Servers();
+        auto *srv = new ServerTableModel();
         context->setContextProperty(srv->objectName(), srv);
     } else {
         qDebug() << "Cannot get root context";
