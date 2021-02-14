@@ -232,7 +232,7 @@ void ServerTableModel::timeTick()
 
             _dnsActive.insert(unresolved);
             ServerResolver *sr = new ServerResolver();
-            QObject::connect(sr, SIGNAL(resolved()), this, SLOT(lookedUp()));
+            QObject::connect(sr, &ServerResolver::resolved, this, &ServerTableModel::lookedUp);
             sr->resolve(unresolved.hostname, unresolved.port);
             break;
         }
@@ -279,17 +279,12 @@ void ServerTableModel::sendPing(const QHostAddress &host, unsigned short port)
     memset(blob, 0, sizeof(blob));
     *reinterpret_cast< quint64 * >(blob + 8) = _pingTimer.elapsed() ^ uiRand;
 
-    if (_IPv4 && host.protocol() == QAbstractSocket::IPv4Protocol)
+    if (_IPv4 && host.protocol() == QAbstractSocket::IPv4Protocol) {
         _socket4->writeDatagram(blob + 4, 12, host, port);
-    else if (_IPv6 && host.protocol() == QAbstractSocket::IPv6Protocol)
+    } else if (_IPv6 && host.protocol() == QAbstractSocket::IPv6Protocol) {
         _socket6->writeDatagram(blob + 4, 12, host, port);
-    else
+    } else {
         return;
-
-    const QSet< ServerItem * > &qs = _pings.value(addr);
-
-    for (auto *si: qs) {
-        ++si->sent;
     }
 }
 
@@ -303,7 +298,7 @@ void ServerTableModel::udpReply()
         QHostAddress host;
         unsigned short port;
 
-        qint64 len = sock->readDatagram(blob + 4, 24, &host, &port);
+        const qint64 len = sock->readDatagram(blob + 4, 24, &host, &port);
         if (len == 24) {
             if (host.scopeId() == QLatin1String("0"))
                 host.setScopeId(QLatin1String(""));
@@ -333,5 +328,35 @@ void ServerTableModel::udpReply()
                 }
             }
         }
+    }
+}
+
+void ServerTableModel::lookedUp()
+{
+    ServerResolver *sr = qobject_cast< ServerResolver * >(QObject::sender());
+    sr->deleteLater();
+
+    QString hostname    = sr->hostname().toLower();
+    unsigned short port = sr->port();
+    UnresolvedServerAddress unresolved(hostname, port);
+
+    _dnsActive.remove(unresolved);
+
+    // An error occurred, or no records were found.
+    if (sr->records().size() == 0) {
+        return;
+    }
+
+    QSet< ServerAddress > qs;
+    foreach (ServerResolverRecord record, sr->records()) {
+        foreach (const HostAddress &ha, record.addresses()) { qs.insert(ServerAddress(ha, record.port())); }
+    }
+
+    _dnsLookup.removeAll(unresolved);
+    _dnsCache.insert(unresolved, qs.values());
+    _dnsWait.remove(unresolved);
+
+    for (const auto &addr: qs) {
+        sendPing(addr.host.toAddress(), addr.port);
     }
 }

@@ -77,6 +77,7 @@ private:
     void startDns(ServerItem *si);
     void sendPing(const QHostAddress &host, unsigned short port);
     void udpReply();
+    void lookedUp();
 
     QVector<ServerItem> _servers;
     QTimer _pingTick;
