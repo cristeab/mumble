@@ -24,14 +24,19 @@ Page {
     }
     CustomButton {
         id: connectBtn
+        property bool isConnected: servers.isConnected(servers.currentIndex)
         anchors {
             left: srvTbl.left
             bottom: parent.bottom
             bottomMargin: Theme.windowMargin
         }
-        text: qsTr("Connect")
+        text: connectBtn.isConnected ? qsTr("Disconnect") : qsTr("Connect")
         onClicked: {
-            //TODO
+            if (connectBtn.isConnected) {
+                servers.disconnectServer()
+            } else {
+                servers.connect()
+            }
         }
     }
     Row {
@@ -45,8 +50,9 @@ Page {
             onClicked: addEditServerDlg.addNewServer()
         }
         CustomButton {
+            enabled: !connectBtn.isConnected
             text: qsTr("Edit...")
-            onClicked: addEditServerDlg.editServer(srvTbl.currentRow)
+            onClicked: addEditServerDlg.editServer()
         }
     }
 }

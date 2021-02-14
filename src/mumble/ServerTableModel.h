@@ -43,6 +43,7 @@ public:
         QString address;//should be resolved from hostname
         int port = 0;
         QString username;
+        QString password;
         uint32_t version = 0;
         uint32_t bandwidth = 0;
         uint32_t pingSort = 0;
@@ -62,6 +63,11 @@ public:
     Q_INVOKABLE bool isReachable(int row) {
         return isValidIndex(row) ? (0 < _servers.at(row).totalUsers) : false;
     }
+    Q_INVOKABLE void connectServer();
+    Q_INVOKABLE void disconnectServer();
+    Q_INVOKABLE bool isConnected(int row) {
+        return (INVALID_INDEX != row) && (row == _connectedServerIndex);
+    }
 
     int rowCount(const QModelIndex & = QModelIndex()) const override;
     int columnCount(const QModelIndex & = QModelIndex()) const override;
@@ -71,7 +77,8 @@ public:
 
 private:
     enum { NAME = 0, DELAY, USERS, COLUMN_COUNT };
-    enum { TICK_PERIOD_MS = 500, TICK_THRESHOLD_US = 1000000ULL, GRACE_PINGS = 4 };
+    enum { TICK_PERIOD_MS = 500, TICK_THRESHOLD_US = 1000000ULL, GRACE_PINGS = 4,
+           INVALID_INDEX = -1 };
     bool isValidIndex(int index) const {
         return ((index >= 0) && (index < _servers.count()));
     }
@@ -84,6 +91,7 @@ private:
     void udpReply();
     void lookedUp();
     void setStats(ServerItem *si, double delay, int users, int totalUsers);
+    static void recreateServerHandler();
 
     QVector<ServerItem> _servers;
     QTimer _pingTick;
@@ -107,6 +115,7 @@ private:
     bool _IPv6 = false;
     QUdpSocket *_socket4 = nullptr;
     QUdpSocket *_socket6 = nullptr;
+    int _connectedServerIndex = INVALID_INDEX;
 
 #ifdef USE_ZEROCONF
 protected:
