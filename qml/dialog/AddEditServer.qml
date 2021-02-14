@@ -6,10 +6,8 @@ import ".."
 Dialog {
     id: control
 
-    property int serverIndex: -1
-
     function validate() {
-        if ("" === servers.address) {
+        if ("" === servers.hostname) {
             address.error = true
             return false
         }
@@ -36,7 +34,7 @@ Dialog {
     implicitHeight: dlgColumn.height + 120
     x: (appWin.width-width)/2
     y: (appWin.height-height)/2
-    title: (-1 === control.serverIndex) ? qsTr("Add Server") : qsTr("Edit Server")
+    title: (-1 === servers.currentIndex) ? qsTr("Add Server") : qsTr("Edit Server")
     modal: true
     visible: false
     closePolicy: Popup.NoAutoClose
@@ -47,7 +45,7 @@ Dialog {
             addEditServerDlg.item.visible = true
             return
         }
-        servers.changeServer(control.serverIndex)
+        servers.changeServer()
         addEditServerDlg.active = false
     }
     onRejected: addEditServerDlg.active = false
@@ -60,13 +58,10 @@ Dialog {
         LabelTextField {
             id: address
             text: qsTr("Address")
-            editText: servers.address
+            editText: servers.hostname
             placeholderText: "127.0.0.1"
-            validator: RegExpValidator {
-                regExp: /^((?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\.){0,3}(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])$/
-            }
             onEditTextChanged: {
-                servers.address = editText
+                servers.hostname = editText
                 servers.label = editText
             }
         }
