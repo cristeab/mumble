@@ -317,6 +317,18 @@ void ServerTableModel::sendPing(const QHostAddress &host, unsigned short port)
     } else {
         return;
     }
+
+    const QSet< ServerItem * > &qs = _pings.value(addr);
+    for (auto *si: qs) {
+        //test the number of received packets
+        if ((si->sent - si->recv) > GRACE_PINGS) {
+            setStats(si, 0, 0, 0);
+            si->sent = 0;
+            si->recv = 0;
+        }
+
+        ++si->sent;
+    }
 }
 
 void ServerTableModel::udpReply()
@@ -343,6 +355,7 @@ void ServerTableModel::udpReply()
                 quint64 elapsed = _pingTimer.elapsed() - (*ts ^ _pingRand.value(address));
 
                 for (auto *si: _pings.value(address)) {
+                    ++si->recv;
                     si->version    = qFromBigEndian(ping[0]);
                     quint32 users    = qFromBigEndian(ping[3]);
                     quint32 maxusers = qFromBigEndian(ping[4]);
@@ -350,11 +363,7 @@ void ServerTableModel::udpReply()
 
                     if (!si->pingSort)
                         si->pingSort = _pingCache.value(UnresolvedServerAddress(si->hostname, si->port));
-
-                    emit layoutAboutToBeChanged();
-                    si->delayMs = static_cast< double >(elapsed);
-                    si->currentUsers = users;
-                    si->totalUsers = maxusers;
+                    setStats(si, static_cast< double >(elapsed), users, maxusers);
                     emit layoutChanged();
                 }
             }
@@ -390,4 +399,13 @@ void ServerTableModel::lookedUp()
     for (const auto &addr: qs) {
         sendPing(addr.host.toAddress(), addr.port);
     }
+}
+
+void ServerTableModel::setStats(ServerItem *si, double delay, int users, int totalUsers)
+{
+    emit layoutAboutToBeChanged();
+    si->delayMs = delay;
+    si->currentUsers = users;
+    si->totalUsers = totalUsers;
+    emit layoutChanged();
 }

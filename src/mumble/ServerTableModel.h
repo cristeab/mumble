@@ -47,6 +47,7 @@ public:
         uint32_t bandwidth = 0;
         uint32_t pingSort = 0;
         uint32_t sent = 0;
+        uint32_t recv = 0;
 #ifdef USE_ZEROCONF
         QString zeroconfHost;
         BonjourRecord zeroconfRecord;
@@ -58,6 +59,9 @@ public:
     Q_INVOKABLE void resetServer();
     Q_INVOKABLE void changeServer();
     Q_INVOKABLE void startPingTick(bool start);
+    Q_INVOKABLE bool isReachable(int row) {
+        return isValidIndex(row) ? (0 < _servers.at(row).totalUsers) : false;
+    }
 
     int rowCount(const QModelIndex & = QModelIndex()) const override;
     int columnCount(const QModelIndex & = QModelIndex()) const override;
@@ -67,7 +71,7 @@ public:
 
 private:
     enum { NAME = 0, DELAY, USERS, COLUMN_COUNT };
-    enum { TICK_PERIOD_MS = 500, TICK_THRESHOLD_US = 1000000ULL };
+    enum { TICK_PERIOD_MS = 500, TICK_THRESHOLD_US = 1000000ULL, GRACE_PINGS = 4 };
     bool isValidIndex(int index) const {
         return ((index >= 0) && (index < _servers.count()));
     }
@@ -79,6 +83,7 @@ private:
     void sendPing(const QHostAddress &host, unsigned short port);
     void udpReply();
     void lookedUp();
+    void setStats(ServerItem *si, double delay, int users, int totalUsers);
 
     QVector<ServerItem> _servers;
     QTimer _pingTick;
