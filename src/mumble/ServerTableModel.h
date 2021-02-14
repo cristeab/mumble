@@ -90,15 +90,12 @@ private:
     QSet<UnresolvedServerAddress> _dnsActive;
     QHash< UnresolvedServerAddress, QSet< ServerItem * > > _dnsWait;
     QHash< UnresolvedServerAddress, QList< ServerAddress > > _dnsCache;
-    QList< ServerItem * > _items;
-    int _pingIndex = -1;
 
     QHash< ServerAddress, quint64 > _pingRand;
     QHash< ServerAddress, QSet< ServerItem * > > _pings;
     QMap< UnresolvedServerAddress, unsigned int > _pingCache;
     Timer _pingTimer;
     Timer _currentTimer;
-    Timer _restart;
     bool _IPv4 = false;
     bool _IPv6 = false;
     QUdpSocket *_socket4 = nullptr;

@@ -22,6 +22,12 @@ ApplicationWindow {
         readonly property var icons: ["qrc:/img/server.svg", "qrc:/img/microphone.svg", "qrc:/img/volume.svg", "qrc:/img/key.svg", "qrc:/img/certificate.svg"]
         readonly property var pages: ["qrc:/qml/Servers.qml", "qrc:/qml/AudioInput.qml", "qrc:/qml/AudioOutput.qml", "qrc:/qml/PasswordManager.qml", "qrc:/qml/CertificateManager.qml"]
 
+        Component.onCompleted: {
+            if (0 === bar.currentButtonIndex) {
+                servers.startPingTick(true)
+            }
+        }
+
         anchors {
             left: parent.left
             verticalCenter: parent.verticalCenter
