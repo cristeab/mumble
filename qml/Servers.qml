@@ -46,7 +46,7 @@ Page {
         }
         CustomButton {
             text: qsTr("Edit...")
-            onClicked: addEditServerDlg.editServer()
+            onClicked: addEditServerDlg.editServer(srvTbl.currentRow)
         }
     }
 }
