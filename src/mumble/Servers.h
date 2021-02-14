@@ -32,11 +32,19 @@ public:
 
     explicit Servers(QObject *parent = nullptr);
 
-    Q_INVOKABLE void resetServer() {
-        setAddress("");
-        setPort(DEFAULT_PORT);
-        setUsername("");
-        setLabel("");
+    Q_INVOKABLE void resetServer(int index) {
+        if (isValidIndex(index)) {
+            const auto &srv = _servers.at(index);
+            setAddress(srv.address);
+            setPort(srv.port);
+            setUsername(srv.username);
+            setLabel(srv.name);
+        } else {
+            setAddress("");
+            setPort(DEFAULT_PORT);
+            setUsername("");
+            setLabel("");
+        }
     }
     Q_INVOKABLE void changeServer(int index);
 

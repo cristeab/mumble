@@ -74,15 +74,17 @@ ApplicationWindow {
         id: addEditServerDlg
 
         function addNewServer() {
-            servers.resetServer()
+            servers.resetServer(-1)
             addEditServerDlg.active = true
             addEditServerDlg.item.visible = true
             addEditServerDlg.item.serverIndex = -1
         }
-        function editServer() {
+        function editServer(idx) {
+            console.log("Edit server " + idx)
+            servers.resetServer(idx)
             addEditServerDlg.active = true
             addEditServerDlg.item.visible = true
-            addEditServerDlg.item.serverIndex = 0
+            addEditServerDlg.item.serverIndex = idx
         }
 
         anchors.fill: parent

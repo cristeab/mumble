@@ -122,11 +122,14 @@ void Servers::save()
         qCritical() << "Cannot access db";
         return;
     }
+    QList<FavoriteServer> favs;
     for (const auto &it: _servers) {
         FavoriteServer favSrv;
         favSrv.qsName = it.name;
         favSrv.qsUrl = it.address;
         favSrv.usPort = it.port;
         favSrv.qsUsername = it.username;
+        favs << favSrv;
     }
+    g.db->setFavorites(favs);
 }
