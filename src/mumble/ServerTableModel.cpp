@@ -134,7 +134,6 @@ void ServerTableModel::startPingTick(bool start)
 {
     qDebug() << "startPingTick" << start;
     if (start) {
-        _pingIndex = -1;
         _pingTick.start();
     } else {
         _pingTick.stop();
@@ -257,25 +256,6 @@ void ServerTableModel::timeTick()
             si = nullptr;
         }
     }
-
-    if (!si) {
-        if (_items.isEmpty())
-            return;
-
-        do {
-            ++_pingIndex;
-            if (_pingIndex >= _items.count()) {
-                if (_restart.isElapsed(TICK_THRESHOLD_US))
-                    _pingIndex = 0;
-                else
-                    return;
-            }
-            si = _items.at(_pingIndex);
-        } while (si->address.isEmpty());
-    }
-
-    if (si)
-        _currentTimer.restart();
 
     for (const auto &it: _servers) {
         sendPing(QHostAddress(it.address), it.port);
