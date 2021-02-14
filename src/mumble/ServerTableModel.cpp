@@ -112,11 +112,13 @@ void ServerTableModel::changeServer()
 {
     emit layoutAboutToBeChanged();
     if (isValidIndex(_currentIndex)) {
+        stopDns(&_servers[_currentIndex]);
         auto &server = _servers[_currentIndex];
         server.hostname = _hostname;
         server.port = _port;
         server.username = _username;
         server.name = _label;
+        startDns(&_servers[_currentIndex]);
     } else {
         ServerItem server;
         server.hostname = _hostname;
@@ -217,6 +219,34 @@ void ServerTableModel::startDns(ServerItem *si)
         _dnsLookup.prepend(unresolved);
     }
     _dnsWait[unresolved].insert(si);
+}
+
+void ServerTableModel::stopDns(ServerItem *si)
+{
+    if (!_allowHostLookup) {
+        return;
+    }
+
+    ServerAddress addr(QHostAddress(si->address), si->port);
+    if (_pings.contains(addr)) {
+        _pings[addr].remove(si);
+        if (_pings[addr].isEmpty()) {
+            _pings.remove(addr);
+            _pingRand.remove(addr);
+        }
+    }
+
+    QString hostname    = si->hostname.toLower();
+    unsigned short port = si->port;
+    UnresolvedServerAddress unresolved(hostname, port);
+
+    if (_dnsWait.contains(unresolved)) {
+        _dnsWait[unresolved].remove(si);
+        if (_dnsWait[unresolved].isEmpty()) {
+            _dnsWait.remove(unresolved);
+            _dnsLookup.removeAll(unresolved);
+        }
+    }
 }
 
 void ServerTableModel::timeTick()
