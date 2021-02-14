@@ -50,6 +50,7 @@ ApplicationWindow {
                 onClicked: {
                     bar.currentButtonIndex = index
                     tabView.replace(bar.pages[index])
+                    servers.startPingTick(0 === index)
                 }
                 ToolTip {
                     visible: tabButton.hovered
@@ -60,6 +61,7 @@ ApplicationWindow {
     }
     StackView {
         id: tabView
+
         anchors {
             top: parent.top
             bottom: parent.bottom
@@ -74,17 +76,16 @@ ApplicationWindow {
         id: addEditServerDlg
 
         function addNewServer() {
-            servers.resetServer(-1)
+            servers.currentIndex = -1
+            servers.resetServer()
             addEditServerDlg.active = true
             addEditServerDlg.item.visible = true
-            addEditServerDlg.item.serverIndex = -1
         }
         function editServer(idx) {
-            console.log("Edit server " + idx)
-            servers.resetServer(idx)
+            servers.currentIndex = idx
+            servers.resetServer()
             addEditServerDlg.active = true
             addEditServerDlg.item.visible = true
-            addEditServerDlg.item.serverIndex = idx
         }
 
         anchors.fill: parent
