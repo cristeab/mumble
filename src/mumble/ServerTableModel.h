@@ -75,6 +75,7 @@ private:
     void save();
     void timeTick();
     void startDns(ServerItem *si);
+    void stopDns(ServerItem *si);
     void sendPing(const QHostAddress &host, unsigned short port);
     void udpReply();
     void lookedUp();
