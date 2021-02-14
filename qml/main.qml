@@ -87,8 +87,7 @@ ApplicationWindow {
             addEditServerDlg.active = true
             addEditServerDlg.item.visible = true
         }
-        function editServer(idx) {
-            servers.currentIndex = idx
+        function editServer() {
             servers.resetServer()
             addEditServerDlg.active = true
             addEditServerDlg.item.visible = true

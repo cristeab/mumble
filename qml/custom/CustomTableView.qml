@@ -6,7 +6,6 @@ TableView {
     id: controlTable
 
     readonly property var columnWidths: [440, 120, 120]
-    property int currentRow: 0
 
     visible: 0 < controlTable.rows
 
@@ -52,11 +51,11 @@ TableView {
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         background: Rectangle {
-            color: (controlDelegate.row !== controlTable.currentRow) ? Theme.tableBackgroundColor : Theme.tableSelectedBackgroundColor
+            color: (controlDelegate.row !== servers.currentIndex) ? Theme.tableBackgroundColor : Theme.tableSelectedBackgroundColor
         }
         MouseArea {
             anchors.fill: parent
-            onClicked: controlTable.currentRow = controlDelegate.row
+            onClicked: servers.currentIndex = controlDelegate.row
         }
     }
 }

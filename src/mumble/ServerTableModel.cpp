@@ -2,10 +2,13 @@
 #include "Database.h"
 #include "Global.h"
 #include "ServerResolver.h"
+#include "ServerHandler.h"
+#include "MainWindow.h"
 
 #include <QRandomGenerator>
 #include <QUdpSocket>
 #include <QtEndian>
+#include <QThread>
 
 ServerTableModel::ServerTableModel(QObject *parent) : QAbstractTableModel(parent)
 {
@@ -15,10 +18,10 @@ ServerTableModel::ServerTableModel(QObject *parent) : QAbstractTableModel(parent
     _socket6 = new QUdpSocket(this);
     _IPv4      = _socket4->bind(QHostAddress(QHostAddress::Any), 0);
     _IPv6      = _socket6->bind(QHostAddress(QHostAddress::AnyIPv6), 0);
-    connect(_socket4, &QUdpSocket::readyRead, this, &ServerTableModel::udpReply);
-    connect(_socket6, &QUdpSocket::readyRead, this, &ServerTableModel::udpReply);
+    QObject::connect(_socket4, &QUdpSocket::readyRead, this, &ServerTableModel::udpReply);
+    QObject::connect(_socket6, &QUdpSocket::readyRead, this, &ServerTableModel::udpReply);
 
-    connect(&_pingTick, &QTimer::timeout, this, &ServerTableModel::timeTick);
+    QObject::connect(&_pingTick, &QTimer::timeout, this, &ServerTableModel::timeTick);
     _pingTick.setInterval(TICK_PERIOD_MS);
 
     load();
@@ -408,4 +411,56 @@ void ServerTableModel::setStats(ServerItem *si, double delay, int users, int tot
     si->currentUsers = users;
     si->totalUsers = totalUsers;
     emit layoutChanged();
+}
+
+void ServerTableModel::connectServer()
+{
+    qInfo() << "Connect" << _currentIndex;
+    if (!isValidIndex(_currentIndex)) {
+        qCritical() << "Invalid index" << _currentIndex;
+        return;
+    }
+    recreateServerHandler();
+    const auto &srv = _servers.at(_currentIndex);
+    g.sh->setConnectionInfo(srv.address, srv.port, srv.username, srv.password);
+    g.sh->start(QThread::TimeCriticalPriority);
+    _connectedServerIndex = _currentIndex;
+}
+
+void ServerTableModel::recreateServerHandler()
+{
+    ServerHandlerPtr sh = g.sh;
+    if (sh && sh->isRunning() && (nullptr != g.mw)) {
+        g.mw->on_qaServerDisconnect_triggered();
+        sh->disconnect();
+        sh->wait();
+        QCoreApplication::instance()->processEvents();
+    }
+
+    g.sh.reset();
+    while (sh && !sh.unique())
+        QThread::yieldCurrentThread();
+    sh.reset();
+
+    sh = ServerHandlerPtr(new ServerHandler());
+    sh->moveToThread(sh.get());
+    g.sh = sh;
+    if (nullptr != g.mw) {
+        g.mw->connect(sh.get(), SIGNAL(connected()), g.mw, SLOT(serverConnected()));
+        g.mw->connect(sh.get(), SIGNAL(disconnected(QAbstractSocket::SocketError, QString)), g.mw,
+                      SLOT(serverDisconnected(QAbstractSocket::SocketError, QString)));
+        g.mw->connect(sh.get(), SIGNAL(error(QAbstractSocket::SocketError, QString)), g.mw,
+                      SLOT(resolverError(QAbstractSocket::SocketError, QString)));
+    }
+}
+
+void ServerTableModel::disconnectServer()
+{
+    qInfo() << "Disconnect";
+    if (g.sh && g.sh->isRunning()) {
+        g.sh->disconnect();
+        _connectedServerIndex = INVALID_INDEX;
+    } else {
+        qWarning() << "Nothing to do";
+    }
 }
