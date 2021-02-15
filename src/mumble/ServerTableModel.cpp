@@ -367,7 +367,6 @@ void ServerTableModel::udpReply()
                     if (!si->pingSort)
                         si->pingSort = _pingCache.value(UnresolvedServerAddress(si->hostname, si->port));
                     setStats(si, static_cast< double >(elapsed), users, maxusers);
-                    emit layoutChanged();
                 }
             }
         }
