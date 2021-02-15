@@ -8,6 +8,7 @@ TableView {
     readonly property var columnWidths: [440, 120, 120]
 
     visible: 0 < controlTable.rows
+    interactive: false
 
     Row {
         id: columnsHeader
