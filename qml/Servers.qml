@@ -25,7 +25,7 @@ Page {
     CustomButton {
         id: connectBtn
 
-        property bool isConnected: false
+        property bool isConnected: servers.currentIndex === servers.connectedServerIndex
 
         enabled: servers.isReachable(servers.currentIndex)
         anchors {
@@ -36,9 +36,9 @@ Page {
         text: connectBtn.isConnected ? qsTr("Disconnect") : qsTr("Connect")
         onClicked: {
             if (connectBtn.isConnected) {
-                connectBtn.isConnected = !servers.disconnectServer()
+                servers.disconnectServer()
             } else {
-                connectBtn.isConnected = servers.connectServer()
+                servers.connectServer()
             }
         }
     }

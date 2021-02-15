@@ -420,11 +420,24 @@ bool ServerTableModel::connectServer()
         qCritical() << "Invalid index" << _currentIndex;
         return false;
     }
+
+    //disconnect previous server
+    if (_currentIndex == _connectedServerIndex) {
+        qDebug() << "Nothing to do";
+        return true;//should not happen
+    }
+    if (isValidIndex(_connectedServerIndex)) {
+        qInfo() << "Disconnect current" << _connectedServerIndex;
+        if (!disconnectServer()) {
+            return false;
+        }
+    }
+
     recreateServerHandler();
     const auto &srv = _servers.at(_currentIndex);
     g.sh->setConnectionInfo(srv.address, srv.port, srv.username, srv.password);
     g.sh->start(QThread::TimeCriticalPriority);
-
+    setConnectedServerIndex(_currentIndex);
     return true;
 }
 
@@ -461,6 +474,7 @@ bool ServerTableModel::disconnectServer()
     qInfo() << "Disconnect";
     if (g.sh && g.sh->isRunning()) {
         g.sh->disconnect();
+        setConnectedServerIndex(INVALID_INDEX);
         return true;
     }
     qWarning() << "Nothing to do";
