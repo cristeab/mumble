@@ -1,9 +1,9 @@
+#include "MainWindow.h"
 #include "ServerTableModel.h"
 #include "Database.h"
 #include "Global.h"
 #include "ServerResolver.h"
 #include "ServerHandler.h"
-#include "MainWindow.h"
 
 #include <QRandomGenerator>
 #include <QUdpSocket>
