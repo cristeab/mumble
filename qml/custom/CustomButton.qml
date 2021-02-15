@@ -4,8 +4,9 @@ import ".."
 
 Button {
     id: control
+
     property color backgroundColor: Theme.backgroundColor
-    property color textColor: Theme.textColor
+    property color textColor: control.enabled ? Theme.textColor : "gray"
     contentItem: Label {
         anchors.centerIn: parent
         text: control.text
@@ -17,8 +18,6 @@ Button {
     }
     background: Rectangle {
         color: control.pressed ? Qt.darker(control.backgroundColor) : control.backgroundColor
-        //height: control.height
-        //width: control.width
         radius: height / 2
         border {
             width: 2

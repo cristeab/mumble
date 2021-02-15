@@ -63,11 +63,8 @@ public:
     Q_INVOKABLE bool isReachable(int row) {
         return isValidIndex(row) ? (0 < _servers.at(row).totalUsers) : false;
     }
-    Q_INVOKABLE void connectServer();
-    Q_INVOKABLE void disconnectServer();
-    Q_INVOKABLE bool isConnected(int row) {
-        return (INVALID_INDEX != row) && (row == _connectedServerIndex);
-    }
+    Q_INVOKABLE bool connectServer();
+    Q_INVOKABLE bool disconnectServer();
 
     int rowCount(const QModelIndex & = QModelIndex()) const override;
     int columnCount(const QModelIndex & = QModelIndex()) const override;
@@ -115,7 +112,6 @@ private:
     bool _IPv6 = false;
     QUdpSocket *_socket4 = nullptr;
     QUdpSocket *_socket6 = nullptr;
-    int _connectedServerIndex = INVALID_INDEX;
 
 #ifdef USE_ZEROCONF
 protected:

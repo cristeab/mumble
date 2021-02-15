@@ -413,18 +413,19 @@ void ServerTableModel::setStats(ServerItem *si, double delay, int users, int tot
     emit layoutChanged();
 }
 
-void ServerTableModel::connectServer()
+bool ServerTableModel::connectServer()
 {
     qInfo() << "Connect" << _currentIndex;
     if (!isValidIndex(_currentIndex)) {
         qCritical() << "Invalid index" << _currentIndex;
-        return;
+        return false;
     }
     recreateServerHandler();
     const auto &srv = _servers.at(_currentIndex);
     g.sh->setConnectionInfo(srv.address, srv.port, srv.username, srv.password);
     g.sh->start(QThread::TimeCriticalPriority);
-    _connectedServerIndex = _currentIndex;
+
+    return true;
 }
 
 void ServerTableModel::recreateServerHandler()
@@ -438,8 +439,9 @@ void ServerTableModel::recreateServerHandler()
     }
 
     g.sh.reset();
-    while (sh && !sh.unique())
+    while (sh && !sh.unique()) {
         QThread::yieldCurrentThread();
+    }
     sh.reset();
 
     sh = ServerHandlerPtr(new ServerHandler());
@@ -454,13 +456,13 @@ void ServerTableModel::recreateServerHandler()
     }
 }
 
-void ServerTableModel::disconnectServer()
+bool ServerTableModel::disconnectServer()
 {
     qInfo() << "Disconnect";
     if (g.sh && g.sh->isRunning()) {
         g.sh->disconnect();
-        _connectedServerIndex = INVALID_INDEX;
-    } else {
-        qWarning() << "Nothing to do";
+        return true;
     }
+    qWarning() << "Nothing to do";
+    return false;
 }
