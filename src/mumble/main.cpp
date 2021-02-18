@@ -633,8 +633,8 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
     engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
-    //g.mw = new MainWindow(nullptr);
-    //g.mw->show();
+    g.mw = new MainWindow(nullptr);
+    g.mw->hide();
 
 	g.talkingUI = new TalkingUI();
 
@@ -763,7 +763,7 @@ int main(int argc, char **argv) {
 		Global::get().p->checkUpdates();
 	}
 
-    if (nullptr != Global::get().mw) {
+    /*if (nullptr != Global::get().mw) {
 	    if (url.isValid()) {
 		    OpenURLEvent *oue = new OpenURLEvent(url);
 		    qApp->postEvent(Global::get().mw, oue);
@@ -775,7 +775,7 @@ int main(int argc, char **argv) {
 	    } else {
 		    Global::get().mw->on_qaServerConnect_triggered(true);
         }
-    }
+    }*/
 
 	if (!Global::get().bQuit)
 		res = a.exec();

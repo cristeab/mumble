@@ -103,7 +103,7 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p) {
 	SvgIcon::addSvgPixmapsToIcon(qiTalkingShout, QLatin1String("skin:talking_alt.svg"));
 	SvgIcon::addSvgPixmapsToIcon(qiTalkingWhisper, QLatin1String("skin:talking_whisper.svg"));
 
-#ifdef Q_OS_MAC
+/*#ifdef Q_OS_MAC
 	if (QFile::exists(QLatin1String("skin:mumble.icns")))
 		qiIcon.addFile(QLatin1String("skin:mumble.icns"));
 	else
@@ -115,12 +115,12 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p) {
 	// shown in the title-bar usually serves as a draggable version of the
 	// current open document (i.e. you can copy the open document anywhere
 	// simply by dragging this icon).
-	qApp->setWindowIcon(qiIcon);
+    qApp->setWindowIcon(qiIcon);
 
 	// Set the icon on the MainWindow directly. This fixes the icon not
 	// being set on the MainWindow in certain environments (Ex: GTK+).
 	setWindowIcon(qiIcon);
-#endif
+#endif*/
 
 #ifdef Q_OS_WIN
 	uiNewHardware = 1;
@@ -140,7 +140,7 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p) {
 
 	qwPTTButtonWidget = nullptr;
 
-	qtReconnect = new QTimer(this);
+    qtReconnect = new QTimer(this);
 	qtReconnect->setInterval(10000);
 	qtReconnect->setSingleShot(true);
 	qtReconnect->setObjectName(QLatin1String("Reconnect"));
@@ -155,8 +155,8 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p) {
 	qaEmpty->setEnabled(false);
 
 	createActions();
-	setupUi(this);
-	setupGui();
+    setupUi(this);
+    setupGui();
 	qtvUsers->setAccessibleName(tr("Channels and users"));
 	qteLog->setAccessibleName(tr("Activity log"));
 	qteChat->setAccessibleName(tr("Chat message"));
@@ -171,8 +171,8 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p) {
 	connect(qaShow, SIGNAL(triggered()), this, SLOT(showRaiseWindow()));
 
 	// Explicitely add actions to mainwindow so their shortcuts are available
-	// if only the main window is visible (e.Global::get(). minimal mode)
-	addActions(findChildren< QAction * >());
+	// if only the main window is visible (e.g. minimal mode)
+    /*addActions(findChildren< QAction * >());
 
 	on_qmServer_aboutToShow();
 	on_qmSelf_aboutToShow();
@@ -181,9 +181,9 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p) {
 	on_qmConfig_aboutToShow();
 	qmDeveloper->addAction(qaDeveloperConsole);
 
-	setOnTop(Global::get().s.aotbAlwaysOnTop == Settings::OnTopAlways
-			 || (Global::get().s.bMinimalView && Global::get().s.aotbAlwaysOnTop == Settings::OnTopInMinimal)
-			 || (!Global::get().s.bMinimalView && Global::get().s.aotbAlwaysOnTop == Settings::OnTopInNormal));
+	setOnTop(g.s.aotbAlwaysOnTop == Settings::OnTopAlways
+			 || (g.s.bMinimalView && g.s.aotbAlwaysOnTop == Settings::OnTopInMinimal)
+             || (!g.s.bMinimalView && g.s.aotbAlwaysOnTop == Settings::OnTopInNormal));*/
 }
 
 void MainWindow::createActions() {
@@ -1224,7 +1224,7 @@ void MainWindow::setupView(bool toggle_minimize) {
 }
 
 void MainWindow::on_qaServerConnect_triggered(bool autoconnect) {
-	ConnectDialog *cd = new ConnectDialog(this, autoconnect);
+    ConnectDialog *cd = new ConnectDialog(this, autoconnect);
 	int res           = cd->exec();
 
 	if (cd->qsServer.isEmpty() || (cd->usPort == 0) || cd->qsUsername.isEmpty())
@@ -1241,7 +1241,7 @@ void MainWindow::on_qaServerConnect_triggered(bool autoconnect) {
 		Global::get().sh->setConnectionInfo(cd->qsServer, cd->usPort, cd->qsUsername, cd->qsPassword);
 		Global::get().sh->start(QThread::TimeCriticalPriority);
 	}
-	delete cd;
+    delete cd;
 }
 
 void MainWindow::on_Reconnect_timeout() {
@@ -3386,7 +3386,8 @@ void MainWindow::serverDisconnected(QAbstractSocket::SocketError err, QString re
 #endif
 
 		bool matched = true;
-		switch (rtLast) {
+        emit serverDisconnected(rtLast);
+        /*switch (rtLast) {
 			case MumbleProto::Reject_RejectType_InvalidUsername:
 				uname = QInputDialog::getText(this, tr("Invalid username"),
 											  tr("You connected with an invalid username, please try another one."),
@@ -3412,7 +3413,7 @@ void MainWindow::serverDisconnected(QAbstractSocket::SocketError err, QString re
 			default:
 				matched = false;
 				break;
-		}
+        }
 		if (ok && matched) {
 			if (!Global::get().s.bSuppressIdentity)
 				Global::get().db->setPassword(host, port, uname, pw);
@@ -3424,7 +3425,7 @@ void MainWindow::serverDisconnected(QAbstractSocket::SocketError err, QString re
 			if (bRetryServer) {
 				qtReconnect->start();
 			}
-		}
+        }*/
 	}
 	qstiIcon->setToolTip(tr("Mumble -- %1").arg(QLatin1String(MUMBLE_RELEASE)));
 	AudioInput::setMaxBandwidth(-1);
