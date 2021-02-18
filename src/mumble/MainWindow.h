@@ -319,6 +319,8 @@ signals:
 	void userAddedChannelListener(ClientUser *user, Channel *channel);
 	/// Signal emitted whenever a user removes a ChannelListener
 	void userRemovedChannelListener(ClientUser *user, Channel *channel);
+    //
+    void serverDisconnected(MumbleProto::Reject_RejectType rtLast);
 
 public:
 	MainWindow(QWidget *parent);

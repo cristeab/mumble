@@ -32,6 +32,7 @@ class ServerTableModel : public QAbstractTableModel
     QML_WRITABLE_PROPERTY(QString, label, setLabel, "")
     QML_WRITABLE_PROPERTY(int, currentIndex, setCurrentIndex, 0)
     QML_WRITABLE_PROPERTY(int, connectedServerIndex, setConnectedServerIndex, INVALID_INDEX)
+    QML_WRITABLE_PROPERTY(bool, refreshRow, setRefreshRow, true)
 
 public:
     struct ServerItem {

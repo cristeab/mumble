@@ -45,7 +45,7 @@ TableView {
         property int col: index / controlTable.rows
 
         padding: Theme.windowMargin
-        text: ((0 === col) || servers.isReachable(row)) ? display : ""
+        text: (((0 === col) || servers.isReachable(row)) && servers.refreshRow) ? display : ""
         color: Theme.textColor2
         clip: true
         elide: Text.ElideRight

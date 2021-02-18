@@ -410,6 +410,7 @@ void ServerTableModel::setStats(ServerItem *si, double delay, int users, int tot
     si->currentUsers = users;
     si->totalUsers = totalUsers;
     emit layoutChanged();
+    emit refreshRowChanged();
 }
 
 bool ServerTableModel::connectServer()
@@ -437,6 +438,18 @@ bool ServerTableModel::connectServer()
     g.sh->setConnectionInfo(srv.address, srv.port, srv.username, srv.password);
     g.sh->start(QThread::TimeCriticalPriority);
     setConnectedServerIndex(_currentIndex);
+
+    if (nullptr != g.mw) {
+        auto *m = g.mw->pmModel;
+        if (nullptr != m) {
+            qInfo() << "Got User model";
+        } else {
+            qWarning() << "User model not available";
+        }
+    } else {
+        qWarning() << "MW";
+    }
+
     return true;
 }
 
@@ -474,8 +487,8 @@ bool ServerTableModel::disconnectServer()
     if (g.sh && g.sh->isRunning()) {
         g.sh->disconnect();
         setConnectedServerIndex(INVALID_INDEX);
-        return true;
+    } else {
+        qWarning() << "Nothing to do";
     }
-    qWarning() << "Nothing to do";
-    return false;
+    return true;
 }

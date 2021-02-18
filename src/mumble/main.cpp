@@ -589,8 +589,8 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
     engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
-    //g.mw = new MainWindow(nullptr);
-    //g.mw->show();
+    g.mw = new MainWindow(nullptr);
+    g.mw->hide();
 
 	g.talkingUI = new TalkingUI();
 
@@ -720,7 +720,7 @@ int main(int argc, char **argv) {
 		g.p->checkUpdates();
 	}
 
-    if (nullptr != g.mw) {
+    /*if (nullptr != g.mw) {
         if (url.isValid()) {
             OpenURLEvent *oue = new OpenURLEvent(url);
             qApp->postEvent(g.mw, oue);
@@ -732,7 +732,7 @@ int main(int argc, char **argv) {
         } else if (nullptr != g.mw) {
             g.mw->on_qaServerConnect_triggered(true);
         }
-    }
+    }*/
 
 	if (!g.bQuit)
 		res = a.exec();
