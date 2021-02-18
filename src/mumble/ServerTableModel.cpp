@@ -423,7 +423,7 @@ bool ServerTableModel::connectServer()
 
     //disconnect previous server
     if (_currentIndex == _connectedServerIndex) {
-        qDebug() << "Nothing to do";
+        qDebug() << "Cannot connect: nothing to do";
         return true;//should not happen
     }
     if (isValidIndex(_connectedServerIndex)) {
@@ -486,9 +486,9 @@ bool ServerTableModel::disconnectServer()
     qInfo() << "Disconnect";
     if (g.sh && g.sh->isRunning()) {
         g.sh->disconnect();
-        setConnectedServerIndex(INVALID_INDEX);
     } else {
-        qWarning() << "Nothing to do";
+        qWarning() << "Cannot disconnect: nothing to do";
     }
+    setConnectedServerIndex(INVALID_INDEX);
     return true;
 }
