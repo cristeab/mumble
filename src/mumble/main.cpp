@@ -232,7 +232,7 @@ int main(int argc, char **argv) {
 	QStringList extraTranslationDirs;
 	QString localeOverwrite;
 
-	if (a.arguments().count() > 1) {
+    /*if (a.arguments().count() > 1) {
 		for (int i = 1; i < args.count(); ++i) {
 			if (args.at(i) == QLatin1String("-h") || args.at(i) == QLatin1String("--help")
 #if defined(Q_OS_WIN)
@@ -415,7 +415,7 @@ int main(int argc, char **argv) {
 				}
 			}
 		}
-	}
+    }*/
 
 	if (printTranslationDirs) {
 		QString infoString = QObject::tr("The directories in which Mumble searches for extra translation files are:\n");
@@ -625,8 +625,8 @@ int main(int argc, char **argv) {
     QQmlApplicationEngine engine;
     //set properties
     QQmlContext *context = engine.rootContext();//registered properties are available to all components
+    auto *srv = new ServerTableModel();
     if (nullptr != context) {
-        auto *srv = new ServerTableModel();
         context->setContextProperty(srv->objectName(), srv);
     } else {
         qDebug() << "Cannot get root context";
@@ -635,6 +635,10 @@ int main(int argc, char **argv) {
     engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
     g.mw = new MainWindow(nullptr);
     g.mw->hide();
+
+    // Connect signals
+    QObject::connect(g.mw, &MainWindow::serverDisconnectedEvent, srv,
+                     &ServerTableModel::onServerDisconnectedEvent);
 
 	g.talkingUI = new TalkingUI();
 
