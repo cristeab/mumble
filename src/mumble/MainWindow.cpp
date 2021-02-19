@@ -3209,7 +3209,8 @@ void MainWindow::serverConnected() {
 }
 
 void MainWindow::serverDisconnected(QAbstractSocket::SocketError err, QString reason) {
-	if (g.sh->hasSynchronized()) {
+    qDebug() << "serverDisconnected" << reason;
+    if (g.sh->hasSynchronized()) {
 		// Note that the saving of the ChannelListeners has to be done, before resetting g.uiSession
 		// Save ChannelListeners
 		ChannelListener::saveToDB();
@@ -3375,7 +3376,7 @@ void MainWindow::serverDisconnected(QAbstractSocket::SocketError err, QString re
 #endif
 
 		bool matched = true;
-        emit serverDisconnected(rtLast);
+        emit serverDisconnectedEvent(rtLast);
         /*switch (rtLast) {
 			case MumbleProto::Reject_RejectType_InvalidUsername:
 				uname = QInputDialog::getText(this, tr("Invalid username"),

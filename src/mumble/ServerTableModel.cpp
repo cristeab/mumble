@@ -492,3 +492,8 @@ bool ServerTableModel::disconnectServer()
     setConnectedServerIndex(INVALID_INDEX);
     return true;
 }
+
+void ServerTableModel::onServerDisconnectedEvent(MumbleProto::Reject_RejectType rtLast)
+{
+    qDebug() << "onServerDisconnectedEvent" << rtLast;
+}

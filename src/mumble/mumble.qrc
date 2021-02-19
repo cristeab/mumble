@@ -33,6 +33,7 @@
         <file alias="qml/custom/LabelTextField.qml">../../qml/custom/LabelTextField.qml</file>
         <file alias="qml/custom/CustomTextField.qml">../../qml/custom/CustomTextField.qml</file>
         <file alias="qml/dialog/AddEditServer.qml">../../qml/dialog/AddEditServer.qml</file>
+        <file alias="qml/dialog/LineEditDialog.qml">../../qml/dialog/LineEditDialog.qml</file>
         <file alias="qml/qmldir">../../qml/qmldir</file>
         <file alias="qtquickcontrols2.conf">../../qml/qtquickcontrols2.conf</file>
     </qresource>

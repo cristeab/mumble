@@ -4,6 +4,7 @@
 #include "UnresolvedServerAddress.h"
 #include "ServerAddress.h"
 #include "Timer.h"
+#include "Mumble.pb.h"
 
 #include <QAbstractListModel>
 #include <qqml.h>
@@ -73,6 +74,8 @@ public:
     QVariant data(const QModelIndex &index, int role) const override;
     QHash<int, QByteArray> roleNames() const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+
+    void onServerDisconnectedEvent(MumbleProto::Reject_RejectType rtLast);
 
 private:
     enum { NAME = 0, DELAY, USERS, COLUMN_COUNT };
