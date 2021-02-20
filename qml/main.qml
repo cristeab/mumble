@@ -16,6 +16,10 @@ ApplicationWindow {
 
     TabButton {
         id: backBtn
+        anchors {
+            top: parent.top
+            left: parent.left
+        }
         visible: 1 < tabView.depth
         display: AbstractButton.IconOnly
         icon {
@@ -24,7 +28,7 @@ ApplicationWindow {
         }
         font.pointSize: 5
         width: bar.width
-        height: width + 2 * Theme.windowMargin
+        height: width + Theme.windowMargin
         background: Rectangle {
             color: Theme.backgroundColor
         }
