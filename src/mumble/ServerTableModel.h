@@ -41,6 +41,8 @@ class ServerTableModel : public QAbstractTableModel
     QML_WRITABLE_PROPERTY(QString, dlgText, setDlgText, "")
     QML_WRITABLE_PROPERTY(bool, dlgIsPassword, setDlgIsPassword, false)
 
+    QML_WRITABLE_PROPERTY(QStringList, classNameList, setClassNameList, QStringList())
+
 public:
     struct ServerItem {
         QString name;
@@ -75,6 +77,7 @@ public:
     Q_INVOKABLE bool connectServer();
     Q_INVOKABLE bool disconnectServer();
     Q_INVOKABLE void onLineEditDlgAccepted();
+    Q_INVOKABLE void gotoClass(int index);
 
     int rowCount(const QModelIndex & = QModelIndex()) const override;
     int columnCount(const QModelIndex & = QModelIndex()) const override;
@@ -84,6 +87,7 @@ public:
 
     void onServerDisconnectedEvent(MumbleProto::Reject_RejectType rtLast,
                                    const QString &reason);
+    void onUserModelChanged();
 
 private:
     enum { NAME = 0, DELAY, USERS, COLUMN_COUNT };

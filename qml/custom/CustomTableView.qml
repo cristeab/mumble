@@ -20,7 +20,7 @@ TableView {
             Label {
                 width: controlTable.columnWidthProvider(modelData) - (modelData === 2 ? 0 : 2)
                 text: servers.headerData(modelData, Qt.Horizontal)
-                color: "white"
+                color: Theme.textColor2
                 font.pixelSize: 15
                 padding: Theme.windowMargin
                 verticalAlignment: Text.AlignVCenter

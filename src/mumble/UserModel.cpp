@@ -1359,7 +1359,6 @@ Channel *UserModel::addChannel(int id, Channel *p, const QString &name) {
     if ((g.s.ceExpand == Settings::AllChannels) && (nullptr != g.mw))
 		g.mw->qtvUsers->setExpanded(index(item), true);
 
-    qDebug() << "addChannel" << name;
 	return c;
 }
 

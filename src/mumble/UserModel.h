@@ -196,7 +196,7 @@ public:
 
 	unsigned int uiSessionComment;
 	int iChannelDescription;
-
+    ModelItem* rootItem() const { return miRoot; }
 
 	/// Creates the display string for the given user/listener
 	///

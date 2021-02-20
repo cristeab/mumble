@@ -14,6 +14,27 @@ ApplicationWindow {
         color: Theme.backgroundColor
     }
 
+    TabButton {
+        id: backBtn
+        visible: 1 < tabView.dept
+        display: AbstractButton.IconOnly
+        icon {
+            source: "qrc:/img/chevron-circle-left.svg"
+            color: backBtn.pressed ? Theme.tabButtonColorSel : Theme.tabButtonColor
+        }
+        font.pointSize: 5
+        width: bar.width
+        height: width + 2 * Theme.windowMargin
+        background: Rectangle {
+            color: Theme.backgroundColor
+        }
+        onClicked: tabView.pop()
+        ToolTip {
+            visible: backBtn.hovered
+            text: "Back"
+        }
+    }
+
     Column {
         id: bar
 
@@ -76,6 +97,14 @@ ApplicationWindow {
         }
         width: parent.width
         initialItem: "qrc:/qml/Servers.qml"
+    }
+    Connections {
+        target: servers
+        onClassNameListChanged: {
+            if ((0 < servers.classNameList.count) && (1 === tabView.depth)) {
+                //tabView.push("qrc:/qml/Classes.qml")
+            }
+        }
     }
 
     Loader {
