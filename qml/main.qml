@@ -16,7 +16,7 @@ ApplicationWindow {
 
     TabButton {
         id: backBtn
-        visible: 1 < tabView.dept
+        visible: 1 < tabView.depth
         display: AbstractButton.IconOnly
         icon {
             source: "qrc:/img/chevron-circle-left.svg"
@@ -37,6 +37,8 @@ ApplicationWindow {
 
     Column {
         id: bar
+
+        enabled: !backBtn.visible
 
         property int currentButtonIndex: 0
         readonly property var names: [qsTr("Servers"), qsTr("Audio Input"), qsTr("Audio Output"), qsTr("Password Manager"), qsTr("Certificate Manager")]
