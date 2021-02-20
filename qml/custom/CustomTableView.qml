@@ -20,7 +20,7 @@ TableView {
             Label {
                 width: controlTable.columnWidthProvider(modelData) - (modelData === 2 ? 0 : 2)
                 text: servers.headerData(modelData, Qt.Horizontal)
-                color: "white"
+                color: Theme.textColor2
                 font.pixelSize: 15
                 padding: Theme.windowMargin
                 verticalAlignment: Text.AlignVCenter
@@ -45,7 +45,7 @@ TableView {
         property int col: index / controlTable.rows
 
         padding: Theme.windowMargin
-        text: ((0 === col) || servers.isReachable(row)) ? display : ""
+        text: (((0 === col) || servers.isReachable(row)) && servers.refreshRow) ? display : ""
         color: Theme.textColor2
         clip: true
         elide: Text.ElideRight

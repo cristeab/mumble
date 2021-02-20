@@ -4,6 +4,8 @@
 #include "Global.h"
 #include "ServerResolver.h"
 #include "ServerHandler.h"
+#include "UserModel.h"
+#include "Channel.h"
 
 #include <QRandomGenerator>
 #include <QUdpSocket>
@@ -367,7 +369,6 @@ void ServerTableModel::udpReply()
                     if (!si->pingSort)
                         si->pingSort = _pingCache.value(UnresolvedServerAddress(si->hostname, si->port));
                     setStats(si, static_cast< double >(elapsed), users, maxusers);
-                    emit layoutChanged();
                 }
             }
         }
@@ -411,6 +412,7 @@ void ServerTableModel::setStats(ServerItem *si, double delay, int users, int tot
     si->currentUsers = users;
     si->totalUsers = totalUsers;
     emit layoutChanged();
+    emit refreshRowChanged();
 }
 
 bool ServerTableModel::connectServer()
@@ -423,7 +425,7 @@ bool ServerTableModel::connectServer()
 
     //disconnect previous server
     if (_currentIndex == _connectedServerIndex) {
-        qDebug() << "Nothing to do";
+        qDebug() << "Cannot connect: nothing to do";
         return true;//should not happen
     }
     if (isValidIndex(_connectedServerIndex)) {
@@ -438,6 +440,7 @@ bool ServerTableModel::connectServer()
     g.sh->setConnectionInfo(srv.address, srv.port, srv.username, srv.password);
     g.sh->start(QThread::TimeCriticalPriority);
     setConnectedServerIndex(_currentIndex);
+
     return true;
 }
 
@@ -474,9 +477,99 @@ bool ServerTableModel::disconnectServer()
     qInfo() << "Disconnect";
     if (g.sh && g.sh->isRunning()) {
         g.sh->disconnect();
-        setConnectedServerIndex(INVALID_INDEX);
-        return true;
+    } else {
+        qWarning() << "Cannot disconnect: nothing to do";
     }
-    qWarning() << "Nothing to do";
-    return false;
+    setConnectedServerIndex(INVALID_INDEX);
+    return true;
+}
+
+void ServerTableModel::onLineEditDlgAccepted()
+{
+    if (_dlgIsPassword) {
+        setPassword(_dlgText);
+    } else {
+        setUsername(_dlgText);
+    }
+
+    if (!g.s.bSuppressIdentity) {
+        g.db->setPassword(_hostname, _port, _username, _password);
+    }
+    g.sh->setConnectionInfo(_hostname, _port, _username, _password);
+    g.mw->on_Reconnect_timeout();
+}
+
+void ServerTableModel::onServerDisconnectedEvent(MumbleProto::Reject_RejectType rtLast,
+                                                 const QString &reason)
+{
+    qDebug() << "onServerDisconnectedEvent" << rtLast << reason;
+
+    QString uname, pw, host;
+    unsigned short port;
+    g.sh->getConnectionInfo(host, port, uname, pw);
+    setHostname(host);
+    setPort(port);
+    setUsername(uname);
+    setPassword(pw);
+
+    switch (rtLast) {
+    case MumbleProto::Reject_RejectType_InvalidUsername:
+        setDlgTitle(tr("Invalid username"));
+        setDlgTextLabel(tr("You connected with an invalid username, please try another one."));
+        setDlgText(_username);
+        setDlgIsPassword(false);
+        break;
+    case MumbleProto::Reject_RejectType_UsernameInUse:
+        setDlgTitle(tr("Username in use"));
+        setDlgTextLabel(tr("That username is already in use, please try another username."));
+        setDlgText(_username);
+        setDlgIsPassword(false);
+        break;
+    case MumbleProto::Reject_RejectType_WrongUserPW:
+        setDlgTitle(tr("Wrong certificate or password"));
+        setDlgTextLabel(tr("Wrong certificate or password for registered user. If you are\n"
+                                                  "certain this user is protected by a password please retry.\n"
+                                                  "Otherwise abort and check your certificate and username."));
+        setDlgText(_password);
+        setDlgIsPassword(true);
+        break;
+    case MumbleProto::Reject_RejectType_WrongServerPW:
+        setDlgTitle(tr("Wrong password"));
+        setDlgTextLabel(tr("Wrong server password for unregistered user account, please try again."));
+        setDlgText(_password);
+        setDlgIsPassword(true);
+        break;
+    default:
+        ;
+    }
+    if (g.s.bReconnect && !reason.isEmpty()) {
+            g.mw->qaServerDisconnect->setEnabled(true);
+            if (g.mw->bRetryServer) {
+                g.mw->qtReconnect->start();
+            }
+        }
+}
+
+void ServerTableModel::onUserModelChanged()
+{
+    auto *userModel = g.mw->pmModel;
+    if (nullptr != userModel) {
+        _classNameList.clear();
+        auto *rootItem = userModel->rootItem();
+        for (auto *child: rootItem->qlChildren) {
+            _classNameList << child->cChan->qsName;
+        }
+        emit classNameListChanged();
+        if (1 == _classNameList.size()) {
+            emit classesAvailable();
+            qDebug() << "onUserModelChanged";
+        }
+    } else {
+        qWarning() << "Cannot get user model";
+    }
+}
+
+void ServerTableModel::gotoClass(int index)
+{
+    qDebug() << "gotoClass" << index;
 }

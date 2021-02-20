@@ -9,6 +9,31 @@ Page {
         color: Theme.backgroundColor
     }
 
+    TabButton {
+        id: forwardBtn
+        anchors {
+            top: parent.top
+            right: parent.right
+        }
+        visible: (0 <= servers.connectedServerIndex) && (0 < servers.classNameList.length)
+        display: AbstractButton.IconOnly
+        icon {
+            source: "qrc:/img/chevron-circle-right.svg"
+            color: forwardBtn.pressed ? Theme.tabButtonColorSel : Theme.tabButtonColor
+        }
+        font.pointSize: 5
+        width: backBtn.width
+        height: backBtn.height
+        background: Rectangle {
+            color: Theme.backgroundColor
+        }
+        onClicked: tabView.push("qrc:/qml/Classes.qml")
+        ToolTip {
+            visible: forwardBtn.hovered
+            text: "Forward"
+        }
+    }
+
     CustomTableView {
         id: srvTbl
         anchors {

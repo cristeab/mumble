@@ -232,7 +232,7 @@ int main(int argc, char **argv) {
 	QString rpcCommand;
 	QUrl url;
 
-	if (a.arguments().count() > 1) {
+    /*if (a.arguments().count() > 1) {
 		for (int i = 1; i < args.count(); ++i) {
 			if (args.at(i) == QLatin1String("-h") || args.at(i) == QLatin1String("--help")
 #if defined(Q_OS_WIN)
@@ -377,7 +377,7 @@ int main(int argc, char **argv) {
 				}
 			}
 		}
-	}
+    }*/
 
 #ifdef USE_DBUS
 #	ifdef Q_OS_WIN
@@ -581,16 +581,22 @@ int main(int argc, char **argv) {
     QQmlApplicationEngine engine;
     //set properties
     QQmlContext *context = engine.rootContext();//registered properties are available to all components
+    auto *srv = new ServerTableModel();
     if (nullptr != context) {
-        auto *srv = new ServerTableModel();
         context->setContextProperty(srv->objectName(), srv);
     } else {
         qDebug() << "Cannot get root context";
         return EXIT_FAILURE;
     }
     engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
-    //g.mw = new MainWindow(nullptr);
-    //g.mw->show();
+    g.mw = new MainWindow(nullptr);
+    g.mw->hide();
+
+    // Connect signals
+    QObject::connect(g.mw, &MainWindow::serverDisconnectedEvent, srv,
+                     &ServerTableModel::onServerDisconnectedEvent);
+    QObject::connect(g.mw, &MainWindow::userModelChanged, srv,
+                     &ServerTableModel::onUserModelChanged);
 
 	g.talkingUI = new TalkingUI();
 
@@ -720,7 +726,7 @@ int main(int argc, char **argv) {
 		g.p->checkUpdates();
 	}
 
-    if (nullptr != g.mw) {
+    /*if (nullptr != g.mw) {
         if (url.isValid()) {
             OpenURLEvent *oue = new OpenURLEvent(url);
             qApp->postEvent(g.mw, oue);
@@ -732,7 +738,7 @@ int main(int argc, char **argv) {
         } else if (nullptr != g.mw) {
             g.mw->on_qaServerConnect_triggered(true);
         }
-    }
+    }*/
 
 	if (!g.bQuit)
 		res = a.exec();

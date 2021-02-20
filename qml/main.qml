@@ -14,8 +14,35 @@ ApplicationWindow {
         color: Theme.backgroundColor
     }
 
+    TabButton {
+        id: backBtn
+        anchors {
+            top: parent.top
+            left: parent.left
+        }
+        visible: 1 < tabView.depth
+        display: AbstractButton.IconOnly
+        icon {
+            source: "qrc:/img/chevron-circle-left.svg"
+            color: backBtn.pressed ? Theme.tabButtonColorSel : Theme.tabButtonColor
+        }
+        font.pointSize: 5
+        width: bar.width
+        height: width + Theme.windowMargin
+        background: Rectangle {
+            color: Theme.backgroundColor
+        }
+        onClicked: tabView.pop()
+        ToolTip {
+            visible: backBtn.hovered
+            text: "Back"
+        }
+    }
+
     Column {
         id: bar
+
+        enabled: !backBtn.visible
 
         property int currentButtonIndex: 0
         readonly property var names: [qsTr("Servers"), qsTr("Audio Input"), qsTr("Audio Output"), qsTr("Password Manager"), qsTr("Certificate Manager")]
@@ -77,6 +104,14 @@ ApplicationWindow {
         width: parent.width
         initialItem: "qrc:/qml/Servers.qml"
     }
+    Connections {
+        target: servers
+        function onClassesAvailable() {
+            if (1 === tabView.depth) {
+                tabView.push("qrc:/qml/Classes.qml")
+            }
+        }
+    }
 
     Loader {
         id: addEditServerDlg
@@ -96,5 +131,12 @@ ApplicationWindow {
         anchors.fill: parent
         active: false
         source: "qrc:/qml/dialog/AddEditServer.qml"
+    }
+
+    Loader {
+        id: lineEditDlg
+        anchors.fill: parent
+        active: "" !== servers.dlgTitle
+        source: "qrc:/qml/dialog/LineEditDialog.qml"
     }
 }

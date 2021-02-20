@@ -4,6 +4,7 @@
 #include "UnresolvedServerAddress.h"
 #include "ServerAddress.h"
 #include "Timer.h"
+#include "Mumble.pb.h"
 
 #include <QAbstractListModel>
 #include <qqml.h>
@@ -29,9 +30,18 @@ class ServerTableModel : public QAbstractTableModel
     QML_WRITABLE_PROPERTY(QString, hostname, setHostname, "")
     QML_WRITABLE_PROPERTY(int, port, setPort, DEFAULT_PORT)
     QML_WRITABLE_PROPERTY(QString, username, setUsername, "")
+    QML_READABLE_PROPERTY(QString, password, setPassword, "")
     QML_WRITABLE_PROPERTY(QString, label, setLabel, "")
     QML_WRITABLE_PROPERTY(int, currentIndex, setCurrentIndex, 0)
     QML_WRITABLE_PROPERTY(int, connectedServerIndex, setConnectedServerIndex, INVALID_INDEX)
+    QML_WRITABLE_PROPERTY(bool, refreshRow, setRefreshRow, true)
+
+    QML_WRITABLE_PROPERTY(QString, dlgTitle, setDlgTitle, "")
+    QML_WRITABLE_PROPERTY(QString, dlgTextLabel, setDlgTextLabel, "")
+    QML_WRITABLE_PROPERTY(QString, dlgText, setDlgText, "")
+    QML_WRITABLE_PROPERTY(bool, dlgIsPassword, setDlgIsPassword, false)
+
+    QML_WRITABLE_PROPERTY(QStringList, classNameList, setClassNameList, QStringList())
 
 public:
     struct ServerItem {
@@ -66,12 +76,21 @@ public:
     }
     Q_INVOKABLE bool connectServer();
     Q_INVOKABLE bool disconnectServer();
+    Q_INVOKABLE void onLineEditDlgAccepted();
+    Q_INVOKABLE void gotoClass(int index);
 
     int rowCount(const QModelIndex & = QModelIndex()) const override;
     int columnCount(const QModelIndex & = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role) const override;
     QHash<int, QByteArray> roleNames() const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+
+    void onServerDisconnectedEvent(MumbleProto::Reject_RejectType rtLast,
+                                   const QString &reason);
+    void onUserModelChanged();
+
+signals:
+    void classesAvailable();
 
 private:
     enum { NAME = 0, DELAY, USERS, COLUMN_COUNT };
