@@ -30,6 +30,7 @@ class ServerTableModel : public QAbstractTableModel
     QML_WRITABLE_PROPERTY(QString, hostname, setHostname, "")
     QML_WRITABLE_PROPERTY(int, port, setPort, DEFAULT_PORT)
     QML_WRITABLE_PROPERTY(QString, username, setUsername, "")
+    QML_READABLE_PROPERTY(QString, password, setPassword, "")
     QML_WRITABLE_PROPERTY(QString, label, setLabel, "")
     QML_WRITABLE_PROPERTY(int, currentIndex, setCurrentIndex, 0)
     QML_WRITABLE_PROPERTY(int, connectedServerIndex, setConnectedServerIndex, INVALID_INDEX)

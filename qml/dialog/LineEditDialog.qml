@@ -21,7 +21,11 @@ Dialog {
     y: (appWin.height-height)/2
 
     background: Rectangle {
-        color: Theme.backgroundColor2
+        color: Theme.backgroundColor
+        border {
+            width: 1
+            color: Theme.tabButtonColor
+        }
     }
     onAccepted: {
         servers.onLineEditDlgAccepted()
@@ -44,23 +48,28 @@ Dialog {
             wrapMode: Text.WordWrap
             clip: true
             elide: Text.ElideRight
-            color: Theme.textColor2
+            color: Theme.textColor
         }
         CustomTextField {
             width: parent.width
             echoMode: servers.dlgIsPassword ? TextInput.Password : TextInput.Normal
+            text: servers.dlgText
             onTextChanged: servers.dlgText = text
-            color: Theme.textColor2
+            color: Theme.textColor
             placeholderText: servers.dlgIsPassword ? qsTr("Your password") : qsTr("Your username")
         }
     }
 
     header: Rectangle {
-        color: Theme.backgroundColor2
+        color: Theme.backgroundColor
+        border {
+            width: 1
+            color: Theme.tabButtonColor
+        }
         height: childrenRect.height
         Label {
             text: control.title
-            color: Theme.textColor2
+            color: Theme.textColor
             font {
                 bold: true
                 pointSize: Theme.titleFontSize
@@ -75,15 +84,17 @@ Dialog {
         CustomButton {
             text: qsTr("OK")
             DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
-            backgroundColor: Theme.backgroundColor2
         }
         CustomButton {
             text: qsTr("Cancel")
             DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
-            backgroundColor: Theme.backgroundColor2
         }
         background: Rectangle {
-            color: Theme.backgroundColor2
+            color: Theme.backgroundColor
+            border {
+                width: 1
+                color: Theme.tabButtonColor
+            }
         }
     }
 }

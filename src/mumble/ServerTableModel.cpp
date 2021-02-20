@@ -495,20 +495,16 @@ bool ServerTableModel::disconnectServer()
 
 void ServerTableModel::onLineEditDlgAccepted()
 {
-    QString uname, pw, host;
-    unsigned short port;
-    g.sh->getConnectionInfo(host, port, uname, pw);
-
     if (_dlgIsPassword) {
-        pw = _dlgText;
+        setPassword(_dlgText);
     } else {
-        uname = _dlgText;
+        setUsername(_dlgText);
     }
 
     if (!g.s.bSuppressIdentity) {
-        g.db->setPassword(host, port, uname, pw);
+        g.db->setPassword(_hostname, _port, _username, _password);
     }
-    g.sh->setConnectionInfo(host, port, uname, pw);
+    g.sh->setConnectionInfo(_hostname, _port, _username, _password);
     g.mw->on_Reconnect_timeout();
 }
 
@@ -516,17 +512,26 @@ void ServerTableModel::onServerDisconnectedEvent(MumbleProto::Reject_RejectType 
                                                  const QString &reason)
 {
     qDebug() << "onServerDisconnectedEvent" << rtLast << reason;
+
+    QString uname, pw, host;
+    unsigned short port;
+    g.sh->getConnectionInfo(host, port, uname, pw);
+    setHostname(host);
+    setPort(port);
+    setUsername(uname);
+    setPassword(pw);
+
     switch (rtLast) {
     case MumbleProto::Reject_RejectType_InvalidUsername:
         setDlgTitle(tr("Invalid username"));
         setDlgTextLabel(tr("You connected with an invalid username, please try another one."));
-        setDlgText("");
+        setDlgText(_username);
         setDlgIsPassword(false);
         break;
     case MumbleProto::Reject_RejectType_UsernameInUse:
         setDlgTitle(tr("Username in use"));
         setDlgTextLabel(tr("That username is already in use, please try another username."));
-        setDlgText("");
+        setDlgText(_username);
         setDlgIsPassword(false);
         break;
     case MumbleProto::Reject_RejectType_WrongUserPW:
@@ -534,13 +539,13 @@ void ServerTableModel::onServerDisconnectedEvent(MumbleProto::Reject_RejectType 
         setDlgTextLabel(tr("Wrong certificate or password for registered user. If you are\n"
                                                   "certain this user is protected by a password please retry.\n"
                                                   "Otherwise abort and check your certificate and username."));
-        setDlgText("");
+        setDlgText(_password);
         setDlgIsPassword(true);
         break;
     case MumbleProto::Reject_RejectType_WrongServerPW:
         setDlgTitle(tr("Wrong password"));
         setDlgTextLabel(tr("Wrong server password for unregistered user account, please try again."));
-        setDlgText("");
+        setDlgText(_password);
         setDlgIsPassword(true);
         break;
     default:
