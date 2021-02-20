@@ -493,7 +493,63 @@ bool ServerTableModel::disconnectServer()
     return true;
 }
 
-void ServerTableModel::onServerDisconnectedEvent(MumbleProto::Reject_RejectType rtLast)
+void ServerTableModel::onLineEditDlgAccepted()
 {
-    qDebug() << "onServerDisconnectedEvent" << rtLast;
+    QString uname, pw, host;
+    unsigned short port;
+    g.sh->getConnectionInfo(host, port, uname, pw);
+
+    if (_dlgIsPassword) {
+        pw = _dlgText;
+    } else {
+        uname = _dlgText;
+    }
+
+    if (!g.s.bSuppressIdentity) {
+        g.db->setPassword(host, port, uname, pw);
+    }
+    g.sh->setConnectionInfo(host, port, uname, pw);
+    g.mw->on_Reconnect_timeout();
+}
+
+void ServerTableModel::onServerDisconnectedEvent(MumbleProto::Reject_RejectType rtLast,
+                                                 const QString &reason)
+{
+    qDebug() << "onServerDisconnectedEvent" << rtLast << reason;
+    switch (rtLast) {
+    case MumbleProto::Reject_RejectType_InvalidUsername:
+        setDlgTitle(tr("Invalid username"));
+        setDlgTextLabel(tr("You connected with an invalid username, please try another one."));
+        setDlgText("");
+        setDlgIsPassword(false);
+        break;
+    case MumbleProto::Reject_RejectType_UsernameInUse:
+        setDlgTitle(tr("Username in use"));
+        setDlgTextLabel(tr("That username is already in use, please try another username."));
+        setDlgText("");
+        setDlgIsPassword(false);
+        break;
+    case MumbleProto::Reject_RejectType_WrongUserPW:
+        setDlgTitle(tr("Wrong certificate or password"));
+        setDlgTextLabel(tr("Wrong certificate or password for registered user. If you are\n"
+                                                  "certain this user is protected by a password please retry.\n"
+                                                  "Otherwise abort and check your certificate and username."));
+        setDlgText("");
+        setDlgIsPassword(true);
+        break;
+    case MumbleProto::Reject_RejectType_WrongServerPW:
+        setDlgTitle(tr("Wrong password"));
+        setDlgTextLabel(tr("Wrong server password for unregistered user account, please try again."));
+        setDlgText("");
+        setDlgIsPassword(true);
+        break;
+    default:
+        ;
+    }
+    if (g.s.bReconnect && !reason.isEmpty()) {
+            g.mw->qaServerDisconnect->setEnabled(true);
+            if (g.mw->bRetryServer) {
+                g.mw->qtReconnect->start();
+            }
+        }
 }
