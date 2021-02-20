@@ -72,7 +72,7 @@ Dialog {
                 bottom: parent.bottom
                 horizontalCenter: parent.horizontalCenter
             }
-            width: control.width - 2
+            width: parent.width - 2
             height: 1
             color: Theme.backgroundColor
         }

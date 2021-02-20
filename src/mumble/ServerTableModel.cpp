@@ -4,6 +4,8 @@
 #include "Global.h"
 #include "ServerResolver.h"
 #include "ServerHandler.h"
+#include "UserModel.h"
+#include "Channel.h"
 
 #include <QRandomGenerator>
 #include <QUdpSocket>
@@ -557,4 +559,24 @@ void ServerTableModel::onServerDisconnectedEvent(MumbleProto::Reject_RejectType 
                 g.mw->qtReconnect->start();
             }
         }
+}
+
+void ServerTableModel::onUserModelChanged()
+{
+    auto *userModel = g.mw->pmModel;
+    if (nullptr != userModel) {
+        _classNameList.clear();
+        auto *rootItem = userModel->rootItem();
+        for (auto *child: rootItem->qlChildren) {
+            _classNameList << child->cChan->qsName;
+        }
+        emit classNameListChanged();
+    } else {
+        qWarning() << "Cannot get user model";
+    }
+}
+
+void ServerTableModel::gotoClass(int index)
+{
+    qDebug() << "gotoClass" << index;
 }

@@ -876,8 +876,8 @@ void MainWindow::msgChannelState(const MumbleProto::ChannelState &msg) {
 
 			ServerHandlerPtr sh = Global::get().sh;
 			if (sh)
-				c->bFiltered = Global::get().db->isChannelFiltered(sh->qbaDigest, c->iId);
-
+				c->bFiltered = g.db->isChannelFiltered(sh->qbaDigest, c->iId);
+            emit userModelChanged();
 		} else {
 			qWarning("Server attempted state change on nonexistent channel");
 			return;
