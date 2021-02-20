@@ -100,9 +100,9 @@ ApplicationWindow {
     }
     Connections {
         target: servers
-        onClassNameListChanged: {
-            if ((0 < servers.classNameList.count) && (1 === tabView.depth)) {
-                //tabView.push("qrc:/qml/Classes.qml")
+        function onClassesAvailable() {
+            if (1 === tabView.depth) {
+                tabView.push("qrc:/qml/Classes.qml")
             }
         }
     }

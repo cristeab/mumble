@@ -31,7 +31,7 @@ Page {
             leftMargin: 2 * Theme.windowMargin
             right: parent.right
             rightMargin: 2 * Theme.windowMargin
-            bottom: connectBtn.top
+            bottom: goBtn.top
             bottomMargin: Theme.windowMargin
         }
         currentIndex: 0
@@ -39,6 +39,7 @@ Page {
         boundsBehavior: ListView.StopAtBounds
         model: servers.classNameList
         delegate: Label {
+            width: parent.width
             padding: Theme.windowMargin
             text: modelData
             color: Theme.textColor2
@@ -57,6 +58,7 @@ Page {
     }
 
     CustomButton {
+        id: goBtn
         anchors {
             left: classList.left
             bottom: parent.bottom

@@ -89,6 +89,9 @@ public:
                                    const QString &reason);
     void onUserModelChanged();
 
+signals:
+    void classesAvailable();
+
 private:
     enum { NAME = 0, DELAY, USERS, COLUMN_COUNT };
     enum { TICK_PERIOD_MS = 500, TICK_THRESHOLD_US = 1000000ULL, GRACE_PINGS = 4,

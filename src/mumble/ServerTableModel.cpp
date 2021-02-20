@@ -441,17 +441,6 @@ bool ServerTableModel::connectServer()
     g.sh->start(QThread::TimeCriticalPriority);
     setConnectedServerIndex(_currentIndex);
 
-    if (nullptr != g.mw) {
-        auto *m = g.mw->pmModel;
-        if (nullptr != m) {
-            qInfo() << "Got User model";
-        } else {
-            qWarning() << "User model not available";
-        }
-    } else {
-        qWarning() << "MW";
-    }
-
     return true;
 }
 
@@ -571,6 +560,10 @@ void ServerTableModel::onUserModelChanged()
             _classNameList << child->cChan->qsName;
         }
         emit classNameListChanged();
+        if (1 == _classNameList.size()) {
+            emit classesAvailable();
+            qDebug() << "onUserModelChanged";
+        }
     } else {
         qWarning() << "Cannot get user model";
     }
