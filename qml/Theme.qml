@@ -10,6 +10,7 @@ QtObject {
     readonly property real titleFontSize: 12
 
     readonly property color backgroundColor: "#C2CCDA"
+    readonly property color backgroundColor2: "#0F80FE"
     readonly property color tabButtonColor: "#130039"
     readonly property color tabButtonColorSel: "#0F80FE"
     readonly property color buttonBlueColor: "#0F80FE"
