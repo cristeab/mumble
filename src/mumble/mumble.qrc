@@ -22,6 +22,7 @@
         <file alias="img/server.svg">../../img/server.svg</file>
         <file alias="img/volume.svg">../../img/volume.svg</file>
         <file alias="img/chevron-circle-left.svg">../../img/chevron-circle-left.svg</file>
+        <file alias="img/chevron-circle-right.svg">../../img/chevron-circle-right.svg</file>
         <file alias="qml/main.qml">../../qml/main.qml</file>
         <file alias="qml/Servers.qml">../../qml/Servers.qml</file>
         <file alias="qml/Classes.qml">../../qml/Classes.qml</file>
