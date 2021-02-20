@@ -67,6 +67,15 @@ Dialog {
             color: Theme.tabButtonColor
         }
         height: childrenRect.height
+        Rectangle {
+            anchors {
+                bottom: parent.bottom
+                horizontalCenter: parent.horizontalCenter
+            }
+            width: control.width - 2
+            height: 1
+            color: Theme.backgroundColor
+        }
         Label {
             text: control.title
             color: Theme.textColor
@@ -91,6 +100,15 @@ Dialog {
         }
         background: Rectangle {
             color: Theme.backgroundColor
+            Rectangle {
+                anchors {
+                    top: parent.top
+                    horizontalCenter: parent.horizontalCenter
+                }
+                width: parent.width - 2
+                height: 1
+                color: Theme.backgroundColor
+            }
             border {
                 width: 1
                 color: Theme.tabButtonColor
