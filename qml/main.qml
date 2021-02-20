@@ -97,4 +97,11 @@ ApplicationWindow {
         active: false
         source: "qrc:/qml/dialog/AddEditServer.qml"
     }
+
+    Loader {
+        id: lineEditDlg
+        anchors.fill: parent
+        active: "" !== servers.dlgTitle
+        source: "qrc:/qml/dialog/LineEditDialog.qml"
+    }
 }

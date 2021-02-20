@@ -3386,9 +3386,9 @@ void MainWindow::serverDisconnected(QAbstractSocket::SocketError err, QString re
 		Qt::WindowFlags wf = 0;
 #endif
 
-		bool matched = true;
-        emit serverDisconnectedEvent(rtLast);
-        /*switch (rtLast) {
+        emit serverDisconnectedEvent(rtLast, reason);
+        /*bool matched = true;
+        switch (rtLast) {
 			case MumbleProto::Reject_RejectType_InvalidUsername:
 				uname = QInputDialog::getText(this, tr("Invalid username"),
 											  tr("You connected with an invalid username, please try another one."),

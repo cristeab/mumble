@@ -35,6 +35,11 @@ class ServerTableModel : public QAbstractTableModel
     QML_WRITABLE_PROPERTY(int, connectedServerIndex, setConnectedServerIndex, INVALID_INDEX)
     QML_WRITABLE_PROPERTY(bool, refreshRow, setRefreshRow, true)
 
+    QML_WRITABLE_PROPERTY(QString, dlgTitle, setDlgTitle, "")
+    QML_WRITABLE_PROPERTY(QString, dlgTextLabel, setDlgTextLabel, "")
+    QML_WRITABLE_PROPERTY(QString, dlgText, setDlgText, "")
+    QML_WRITABLE_PROPERTY(bool, dlgIsPassword, setDlgIsPassword, false)
+
 public:
     struct ServerItem {
         QString name;
@@ -68,6 +73,7 @@ public:
     }
     Q_INVOKABLE bool connectServer();
     Q_INVOKABLE bool disconnectServer();
+    Q_INVOKABLE void onLineEditDlgAccepted();
 
     int rowCount(const QModelIndex & = QModelIndex()) const override;
     int columnCount(const QModelIndex & = QModelIndex()) const override;
@@ -75,7 +81,8 @@ public:
     QHash<int, QByteArray> roleNames() const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
-    void onServerDisconnectedEvent(MumbleProto::Reject_RejectType rtLast);
+    void onServerDisconnectedEvent(MumbleProto::Reject_RejectType rtLast,
+                                   const QString &reason);
 
 private:
     enum { NAME = 0, DELAY, USERS, COLUMN_COUNT };

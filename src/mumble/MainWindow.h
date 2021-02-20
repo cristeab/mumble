@@ -54,6 +54,7 @@ public:
 
 class MainWindow : public QMainWindow, public MessageHandler, public Ui::MainWindow {
 	friend class UserModel;
+    friend class ServerTableModel;
 
 private:
 	Q_OBJECT
@@ -320,7 +321,8 @@ signals:
 	/// Signal emitted whenever a user removes a ChannelListener
 	void userRemovedChannelListener(ClientUser *user, Channel *channel);
     //
-    void serverDisconnectedEvent(MumbleProto::Reject_RejectType rtLast);
+    void serverDisconnectedEvent(MumbleProto::Reject_RejectType rtLast,
+                                 const QString &reason);
 
 public:
 	MainWindow(QWidget *parent);
