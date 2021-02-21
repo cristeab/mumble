@@ -244,7 +244,8 @@ set(MUMBLE_SOURCES
 	"XMLTools.h"
         "ServerTableModel.cpp"
         "ServerTableModel.h"
-
+        "RoomsModel.cpp"
+        "RoomsModel.h"
 	"widgets/CompletablePage.cpp"
 	"widgets/CompletablePage.h"
 	"widgets/MUComboBox.cpp"
