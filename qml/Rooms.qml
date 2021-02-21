@@ -9,10 +9,11 @@ Page {
         color: Theme.backgroundColor
     }
 
+    Component.onCompleted: roomsGrid.currentIndex = 0
+    Component.onDestruction: servers.roomsModel.clear()
+
     GridView {
         id: roomsGrid
-
-        readonly property int columns: 3
 
         anchors {
             top: parent.top
@@ -22,55 +23,69 @@ Page {
             right: parent.right
             rightMargin: 2 * Theme.windowMargin
             bottom: parent.bottom
-            bottomMargin: Theme.windowMargin
         }
-        cellWidth: (roomsGrid.width - (roomsGrid.column - 1) * Theme.windowMargin) / roomsGrid.columns
+        cellWidth: roomsGrid.width / 4
         cellHeight: 250
         currentIndex: 0
         clip: true
         boundsBehavior: ListView.StopAtBounds
         model: servers.roomsModel
-        delegate: ListView {
-            id: usersList
-
-            Label {
-                id: usersListHeader
-                width: parent.width
-                clip: true
-                elide: Text.ElideRight
-                text: name
-                color: Theme.textColor2
-                font.pixelSize: 15
-                padding: Theme.windowMargin / 2
-                verticalAlignment: Text.AlignVCenter
-                background: Rectangle { color: Theme.tableBackgroundColor }
-            }
-            topMargin: usersListHeader.implicitHeight
+        delegate: Item {
+            id: delegateControl
 
             width: roomsGrid.cellWidth
             height: roomsGrid.cellHeight
-            currentIndex: 0
-            clip: true
-            boundsBehavior: ListView.StopAtBounds
-            model: users
-            delegate: Label {
-                width: parent.width
-                padding: Theme.windowMargin / 2
-                text: modelData
-                color: Theme.textColor
-                clip: true
-                elide: Text.ElideRight
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-                background: Rectangle {
-                    color: usersList.GridView.isCurrentItem ?  Theme.backgroundColor2 : Theme.backgroundColor
+
+            ListView {
+                id: usersList
+
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                    leftMargin: Theme.windowMargin
+                    right: parent.right
+                    rightMargin: Theme.windowMargin
+                    bottom: parent.bottom
+                    bottomMargin: Theme.windowMargin
                 }
-            }
-            MouseArea {
-                anchors.fill: parent
-                onClicked: roomsGrid.currentIndex = index
-                onDoubleClicked: {
-                    //TODO: join room
+
+                Label {
+                    id: usersListHeader
+                    width: parent.width
+                    clip: true
+                    elide: Text.ElideRight
+                    text: name
+                    color: Theme.textColor2
+                    font.pixelSize: 15
+                    padding: Theme.windowMargin / 2
+                    verticalAlignment: Text.AlignVCenter
+                    background: Rectangle { color: Theme.tableBackgroundColor }
+                }
+                topMargin: usersListHeader.implicitHeight
+
+                currentIndex: 0
+                clip: true
+                boundsBehavior: ListView.StopAtBounds
+                model: users
+                delegate: Label {
+                    width: parent.width
+                    padding: Theme.windowMargin / 2
+                    text: modelData
+                    color: Theme.textColor
+                    clip: true
+                    elide: Text.ElideRight
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    background: Rectangle {
+                        color: delegateControl.GridView.isCurrentItem ?  Theme.backgroundColor2 : Theme.backgroundColor
+                    }
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: roomsGrid.currentIndex = index
+                    onDoubleClicked: {
+                        //TODO: join room
+                    }
                 }
             }
         }

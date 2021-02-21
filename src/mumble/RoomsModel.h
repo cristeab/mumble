@@ -21,7 +21,7 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     QHash<int,QByteArray> roleNames() const;
 
-    void clear();
+    Q_INVOKABLE void clear();
     void append(const RoomInfo &roomInfo);
 
     void fillDummy();
