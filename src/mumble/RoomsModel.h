@@ -24,6 +24,8 @@ public:
     void clear();
     void append(const RoomInfo &roomInfo);
 
+    void fillDummy();
+
 private:
     bool isValidIndex(int index) const {
         return ((index >= 0) && (index < _rooms.count()));

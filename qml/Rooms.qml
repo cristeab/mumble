@@ -24,16 +24,14 @@ Page {
             bottom: parent.bottom
             bottomMargin: Theme.windowMargin
         }
-        cellWidth: (parent.width - (roomsGrid.columns - 1) * Theme.windowMargin) / roomsGrid.columns
-        cellHeight: 300
+        cellWidth: (roomsGrid.width - (roomsGrid.column - 1) * Theme.windowMargin) / roomsGrid.columns
+        cellHeight: 250
         currentIndex: 0
         clip: true
         boundsBehavior: ListView.StopAtBounds
         model: servers.roomsModel
         delegate: ListView {
             id: usersList
-
-            property int gridIndex: index
 
             Label {
                 id: usersListHeader
@@ -43,34 +41,34 @@ Page {
                 text: name
                 color: Theme.textColor2
                 font.pixelSize: 15
-                padding: Theme.windowMargin
+                padding: Theme.windowMargin / 2
                 verticalAlignment: Text.AlignVCenter
                 background: Rectangle { color: Theme.tableBackgroundColor }
             }
-            topMargin: usersListHeader.implicitHeight + 3
+            topMargin: usersListHeader.implicitHeight
 
             width: roomsGrid.cellWidth
-            height: 6 * usersListHeader.height
+            height: roomsGrid.cellHeight
             currentIndex: 0
             clip: true
             boundsBehavior: ListView.StopAtBounds
             model: users
             delegate: Label {
                 width: parent.width
-                padding: Theme.windowMargin
+                padding: Theme.windowMargin / 2
                 text: modelData
-                color: Theme.textColor2
+                color: Theme.textColor
                 clip: true
                 elide: Text.ElideRight
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
                 background: Rectangle {
-                    color: (roomsGrid.currentIndex === usersList.gridIndex) ? Theme.backgroundColor : Theme.backgroundColor2
+                    color: usersList.GridView.isCurrentItem ?  Theme.backgroundColor2 : Theme.backgroundColor
                 }
             }
             MouseArea {
                 anchors.fill: parent
-                onClicked: roomsGrid.currentIndex = usersList.gridIndex
+                onClicked: roomsGrid.currentIndex = index
                 onDoubleClicked: {
                     //TODO: join room
                 }
