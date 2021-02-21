@@ -111,6 +111,12 @@ ApplicationWindow {
                 tabView.push("qrc:/qml/Classes.qml")
             }
         }
+        function onDlgTitleChanged() {
+            if ("" !== servers.dlgTitle) {
+                lineEditDlg.active = true
+                lineEditDlg.item.visible = true
+            }
+        }
     }
 
     Loader {
@@ -136,7 +142,7 @@ ApplicationWindow {
     Loader {
         id: lineEditDlg
         anchors.fill: parent
-        active: "" !== servers.dlgTitle
+        active: false
         source: "qrc:/qml/dialog/LineEditDialog.qml"
     }
 }
