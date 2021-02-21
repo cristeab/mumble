@@ -248,6 +248,7 @@ void MainWindow::msgServerConfig(const MumbleProto::ServerConfig &msg) {
 ///
 /// @param msg The message object containing further details as to why and what Permission has been denied
 void MainWindow::msgPermissionDenied(const MumbleProto::PermissionDenied &msg) {
+    qDebug() << "msgPermissionDenied" << msg.type();
 	switch (msg.type()) {
 		case MumbleProto::PermissionDenied_DenyType_Permission: {
 			VICTIM_INIT;
@@ -394,10 +395,12 @@ void MainWindow::msgUserState(const MumbleProto::UserState &msg) {
 
 		if (pSelf) {
 			if (pDst->cChannel == pSelf->cChannel) {
-				Global::get().l->log(Log::ChannelJoinConnect,
-						 tr("%1 connected and entered channel.").arg(Log::formatClientUser(pDst, Log::Source)));
+                qInfo() << pDst->qsName << "connected and entered channel";
+                //g.l->log(Log::ChannelJoinConnect,
+                //		 tr("%1 connected and entered channel.").arg(Log::formatClientUser(pDst, Log::Source)));
 			} else {
-				Global::get().l->log(Log::UserJoin, tr("%1 connected.").arg(Log::formatClientUser(pDst, Log::Source)));
+                qInfo() << pDst->qsName << "connected";
+                //g.l->log(Log::UserJoin, tr("%1 connected.").arg(Log::formatClientUser(pDst, Log::Source)));
 			}
 		}
 	}
@@ -427,49 +430,59 @@ void MainWindow::msgUserState(const MumbleProto::UserState &msg) {
 
 				if (pDst == pSelf) {
 					if (pSrc == pSelf) {
-						Global::get().l->log(Log::SelfChannelJoin, tr("You joined %1.").arg(Log::formatChannel(channel)));
+                        qInfo() << "You joined" << channel->qsName;
+                        emit channelJoined(channel);
+                        //g.l->log(Log::SelfChannelJoin, tr("You joined %1.").arg(Log::formatChannel(channel)));
 					} else {
-						Global::get().l->log(Log::SelfChannelJoinOther, tr("You were moved to %1 by %2.")
-																.arg(Log::formatChannel(channel))
-																.arg(Log::formatClientUser(pSrc, Log::Source)));
+                        qInfo() << "You were moved to" << channel->qsName << "by" << pSrc->qsName;
+                        //g.l->log(Log::SelfChannelJoinOther, tr("You were moved to %1 by %2.")
+                        //										.arg(Log::formatChannel(channel))
+                        //										.arg(Log::formatClientUser(pSrc, Log::Source)));
 					}
 				} else if (pSrc == pSelf) {
 					if (channel == pSelf->cChannel) {
-						Global::get().l->log(Log::ChannelJoin, tr("You moved %1 to %2.")
-													   .arg(Log::formatClientUser(pDst, Log::Target))
-													   .arg(Log::formatChannel(channel)));
+                        qInfo() << "You moved" << pDst->qsName << "to" << channel->qsName;
+                        //g.l->log(Log::ChannelJoin, tr("You moved %1 to %2.")
+                        //							   .arg(Log::formatClientUser(pDst, Log::Target))
+                        //							   .arg(Log::formatChannel(channel)));
 					} else {
-						Global::get().l->log(Log::ChannelLeave, tr("You moved %1 to %2.")
-														.arg(Log::formatClientUser(pDst, Log::Target))
-														.arg(Log::formatChannel(channel)));
+                        qInfo() << "You moved" << pDst->qsName << "to" << channel->qsName;
+                        //g.l->log(Log::ChannelLeave, tr("You moved %1 to %2.")
+                        //								.arg(Log::formatClientUser(pDst, Log::Target))
+                        //								.arg(Log::formatChannel(channel)));
 					}
 				} else if ((channel == pSelf->cChannel) || (oldChannel == pSelf->cChannel)) {
 					if (pDst == pSrc) {
 						if (channel == pSelf->cChannel) {
-							Global::get().l->log(Log::ChannelJoin,
-									 tr("%1 entered channel.").arg(Log::formatClientUser(pDst, Log::Target)));
+                            qInfo() << pDst->qsName << "entered channel";
+                            //g.l->log(Log::ChannelJoin,
+                            //		 tr("%1 entered channel.").arg(Log::formatClientUser(pDst, Log::Target)));
 						} else {
-							Global::get().l->log(Log::ChannelLeave, tr("%1 moved to %2.")
-															.arg(Log::formatClientUser(pDst, Log::Target))
-															.arg(Log::formatChannel(channel)));
+                            qInfo() << pDst->qsName << "moved to" << channel->qsName;
+                            //g.l->log(Log::ChannelLeave, tr("%1 moved to %2.")
+                            //								.arg(Log::formatClientUser(pDst, Log::Target))
+                            //								.arg(Log::formatChannel(channel)));
 						}
 					} else {
 						if (channel == pSelf->cChannel) {
-							Global::get().l->log(Log::ChannelJoin, tr("%1 moved in from %2 by %3.")
-														   .arg(Log::formatClientUser(pDst, Log::Target))
-														   .arg(Log::formatChannel(oldChannel))
-														   .arg(Log::formatClientUser(pSrc, Log::Source)));
+                            qInfo() << pDst->qsName << "moved in from" << oldChannel->qsName << "by" << pSrc->qsName;
+                            //g.l->log(Log::ChannelJoin, tr("%1 moved in from %2 by %3.")
+                            //							   .arg(Log::formatClientUser(pDst, Log::Target))
+                            //							   .arg(Log::formatChannel(oldChannel))
+                            //							   .arg(Log::formatClientUser(pSrc, Log::Source)));
 						} else {
-							Global::get().l->log(Log::ChannelLeave, tr("%1 moved to %2 by %3.")
-															.arg(Log::formatClientUser(pDst, Log::Target))
-															.arg(Log::formatChannel(channel))
-															.arg(Log::formatClientUser(pSrc, Log::Source)));
+                            qInfo() << pDst->qsName << "moved to" << channel->qsName << "by" << pSrc->qsName;
+                            //g.l->log(Log::ChannelLeave, tr("%1 moved to %2 by %3.")
+                            //								.arg(Log::formatClientUser(pDst, Log::Target))
+                            //								.arg(Log::formatChannel(channel))
+                            //								.arg(Log::formatClientUser(pSrc, Log::Source)));
 						}
 					}
 				}
 
 				if ((channel == pSelf->cChannel) && pDst->bRecording) {
-					Global::get().l->log(Log::Recording, tr("%1 is recording").arg(Log::formatClientUser(pDst, Log::Target)));
+                    qInfo() << pDst->qsName << "is recording";
+                    //g.l->log(Log::Recording, tr("%1 is recording").arg(Log::formatClientUser(pDst, Log::Target)));
 				}
 			}
 		}
@@ -502,7 +515,8 @@ void MainWindow::msgUserState(const MumbleProto::UserState &msg) {
 		}
 
 		if (!logMsg.isEmpty()) {
-			Global::get().l->log(Log::ChannelListeningAdd, logMsg);
+            qInfo() << logMsg;
+            //g.l->log(Log::ChannelListeningAdd, logMsg);
 		}
 	}
 	for (int i = 0; i < msg.listening_channel_remove_size(); i++) {
@@ -524,7 +538,8 @@ void MainWindow::msgUserState(const MumbleProto::UserState &msg) {
 		}
 
 		if (!logMsg.isEmpty()) {
-			Global::get().l->log(Log::ChannelListeningRemove, logMsg);
+            qInfo() << logMsg;
+            //g.l->log(Log::ChannelListeningRemove, logMsg);
 		}
 	}
 
@@ -534,14 +549,16 @@ void MainWindow::msgUserState(const MumbleProto::UserState &msg) {
 		pmModel->renameUser(pDst, newName);
 		if (!oldName.isNull() && oldName != newName) {
 			if (pSrc != pDst) {
-				Global::get().l->log(Log::UserRenamed, tr("%1 renamed to %2 by %3.")
-											   .arg(Log::formatClientUser(pDst, Log::Target, oldName))
-											   .arg(Log::formatClientUser(pDst, Log::Target))
-											   .arg(Log::formatClientUser(pSrc, Log::Source)));
+                qInfo() << oldName << "renamed to" << pDst->qsName << "by" << pSrc->qsName;
+                //g.l->log(Log::UserRenamed, tr("%1 renamed to %2 by %3.")
+                //							   .arg(Log::formatClientUser(pDst, Log::Target, oldName))
+                //							   .arg(Log::formatClientUser(pDst, Log::Target))
+                //							   .arg(Log::formatClientUser(pSrc, Log::Source)));
 			} else {
-				Global::get().l->log(Log::UserRenamed, tr("%1 renamed to %2.")
-											   .arg(Log::formatClientUser(pDst, Log::Target, oldName),
-													Log::formatClientUser(pDst, Log::Target)));
+                qInfo() << oldName << "renamed to" << pDst->qsName;
+                //g.l->log(Log::UserRenamed, tr("%1 renamed to %2.")
+                //							   .arg(Log::formatClientUser(pDst, Log::Target, oldName),
+                //									Log::formatClientUser(pDst, Log::Target)));
 			}
 		}
 	}
@@ -569,12 +586,15 @@ void MainWindow::msgUserState(const MumbleProto::UserState &msg) {
 		if (pSelf && pDst != pSelf
 			&& ((pDst->cChannel == pSelf->cChannel) || pDst->cChannel->allLinks().contains(pSelf->cChannel))) {
 			if (pDst->bSelfMute && pDst->bSelfDeaf)
-				Global::get().l->log(Log::OtherSelfMute,
-						 tr("%1 is now muted and deafened.").arg(Log::formatClientUser(pDst, Log::Target)));
+                qInfo() << pDst->qsName  << "is now muted and deafened";
+                //g.l->log(Log::OtherSelfMute,
+                //		 tr("%1 is now muted and deafened.").arg(Log::formatClientUser(pDst, Log::Target)));
 			else if (pDst->bSelfMute)
-				Global::get().l->log(Log::OtherSelfMute, tr("%1 is now muted.").arg(Log::formatClientUser(pDst, Log::Target)));
+                qInfo() << pDst->qsName << "is now muted";
+                //g.l->log(Log::OtherSelfMute, tr("%1 is now muted.").arg(Log::formatClientUser(pDst, Log::Target)));
 			else
-				Global::get().l->log(Log::OtherSelfMute, tr("%1 is now unmuted.").arg(Log::formatClientUser(pDst, Log::Target)));
+                qInfo() << pDst->qsName << "is now unmuted";
+                //g.l->log(Log::OtherSelfMute, tr("%1 is now unmuted.").arg(Log::formatClientUser(pDst, Log::Target)));
 		}
 	}
 
@@ -585,15 +605,19 @@ void MainWindow::msgUserState(const MumbleProto::UserState &msg) {
 		if (pSelf) {
 			if (pDst == pSelf) {
 				if (pDst->bRecording) {
-					Global::get().l->log(Log::Recording, tr("Recording started"));
+                    qInfo() << "Recording started";
+                    //g.l->log(Log::Recording, tr("Recording started"));
 				} else {
-					Global::get().l->log(Log::Recording, tr("Recording stopped"));
+                    qInfo() << "Recording stopped";
+                    //g.l->log(Log::Recording, tr("Recording stopped"));
 				}
 			} else if (pDst->cChannel->allLinks().contains(pSelf->cChannel)) {
 				if (pDst->bRecording) {
-					Global::get().l->log(Log::Recording, tr("%1 started recording.").arg(Log::formatClientUser(pDst, Log::Source)));
+                    qInfo() << pDst->qsName << "started recording";
+                    //g.l->log(Log::Recording, tr("%1 started recording.").arg(Log::formatClientUser(pDst, Log::Source)));
 				} else {
-					Global::get().l->log(Log::Recording, tr("%1 stopped recording.").arg(Log::formatClientUser(pDst, Log::Source)));
+                    qInfo() << pDst->qsName << "stopped recording";
+                    //g.l->log(Log::Recording, tr("%1 stopped recording.").arg(Log::formatClientUser(pDst, Log::Source)));
 				}
 			}
 		}
@@ -605,46 +629,56 @@ void MainWindow::msgUserState(const MumbleProto::UserState &msg) {
 				|| (pSrc == pSelf))) {
 			if ((pSrc == pDst) && (pSrc == pSelf)) {
 				if (pDst->bPrioritySpeaker) {
-					Global::get().l->log(Log::YouMuted, tr("You revoked your priority speaker status."));
+                    qInfo() << "You revoked your priority speaker status";
+                    //g.l->log(Log::YouMuted, tr("You revoked your priority speaker status."));
 				} else {
-					Global::get().l->log(Log::YouMuted, tr("You assumed priority speaker status."));
+                    qInfo() << "You assumed priority speaker status.";
+                    //g.l->log(Log::YouMuted, tr("You assumed priority speaker status."));
 				}
 			} else if ((pSrc != pSelf) && (pDst == pSelf)) {
 				if (pDst->bPrioritySpeaker) {
-					Global::get().l->log(
-						Log::YouMutedOther,
-						tr("%1 revoked your priority speaker status.").arg(Log::formatClientUser(pSrc, Log::Source)));
+                    qInfo() << pSrc->qsName << "revoked your priority speaker statu";
+                    //g.l->log(
+                    //	Log::YouMutedOther,
+                    //	tr("%1 revoked your priority speaker status.").arg(Log::formatClientUser(pSrc, Log::Source)));
 				} else {
-					Global::get().l->log(Log::YouMutedOther,
-							 tr("%1 gave you priority speaker status.").arg(Log::formatClientUser(pSrc, Log::Source)));
+                    qInfo() << pSrc->qsName << "gave you priority speaker status";
+                    //g.l->log(Log::YouMutedOther,
+                    //		 tr("%1 gave you priority speaker status.").arg(Log::formatClientUser(pSrc, Log::Source)));
 				}
 			} else if ((pSrc == pSelf) && (pSrc != pDst)) {
 				if (pDst->bPrioritySpeaker) {
-					Global::get().l->log(Log::YouMutedOther, tr("You revoked priority speaker status for %1.")
-													 .arg(Log::formatClientUser(pDst, Log::Target)));
+                    qInfo() << "You revoked priority speaker status for" << pSrc->qsName;
+                    //g.l->log(Log::YouMutedOther, tr("You revoked priority speaker status for %1.")
+                    //								 .arg(Log::formatClientUser(pDst, Log::Target)));
 				} else {
-					Global::get().l->log(
-						Log::YouMutedOther,
-						tr("You gave priority speaker status to %1.").arg(Log::formatClientUser(pDst, Log::Target)));
+                    qInfo() << "You gave priority speaker status to" << pDst->qsName;
+                    //g.l->log(
+                    //	Log::YouMutedOther,
+                    //	tr("You gave priority speaker status to %1.").arg(Log::formatClientUser(pDst, Log::Target)));
 				}
 			} else if ((pSrc == pDst) && (pSrc != pSelf)) {
 				if (pDst->bPrioritySpeaker) {
-					Global::get().l->log(
-						Log::OtherMutedOther,
-						tr("%1 revoked own priority speaker status.").arg(Log::formatClientUser(pSrc, Log::Source)));
+                    qInfo() << pSrc->qsName << "revoked own priority speaker status";
+                    //g.l->log(
+                    //	Log::OtherMutedOther,
+                    //	tr("%1 revoked own priority speaker status.").arg(Log::formatClientUser(pSrc, Log::Source)));
 				} else {
-					Global::get().l->log(Log::OtherMutedOther,
-							 tr("%1 assumed priority speaker status.").arg(Log::formatClientUser(pSrc, Log::Source)));
+                    qInfo() << pSrc->qsName << "assumed priority speaker status";
+                    //g.l->log(Log::OtherMutedOther,
+                    //		 tr("%1 assumed priority speaker status.").arg(Log::formatClientUser(pSrc, Log::Source)));
 				}
 			} else if ((pSrc != pSelf) && (pDst != pSelf)) {
 				if (pDst->bPrioritySpeaker) {
-					Global::get().l->log(Log::OtherMutedOther, tr("%1 revoked priority speaker status for %2.")
-													   .arg(Log::formatClientUser(pSrc, Log::Source),
-															Log::formatClientUser(pDst, Log::Target)));
+                    qInfo() << pSrc->qsName << "revoked priority speaker status for" << pDst->qsName;
+                    //g.l->log(Log::OtherMutedOther, tr("%1 revoked priority speaker status for %2.")
+                    //								   .arg(Log::formatClientUser(pSrc, Log::Source),
+                    //										Log::formatClientUser(pDst, Log::Target)));
 				} else if (!pDst->bPrioritySpeaker) {
-					Global::get().l->log(Log::OtherMutedOther, tr("%1 gave priority speaker status to %2.")
-													   .arg(Log::formatClientUser(pSrc, Log::Source),
-															Log::formatClientUser(pDst, Log::Target)));
+                    qInfo() << pSrc->qsName << "gave priority speaker status to" << pDst->qsName;
+                    //g.l->log(Log::OtherMutedOther, tr("%1 gave priority speaker status to %2.")
+                    //								   .arg(Log::formatClientUser(pSrc, Log::Source),
+                    //										Log::formatClientUser(pDst, Log::Target)));
 				}
 			}
 		}
@@ -665,115 +699,137 @@ void MainWindow::msgUserState(const MumbleProto::UserState &msg) {
 				|| (pSrc == pSelf))) {
 			if (pDst == pSelf) {
 				if (msg.has_mute() && msg.has_deaf() && pDst->bMute && pDst->bDeaf) {
-					Global::get().l->log(Log::YouMuted,
-							 tr("You were muted and deafened by %1.").arg(Log::formatClientUser(pSrc, Log::Source)));
+                    qInfo() << "You were muted and deafened by" << pSrc->qsName;
+                    //g.l->log(Log::YouMuted,
+                    //		 tr("You were muted and deafened by %1.").arg(Log::formatClientUser(pSrc, Log::Source)));
 				} else if (msg.has_mute() && msg.has_deaf() && !pDst->bMute && !pDst->bDeaf) {
-					Global::get().l->log(
-						Log::YouMuted,
-						tr("You were unmuted and undeafened by %1.").arg(Log::formatClientUser(pSrc, Log::Source)));
+                    qInfo() << "You were unmuted and undeafened by" << pSrc->qsName;
+                    //g.l->log(
+                    //	Log::YouMuted,
+                    //	tr("You were unmuted and undeafened by %1.").arg(Log::formatClientUser(pSrc, Log::Source)));
 				} else {
 					if (msg.has_mute()) {
 						if (pDst->bMute)
-							Global::get().l->log(Log::YouMuted,
-									 tr("You were muted by %1.").arg(Log::formatClientUser(pSrc, Log::Source)));
+                            qInfo() << "You were muted by" << pSrc->qsName;
+                            //g.l->log(Log::YouMuted,
+                            //		 tr("You were muted by %1.").arg(Log::formatClientUser(pSrc, Log::Source)));
 						else
-							Global::get().l->log(Log::YouMuted,
-									 tr("You were unmuted by %1.").arg(Log::formatClientUser(pSrc, Log::Source)));
+                            qInfo() << "You were unmuted by" << pSrc->qsName;
+                            //g.l->log(Log::YouMuted,
+                            //		 tr("You were unmuted by %1.").arg(Log::formatClientUser(pSrc, Log::Source)));
 					}
 
 					if (msg.has_deaf()) {
 						if (!pDst->bDeaf)
-							Global::get().l->log(Log::YouMuted,
-									 tr("You were undeafened by %1.").arg(Log::formatClientUser(pSrc, Log::Source)));
+                            qInfo() << "You were undeafened by" << pSrc->qsName;
+                            //g.l->log(Log::YouMuted,
+                            //		 tr("You were undeafened by %1.").arg(Log::formatClientUser(pSrc, Log::Source)));
 					}
 				}
 
 				if (msg.has_suppress()) {
 					if (pDst->bSuppress)
-						Global::get().l->log(Log::YouMuted, tr("You were suppressed."));
+                        qInfo() << "You were suppressed";
+                        //g.l->log(Log::YouMuted, tr("You were suppressed."));
 					else {
 						if (msg.has_channel_id())
-							Global::get().l->log(Log::YouMuted, tr("You were unsuppressed."));
+                            qInfo() << "You were unsuppressed";
+                            //g.l->log(Log::YouMuted, tr("You were unsuppressed."));
 						else
-							Global::get().l->log(Log::YouMuted,
-									 tr("You were unsuppressed by %1.").arg(Log::formatClientUser(pSrc, Log::Source)));
+                            qInfo() << "You were unsuppressed by" << pSrc->qsName;
+                            //g.l->log(Log::YouMuted,
+                            //		 tr("You were unsuppressed by %1.").arg(Log::formatClientUser(pSrc, Log::Source)));
 					}
 				}
 
 				updateTrayIcon();
 			} else if (pSrc == pSelf) {
 				if (msg.has_mute() && msg.has_deaf() && pDst->bMute && pDst->bDeaf) {
-					Global::get().l->log(Log::YouMutedOther,
-							 tr("You muted and deafened %1.").arg(Log::formatClientUser(pDst, Log::Target)));
+                    qInfo() << "You muted and deafened" << pDst->qsName;
+                    //g.l->log(Log::YouMutedOther,
+                    //		 tr("You muted and deafened %1.").arg(Log::formatClientUser(pDst, Log::Target)));
 				} else if (msg.has_mute() && msg.has_deaf() && !pDst->bMute && !pDst->bDeaf) {
-					Global::get().l->log(Log::YouMutedOther,
-							 tr("You unmuted and undeafened %1.").arg(Log::formatClientUser(pDst, Log::Target)));
+                    qInfo() << "You unmuted and undeafened" << pDst->qsName;
+                    //g.l->log(Log::YouMutedOther,
+                    //		 tr("You unmuted and undeafened %1.").arg(Log::formatClientUser(pDst, Log::Target)));
 				} else {
 					if (msg.has_mute()) {
 						if (pDst->bMute)
-							Global::get().l->log(Log::YouMutedOther,
-									 tr("You muted %1.").arg(Log::formatClientUser(pDst, Log::Target)));
+                            qInfo() << "You muted" << pDst->qsName;
+                            //g.l->log(Log::YouMutedOther,
+                            //		 tr("You muted %1.").arg(Log::formatClientUser(pDst, Log::Target)));
 						else
-							Global::get().l->log(Log::YouMutedOther,
-									 tr("You unmuted %1.").arg(Log::formatClientUser(pDst, Log::Target)));
+                            qInfo() << "You unmuted" << pDst->qsName;
+                            //g.l->log(Log::YouMutedOther,
+                            //		 tr("You unmuted %1.").arg(Log::formatClientUser(pDst, Log::Target)));
 					}
 
 					if (msg.has_deaf()) {
 						if (!pDst->bDeaf)
-							Global::get().l->log(Log::YouMutedOther,
-									 tr("You undeafened %1.").arg(Log::formatClientUser(pDst, Log::Target)));
+                            qInfo() << "You undeafened" << pDst->qsName;
+                            //g.l->log(Log::YouMutedOther,
+                            //		 tr("You undeafened %1.").arg(Log::formatClientUser(pDst, Log::Target)));
 					}
 				}
 
 				if (msg.has_suppress()) {
 					if (!msg.has_channel_id()) {
 						if (pDst->bSuppress)
-							Global::get().l->log(Log::YouMutedOther,
-									 tr("You suppressed %1.").arg(Log::formatClientUser(pDst, Log::Target)));
+                            qInfo() << "You suppressed" << pDst->qsName;
+                            //g.l->log(Log::YouMutedOther,
+                            //		 tr("You suppressed %1.").arg(Log::formatClientUser(pDst, Log::Target)));
 						else
-							Global::get().l->log(Log::YouMutedOther,
-									 tr("You unsuppressed %1.").arg(Log::formatClientUser(pDst, Log::Target)));
+                            qInfo() << "You unsuppressed" << pDst->qsName;
+                            //g.l->log(Log::YouMutedOther,
+                            //		 tr("You unsuppressed %1.").arg(Log::formatClientUser(pDst, Log::Target)));
 					}
 				}
 			} else {
 				if (msg.has_mute() && msg.has_deaf() && pDst->bMute && pDst->bDeaf) {
-					Global::get().l->log(Log::OtherMutedOther, tr("%1 muted and deafened by %2.")
-													   .arg(Log::formatClientUser(pDst, Log::Target),
-															Log::formatClientUser(pSrc, Log::Source)));
+                    qInfo() << pDst->qsName << "muted and deafened by" << pSrc->qsName;
+                    //g.l->log(Log::OtherMutedOther, tr("%1 muted and deafened by %2.")
+                    //								   .arg(Log::formatClientUser(pDst, Log::Target),
+                    //										Log::formatClientUser(pSrc, Log::Source)));
 				} else if (msg.has_mute() && msg.has_deaf() && !pDst->bMute && !pDst->bDeaf) {
-					Global::get().l->log(Log::OtherMutedOther, tr("%1 unmuted and undeafened by %2.")
-													   .arg(Log::formatClientUser(pDst, Log::Target),
-															Log::formatClientUser(pSrc, Log::Source)));
+                    qInfo() << pDst->qsName << "unmuted and undeafened by" << pSrc->qsName;
+                    //g.l->log(Log::OtherMutedOther, tr("%1 unmuted and undeafened by %2.")
+                    //								   .arg(Log::formatClientUser(pDst, Log::Target),
+                    //										Log::formatClientUser(pSrc, Log::Source)));
 				} else {
 					if (msg.has_mute()) {
 						if (pDst->bMute)
-							Global::get().l->log(Log::OtherMutedOther, tr("%1 muted by %2.")
-															   .arg(Log::formatClientUser(pDst, Log::Target),
-																	Log::formatClientUser(pSrc, Log::Source)));
+                            qInfo() << pDst->qsName << "muted by" << pSrc->qsName;
+                            //g.l->log(Log::OtherMutedOther, tr("%1 muted by %2.")
+                            //								   .arg(Log::formatClientUser(pDst, Log::Target),
+                            //										Log::formatClientUser(pSrc, Log::Source)));
 						else
-							Global::get().l->log(Log::OtherMutedOther, tr("%1 unmuted by %2.")
-															   .arg(Log::formatClientUser(pDst, Log::Target),
-																	Log::formatClientUser(pSrc, Log::Source)));
+                            qInfo() << pDst->qsName << "unmuted by" << pSrc->qsName;
+                            //g.l->log(Log::OtherMutedOther, tr("%1 unmuted by %2.")
+                            //								   .arg(Log::formatClientUser(pDst, Log::Target),
+                            //										Log::formatClientUser(pSrc, Log::Source)));
 					}
 
 					if (msg.has_deaf()) {
 						if (!pDst->bDeaf)
-							Global::get().l->log(Log::OtherMutedOther, tr("%1 undeafened by %2.")
-															   .arg(Log::formatClientUser(pDst, Log::Target),
-																	Log::formatClientUser(pSrc, Log::Source)));
+                            qInfo() << pDst->qsName << "undeafened by" << pSrc->qsName;
+                            //g.l->log(Log::OtherMutedOther, tr("%1 undeafened by %2.")
+                            //								   .arg(Log::formatClientUser(pDst, Log::Target),
+                            //										Log::formatClientUser(pSrc, Log::Source)));
 					}
 				}
 
 				if (msg.has_suppress()) {
 					if (!msg.has_channel_id()) {
 						if (pDst->bSuppress)
-							Global::get().l->log(Log::OtherMutedOther, tr("%1 suppressed by %2.")
-															   .arg(Log::formatClientUser(pDst, Log::Target),
-																	Log::formatClientUser(pSrc, Log::Source)));
+                            qInfo() << pDst->qsName << "suppressed by" << pSrc->qsName;
+                            //g.l->log(Log::OtherMutedOther, tr("%1 suppressed by %2.")
+                            //								   .arg(Log::formatClientUser(pDst, Log::Target),
+                            //										Log::formatClientUser(pSrc, Log::Source)));
 						else
-							Global::get().l->log(Log::OtherMutedOther, tr("%1 unsuppressed by %2.")
-															   .arg(Log::formatClientUser(pDst, Log::Target),
-																	Log::formatClientUser(pSrc, Log::Source)));
+                            qInfo() << pDst->qsName << "unsuppressed by" << pSrc->qsName;
+                            //g.l->log(Log::OtherMutedOther, tr("%1 unsuppressed by %2.")
+                            //								   .arg(Log::formatClientUser(pDst, Log::Target),
+                            //										Log::formatClientUser(pSrc, Log::Source)));
 					}
 				}
 			}
@@ -821,32 +877,38 @@ void MainWindow::msgUserRemove(const MumbleProto::UserRemove &msg) {
 	if (pDst == pSelf) {
 		bRetryServer = false;
 		if (msg.ban())
-			Global::get().l->log(Log::YouKicked, tr("You were kicked and banned from the server by %1: %2.")
-										 .arg(Log::formatClientUser(pSrc, Log::Source))
-										 .arg(reason));
+            qInfo() << "You were kicked and banned from the server by" << pSrc->qsName << ":" << reason;
+            //g.l->log(Log::YouKicked, tr("You were kicked and banned from the server by %1: %2.")
+            //							 .arg(Log::formatClientUser(pSrc, Log::Source))
+            //							 .arg(reason));
 		else
-			Global::get().l->log(Log::YouKicked, tr("You were kicked from the server by %1: %2.")
-										 .arg(Log::formatClientUser(pSrc, Log::Source))
-										 .arg(reason));
+            qInfo() << "You were kicked from the server by" << pSrc->qsName << ":" << reason;
+            //g.l->log(Log::YouKicked, tr("You were kicked from the server by %1: %2.")
+            //							 .arg(Log::formatClientUser(pSrc, Log::Source))
+            //							 .arg(reason));
 	} else if (pSrc) {
 		if (msg.ban())
-			Global::get().l->log((pSrc == pSelf) ? Log::YouKicked : Log::UserKicked,
-					 tr("%3 was kicked and banned from the server by %1: %2.")
-						 .arg(Log::formatClientUser(pSrc, Log::Source))
-						 .arg(reason)
-						 .arg(Log::formatClientUser(pDst, Log::Target)));
+            qInfo() << pDst->qsName << "was kicked and banned from the server by" << pSrc->qsName << ":" << reason;
+            //g.l->log((pSrc == pSelf) ? Log::YouKicked : Log::UserKicked,
+            //		 tr("%3 was kicked and banned from the server by %1: %2.")
+            //			 .arg(Log::formatClientUser(pSrc, Log::Source))
+            //			 .arg(reason)
+            //			 .arg(Log::formatClientUser(pDst, Log::Target)));
 		else
-			Global::get().l->log((pSrc == pSelf) ? Log::YouKicked : Log::UserKicked,
-					 tr("%3 was kicked from the server by %1: %2.")
-						 .arg(Log::formatClientUser(pSrc, Log::Source))
-						 .arg(reason)
-						 .arg(Log::formatClientUser(pDst, Log::Target)));
+            qInfo() << pDst->qsName << "was kicked from the server by" << pSrc->qsName << ":" << reason;
+            //g.l->log((pSrc == pSelf) ? Log::YouKicked : Log::UserKicked,
+            //		 tr("%3 was kicked from the server by %1: %2.")
+            //			 .arg(Log::formatClientUser(pSrc, Log::Source))
+            //			 .arg(reason)
+            //			 .arg(Log::formatClientUser(pDst, Log::Target)));
 	} else {
 		if (pDst->cChannel == pSelf->cChannel || pDst->cChannel->allLinks().contains(pSelf->cChannel)) {
-			Global::get().l->log(Log::ChannelLeaveDisconnect,
-					 tr("%1 left channel and disconnected.").arg(Log::formatClientUser(pDst, Log::Source)));
+            qInfo() << pDst->qsName << "left channel and disconnected";
+            //g.l->log(Log::ChannelLeaveDisconnect,
+            //		 tr("%1 left channel and disconnected.").arg(Log::formatClientUser(pDst, Log::Source)));
 		} else {
-			Global::get().l->log(Log::UserLeave, tr("%1 disconnected.").arg(Log::formatClientUser(pDst, Log::Source)));
+            qInfo() << pDst->qsName << "disconnected";
+            //g.l->log(Log::UserLeave, tr("%1 disconnected.").arg(Log::formatClientUser(pDst, Log::Source)));
 		}
 	}
 	if (pDst != pSelf)
@@ -975,8 +1037,9 @@ void MainWindow::msgChannelRemove(const MumbleProto::ChannelRemove &msg) {
 			c->bFiltered = false;
 		}
 		if (!pmModel->removeChannel(c, true)) {
-			Global::get().l->log(Log::CriticalError, tr("Protocol violation. Server sent remove for occupied channel."));
-			Global::get().sh->disconnect();
+            qCritical() << "Protocol violation. Server sent remove for occupied channel.";
+            //g.l->log(Log::CriticalError, tr("Protocol violation. Server sent remove for occupied channel."));
+			Global::get()..sh->disconnect();
 			return;
 		}
 	}
@@ -1220,8 +1283,9 @@ void MainWindow::msgCodecVersion(const MumbleProto::CodecVersion &msg) {
 	static bool warnedOpus = false;
 	Global::get().bOpus                = msg.opus();
 
-	if (!Global::get().oCodec && !warnedOpus) {
-		Global::get().l->log(Log::CriticalError, tr("Failed to load Opus, it will not be available for audio encoding/decoding."));
+	if (!g.oCodec && !warnedOpus) {
+        qCritical() << "Failed to load Opus, it will not be available for audio encoding/decoding.";
+        //g.l->log(Log::CriticalError, tr("Failed to load Opus, it will not be available for audio encoding/decoding."));
 		warnedOpus = true;
 	}
 #endif
@@ -1252,8 +1316,10 @@ void MainWindow::msgCodecVersion(const MumbleProto::CodecVersion &msg) {
 
 	if (!Global::get().qmCodecs.contains(willuse)) {
 		if (!warnedCELT) {
-			Global::get().l->log(Log::CriticalError, tr("Unable to find matching CELT codecs with other clients. You will not be "
-											"able to talk to all users."));
+            qInfo() << "Unable to find matching CELT codecs with other clients. You will not be "
+                                            "able to talk to all users.";
+            //g.l->log(Log::CriticalError, tr("Unable to find matching CELT codecs with other clients. You will not be "
+            //								"able to talk to all users."));
 			warnedCELT = true;
 		}
 	} else {
@@ -1296,20 +1362,25 @@ void MainWindow::msgRequestBlob(const MumbleProto::RequestBlob &) {
 /// @param msg The message object containing the suggestions
 void MainWindow::msgSuggestConfig(const MumbleProto::SuggestConfig &msg) {
 	if (msg.has_version() && (msg.version() > MumbleVersion::getRaw())) {
-		Global::get().l->log(Log::Warning,
-				 tr("The server requests minimum client version %1").arg(MumbleVersion::toString(msg.version())));
+        qWarning() << "The server requests minimum client version" << MumbleVersion::toString(msg.version());
+        //g.l->log(Log::Warning,
+        //		 tr("The server requests minimum client version %1").arg(MumbleVersion::toString(msg.version())));
 	}
 	if (msg.has_positional() && (msg.positional() != Global::get().s.doPositionalAudio())) {
 		if (msg.positional())
-			Global::get().l->log(Log::Warning, tr("The server requests positional audio be enabled."));
+            qWarning() << "The server requests positional audio be enabled.";
+            //g.l->log(Log::Warning, tr("The server requests positional audio be enabled."));
 		else
-			Global::get().l->log(Log::Warning, tr("The server requests positional audio be disabled."));
+            qWarning() << "The server requests positional audio be disabled.";
+            //g.l->log(Log::Warning, tr("The server requests positional audio be disabled."));
 	}
 	if (msg.has_push_to_talk() && (msg.push_to_talk() != (Global::get().s.atTransmit == Settings::PushToTalk))) {
 		if (msg.push_to_talk())
-			Global::get().l->log(Log::Warning, tr("The server requests Push-to-Talk be enabled."));
+            qWarning() << "The server requests Push-to-Talk be enabled.";
+            //g.l->log(Log::Warning, tr("The server requests Push-to-Talk be enabled."));
 		else
-			Global::get().l->log(Log::Warning, tr("The server requests Push-to-Talk be disabled."));
+            qWarning() << "The server requests Push-to-Talk be disabled.";
+            //g.l->log(Log::Warning, tr("The server requests Push-to-Talk be disabled."));
 	}
 }
 

@@ -27,6 +27,7 @@ public:
     Q_INVOKABLE void clear();
     void append(const RoomInfo &roomInfo);
     Channel* channel(int index) const;
+    void insertUser(Channel *channel, const QString &username);
 
 private:
     bool isValidIndex(int index) const {

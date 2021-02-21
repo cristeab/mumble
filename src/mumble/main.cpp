@@ -641,6 +641,8 @@ int main(int argc, char **argv) {
                      &ServerTableModel::onServerDisconnectedEvent);
     QObject::connect(g.mw, &MainWindow::userModelChanged, srv,
                      &ServerTableModel::onUserModelChanged);
+    QObject::connect(g.mw, &MainWindow::channelJoined, srv,
+                     &ServerTableModel::onChannelJoined);
 
 	g.talkingUI = new TalkingUI();
 

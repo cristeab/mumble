@@ -571,6 +571,13 @@ void ServerTableModel::onUserModelChanged()
     }
 }
 
+void ServerTableModel::onChannelJoined(Channel *channel)
+{
+    if (nullptr != channel) {
+        _roomsModel->insertUser(channel, _username);
+    }
+}
+
 void ServerTableModel::gotoClass(int index)
 {
     if ((0 <= index) && (index < _classModelItems.size())) {

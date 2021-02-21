@@ -1,4 +1,5 @@
 #include "RoomsModel.h"
+#include "Channel.h"
 #include <QQmlEngine>
 
 RoomsModel::RoomsModel(QObject *parent) : QAbstractListModel(parent)
@@ -62,4 +63,24 @@ Channel* RoomsModel::channel(int index) const
         ch = _rooms.at(index).channel;
     }
     return ch;
+}
+
+void RoomsModel::insertUser(Channel *channel, const QString &username)
+{
+    for (auto &roomInfo: _rooms) {
+        if (roomInfo.channel == channel) {
+            emit layoutAboutToBeChanged();
+            roomInfo.users << username;
+            emit layoutChanged();
+            return;
+        }
+    }
+    qWarning() << "Create new room" << username;
+    RoomInfo roomInfo;
+    roomInfo.channel = channel;
+    roomInfo.name = channel->qsName;
+    roomInfo.users << username;
+    emit layoutAboutToBeChanged();
+    _rooms << roomInfo;
+    emit layoutChanged();
 }

@@ -94,6 +94,7 @@ public:
     void onServerDisconnectedEvent(MumbleProto::Reject_RejectType rtLast,
                                    const QString &reason);
     void onUserModelChanged();
+    void onChannelJoined(Channel *channel);
 
 signals:
     void classesAvailable();
