@@ -591,3 +591,8 @@ void ServerTableModel::gotoClass(int index)
         qCritical() << "Invalid index" << index;
     }
 }
+
+void ServerTableModel::joinRoom(int index)
+{
+    qDebug() << "Join room" << index;
+}
