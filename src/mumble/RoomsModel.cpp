@@ -81,6 +81,8 @@ void RoomsModel::insertUser(Channel *channel, const QString &username)
             emit layoutChanged();
             _userPosition.roomIndex = i;
             _userPosition.userIndex = roomInfo.users.size() - 1;
+            setCurrentRoomIndex(INVALID_INDEX);//make sure the index is updated
+            setCurrentRoomIndex(i);
             return;
         }
     }
@@ -94,4 +96,6 @@ void RoomsModel::insertUser(Channel *channel, const QString &username)
     emit layoutChanged();
     _userPosition.roomIndex = _rooms.size() - 1;
     _userPosition.userIndex = roomInfo.users.size() - 1;
+    setCurrentRoomIndex(INVALID_INDEX);//make sure the index is updated
+    setCurrentRoomIndex(_userPosition.roomIndex);
 }
