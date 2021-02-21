@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Controls.Material 2.12
 import ".."
 
 Row {
@@ -7,7 +8,8 @@ Row {
     property alias text: controlLabel.text
     property alias model: controlCombo.model
     property alias currentIndex: controlCombo.currentIndex
-    spacing: Theme.windowMargin / 2
+    spacing: Theme.windowMargin
+    Material.accent: Theme.backgroundColor2
     Label {
         id: controlLabel
         anchors.verticalCenter: controlCombo.verticalCenter

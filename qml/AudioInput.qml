@@ -10,12 +10,32 @@ Page {
     }
 
     Row {
+        id: checkBoxRow
         anchors {
             top: parent.top
             topMargin: 8 * Theme.windowMargin
             horizontalCenter: parent.horizontalCenter
         }
-        spacing: Theme.windowMargin
+        spacing: 2 * Theme.windowMargin
+        CustomCheckBox {
+            text: qsTr("Mute microphone")
+            checked: audioDevices.inputDeviceMute
+            onCheckedChanged: audioDevices.inputDeviceMute = checked
+        }
+        CustomCheckBox {
+            text: qsTr("Reconnect automatically")
+            checked: audioDevices.inputDeviceAutoConnect
+            onCheckedChanged: audioDevices.inputDeviceAutoConnect = checked
+        }
+    }
+
+    Row {
+        anchors {
+            top: checkBoxRow.bottom
+            topMargin: Theme.windowMargin
+            horizontalCenter: parent.horizontalCenter
+        }
+        spacing: 2 * Theme.windowMargin
         LabelComboBox {
             text: qsTr("System")
             model: audioDevices.inputSystems
