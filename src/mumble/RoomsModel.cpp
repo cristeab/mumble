@@ -54,3 +54,12 @@ void RoomsModel::append(const RoomInfo &roomInfo)
     _rooms << roomInfo;
     emit layoutChanged();
 }
+
+Channel* RoomsModel::channel(int index) const
+{
+    Channel *ch = nullptr;
+    if (isValidIndex(index)) {
+        ch = _rooms.at(index).channel;
+    }
+    return ch;
+}
