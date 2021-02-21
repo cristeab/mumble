@@ -44,6 +44,7 @@
 #include "UserLockFile.h"
 #include "VersionCheck.h"
 #include "ServerTableModel.h"
+#include "AudioDeviceModel.h"
 
 #include <QtCore/QProcess>
 #include <QtGui/QDesktopServices>
@@ -626,8 +627,10 @@ int main(int argc, char **argv) {
     //set properties
     QQmlContext *context = engine.rootContext();//registered properties are available to all components
     auto *srv = new ServerTableModel();
+    auto *audioDev = new AudioDeviceModel();
     if (nullptr != context) {
         context->setContextProperty(srv->objectName(), srv);
+        context->setContextProperty(audioDev->objectName(), audioDev);
     } else {
         qDebug() << "Cannot get root context";
         return EXIT_FAILURE;
