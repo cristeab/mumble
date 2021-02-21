@@ -84,6 +84,9 @@ ApplicationWindow {
                     bar.currentButtonIndex = index
                     tabView.replace(bar.pages[index])
                     servers.startPingTick(0 === index)
+                    if ((1 === index) || (2 === index)) {
+                        audioDevices.init(1 === index)
+                    }
                 }
                 ToolTip {
                     visible: tabButton.hovered
