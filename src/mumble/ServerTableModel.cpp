@@ -578,6 +578,7 @@ void ServerTableModel::gotoClass(int index)
         _roomsModel->clear();
         for (auto *child: rootItem->qlChildren) {
             RoomsModel::RoomInfo roomInfo;
+            roomInfo.channel = child->cChan;
             roomInfo.name = child->cChan->qsName;
             for (auto *user: child->qlChildren) {
                 if (nullptr != user->pUser) {
@@ -595,4 +596,10 @@ void ServerTableModel::gotoClass(int index)
 void ServerTableModel::joinRoom(int index)
 {
     qDebug() << "Join room" << index;
+    const auto *ch = _roomsModel->channel(index);
+    if (nullptr != ch) {
+        g.sh->joinChannel(g.uiSession, ch->iId);
+    } else {
+        qCritical() << "Cannot join room: invalid index" << index;
+    }
 }

@@ -3,6 +3,8 @@
 #include <QAbstractListModel>
 #include <QList>
 
+class Channel;
+
 class RoomsModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -12,6 +14,7 @@ public:
         Users
     };
     struct RoomInfo {
+        Channel *channel = nullptr;
         QString name;
         QStringList users;
     };
@@ -23,6 +26,7 @@ public:
 
     Q_INVOKABLE void clear();
     void append(const RoomInfo &roomInfo);
+    Channel* channel(int index) const;
 
 private:
     bool isValidIndex(int index) const {
