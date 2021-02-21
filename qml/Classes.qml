@@ -53,18 +53,27 @@ Page {
             MouseArea {
                 anchors.fill: parent
                 onClicked: classList.currentIndex = index
+                onDoubleClicked: {
+                    classList.currentIndex = index
+                    servers.gotoClass(classList.currentIndex)
+                }
             }
         }
     }
 
     CustomButton {
         id: goBtn
+
+        function gotoAction() {
+            servers.gotoClass(classList.currentIndex)
+        }
+
         anchors {
             left: classList.left
             bottom: parent.bottom
             bottomMargin: Theme.windowMargin
         }
         text: qsTr("Go to class")
-        onClicked: servers.gotoClass(classList.currentIndex)
+        onClicked: goBtn.gotoAction()
     }
 }
