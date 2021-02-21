@@ -9,6 +9,7 @@ TableView {
 
     visible: 0 < controlTable.rows
     interactive: false
+    Component.onCompleted: controlTable.forceLayout()
 
     Row {
         id: columnsHeader
