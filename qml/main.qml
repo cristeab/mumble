@@ -84,6 +84,9 @@ ApplicationWindow {
                     bar.currentButtonIndex = index
                     tabView.replace(bar.pages[index])
                     servers.startPingTick(0 === index)
+                    if ((1 === index) || (2 === index)) {
+                        audioDevices.init(1 === index)
+                    }
                 }
                 ToolTip {
                     visible: tabButton.hovered
@@ -111,6 +114,12 @@ ApplicationWindow {
                 tabView.push("qrc:/qml/Classes.qml")
             }
         }
+        function onDlgTitleChanged() {
+            if ("" !== servers.dlgTitle) {
+                lineEditDlg.active = true
+                lineEditDlg.item.visible = true
+            }
+        }
     }
 
     Loader {
@@ -136,7 +145,7 @@ ApplicationWindow {
     Loader {
         id: lineEditDlg
         anchors.fill: parent
-        active: "" !== servers.dlgTitle
+        active: false
         source: "qrc:/qml/dialog/LineEditDialog.qml"
     }
 }

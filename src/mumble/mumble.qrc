@@ -36,6 +36,8 @@
         <file alias="qml/custom/CustomButton.qml">../../qml/custom/CustomButton.qml</file>
         <file alias="qml/custom/LabelTextField.qml">../../qml/custom/LabelTextField.qml</file>
         <file alias="qml/custom/CustomTextField.qml">../../qml/custom/CustomTextField.qml</file>
+        <file alias="qml/custom/LabelComboBox.qml">../../qml/custom/LabelComboBox.qml</file>
+        <file alias="qml/custom/CustomCheckBox.qml">../../qml/custom/CustomCheckBox.qml</file>
         <file alias="qml/dialog/AddEditServer.qml">../../qml/dialog/AddEditServer.qml</file>
         <file alias="qml/dialog/LineEditDialog.qml">../../qml/dialog/LineEditDialog.qml</file>
         <file alias="qml/qmldir">../../qml/qmldir</file>

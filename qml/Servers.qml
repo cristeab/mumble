@@ -9,6 +9,8 @@ Page {
         color: Theme.backgroundColor
     }
 
+    Component.onCompleted: srvTbl.forceLayout()
+
     TabButton {
         id: forwardBtn
         anchors {

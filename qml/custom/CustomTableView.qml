@@ -10,7 +10,6 @@ TableView {
     ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
     visible: 0 < controlTable.rows
     interactive: false
-    Component.onCompleted: controlTable.forceLayout()
 
     Row {
         id: columnsHeader
@@ -47,7 +46,7 @@ TableView {
         property int col: index / controlTable.rows
 
         padding: Theme.windowMargin
-        text: (((0 === col) || servers.isReachable(row)) && servers.refreshRow) ? display : ""
+        text: (((0 === col) || servers.isReachable(row))) ? display : ""
         color: Theme.textColor2
         clip: true
         elide: Text.ElideRight
@@ -58,7 +57,10 @@ TableView {
         }
         MouseArea {
             anchors.fill: parent
-            onClicked: servers.currentIndex = controlDelegate.row
+            onClicked: {
+                servers.currentIndex = controlDelegate.row
+                controlTable.forceLayout()
+            }
         }
     }
 }

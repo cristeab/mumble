@@ -412,7 +412,6 @@ void ServerTableModel::setStats(ServerItem *si, double delay, int users, int tot
     si->currentUsers = users;
     si->totalUsers = totalUsers;
     emit layoutChanged();
-    emit refreshRowChanged();
 }
 
 bool ServerTableModel::connectServer()
