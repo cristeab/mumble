@@ -28,6 +28,7 @@ Page {
     GridView {
         id: roomsGrid
 
+        ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
         anchors {
             top: parent.top
             topMargin: 8 * Theme.windowMargin
@@ -35,7 +36,7 @@ Page {
             leftMargin: 2 * Theme.windowMargin
             right: parent.right
             rightMargin: 2 * Theme.windowMargin
-            bottom: parent.bottom
+            bottom: joinBtn.top
         }
         cellWidth: roomsGrid.width / 4
         cellHeight: 250
@@ -60,6 +61,7 @@ Page {
             ListView {
                 id: usersList
 
+                ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
                 anchors {
                     top: parent.top
                     left: parent.left
@@ -104,10 +106,26 @@ Page {
                     onClicked: roomsGrid.currentIndex = index
                     onDoubleClicked: {
                         roomsGrid.currentIndex = index
-                        servers.joinRoom(roomsGrid.currentIndex)
+                        joinBtn.joinAction()
                     }
                 }
             }
         }
+    }
+    CustomButton {
+        id: joinBtn
+
+        function joinAction() {
+            servers.joinRoom(roomsGrid.currentIndex)
+        }
+
+        enabled: servers.roomsModel.currentRoomIndex !== roomsGrid.currentIndex
+        anchors {
+            left: roomsGrid.left
+            bottom: parent.bottom
+            bottomMargin: Theme.windowMargin
+        }
+        text: qsTr("Join room")
+        onClicked: joinBtn.joinAction()
     }
 }

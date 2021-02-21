@@ -7,6 +7,7 @@ TableView {
 
     readonly property var columnWidths: [440, 120, 120]
 
+    ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
     visible: 0 < controlTable.rows
     interactive: false
     Component.onCompleted: controlTable.forceLayout()

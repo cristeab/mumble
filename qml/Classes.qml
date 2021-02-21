@@ -24,6 +24,7 @@ Page {
         }
         topMargin: classListHeader.implicitHeight + 3
 
+        ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
         anchors {
             top: parent.top
             topMargin: 8 * Theme.windowMargin

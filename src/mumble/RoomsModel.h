@@ -1,5 +1,6 @@
 #pragma once
 
+#include "qmlhelpers.h"
 #include <QAbstractListModel>
 #include <QList>
 
@@ -8,6 +9,9 @@ class Channel;
 class RoomsModel : public QAbstractListModel
 {
     Q_OBJECT
+
+    QML_READABLE_PROPERTY(int, currentRoomIndex, setCurrentRoomIndex, INVALID_INDEX)
+
 public:
     enum RoomRoles {
         Name = Qt::UserRole+1,
@@ -30,14 +34,15 @@ public:
     void insertUser(Channel *channel, const QString &username);
 
 private:
+    enum { INVALID_INDEX = -1 };
     bool isValidIndex(int index) const {
         return ((index >= 0) && (index < _rooms.count()));
     }
     QList<RoomInfo> _rooms;
     struct UserPosition {
-        int roomIndex = -1;
-        int userIndex = -1;
+        int roomIndex = INVALID_INDEX;
+        int userIndex = INVALID_INDEX;
         bool isValid() const { return (0 <= roomIndex) && (0 <= userIndex); }
-        void clear() { roomIndex = userIndex = -1; }
+        void clear() { roomIndex = userIndex = INVALID_INDEX; }
     } _userPosition;
 };
