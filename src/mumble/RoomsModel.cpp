@@ -54,3 +54,15 @@ void RoomsModel::append(const RoomInfo &roomInfo)
     _rooms << roomInfo;
     emit layoutChanged();
 }
+
+void RoomsModel::fillDummy()
+{
+    for (int r = 0; r < 15; ++r) {
+        RoomInfo roomInfo;
+        roomInfo.name = "Dummy" + QString::number(r);
+        for (int i = 0; i < 10; ++i) {
+            roomInfo.users << "User" + QString::number(i);
+        }
+        _rooms << roomInfo;
+    }
+}
