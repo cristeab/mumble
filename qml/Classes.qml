@@ -24,6 +24,7 @@ Page {
         }
         topMargin: classListHeader.implicitHeight + 3
 
+        ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
         anchors {
             top: parent.top
             topMargin: 8 * Theme.windowMargin
@@ -53,18 +54,28 @@ Page {
             MouseArea {
                 anchors.fill: parent
                 onClicked: classList.currentIndex = index
+                onDoubleClicked: {
+                    classList.currentIndex = index
+                    goBtn.gotoAction()
+                }
             }
         }
     }
 
     CustomButton {
         id: goBtn
+
+        function gotoAction() {
+            servers.gotoClass(classList.currentIndex)
+            tabView.push("qrc:/qml/Rooms.qml")
+        }
+
         anchors {
             left: classList.left
             bottom: parent.bottom
             bottomMargin: Theme.windowMargin
         }
         text: qsTr("Go to class")
-        onClicked: servers.gotoClass(classList.currentIndex)
+        onClicked: goBtn.gotoAction()
     }
 }

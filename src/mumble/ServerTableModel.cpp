@@ -481,6 +481,9 @@ bool ServerTableModel::disconnectServer()
         qWarning() << "Cannot disconnect: nothing to do";
     }
     setConnectedServerIndex(INVALID_INDEX);
+    if (nullptr != _roomsModel) {
+        _roomsModel->clear();
+    }
     return true;
 }
 
@@ -555,9 +558,11 @@ void ServerTableModel::onUserModelChanged()
     auto *userModel = g.mw->pmModel;
     if (nullptr != userModel) {
         _classNameList.clear();
-        auto *rootItem = userModel->rootItem();
+        _classModelItems.clear();
+        const auto *rootItem = userModel->rootItem();
         for (auto *child: rootItem->qlChildren) {
             _classNameList << child->cChan->qsName;
+            _classModelItems << child;
         }
         emit classNameListChanged();
         if (1 == _classNameList.size()) {
@@ -569,7 +574,42 @@ void ServerTableModel::onUserModelChanged()
     }
 }
 
+void ServerTableModel::onChannelJoined(Channel *channel)
+{
+    if (nullptr != channel) {
+        _roomsModel->insertUser(channel, _username);
+    }
+}
+
 void ServerTableModel::gotoClass(int index)
 {
-    qDebug() << "gotoClass" << index;
+    if ((0 <= index) && (index < _classModelItems.size())) {
+        const auto *rootItem = _classModelItems.at(index);
+        _roomsModel->clear();
+        for (auto *child: rootItem->qlChildren) {
+            RoomsModel::RoomInfo roomInfo;
+            roomInfo.channel = child->cChan;
+            roomInfo.name = child->cChan->qsName;
+            for (auto *user: child->qlChildren) {
+                if (nullptr != user->pUser) {
+                    roomInfo.users << user->pUser->qsName;
+                }
+            }
+            _roomsModel->append(roomInfo);
+        }
+        setCurrentClassName(_classNameList.at(index));
+    } else {
+        qCritical() << "Invalid index" << index;
+    }
+}
+
+void ServerTableModel::joinRoom(int index)
+{
+    qDebug() << "Join room" << index;
+    const auto *ch = _roomsModel->channel(index);
+    if (nullptr != ch) {
+        g.sh->joinChannel(g.uiSession, ch->iId);
+    } else {
+        qCritical() << "Cannot join room: invalid index" << index;
+    }
 }

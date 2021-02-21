@@ -5,6 +5,7 @@
 #include "ServerAddress.h"
 #include "Timer.h"
 #include "Mumble.pb.h"
+#include "RoomsModel.h"
 
 #include <QAbstractListModel>
 #include <qqml.h>
@@ -16,6 +17,8 @@
 #	include "BonjourRecord.h"
 #	include <dns_sd.h>
 #endif
+
+class ModelItem;
 
 class QUdpSocket;
 
@@ -42,6 +45,8 @@ class ServerTableModel : public QAbstractTableModel
     QML_WRITABLE_PROPERTY(bool, dlgIsPassword, setDlgIsPassword, false)
 
     QML_WRITABLE_PROPERTY(QStringList, classNameList, setClassNameList, QStringList())
+    QML_CONSTANT_PROPERTY_PTR(RoomsModel, roomsModel)
+    QML_READABLE_PROPERTY(QString, currentClassName, setCurrentClassName, "")
 
 public:
     struct ServerItem {
@@ -78,6 +83,7 @@ public:
     Q_INVOKABLE bool disconnectServer();
     Q_INVOKABLE void onLineEditDlgAccepted();
     Q_INVOKABLE void gotoClass(int index);
+    Q_INVOKABLE void joinRoom(int index);
 
     int rowCount(const QModelIndex & = QModelIndex()) const override;
     int columnCount(const QModelIndex & = QModelIndex()) const override;
@@ -88,6 +94,7 @@ public:
     void onServerDisconnectedEvent(MumbleProto::Reject_RejectType rtLast,
                                    const QString &reason);
     void onUserModelChanged();
+    void onChannelJoined(Channel *channel);
 
 signals:
     void classesAvailable();
@@ -132,6 +139,7 @@ private:
     bool _IPv6 = false;
     QUdpSocket *_socket4 = nullptr;
     QUdpSocket *_socket6 = nullptr;
+    QList<ModelItem*> _classModelItems;
 
 #ifdef USE_ZEROCONF
 protected:
