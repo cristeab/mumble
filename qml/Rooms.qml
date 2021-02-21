@@ -49,6 +49,10 @@ Page {
             width: roomsGrid.cellWidth
             height: roomsGrid.cellHeight
 
+            Rectangle {
+                anchors.fill: usersList
+                color: delegateControl.GridView.isCurrentItem ?  Theme.backgroundColor2 : Theme.backgroundColor
+            }
             ListView {
                 id: usersList
 
@@ -89,15 +93,14 @@ Page {
                     elide: Text.ElideRight
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
-                    background: Rectangle {
-                        color: delegateControl.GridView.isCurrentItem ?  Theme.backgroundColor2 : Theme.backgroundColor
-                    }
+                    background: Item {}
                 }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: roomsGrid.currentIndex = index
                     onDoubleClicked: {
-                        //TODO: join room
+                        roomsGrid.currentIndex = index
+                        servers.joinRoom(roomsGrid.currentIndex)
                     }
                 }
             }
