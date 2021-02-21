@@ -54,6 +54,7 @@ void RoomsModel::append(const RoomInfo &roomInfo)
     emit layoutAboutToBeChanged();
     _rooms << roomInfo;
     emit layoutChanged();
+    _userPosition.clear();
 }
 
 Channel* RoomsModel::channel(int index) const
@@ -67,11 +68,19 @@ Channel* RoomsModel::channel(int index) const
 
 void RoomsModel::insertUser(Channel *channel, const QString &username)
 {
-    for (auto &roomInfo: _rooms) {
+    //remove user from previous room
+    if (_userPosition.isValid() && isValidIndex(_userPosition.roomIndex)) {
+        _rooms[_userPosition.roomIndex].users.removeAt(_userPosition.userIndex);
+    }
+
+    for (int i = 0; i < _rooms.size(); ++i) {
+        auto &roomInfo = _rooms[i];
         if (roomInfo.channel == channel) {
             emit layoutAboutToBeChanged();
             roomInfo.users << username;
             emit layoutChanged();
+            _userPosition.roomIndex = i;
+            _userPosition.userIndex = roomInfo.users.size() - 1;
             return;
         }
     }
@@ -83,4 +92,6 @@ void RoomsModel::insertUser(Channel *channel, const QString &username)
     emit layoutAboutToBeChanged();
     _rooms << roomInfo;
     emit layoutChanged();
+    _userPosition.roomIndex = _rooms.size() - 1;
+    _userPosition.userIndex = roomInfo.users.size() - 1;
 }

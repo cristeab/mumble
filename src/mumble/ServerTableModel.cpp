@@ -481,6 +481,9 @@ bool ServerTableModel::disconnectServer()
         qWarning() << "Cannot disconnect: nothing to do";
     }
     setConnectedServerIndex(INVALID_INDEX);
+    if (nullptr != _roomsModel) {
+        _roomsModel->clear();
+    }
     return true;
 }
 
