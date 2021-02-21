@@ -34,4 +34,10 @@ private:
         return ((index >= 0) && (index < _rooms.count()));
     }
     QList<RoomInfo> _rooms;
+    struct UserPosition {
+        int roomIndex = -1;
+        int userIndex = -1;
+        bool isValid() const { return (0 <= roomIndex) && (0 <= userIndex); }
+        void clear() { roomIndex = userIndex = -1; }
+    } _userPosition;
 };

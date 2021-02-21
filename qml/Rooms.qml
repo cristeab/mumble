@@ -52,6 +52,10 @@ Page {
             Rectangle {
                 anchors.fill: usersList
                 color: delegateControl.GridView.isCurrentItem ?  Theme.backgroundColor2 : Theme.backgroundColor
+                border {
+                    width: 1
+                    color: Theme.tableBackgroundColor
+                }
             }
             ListView {
                 id: usersList
