@@ -46,6 +46,7 @@ class ServerTableModel : public QAbstractTableModel
 
     QML_WRITABLE_PROPERTY(QStringList, classNameList, setClassNameList, QStringList())
     QML_CONSTANT_PROPERTY_PTR(RoomsModel, roomsModel)
+    QML_READABLE_PROPERTY(QString, currentClassName, setCurrentClassName, "")
 
 public:
     struct ServerItem {

@@ -12,6 +12,19 @@ Page {
     Component.onCompleted: roomsGrid.currentIndex = 0
     Component.onDestruction: servers.roomsModel.clear()
 
+    Label {
+        anchors {
+            top: parent.top
+            topMargin: 3 * Theme.windowMargin
+            horizontalCenter: parent.horizontalCenter
+        }
+        text: servers.currentClassName
+        color: Theme.textColor
+        font.pixelSize: 16
+        clip: true
+        elide: Text.ElideRight
+    }
+
     GridView {
         id: roomsGrid
 

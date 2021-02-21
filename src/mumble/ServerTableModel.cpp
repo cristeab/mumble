@@ -586,7 +586,7 @@ void ServerTableModel::gotoClass(int index)
             }
             _roomsModel->append(roomInfo);
         }
-        _roomsModel->fillDummy();
+        setCurrentClassName(_classNameList.at(index));
     } else {
         qCritical() << "Invalid index" << index;
     }
