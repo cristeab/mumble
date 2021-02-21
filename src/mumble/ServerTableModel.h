@@ -17,6 +17,8 @@
 #	include <dns_sd.h>
 #endif
 
+class ModelItem;
+
 class QUdpSocket;
 
 class ServerTableModel : public QAbstractTableModel
@@ -132,6 +134,7 @@ private:
     bool _IPv6 = false;
     QUdpSocket *_socket4 = nullptr;
     QUdpSocket *_socket6 = nullptr;
+    QList<ModelItem*> _classModelItems;
 
 #ifdef USE_ZEROCONF
 protected:

@@ -555,9 +555,11 @@ void ServerTableModel::onUserModelChanged()
     auto *userModel = g.mw->pmModel;
     if (nullptr != userModel) {
         _classNameList.clear();
-        auto *rootItem = userModel->rootItem();
+        _classModelItems.clear();
+        const auto *rootItem = userModel->rootItem();
         for (auto *child: rootItem->qlChildren) {
             _classNameList << child->cChan->qsName;
+            _classModelItems << child;
         }
         emit classNameListChanged();
         if (1 == _classNameList.size()) {
@@ -571,5 +573,12 @@ void ServerTableModel::onUserModelChanged()
 
 void ServerTableModel::gotoClass(int index)
 {
-    qDebug() << "gotoClass" << index;
+    if ((0 <= index) && (index < _classModelItems.size())) {
+        const auto *rootItem = _classModelItems.at(index);
+        for (auto *child: rootItem->qlChildren) {
+            qInfo() << child->cChan->qsName;
+        }
+    } else {
+        qCritical() << "Invalid index" << index;
+    }
 }
