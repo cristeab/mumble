@@ -1,3 +1,4 @@
+#include "Global.h"
 #include "AudioDeviceModel.h"
 #include "AudioInput.h"
 #include "AudioOutput.h"
@@ -6,6 +7,37 @@
 AudioDeviceModel::AudioDeviceModel(QObject *parent) : QObject(parent)
 {
     setObjectName("audioDevices");
+
+    connect(this, &AudioDeviceModel::inputDeviceIndexChanged, this, [this]() {
+        if ((0 <= _inputSystemIndex) && (_inputSystemIndex < _inputSystems.size())) {
+            const auto &system = _inputSystems.at(_inputSystemIndex);
+            auto *air = AudioInputRegistrar::qmNew->value(system);
+            if ((0 <= _inputDeviceIndex) && (_inputDeviceIndex < _inputDevices.size())) {
+                const auto &device = _inputDevices.at(_inputDeviceIndex);
+                air->setDeviceChoice(device, g.s);
+                qInfo() << "Current input device" << device;
+            } else {
+                qCritical() << "Invalid input device index" << _inputDeviceIndex;
+            }
+        } else {
+            qCritical() << "Invalid input system index" << _inputSystemIndex;
+        }
+    });
+    connect(this, &AudioDeviceModel::outputDeviceIndexChanged, this, [this]() {
+        if ((0 <= _outputSystemIndex) && (_outputSystemIndex < _outputSystems.size())) {
+            const auto &system = _outputSystems.at(_outputSystemIndex);
+            auto *aor = AudioOutputRegistrar::qmNew->value(system);
+            if ((0 <= _outputDeviceIndex) && (_outputDeviceIndex < _outputDevices.size())) {
+                const auto &device = _outputDevices.at(_outputDeviceIndex);
+                aor->setDeviceChoice(device, g.s);
+                qInfo() << "Current output device" << device;
+            } else {
+                qCritical() << "Invalid output device index" << _outputDeviceIndex;
+            }
+        } else {
+            qCritical() << "Invalid output system index" << _outputSystemIndex;
+        }
+    });
 }
 
 void AudioDeviceModel::init(bool input)
