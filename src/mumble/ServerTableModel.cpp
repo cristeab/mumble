@@ -575,8 +575,16 @@ void ServerTableModel::gotoClass(int index)
 {
     if ((0 <= index) && (index < _classModelItems.size())) {
         const auto *rootItem = _classModelItems.at(index);
+        _roomsModel->clear();
         for (auto *child: rootItem->qlChildren) {
-            qInfo() << child->cChan->qsName;
+            RoomsModel::RoomInfo roomInfo;
+            roomInfo.name = child->cChan->qsName;
+            for (auto *user: child->qlChildren) {
+                if (nullptr != user->pUser) {
+                    roomInfo.users << user->pUser->qsName;
+                }
+            }
+            _roomsModel->append(roomInfo);
         }
     } else {
         qCritical() << "Invalid index" << index;

@@ -5,6 +5,7 @@
 #include "ServerAddress.h"
 #include "Timer.h"
 #include "Mumble.pb.h"
+#include "RoomsModel.h"
 
 #include <QAbstractListModel>
 #include <qqml.h>
@@ -44,6 +45,7 @@ class ServerTableModel : public QAbstractTableModel
     QML_WRITABLE_PROPERTY(bool, dlgIsPassword, setDlgIsPassword, false)
 
     QML_WRITABLE_PROPERTY(QStringList, classNameList, setClassNameList, QStringList())
+    QML_CONSTANT_PROPERTY_PTR(RoomsModel, roomsModel)
 
 public:
     struct ServerItem {

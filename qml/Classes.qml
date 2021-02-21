@@ -55,7 +55,7 @@ Page {
                 onClicked: classList.currentIndex = index
                 onDoubleClicked: {
                     classList.currentIndex = index
-                    servers.gotoClass(classList.currentIndex)
+                    goBtn.gotoAction()
                 }
             }
         }
@@ -66,6 +66,7 @@ Page {
 
         function gotoAction() {
             servers.gotoClass(classList.currentIndex)
+            tabView.push("qrc:/qml/Rooms.qml")
         }
 
         anchors {
