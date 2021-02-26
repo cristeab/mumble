@@ -458,6 +458,12 @@ struct Settings {
 	bool doEcho() const;
 	bool doPositionalAudio() const;
 
+    //QML UI variables
+    int inputSystemIndex = -1;
+    int inputDeviceIndex = -1;
+    int outputSystemIndex = -1;
+    int outputDeviceIndex = -1;
+
 	Settings();
 	void load();
 	void load(QSettings *);

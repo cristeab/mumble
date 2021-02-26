@@ -1012,6 +1012,11 @@ void Settings::load(QSettings *settings_ptr) {
 	settings_ptr->beginGroup(QLatin1String("overlay"));
 	os.load(settings_ptr);
 	settings_ptr->endGroup();
+
+    SAVELOAD(inputSystemIndex, "audio/inputSystemIndex");
+    SAVELOAD(inputDeviceIndex, "audio/inputDeviceIndex");
+    SAVELOAD(outputSystemIndex, "audio/outputSystemIndex");
+    SAVELOAD(outputDeviceIndex, "audio/outputDeviceIndex");
 }
 
 #undef LOAD
@@ -1388,6 +1393,11 @@ void Settings::save() {
 	settings_ptr->beginGroup(QLatin1String("overlay"));
 	os.save(settings_ptr);
 	settings_ptr->endGroup();
+
+    SAVELOAD(inputSystemIndex, "audio/inputSystemIndex");
+    SAVELOAD(inputDeviceIndex, "audio/inputDeviceIndex");
+    SAVELOAD(outputSystemIndex, "audio/outputSystemIndex");
+    SAVELOAD(outputDeviceIndex, "audio/outputDeviceIndex");
 }
 
 #undef LOAD
