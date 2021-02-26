@@ -113,7 +113,7 @@ private:
     void sendPing(const QHostAddress &host, unsigned short port);
     void udpReply();
     void lookedUp();
-    void setStats(ServerItem *si, double delay, int users, int totalUsers);
+    void setStats(ServerItem *si, double delayUs, int users, int totalUsers);
     static void recreateServerHandler();
 
     QVector<ServerItem> _servers;
