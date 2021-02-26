@@ -27,5 +27,6 @@ public:
     Q_INVOKABLE void init(bool input);
 
 private:
+    void onDeviceMute();
     enum { INVALID_INDEX = -1 };
 };

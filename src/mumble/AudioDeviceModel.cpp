@@ -1,4 +1,6 @@
+#include "MainWindow.h"
 #include "Global.h"
+#include "ServerHandler.h"
 #include "AudioDeviceModel.h"
 #include "AudioInput.h"
 #include "AudioOutput.h"
@@ -7,6 +9,11 @@
 AudioDeviceModel::AudioDeviceModel(QObject *parent) : QObject(parent)
 {
     setObjectName("audioDevices");
+
+    connect(this, &AudioDeviceModel::inputDeviceMuteChanged, this,
+            &AudioDeviceModel::onDeviceMute);
+    connect(this, &AudioDeviceModel::outputDeviceMuteChanged, this,
+            &AudioDeviceModel::onDeviceMute);
 
     connect(this, &AudioDeviceModel::inputDeviceIndexChanged, this, [this]() {
         if ((0 <= _inputSystemIndex) && (_inputSystemIndex < _inputSystems.size())) {
@@ -85,5 +92,16 @@ void AudioDeviceModel::init(bool input)
         } else {
             setOutputDeviceIndex(INVALID_INDEX);
         }
+    }
+}
+
+void AudioDeviceModel::onDeviceMute()
+{
+    g.s.bMute = _inputDeviceMute;
+    g.s.bDeaf = _outputDeviceMute;
+    if (g.sh) {
+        g.sh->setSelfMuteDeafState(g.s.bMute, g.s.bDeaf);
+    } else {
+        qWarning() << "Cannot set self mute/deaf";
     }
 }

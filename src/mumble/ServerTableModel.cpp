@@ -357,7 +357,7 @@ void ServerTableModel::udpReply()
                 quint32 *ping = reinterpret_cast< quint32 * >(blob + 4);
                 quint64 *ts   = reinterpret_cast< quint64 * >(blob + 8);
 
-                quint64 elapsed = _pingTimer.elapsed() - (*ts ^ _pingRand.value(address));
+                quint64 elapsedUs = _pingTimer.elapsed() - (*ts ^ _pingRand.value(address));
 
                 for (auto *si: _pings.value(address)) {
                     ++si->recv;
@@ -368,7 +368,7 @@ void ServerTableModel::udpReply()
 
                     if (!si->pingSort)
                         si->pingSort = _pingCache.value(UnresolvedServerAddress(si->hostname, si->port));
-                    setStats(si, static_cast< double >(elapsed), users, maxusers);
+                    setStats(si, static_cast< double >(elapsedUs), users, maxusers);
                 }
             }
         }
@@ -405,10 +405,10 @@ void ServerTableModel::lookedUp()
     }
 }
 
-void ServerTableModel::setStats(ServerItem *si, double delay, int users, int totalUsers)
+void ServerTableModel::setStats(ServerItem *si, double delayUs, int users, int totalUsers)
 {
     emit layoutAboutToBeChanged();
-    si->delayMs = delay;
+    si->delayMs = delayUs / 1000;
     si->currentUsers = users;
     si->totalUsers = totalUsers;
     emit layoutChanged();
