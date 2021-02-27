@@ -4,8 +4,8 @@ import ".."
 
 RangeSlider {
     id: control
-    first.value: 0.25
-    second.value: 0.75
+
+    property real backgroundValue: 0
 
     background: Rectangle {
         x: control.leftPadding
@@ -39,6 +39,13 @@ RangeSlider {
             }
             height: middleRect.height
             color: Theme.sliderAboveColor
+            radius: 2
+        }
+        Rectangle {
+            anchors.right: parent.right
+            width: (1 - control.backgroundValue) * parent.width
+            height: middleRect.height
+            color: Theme.sliderBackgroundColor
             radius: 2
         }
     }

@@ -23,6 +23,9 @@ class AudioDeviceModel : public QObject {
     QML_READABLE_PROPERTY(QStringList, outputDevices, setOutputDevices, QStringList())
     QML_WRITABLE_PROPERTY(int, outputDeviceIndex, setOutputDeviceIndex, INVALID_INDEX)
 
+    QML_WRITABLE_PROPERTY(double, sliderBelowValue, setSliderBelowValue, 0.25)
+    QML_WRITABLE_PROPERTY(double, sliderAboveValue, setSliderAboveValue, 0.75)
+    QML_READABLE_PROPERTY(double, micValue, setMicValue, 0.5)
 public:
     AudioDeviceModel(QObject *parent = nullptr);
     Q_INVOKABLE void init(bool input);
@@ -32,6 +35,4 @@ private:
     void onTickerTimeout();
     enum { INVALID_INDEX = -1, TICKER_PERIOD_MS = 20 };
     QTimer _ticker;
-    int _maxPeak = 0;
-    int _ticks = 0;
 };

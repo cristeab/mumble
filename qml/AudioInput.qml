@@ -75,6 +75,13 @@ Page {
             rightMargin: 2 * Theme.windowMargin
         }
         height: 30
+        from: 0
+        to: 1
+        first.value: audioDevices.sliderBelowValue
+        first.onValueChanged: audioDevices.sliderBelowValue = first.value
+        second.value: audioDevices.sliderAboveValue
+        second.onValueChanged: audioDevices.sliderAboveValue = second.value
+        backgroundValue: audioDevices.micValue
     }
     Image {
         id: infoIcon

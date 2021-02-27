@@ -279,6 +279,7 @@ public:
 	void run() Q_DECL_OVERRIDE = 0;
 	virtual bool isAlive() const;
 	bool isTransmitting() const;
+    SpeexPreprocessState* getSppPreprocess() const { return sppPreprocess; }
 };
 
 #endif
