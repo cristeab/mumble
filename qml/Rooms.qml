@@ -52,7 +52,7 @@ Page {
 
             Rectangle {
                 anchors.fill: usersList
-                color: delegateControl.GridView.isCurrentItem ?  Theme.backgroundColor2 : Theme.backgroundColor
+                color: delegateControl.GridView.isCurrentItem ? Theme.backgroundColor2 : Theme.backgroundColor
                 border {
                     width: 1
                     color: Theme.tableBackgroundColor
@@ -94,7 +94,7 @@ Page {
                     width: parent.width
                     padding: Theme.windowMargin / 2
                     text: modelData
-                    color: Theme.textColor
+                    color: delegateControl.GridView.isCurrentItem ? Theme.textColor2 : Theme.textColor
                     clip: true
                     elide: Text.ElideRight
                     verticalAlignment: Text.AlignVCenter

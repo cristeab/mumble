@@ -42,7 +42,7 @@ ApplicationWindow {
     Column {
         id: bar
 
-        enabled: !backBtn.visible
+        enabled: true
 
         property int currentButtonIndex: 0
         readonly property var names: [qsTr("Servers"), qsTr("Audio Input"), qsTr("Audio Output"), qsTr("Password Manager"), qsTr("Certificate Manager")]
