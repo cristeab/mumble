@@ -49,6 +49,10 @@ AudioDeviceModel::AudioDeviceModel(QObject *parent) : QObject(parent)
             qCritical() << "Invalid output system index" << _outputSystemIndex;
         }
     });
+
+    _ticker.setSingleShot(false);
+    _ticker.setInterval(TICKER_PERIOD_MS);
+    connect(&_ticker, &QTimer::timeout, this, &AudioDeviceModel::onTickerTimeout);
 }
 
 void AudioDeviceModel::init(bool input)
@@ -70,6 +74,8 @@ void AudioDeviceModel::init(bool input)
         setInputDeviceMute(g.s.bMute);
         setInputSystemIndex(g.s.inputSystemIndex);
         setInputDeviceIndex(g.s.inputDeviceIndex);
+        //start ticker for audio bar
+        _ticker.start();
     }
     if (!input && AudioOutputRegistrar::qmNew) {
         qInfo() << "Init audio output";
@@ -99,5 +105,22 @@ void AudioDeviceModel::onDeviceMute()
         g.sh->setSelfMuteDeafState(g.s.bMute, g.s.bDeaf);
     } else {
         qWarning() << "Cannot set self mute/deaf";
+    }
+}
+
+void AudioDeviceModel::onTickerTimeout()
+{
+    AudioInputPtr ai = g.ai;
+    if (!ai) {
+        return;
+    }
+    const int peak = static_cast<int>(ai->dMaxMic);
+
+    if (_ticks++ >= 50) {
+        _maxPeak = 0;
+        _ticks   = 0;
+    }
+    if (peak > _maxPeak) {
+        _maxPeak = peak;
     }
 }

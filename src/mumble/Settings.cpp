@@ -714,6 +714,7 @@ void Settings::load(QSettings *settings_ptr) {
     SAVELOAD(inputDeviceIndex, "audio/inputDeviceIndex");
     SAVELOAD(outputSystemIndex, "audio/outputSystemIndex");
     SAVELOAD(outputDeviceIndex, "audio/outputDeviceIndex");
+    qDebug() << "Settings::load" << inputDeviceIndex;
 
 	LOADENUM(atTransmit, "audio/transmit");
 	SAVELOAD(uiDoublePush, "audio/doublepush");
@@ -1095,7 +1096,6 @@ void OverlaySettings::save(QSettings *settings_ptr) {
 }
 
 void Settings::save() {
-    qDebug() << "Settings::save";
 	QSettings *settings_ptr = g.qs;
 	Settings def;
 
@@ -1111,6 +1111,7 @@ void Settings::save() {
     SAVELOAD(inputDeviceIndex, "audio/inputDeviceIndex");
     SAVELOAD(outputSystemIndex, "audio/outputSystemIndex");
     SAVELOAD(outputDeviceIndex, "audio/outputDeviceIndex");
+    qDebug() << "Settings::save" << inputDeviceIndex;
 
 	SAVELOAD(atTransmit, "audio/transmit");
 	SAVELOAD(uiDoublePush, "audio/doublepush");
