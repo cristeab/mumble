@@ -1095,6 +1095,7 @@ void OverlaySettings::save(QSettings *settings_ptr) {
 }
 
 void Settings::save() {
+    qDebug() << "Settings::save";
 	QSettings *settings_ptr = g.qs;
 	Settings def;
 
