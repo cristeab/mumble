@@ -325,8 +325,8 @@ Settings::Settings() {
 	bUndoIdleActionUponActivity = false;
 
 	vsVAD   = Amplitude;
-	fVADmin = 0.80f;
-	fVADmax = 0.98f;
+    fVADmin = 0.25f;
+    fVADmax = 0.75f;
 
 	bTxAudioCue     = false;
 	qsTxAudioCueOn  = cqsDefaultPushClickOn;
