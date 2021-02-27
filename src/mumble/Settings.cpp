@@ -709,6 +709,13 @@ void Settings::load(QSettings *settings_ptr) {
 
 	SAVELOAD(bMute, "audio/mute");
 	SAVELOAD(bDeaf, "audio/deaf");
+
+    SAVELOAD(inputSystemIndex, "audio/inputSystemIndex");
+    SAVELOAD(inputDeviceIndex, "audio/inputDeviceIndex");
+    SAVELOAD(outputSystemIndex, "audio/outputSystemIndex");
+    SAVELOAD(outputDeviceIndex, "audio/outputDeviceIndex");
+    qDebug() << "Settings::load" << inputDeviceIndex;
+
 	LOADENUM(atTransmit, "audio/transmit");
 	SAVELOAD(uiDoublePush, "audio/doublepush");
 	SAVELOAD(pttHold, "audio/ptthold");
@@ -1099,6 +1106,13 @@ void Settings::save() {
 
 	SAVELOAD(bMute, "audio/mute");
 	SAVELOAD(bDeaf, "audio/deaf");
+
+    SAVELOAD(inputSystemIndex, "audio/inputSystemIndex");
+    SAVELOAD(inputDeviceIndex, "audio/inputDeviceIndex");
+    SAVELOAD(outputSystemIndex, "audio/outputSystemIndex");
+    SAVELOAD(outputDeviceIndex, "audio/outputDeviceIndex");
+    qDebug() << "Settings::save" << inputDeviceIndex;
+
 	SAVELOAD(atTransmit, "audio/transmit");
 	SAVELOAD(uiDoublePush, "audio/doublepush");
 	SAVELOAD(pttHold, "audio/ptthold");

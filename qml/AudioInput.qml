@@ -30,6 +30,7 @@ Page {
     }
 
     Row {
+        id: comboBoxRow
         anchors {
             top: checkBoxRow.bottom
             topMargin: Theme.windowMargin
@@ -50,5 +51,63 @@ Page {
             currentIndex: audioDevices.inputDeviceIndex
             onCurrentIndexChanged: audioDevices.inputDeviceIndex = currentIndex
         }
+    }
+
+    Label {
+        id: volLabel
+        anchors {
+            top: comboBoxRow.bottom
+            topMargin: 2 * Theme.windowMargin
+            left: parent.left
+            leftMargin: 2 * Theme.windowMargin
+        }
+        color: Theme.textColor
+        text: qsTr("Volume tuning")
+    }
+    CustomRangeSlider {
+        id: sliderFrame
+        anchors {
+            top: volLabel.bottom
+            topMargin: Theme.windowMargin
+            left: parent.left
+            leftMargin: 2 * Theme.windowMargin
+            right: parent.right
+            rightMargin: 2 * Theme.windowMargin
+        }
+        height: 30
+        from: 0
+        to: 1
+        first.value: audioDevices.sliderBelowValue
+        first.onValueChanged: audioDevices.sliderBelowValue = first.value
+        second.value: audioDevices.sliderAboveValue
+        second.onValueChanged: audioDevices.sliderAboveValue = second.value
+        backgroundValue: audioDevices.micValue
+    }
+    Image {
+        id: infoIcon
+        anchors {
+            top: sliderFrame.bottom
+            topMargin: Theme.windowMargin
+            left: parent.left
+            leftMargin: 2 * Theme.windowMargin
+        }
+        source: "qrc:/img/info-circle-solid.svg"
+        mipmap: true
+        height: 20
+        width: height
+        fillMode: Image.PreserveAspectFit
+    }
+    Label {
+        anchors {
+            top: infoIcon.bottom
+            topMargin: Theme.windowMargin / 2
+            left: parent.left
+            leftMargin: 2 * Theme.windowMargin
+            right: parent.right
+            rightMargin: 2 * Theme.windowMargin
+        }
+        color: Theme.textColor
+        wrapMode: Text.WordWrap
+        text: qsTr("Adjust the sliders such that when you speak the voice exceeds the green field, but when you are quiet the background noise is in the red field.")
     }
 }

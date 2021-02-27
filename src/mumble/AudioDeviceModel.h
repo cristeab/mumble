@@ -2,6 +2,7 @@
 
 #include "qmlhelpers.h"
 #include <QList>
+#include <QTimer>
 
 class AudioDeviceModel : public QObject {
     Q_OBJECT
@@ -22,10 +23,16 @@ class AudioDeviceModel : public QObject {
     QML_READABLE_PROPERTY(QStringList, outputDevices, setOutputDevices, QStringList())
     QML_WRITABLE_PROPERTY(int, outputDeviceIndex, setOutputDeviceIndex, INVALID_INDEX)
 
+    QML_WRITABLE_PROPERTY(double, sliderBelowValue, setSliderBelowValue, 0.25)
+    QML_WRITABLE_PROPERTY(double, sliderAboveValue, setSliderAboveValue, 0.75)
+    QML_READABLE_PROPERTY(double, micValue, setMicValue, 0.5)
 public:
     AudioDeviceModel(QObject *parent = nullptr);
     Q_INVOKABLE void init(bool input);
 
 private:
-    enum { INVALID_INDEX = -1 };
+    void onDeviceMute();
+    void onTickerTimeout();
+    enum { INVALID_INDEX = -1, TICKER_PERIOD_MS = 20 };
+    QTimer _ticker;
 };

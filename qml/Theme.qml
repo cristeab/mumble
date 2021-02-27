@@ -20,4 +20,13 @@ QtObject {
     readonly property color textColor: "#130039"
     readonly property color textColor2: "white"
     readonly property color borderColor: "#8D007B"
+
+    readonly property color sliderPressedColor: "#f0f0f0"
+    readonly property color sliderReleasedColor: "#f6f6f6"
+    readonly property color sliderBorderColor: "#bdbebf"
+
+    readonly property color sliderBelowColor: "red"
+    readonly property color sliderMiddleColor: "yellow"
+    readonly property color sliderAboveColor: "green"
+    readonly property color sliderBackgroundColor: "#80000000"
 }
