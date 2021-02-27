@@ -50,6 +50,13 @@ AudioDeviceModel::AudioDeviceModel(QObject *parent) : QObject(parent)
         }
     });
 
+    connect(this, &AudioDeviceModel::sliderBelowValueChanged, this, [this]() {
+        g.s.fVADmin = _sliderBelowValue;
+    });
+    connect(this, &AudioDeviceModel::sliderAboveValueChanged, this, [this]() {
+        g.s.fVADmax = _sliderAboveValue;
+    });
+
     _ticker.setSingleShot(false);
     _ticker.setInterval(TICKER_PERIOD_MS);
     connect(&_ticker, &QTimer::timeout, this, &AudioDeviceModel::onTickerTimeout);
@@ -74,6 +81,8 @@ void AudioDeviceModel::init(bool input)
         setInputDeviceMute(g.s.bMute);
         setInputSystemIndex(g.s.inputSystemIndex);
         setInputDeviceIndex(g.s.inputDeviceIndex);
+        setSliderBelowValue(g.s.fVADmin);
+        setSliderAboveValue(g.s.fVADmax);
         //start ticker for audio bar
         _ticker.start();
     }

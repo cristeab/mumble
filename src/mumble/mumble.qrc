@@ -40,6 +40,7 @@
         <file alias="qml/custom/LabelComboBox.qml">../../qml/custom/LabelComboBox.qml</file>
         <file alias="qml/custom/CustomCheckBox.qml">../../qml/custom/CustomCheckBox.qml</file>
         <file alias="qml/custom/CustomRangeSlider.qml">../../qml/custom/CustomRangeSlider.qml</file>
+        <file alias="qml/custom/CustomSlider.qml">../../qml/custom/CustomSlider.qml</file>
         <file alias="qml/dialog/AddEditServer.qml">../../qml/dialog/AddEditServer.qml</file>
         <file alias="qml/dialog/LineEditDialog.qml">../../qml/dialog/LineEditDialog.qml</file>
         <file alias="qml/qmldir">../../qml/qmldir</file>

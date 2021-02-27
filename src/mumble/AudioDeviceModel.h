@@ -25,7 +25,7 @@ class AudioDeviceModel : public QObject {
 
     QML_WRITABLE_PROPERTY(double, sliderBelowValue, setSliderBelowValue, 0.25)
     QML_WRITABLE_PROPERTY(double, sliderAboveValue, setSliderAboveValue, 0.75)
-    QML_READABLE_PROPERTY(double, micValue, setMicValue, 0.5)
+    QML_READABLE_PROPERTY(double, micValue, setMicValue, 0)
 public:
     AudioDeviceModel(QObject *parent = nullptr);
     Q_INVOKABLE void init(bool input);

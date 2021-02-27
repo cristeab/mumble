@@ -98,6 +98,7 @@ Page {
         fillMode: Image.PreserveAspectFit
     }
     Label {
+        id: infoLabel
         anchors {
             top: infoIcon.bottom
             topMargin: Theme.windowMargin / 2
@@ -109,5 +110,40 @@ Page {
         color: Theme.textColor
         wrapMode: Text.WordWrap
         text: qsTr("Adjust the sliders such that when you speak the voice exceeds the green field, but when you are quiet the background noise is in the red field.")
+    }
+
+    Label {
+        id: compLabel
+        anchors {
+            top: infoLabel.bottom
+            topMargin: 2 * Theme.windowMargin
+            left: parent.left
+            leftMargin: 2 * Theme.windowMargin
+        }
+        color: Theme.textColor
+        text: qsTr("Compression")
+    }
+    CustomSlider {
+        id: qualitySlider
+        anchors {
+            top: compLabel.bottom
+            topMargin: Theme.windowMargin
+            left: parent.left
+            leftMargin: 2 * Theme.windowMargin
+            right: parent.right
+            rightMargin: 2 * Theme.windowMargin
+        }
+        leftText: qsTr("Quality")
+    }
+    CustomSlider {
+        anchors {
+            top: qualitySlider.bottom
+            topMargin: Theme.windowMargin
+            left: parent.left
+            leftMargin: 2 * Theme.windowMargin
+            right: parent.right
+            rightMargin: 2 * Theme.windowMargin
+        }
+        leftText: qsTr("Audio per packet")
     }
 }
