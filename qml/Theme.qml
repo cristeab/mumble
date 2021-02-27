@@ -25,7 +25,8 @@ QtObject {
     readonly property color sliderReleasedColor: "#f6f6f6"
     readonly property color sliderBorderColor: "#bdbebf"
 
-    readonly property color sliderBelowColor: "#420001"
-    readonly property color sliderMiddleColor: "#434401"
-    readonly property color sliderAboveColor: "#094500"
+    readonly property color sliderBelowColor: "red"
+    readonly property color sliderMiddleColor: "yellow"
+    readonly property color sliderAboveColor: "green"
+    readonly property color sliderBackgroundColor: "#80000000"
 }

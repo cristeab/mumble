@@ -111,16 +111,11 @@ void AudioDeviceModel::onDeviceMute()
 void AudioDeviceModel::onTickerTimeout()
 {
     AudioInputPtr ai = g.ai;
-    if (!ai) {
+    if (!ai.get() || !ai->getSppPreprocess()) {
         return;
     }
-    const int peak = static_cast<int>(ai->dMaxMic);
 
-    if (_ticks++ >= 50) {
-        _maxPeak = 0;
-        _ticks   = 0;
-    }
-    if (peak > _maxPeak) {
-        _maxPeak = peak;
-    }
+    //Amplitude
+    const auto amplitude = (96.0f + ai->dPeakCleanMic) / 96.0f;
+    setMicValue(amplitude);
 }
