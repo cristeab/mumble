@@ -2,6 +2,7 @@
 
 #include "qmlhelpers.h"
 #include <QList>
+#include <QTimer>
 
 class AudioDeviceModel : public QObject {
     Q_OBJECT
@@ -28,5 +29,9 @@ public:
 
 private:
     void onDeviceMute();
-    enum { INVALID_INDEX = -1 };
+    void onTickerTimeout();
+    enum { INVALID_INDEX = -1, TICKER_PERIOD_MS = 20 };
+    QTimer _ticker;
+    int _maxPeak = 0;
+    int _ticks = 0;
 };
