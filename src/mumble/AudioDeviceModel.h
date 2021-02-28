@@ -31,6 +31,12 @@ class AudioDeviceModel : public QObject {
     QML_WRITABLE_PROPERTY(int, frames, setFrames, 3)
     QML_READABLE_PROPERTY(QString, bitRateText, setBitRateText, "")
     QML_READABLE_PROPERTY(bool, bitRateAlarm, setBitRateAlarm, false)
+
+    QML_WRITABLE_PROPERTY(int, volume, setVolume, 100)
+    QML_WRITABLE_PROPERTY(int, outputDelay, setOutputDelay, 10)
+    QML_WRITABLE_PROPERTY(int, attenuation, setAttenuation, 50)
+    QML_WRITABLE_PROPERTY(bool, whileOtherUsersTalk, setWhileOtherUsersTalk, false)
+    QML_WRITABLE_PROPERTY(bool, whileYouTalk, setWhileYouTalk, false)
 public:
     AudioDeviceModel(QObject *parent = nullptr);
     Q_INVOKABLE void init(bool input);
