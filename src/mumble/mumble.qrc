@@ -24,6 +24,9 @@
         <file alias="img/chevron-circle-left.svg">../../img/chevron-circle-left.svg</file>
         <file alias="img/chevron-circle-right.svg">../../img/chevron-circle-right.svg</file>
         <file alias="img/info-circle-solid.svg">../../img/info-circle-solid.svg</file>
+        <file alias="img/plus-circle-solid.svg">../../img/plus-circle-solid.svg</file>
+        <file alias="img/trash-solid.svg">../../img/trash-solid.svg</file>
+        <file alias="img/edit-solid.svg">../../img/edit-solid.svg</file>
         <file alias="qml/main.qml">../../qml/main.qml</file>
         <file alias="qml/Servers.qml">../../qml/Servers.qml</file>
         <file alias="qml/Classes.qml">../../qml/Classes.qml</file>
@@ -41,8 +44,10 @@
         <file alias="qml/custom/CustomCheckBox.qml">../../qml/custom/CustomCheckBox.qml</file>
         <file alias="qml/custom/CustomRangeSlider.qml">../../qml/custom/CustomRangeSlider.qml</file>
         <file alias="qml/custom/CustomSlider.qml">../../qml/custom/CustomSlider.qml</file>
+        <file alias="qml/custom/IconLabel.qml">../../qml/custom/IconLabel.qml</file>
         <file alias="qml/dialog/AddEditServer.qml">../../qml/dialog/AddEditServer.qml</file>
         <file alias="qml/dialog/LineEditDialog.qml">../../qml/dialog/LineEditDialog.qml</file>
+        <file alias="qml/dialog/AddEditToken.qml">../../qml/dialog/AddEditToken.qml</file>
         <file alias="qml/qmldir">../../qml/qmldir</file>
         <file alias="qtquickcontrols2.conf">../../qml/qtquickcontrols2.conf</file>
     </qresource>

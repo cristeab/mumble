@@ -87,6 +87,11 @@ ApplicationWindow {
                     if ((1 === index) || (2 === index)) {
                         audioDevices.init(1 === index)
                     }
+                    if (3 === index) {
+                        tokensModel.load()
+                    } else {
+                        tokensModel.save()
+                    }
                 }
                 ToolTip {
                     visible: tabButton.hovered
@@ -147,5 +152,24 @@ ApplicationWindow {
         anchors.fill: parent
         active: false
         source: "qrc:/qml/dialog/LineEditDialog.qml"
+    }
+
+    Loader {
+        id: addEditTokenDlg
+
+        function addToken() {
+            tokensModel.currentIndex = -1
+            addEditTokenDlg.active = true
+            addEditTokenDlg.item.visible = true
+        }
+        function editToken(index) {
+            tokensModel.currentIndex = index
+            addEditTokenDlg.active = true
+            addEditTokenDlg.item.visible = true
+        }
+
+        anchors.fill: parent
+        active: false
+        source: "qrc:/qml/dialog/AddEditToken.qml"
     }
 }
