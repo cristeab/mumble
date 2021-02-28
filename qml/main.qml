@@ -158,12 +158,12 @@ ApplicationWindow {
         id: addEditTokenDlg
 
         function addToken() {
-            tokensModel.currentEditIndex = -1
+            tokensModel.currentIndex = -1
             addEditTokenDlg.active = true
             addEditTokenDlg.item.visible = true
         }
         function editToken(index) {
-            tokensModel.currentEditIndex = index
+            tokensModel.currentIndex = index
             addEditTokenDlg.active = true
             addEditTokenDlg.item.visible = true
         }

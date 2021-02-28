@@ -81,9 +81,9 @@ void TokensModel::remove(int index)
 
 void TokensModel::setCurrentToken(const QString &token)
 {
-    if (isValidIndex(_currentEditIndex)) {
+    if (isValidIndex(_currentIndex)) {
         emit layoutAboutToBeChanged();
-        _tokens[_currentEditIndex] = token;
+        _tokens[_currentIndex] = token;
         emit layoutChanged();
         _isSaved = false;
     }

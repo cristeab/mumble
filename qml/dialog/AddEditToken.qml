@@ -10,7 +10,7 @@ Dialog {
         addEditTokenDlg.active = false
     }
 
-    title: (0 <= tokensModel.currentEditIndex) ? qsTr("Edit token") : qsTr("Add token")
+    title: (0 <= tokensModel.currentIndex) ? qsTr("Edit token") : qsTr("Add token")
     implicitWidth: 400
     implicitHeight: tokenTextField.height + 120
     x: (appWin.width-width)/2
