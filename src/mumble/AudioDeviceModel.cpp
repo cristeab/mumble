@@ -4,6 +4,7 @@
 #include "AudioDeviceModel.h"
 #include "AudioInput.h"
 #include "AudioOutput.h"
+#include "NetworkConfig.h"
 #include <QDebug>
 
 AudioDeviceModel::AudioDeviceModel(QObject *parent) : QObject(parent)
@@ -56,6 +57,14 @@ AudioDeviceModel::AudioDeviceModel(QObject *parent) : QObject(parent)
     connect(this, &AudioDeviceModel::sliderAboveValueChanged, this, [this]() {
         g.s.fVADmax = _sliderAboveValue;
     });
+    connect(this, &AudioDeviceModel::framesChanged, this, [this]() {
+        g.s.iFramesPerPacket = framesPerPacket(_frames);
+        updateBitrate();
+    });
+    connect(this, &AudioDeviceModel::qualityChanged, this, [this]() {
+        g.s.iQuality = _quality;
+        updateBitrate();
+    });
 
     _ticker.setSingleShot(false);
     _ticker.setInterval(TICKER_PERIOD_MS);
@@ -83,6 +92,9 @@ void AudioDeviceModel::init(bool input)
         setInputDeviceIndex(g.s.inputDeviceIndex);
         setSliderBelowValue(g.s.fVADmin);
         setSliderAboveValue(g.s.fVADmax);
+        setFrames((1 == g.s.iFramesPerPacket) ? 1 : (1 + g.s.iFramesPerPacket / 2));
+        setQuality(g.s.iQuality);
+        updateBitrate();
         //start ticker for audio bar
         _ticker.start();
     }
@@ -127,4 +139,29 @@ void AudioDeviceModel::onTickerTimeout()
     //Amplitude
     const auto amplitude = (96.0f + ai->dPeakCleanMic) / 96.0f;
     setMicValue(amplitude);
+}
+
+void AudioDeviceModel::updateBitrate()
+{
+    // 50 packets, in bits, IP + UDP + Crypt + type + seq + frameheader
+    int overhead = 100 * 8 * (20 + 8 + 4 + 1 + 2 + _frames);
+    // TCP is 12 more bytes than UDP
+    if (NetworkConfig::TcpModeEnabled()) {
+        overhead += 100 * 8 * 12;
+    }
+
+    int posrate = g.s.bTransmitPosition ? 12 : 0;
+    posrate = posrate * 100 * 8;
+
+    overhead = overhead / _frames;
+    posrate  = posrate / _frames;
+
+    const int total = _quality + overhead + posrate;
+    setBitRateAlarm(g.uiSession && (total > g.iMaxBandwidth));
+
+    setBitRateText(tr("%1 kbit/s (Audio %2, Position %4, Overhead %3)")
+                    .arg(total / 1000.0, 0, 'f', 1)
+                    .arg(_quality / 1000.0, 0, 'f', 1)
+                    .arg(overhead / 1000.0, 0, 'f', 1)
+                    .arg(posrate / 1000.0, 0, 'f', 1));
 }
