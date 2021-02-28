@@ -86,12 +86,14 @@ void TokensModel::setCurrentToken(const QString &token)
         _tokens[_currentIndex] = token;
         _tokens.sort();
         emit layoutChanged();
+        setCurrentIndex(INVALID_INDEX);
         _isSaved = false;
     } else if (INVALID_INDEX == _currentIndex) {
         emit layoutAboutToBeChanged();
         _tokens << token;
         _tokens.sort();
         emit layoutChanged();
+        setCurrentIndex(INVALID_INDEX);
         _isSaved = false;
     }
 }
