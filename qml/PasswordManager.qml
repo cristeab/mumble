@@ -8,8 +8,11 @@ Page {
     background: Rectangle {
         color: Theme.backgroundColor
     }
+    Component.onCompleted: tokensModel.currentInde = 0
 
     ListView {
+        id: tokensList
+        readonly property int swipeWidth: 70
         anchors {
             top: parent.top
             topMargin: 8 * Theme.windowMargin
@@ -21,23 +24,31 @@ Page {
         }
         clip: true
         boundsBehavior: ListView.StopAtBounds
+        spacing: 2
         model: tokensModel
         delegate: SwipeDelegate {
             id: delegateControl
-            height: 35
+            width: parent.width
             background: Rectangle {
-                color: Theme.backgroundColor
+                color: (index === tokensModel.currentIndex) ? Theme.tableSelectedBackgroundColor : Theme.tableBackgroundColor
             }
-            contentItem: CustomTextField {
+            contentItem: Label {
                 id: contentTextField
-                text: display
-                onTextChanged: edit = text
-                readOnly: !focus
+                Behavior on x {
+                    enabled: !delegateControl.down
+                    NumberAnimation {
+                        easing.type: Easing.InOutCubic
+                        duration: 400
+                    }
+                }
+                text: name
+                padding: Theme.windowMargin / 2
             }
+            onClicked: tokensModel.currentIndex = index
             swipe.enabled: true
             swipe.right: Rectangle {
                 height: parent.height
-                width: 70
+                width: tokensList.swipeWidth
                 anchors.right: parent.right
                 color: SwipeDelegate.pressed ? Qt.darker(Theme.swipeRemoveItemColor, 1.1) : Theme.swipeRemoveItemColor
                 SwipeDelegate.onClicked: {
@@ -64,7 +75,7 @@ Page {
                     Label {
                         id: deleteLabel
                         text: qsTr("Delete")
-                        color: Theme.textColor
+                        color: Theme.tabButtonColor
                         clip: true
                         elide: Text.ElideRight
                         verticalAlignment: Label.AlignVCenter
@@ -72,6 +83,50 @@ Page {
                         horizontalAlignment: Label.AlignHCenter
                         topPadding: 3
                     }
+                }
+            }
+            swipe.left: Rectangle {
+                height: parent.height
+                width: tokensList.swipeWidth
+                anchors.left: parent.left
+                color: SwipeDelegate.pressed ? Qt.darker(Theme.swipeEditItemColor, 1.1) : Theme.swipeEditItemColor
+                SwipeDelegate.onClicked: {
+                    tokensModel.currentEditIndex = index
+                    delegateControl.swipe.close()
+                }
+                Column {
+                    anchors.fill: parent
+                    spacing: 0
+                    Item {
+                        height: 5
+                        width: parent.width
+                    }
+                    Image {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        height: parent.height/2 - 6
+                        width: height
+                        source: "qrc:/img/edit-solid.svg"
+                        fillMode: Image.PreserveAspectFit
+                        mipmap: true
+                    }
+                    Label {
+                        id: editLabel
+                        text: qsTr("Edit")
+                        color: Theme.tabButtonColor
+                        clip: true
+                        elide: Text.ElideRight
+                        verticalAlignment: Label.AlignVCenter
+                        width: parent.width
+                        horizontalAlignment: Label.AlignHCenter
+                        topPadding: 3
+                        wrapMode: Text.WordWrap
+                    }
+                }
+                Rectangle {
+                    anchors.bottom: parent.bottom
+                    width: parent.width
+                    height: 1
+                    color: Theme.tabButtonColor
                 }
             }
         }
