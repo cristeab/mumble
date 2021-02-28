@@ -62,7 +62,7 @@ Page {
             leftMargin: 2 * Theme.windowMargin
         }
         color: Theme.textColor
-        text: qsTr("Volume tuning")
+        text: qsTr("Sound limitation")
     }
     CustomRangeSlider {
         id: sliderFrame
@@ -133,9 +133,28 @@ Page {
             right: parent.right
             rightMargin: 2 * Theme.windowMargin
         }
+        from: 8000
+        to: 192000
+        stepSize: 1000
+        value: audioDevices.quality
+        onValueChanged: audioDevices.quality = value
         leftText: qsTr("Quality")
+        rightText: (value / 1000) + " kb/s"
+        ToolTip {
+            visible: qualitySlider.hovered
+            text: qsTr("Quality of compression (peak bandwidth)")
+        }
     }
     CustomSlider {
+        id: framesSlider
+
+        function framesPerPacket(val) {
+            if (1 === val) {
+                return 10
+            }
+            return 20 * (val - 1)
+        }
+
         anchors {
             top: qualitySlider.bottom
             topMargin: Theme.windowMargin
@@ -144,6 +163,12 @@ Page {
             right: parent.right
             rightMargin: 2 * Theme.windowMargin
         }
+        from: 1
+        to: 4
+        stepSize: 1
+        value: audioDevices.frames
+        onValueChanged: audioDevices.frames = value
         leftText: qsTr("Audio per packet")
+        rightText: framesSlider.framesPerPacket(value) + " ms"
     }
 }

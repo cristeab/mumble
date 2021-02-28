@@ -9,8 +9,10 @@ Row {
     property alias leftText: leftLabel.text
     property alias from: middleSlider.from
     property alias to: middleSlider.to
+    property alias stepSize: middleSlider.stepSize
     property alias value: middleSlider.value
     property alias rightText: rightLabel.text
+    property alias hovered: middleSlider.hovered
 
     spacing: Theme.windowMargin
 
