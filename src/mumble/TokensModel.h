@@ -6,7 +6,7 @@
 class TokensModel : public QAbstractListModel
 {
     Q_OBJECT
-    QML_WRITABLE_PROPERTY(int, currentIndex, setCurrentIndex, 0)
+    QML_WRITABLE_PROPERTY(int, currentIndex, setCurrentIndex, INVALID_INDEX)
 
 public:
     enum CallHistoryRoles {
@@ -28,6 +28,7 @@ public:
     Q_INVOKABLE void setCurrentToken(const QString &token);
 
 private:
+    enum { INVALID_INDEX = -1 };
     bool isValidIndex(int index) const {
         return (0 <= index) && (index < _tokens.size());
     }
