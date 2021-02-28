@@ -148,13 +148,6 @@ Page {
     CustomSlider {
         id: framesSlider
 
-        function framesPerPacket(val) {
-            if (1 === val) {
-                return 10
-            }
-            return 20 * (val - 1)
-        }
-
         anchors {
             top: qualitySlider.bottom
             topMargin: Theme.windowMargin
@@ -169,6 +162,21 @@ Page {
         value: audioDevices.frames
         onValueChanged: audioDevices.frames = value
         leftText: qsTr("Audio per packet")
-        rightText: framesSlider.framesPerPacket(value) + " ms"
+        rightText: (10 * audioDevices.framesPerPacket(value)) + " ms"
+    }
+    Label {
+        anchors {
+            top: framesSlider.bottom
+            topMargin: Theme.windowMargin
+            left: parent.left
+            leftMargin: 2 * Theme.windowMargin
+            right: parent.right
+            rightMargin: 2 * Theme.windowMargin
+        }
+        horizontalAlignment: Text.AlignHCenter
+        elide: Text.ElideRight
+        clip: true
+        text: audioDevices.bitRateText
+        color: audioDevices.bitRateAlarm ? Theme.errorColor : Theme.textColor
     }
 }

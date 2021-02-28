@@ -29,13 +29,20 @@ class AudioDeviceModel : public QObject {
 
     QML_WRITABLE_PROPERTY(int, quality, setQuality, 32000)
     QML_WRITABLE_PROPERTY(int, frames, setFrames, 3)
+    QML_READABLE_PROPERTY(QString, bitRateText, setBitRateText, "")
+    QML_READABLE_PROPERTY(bool, bitRateAlarm, setBitRateAlarm, false)
 public:
     AudioDeviceModel(QObject *parent = nullptr);
     Q_INVOKABLE void init(bool input);
 
+    Q_INVOKABLE int framesPerPacket(int value) {
+        return (1 == value) ? 1 : 2 * (value - 1);
+    }
+
 private:
     void onDeviceMute();
     void onTickerTimeout();
+    void updateBitrate();
     enum { INVALID_INDEX = -1, TICKER_PERIOD_MS = 20 };
     QTimer _ticker;
 };
