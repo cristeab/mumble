@@ -13,6 +13,9 @@ Page {
     ListView {
         id: tokensList
         readonly property int swipeWidth: 70
+        ScrollBar.vertical: ScrollBar {
+            policy: ScrollBar.AsNeeded
+        }
         anchors {
             top: parent.top
             topMargin: 8 * Theme.windowMargin
@@ -28,7 +31,7 @@ Page {
         model: tokensModel
         delegate: SwipeDelegate {
             id: delegateControl
-            width: parent.width
+            width: tokensList.width
             background: Rectangle {
                 color: (index === tokensModel.currentIndex) ? Theme.tableSelectedBackgroundColor : Theme.tableBackgroundColor
             }
@@ -92,7 +95,7 @@ Page {
                 color: SwipeDelegate.pressed ? Qt.darker(Theme.swipeEditItemColor, 1.1) : Theme.swipeEditItemColor
                 SwipeDelegate.onClicked: {
                     delegateControl.swipe.close()
-                    tokensModel.currentEditIndex = index
+                    addEditTokenDlg.editToken(index)
                 }
                 Column {
                     anchors.fill: parent
@@ -141,7 +144,7 @@ Page {
             source: "qrc:/img/plus-circle-solid.svg"
             color: addButton.pressed ? Theme.tabButtonColorSel : Theme.tabButtonColor
         }
-        onClicked: tokensModel.add()
+        onClicked: addEditTokenDlg.addToken()
         height: 60
         width: height
         ToolTip {

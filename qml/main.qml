@@ -153,4 +153,23 @@ ApplicationWindow {
         active: false
         source: "qrc:/qml/dialog/LineEditDialog.qml"
     }
+
+    Loader {
+        id: addEditTokenDlg
+
+        function addToken() {
+            tokensModel.currentEditIndex = -1
+            addEditTokenDlg.active = true
+            addEditTokenDlg.item.visible = true
+        }
+        function editToken(index) {
+            tokensModel.currentEditIndex = index
+            addEditTokenDlg.active = true
+            addEditTokenDlg.item.visible = true
+        }
+
+        anchors.fill: parent
+        active: false
+        source: "qrc:/qml/dialog/AddEditToken.qml"
+    }
 }

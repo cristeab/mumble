@@ -7,7 +7,7 @@ class TokensModel : public QAbstractListModel
 {
     Q_OBJECT
     QML_WRITABLE_PROPERTY(int, currentIndex, setCurrentIndex, 0)
-    QML_WRITABLE_PROPERTY(int, currentEditIndex, setCurrentEditIndex, -1)
+    QML_READABLE_PROPERTY(bool, currentEditIndex, setCurrentEditIndex, false)
 
 public:
     enum CallHistoryRoles {
@@ -22,8 +22,11 @@ public:
 
     Q_INVOKABLE void load();
     Q_INVOKABLE void save();
-    Q_INVOKABLE void add();
     Q_INVOKABLE void remove(int index);
+    Q_INVOKABLE QString currentToken() const {
+        return isValidIndex(_currentEditIndex) ? _tokens.at(_currentEditIndex) : "";
+    }
+    Q_INVOKABLE void setCurrentToken(const QString &token);
 
 private:
     bool isValidIndex(int index) const {
