@@ -163,6 +163,10 @@ Page {
         onValueChanged: audioDevices.frames = value
         leftText: qsTr("Audio per packet")
         rightText: (10 * audioDevices.framesPerPacket(value)) + " ms"
+        ToolTip {
+            visible: framesSlider.hovered
+            text: qsTr("How many audio frames to send per packet")
+        }
     }
     Label {
         anchors {
