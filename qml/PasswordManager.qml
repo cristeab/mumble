@@ -52,8 +52,8 @@ Page {
                 anchors.right: parent.right
                 color: SwipeDelegate.pressed ? Qt.darker(Theme.swipeRemoveItemColor, 1.1) : Theme.swipeRemoveItemColor
                 SwipeDelegate.onClicked: {
-                    tokensModel.remove(index)
                     delegateControl.swipe.close()
+                    tokensModel.remove(index)
                 }
                 Column {
                     anchors.fill: parent
@@ -91,8 +91,8 @@ Page {
                 anchors.left: parent.left
                 color: SwipeDelegate.pressed ? Qt.darker(Theme.swipeEditItemColor, 1.1) : Theme.swipeEditItemColor
                 SwipeDelegate.onClicked: {
-                    tokensModel.currentEditIndex = index
                     delegateControl.swipe.close()
+                    tokensModel.currentEditIndex = index
                 }
                 Column {
                     anchors.fill: parent
@@ -121,12 +121,6 @@ Page {
                         topPadding: 3
                         wrapMode: Text.WordWrap
                     }
-                }
-                Rectangle {
-                    anchors.bottom: parent.bottom
-                    width: parent.width
-                    height: 1
-                    color: Theme.tabButtonColor
                 }
             }
         }
