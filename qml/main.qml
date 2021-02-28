@@ -87,6 +87,11 @@ ApplicationWindow {
                     if ((1 === index) || (2 === index)) {
                         audioDevices.init(1 === index)
                     }
+                    if (3 === index) {
+                        tokensModel.load()
+                    } else {
+                        tokensModel.save()
+                    }
                 }
                 ToolTip {
                     visible: tabButton.hovered

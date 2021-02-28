@@ -83,32 +83,17 @@ Page {
         second.onValueChanged: audioDevices.sliderAboveValue = second.value
         backgroundValue: audioDevices.micValue
     }
-    Image {
-        id: infoIcon
+
+    IconLabel {
+        id: infoLabel
         anchors {
             top: sliderFrame.bottom
             topMargin: Theme.windowMargin
             left: parent.left
             leftMargin: 2 * Theme.windowMargin
-        }
-        source: "qrc:/img/info-circle-solid.svg"
-        mipmap: true
-        height: 20
-        width: height
-        fillMode: Image.PreserveAspectFit
-    }
-    Label {
-        id: infoLabel
-        anchors {
-            top: infoIcon.bottom
-            topMargin: Theme.windowMargin / 2
-            left: parent.left
-            leftMargin: 2 * Theme.windowMargin
             right: parent.right
             rightMargin: 2 * Theme.windowMargin
         }
-        color: Theme.textColor
-        wrapMode: Text.WordWrap
         text: qsTr("Adjust the sliders such that when you speak the voice exceeds the green field, but when you are quiet the background noise is in the red field.")
     }
 
