@@ -24,7 +24,7 @@ Dialog {
         }
     }
     onAccepted: {
-        servers.setCurrentToken(tokenTextField.text)
+        tokensModel.setCurrentToken(tokenTextField.text)
         control.cleanup()
     }
     onRejected: control.cleanup()
