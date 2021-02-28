@@ -66,6 +66,22 @@ AudioDeviceModel::AudioDeviceModel(QObject *parent) : QObject(parent)
         updateBitrate();
     });
 
+    connect(this, &AudioDeviceModel::volumeChanged, this, [this]() {
+        g.s.fVolume = _volume / 100.0;
+    });
+    connect(this, &AudioDeviceModel::outputDelayChanged, this, [this]() {
+        g.s.iOutputDelay = _outputDelay;
+    });
+    connect(this, &AudioDeviceModel::attenuationChanged, this, [this]() {
+        g.s.fOtherVolume = 1.0f - _attenuation / 100.0f;
+    });
+    connect(this, &AudioDeviceModel::whileOtherUsersTalkChanged, this, [this]() {
+        g.s.bAttenuateOthers = _whileOtherUsersTalk;
+    });
+    connect(this, &AudioDeviceModel::whileYouTalkChanged, this, [this]() {
+        g.s.bAttenuateOthersOnTalk = _whileYouTalk;
+    });
+
     _ticker.setSingleShot(false);
     _ticker.setInterval(TICKER_PERIOD_MS);
     connect(&_ticker, &QTimer::timeout, this, &AudioDeviceModel::onTickerTimeout);
@@ -115,6 +131,11 @@ void AudioDeviceModel::init(bool input)
         setOutputDeviceMute(g.s.bDeaf);
         setOutputSystemIndex(g.s.outputSystemIndex);
         setOutputDeviceIndex(g.s.outputDeviceIndex);
+        setVolume(std::round(100 * g.s.fVolume));
+        setOutputDelay(g.s.iOutputDelay);
+        setAttenuation(std::round((1.0f - g.s.fOtherVolume) * 100.0f + 0.5f));
+        setWhileOtherUsersTalk(g.s.bAttenuateOthers);
+        setWhileYouTalk(g.s.bAttenuateOthersOnTalk);
     }
 }
 

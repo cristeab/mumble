@@ -34,7 +34,7 @@ class AudioDeviceModel : public QObject {
 
     QML_WRITABLE_PROPERTY(int, volume, setVolume, 100)
     QML_WRITABLE_PROPERTY(int, outputDelay, setOutputDelay, 10)
-    QML_WRITABLE_PROPERTY(int, attenuation, setAttenuation, 50)
+    QML_WRITABLE_PROPERTY(int, attenuation, setAttenuation, 0)
     QML_WRITABLE_PROPERTY(bool, whileOtherUsersTalk, setWhileOtherUsersTalk, false)
     QML_WRITABLE_PROPERTY(bool, whileYouTalk, setWhileYouTalk, false)
 public:
