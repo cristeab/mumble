@@ -21,6 +21,10 @@ Row {
         anchors.verticalCenter: middleSlider.verticalCenter
         width: 100
         color: Theme.textColor
+        clip: true
+        elide: Text.ElideRight
+        wrapMode: Text.WordWrap
+        maximumLineCount: 2
     }
     Slider {
         id: middleSlider
@@ -32,5 +36,7 @@ Row {
         anchors.verticalCenter: middleSlider.verticalCenter
         width: 50
         color: Theme.textColor
+        clip: true
+        elide: Text.ElideRight
     }
 }
