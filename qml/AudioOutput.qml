@@ -83,7 +83,7 @@ Page {
         rightText: value + " %"
         ToolTip {
             visible: volSlider.hovered
-            text: qsTr("")
+            text: qsTr("Volume of incoming speech")
         }
     }
     CustomSlider {
@@ -96,16 +96,16 @@ Page {
             right: parent.right
             rightMargin: 2 * Theme.windowMargin
         }
-        from: 0
-        to: 200
+        from: 1
+        to: 10
         stepSize: 1
         value: audioDevices.outputDelay
         onValueChanged: audioDevices.outputDelay = value
         leftText: qsTr("Output delay")
-        rightText: value + " ms"
+        rightText: (10 * value) + " ms"
         ToolTip {
             visible: delaySlider.hovered
-            text: qsTr("")
+            text: qsTr("Amount of data to buffer")
         }
     }
     CustomSlider {
@@ -118,8 +118,9 @@ Page {
             right: parent.right
             rightMargin: 2 * Theme.windowMargin
         }
+        enabled: audioDevices.whileOtherUsersTalk || audioDevices.whileYouTalk
         from: 0
-        to: 200
+        to: 100
         stepSize: 1
         value: audioDevices.attenuation
         onValueChanged: audioDevices.attenuation = value
@@ -127,7 +128,7 @@ Page {
         rightText: value + " %"
         ToolTip {
             visible: attSlider.hovered
-            text: qsTr("")
+            text: qsTr("Attenuation of other applications during speech")
         }
     }
     Row {
@@ -138,14 +139,24 @@ Page {
         }
         spacing: 3 * Theme.windowMargin
         CustomCheckBox {
+            id: whileOtherCheckBox
             text: qsTr("while other users talk")
             checked: audioDevices.whileOtherUsersTalk
             onCheckedChanged: audioDevices.whileOtherUsersTalk = checked
+            ToolTip {
+                visible: whileOtherCheckBox.hovered
+                text: qsTr("If checked Mumble lowers the volume of other applications while other users talk")
+            }
         }
         CustomCheckBox {
+            id: whileYouCheckBox
             text: qsTr("while you talk")
             checked: audioDevices.whileYouTalk
             onCheckedChanged: audioDevices.whileYouTalk = checked
+            ToolTip {
+                visible: whileYouCheckBox.hovered
+                text: qsTr("If checked Mumble lowers the volume of other applications while you talk")
+            }
         }
     }
 }
