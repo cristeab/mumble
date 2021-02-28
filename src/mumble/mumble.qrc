@@ -26,6 +26,7 @@
         <file alias="img/info-circle-solid.svg">../../img/info-circle-solid.svg</file>
         <file alias="img/plus-circle-solid.svg">../../img/plus-circle-solid.svg</file>
         <file alias="img/trash-solid.svg">../../img/trash-solid.svg</file>
+        <file alias="img/edit-solid.svg">../../img/edit-solid.svg</file>
         <file alias="qml/main.qml">../../qml/main.qml</file>
         <file alias="qml/Servers.qml">../../qml/Servers.qml</file>
         <file alias="qml/Classes.qml">../../qml/Classes.qml</file>

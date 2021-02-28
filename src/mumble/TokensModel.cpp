@@ -6,9 +6,17 @@
 TokensModel::TokensModel(QObject *parent) : QAbstractListModel(parent)
 {
     setObjectName("tokensModel");
+    //TODO_BC
+    emit layoutAboutToBeChanged();
+    _tokens << "test1";
+    _tokens << "test2";
+    _tokens << "test3";
+    _tokens << "test4";
+    _tokens << "test5";
+    emit layoutChanged();
 }
 
-int TokensModel::rowCount(const QModelIndex &parent) const
+int TokensModel::rowCount(const QModelIndex& /*parent*/) const
 {
     return _tokens.size();
 }
@@ -22,9 +30,7 @@ QVariant TokensModel::data(const QModelIndex &index, int role) const
     }
     QVariant out;
     switch (role) {
-    case Qt::DisplayRole:
-        //[[fallthrough]];
-    case Qt::EditRole:
+    case Name:
         out = _tokens.at(row);
         break;
     default:
@@ -35,40 +41,13 @@ QVariant TokensModel::data(const QModelIndex &index, int role) const
 
 QHash<int,QByteArray> TokensModel::roleNames() const
 {
-    return { { Qt::DisplayRole, "display" },
-             { Qt::EditRole, "edit" } };
-}
-
-bool TokensModel::setData(const QModelIndex &index, const QVariant &value, int role)
-{
-    if (role == Qt::EditRole) {
-        if (!checkIndex(index)) {
-            return false;
-        }
-        const auto row = index.row();
-        if (isValidIndex(row)) {
-            emit layoutAboutToBeChanged();
-            _tokens[row] = value.toString();
-            _tokens.sort();
-            emit layoutChanged();
-            _isSaved = false;
-            return true;
-        }
-    }
-    return false;
-}
-
-Qt::ItemFlags TokensModel::flags(const QModelIndex &index) const
-{
-    Qt::ItemFlags out = QAbstractListModel::flags(index);
-    out |= Qt::ItemIsEditable;
-    return out;
+    return { { Name, "name" } };
 }
 
 void TokensModel::load()
 {
     if ((nullptr == g.sh) || (nullptr == g.db)) {
-        qCritical() << "Cannot load tokens";
+        qWarning() << "Cannot load tokens";
         return;
     }
     _digest = g.sh->qbaDigest;
@@ -101,7 +80,7 @@ void TokensModel::save()
 void TokensModel::add()
 {
     emit layoutAboutToBeChanged();
-    _tokens << "";
+    _tokens << "test";
     emit layoutChanged();
     _isSaved = false;
 }

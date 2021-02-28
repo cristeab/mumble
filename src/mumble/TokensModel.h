@@ -1,20 +1,24 @@
 #pragma once
 
+#include "qmlhelpers.h"
 #include <QAbstractListModel>
 
 class TokensModel : public QAbstractListModel
 {
     Q_OBJECT
+    QML_WRITABLE_PROPERTY(int, currentIndex, setCurrentIndex, 0)
+    QML_WRITABLE_PROPERTY(int, currentEditIndex, setCurrentEditIndex, -1)
 
 public:
+    enum CallHistoryRoles {
+        Name= Qt::UserRole+1
+    };
+
     explicit TokensModel(QObject *parent = nullptr);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QHash<int,QByteArray> roleNames() const override;
-    bool setData(const QModelIndex &index, const QVariant &value,
-                 int role = Qt::EditRole) override;
-    Qt::ItemFlags flags(const QModelIndex &index) const override;
 
     Q_INVOKABLE void load();
     Q_INVOKABLE void save();

@@ -31,4 +31,5 @@ QtObject {
     readonly property color sliderBackgroundColor: "#80000000"
 
     readonly property color swipeRemoveItemColor: "#f5b9b9"
+    readonly property color swipeEditItemColor: "#a7c8e1"
 }
