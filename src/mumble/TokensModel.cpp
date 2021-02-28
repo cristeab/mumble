@@ -6,14 +6,6 @@
 TokensModel::TokensModel(QObject *parent) : QAbstractListModel(parent)
 {
     setObjectName("tokensModel");
-    //TODO_BC
-    emit layoutAboutToBeChanged();
-    _tokens << "test1";
-    _tokens << "test2";
-    _tokens << "test3";
-    _tokens << "test4";
-    _tokens << "test5";
-    emit layoutChanged();
 }
 
 int TokensModel::rowCount(const QModelIndex& /*parent*/) const
@@ -77,19 +69,21 @@ void TokensModel::save()
     _isSaved = true;
 }
 
-void TokensModel::add()
-{
-    emit layoutAboutToBeChanged();
-    _tokens << "test";
-    emit layoutChanged();
-    _isSaved = false;
-}
-
 void TokensModel::remove(int index)
 {
     if (isValidIndex(index)) {
         emit layoutAboutToBeChanged();
         _tokens.removeAt(index);
+        emit layoutChanged();
+        _isSaved = false;
+    }
+}
+
+void TokensModel::setCurrentToken(const QString &token)
+{
+    if (isValidIndex(_currentEditIndex)) {
+        emit layoutAboutToBeChanged();
+        _tokens[_currentEditIndex] = token;
         emit layoutChanged();
         _isSaved = false;
     }
