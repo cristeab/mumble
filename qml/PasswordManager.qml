@@ -17,13 +17,12 @@ Page {
             leftMargin: 2 * Theme.windowMargin
             right: parent.right
             rightMargin: 2 * Theme.windowMargin
-            bottom: infoLabel.top
-            bottomMargin: Theme.windowMargin
+            bottom: addButton.top
         }
         clip: true
         boundsBehavior: ListView.StopAtBounds
         model: tokensModel
-        SwipeDelegate {
+        delegate: SwipeDelegate {
             id: delegateControl
             height: 35
             background: Rectangle {
@@ -78,29 +77,17 @@ Page {
         }
     }
 
-    IconLabel {
-        id: infoLabel
-        anchors {
-            bottom: addButton.top
-            bottomMargin: Theme.windowMargin
-            left: parent.left
-            leftMargin: 2 * Theme.windowMargin
-            right: parent.right
-            rightMargin: 2 * Theme.windowMargin
-        }
-        text: qsTr("This is an editable list of access tokens on the connected server. An access token is a text string, which can be used as a password for very simple access management on channels. Mumble will remember the tokens you've used and resend them to the server next time you reconnect, so you don't have to enter these every time.")
-    }
     TabButton {
         id: addButton
         anchors {
             right: parent.right
             rightMargin: 2 * Theme.windowMargin
-            bottom: parent.bottom
-            bottomMargin: 2 * Theme.windowMargin
+            bottom: infoLabel.top
         }
         background: Rectangle {
             color: Theme.backgroundColor
         }
+        display: AbstractButton.IconOnly
         icon {
             source: "qrc:/img/plus-circle-solid.svg"
             color: addButton.pressed ? Theme.tabButtonColorSel : Theme.tabButtonColor
@@ -112,5 +99,17 @@ Page {
             visible: addButton.hovered
             text: qsTr("Add a token")
         }
+    }
+    IconLabel {
+        id: infoLabel
+        anchors {
+            bottom: parent.bottom
+            bottomMargin: 2 * Theme.windowMargin
+            left: parent.left
+            leftMargin: 2 * Theme.windowMargin
+            right: parent.right
+            rightMargin: 2 * Theme.windowMargin
+        }
+        text: qsTr("This is an editable list of access tokens on the connected server. An access token is a text string, which can be used as a password for very simple access management on channels. Mumble will remember the tokens you've used and resend them to the server next time you reconnect, so you don't have to enter these every time.")
     }
 }
