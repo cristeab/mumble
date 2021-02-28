@@ -62,7 +62,7 @@ Page {
             leftMargin: 2 * Theme.windowMargin
         }
         color: Theme.textColor
-        text: qsTr("Volume tuning")
+        text: qsTr("Sound limitation")
     }
     CustomRangeSlider {
         id: sliderFrame
@@ -98,6 +98,7 @@ Page {
         fillMode: Image.PreserveAspectFit
     }
     Label {
+        id: infoLabel
         anchors {
             top: infoIcon.bottom
             topMargin: Theme.windowMargin / 2
@@ -109,5 +110,77 @@ Page {
         color: Theme.textColor
         wrapMode: Text.WordWrap
         text: qsTr("Adjust the sliders such that when you speak the voice exceeds the green field, but when you are quiet the background noise is in the red field.")
+    }
+
+    Label {
+        id: compLabel
+        anchors {
+            top: infoLabel.bottom
+            topMargin: 2 * Theme.windowMargin
+            left: parent.left
+            leftMargin: 2 * Theme.windowMargin
+        }
+        color: Theme.textColor
+        text: qsTr("Compression")
+    }
+    CustomSlider {
+        id: qualitySlider
+        anchors {
+            top: compLabel.bottom
+            topMargin: Theme.windowMargin
+            left: parent.left
+            leftMargin: 2 * Theme.windowMargin
+            right: parent.right
+            rightMargin: 2 * Theme.windowMargin
+        }
+        from: 8000
+        to: 192000
+        stepSize: 1000
+        value: audioDevices.quality
+        onValueChanged: audioDevices.quality = value
+        leftText: qsTr("Quality")
+        rightText: (value / 1000) + " kb/s"
+        ToolTip {
+            visible: qualitySlider.hovered
+            text: qsTr("Quality of compression (peak bandwidth)")
+        }
+    }
+    CustomSlider {
+        id: framesSlider
+
+        anchors {
+            top: qualitySlider.bottom
+            topMargin: Theme.windowMargin
+            left: parent.left
+            leftMargin: 2 * Theme.windowMargin
+            right: parent.right
+            rightMargin: 2 * Theme.windowMargin
+        }
+        from: 1
+        to: 4
+        stepSize: 1
+        value: audioDevices.frames
+        onValueChanged: audioDevices.frames = value
+        leftText: qsTr("Audio per packet")
+        rightText: (10 * audioDevices.framesPerPacket(value)) + " ms"
+        ToolTip {
+            visible: framesSlider.hovered
+            text: qsTr("How many audio frames to send per packet")
+        }
+    }
+    Label {
+        anchors {
+            top: framesSlider.bottom
+            topMargin: Theme.windowMargin
+            left: parent.left
+            leftMargin: 2 * Theme.windowMargin
+            right: parent.right
+            rightMargin: 2 * Theme.windowMargin
+        }
+        horizontalAlignment: Text.AlignHCenter
+        elide: Text.ElideRight
+        clip: true
+        text: audioDevices.bitRateText
+        color: audioDevices.bitRateAlarm ? Theme.errorColor : Theme.textColor
     }
 }
