@@ -433,10 +433,11 @@ void MainWindow::msgUserState(const MumbleProto::UserState &msg) {
 				if (pDst == pSelf) {
 					if (pSrc == pSelf) {
                         qInfo() << "You joined" << channel->qsName;
-                        emit channelJoined(channel);
+                        emit channelJoined(channel, "");
                         //g.l->log(Log::SelfChannelJoin, tr("You joined %1.").arg(Log::formatChannel(channel)));
 					} else {
                         qInfo() << "You were moved to" << channel->qsName << "by" << pSrc->qsName;
+                        emit channelJoined(channel, "");
                         //g.l->log(Log::SelfChannelJoinOther, tr("You were moved to %1 by %2.")
                         //										.arg(Log::formatChannel(channel))
                         //										.arg(Log::formatClientUser(pSrc, Log::Source)));
@@ -444,11 +445,13 @@ void MainWindow::msgUserState(const MumbleProto::UserState &msg) {
 				} else if (pSrc == pSelf) {
 					if (channel == pSelf->cChannel) {
                         qInfo() << "You moved" << pDst->qsName << "to" << channel->qsName;
+                        emit channelJoined(channel, "");
                         //g.l->log(Log::ChannelJoin, tr("You moved %1 to %2.")
                         //							   .arg(Log::formatClientUser(pDst, Log::Target))
                         //							   .arg(Log::formatChannel(channel)));
 					} else {
                         qInfo() << "You moved" << pDst->qsName << "to" << channel->qsName;
+                        emit channelJoined(channel, "");
                         //g.l->log(Log::ChannelLeave, tr("You moved %1 to %2.")
                         //								.arg(Log::formatClientUser(pDst, Log::Target))
                         //								.arg(Log::formatChannel(channel)));
@@ -457,10 +460,12 @@ void MainWindow::msgUserState(const MumbleProto::UserState &msg) {
 					if (pDst == pSrc) {
 						if (channel == pSelf->cChannel) {
                             qInfo() << pDst->qsName << "entered channel";
+                            emit channelJoined(channel, pDst->qsName);
                             //g.l->log(Log::ChannelJoin,
                             //		 tr("%1 entered channel.").arg(Log::formatClientUser(pDst, Log::Target)));
 						} else {
                             qInfo() << pDst->qsName << "moved to" << channel->qsName;
+                            emit channelJoined(channel, pDst->qsName);
                             //g.l->log(Log::ChannelLeave, tr("%1 moved to %2.")
                             //								.arg(Log::formatClientUser(pDst, Log::Target))
                             //								.arg(Log::formatChannel(channel)));
@@ -468,12 +473,14 @@ void MainWindow::msgUserState(const MumbleProto::UserState &msg) {
 					} else {
 						if (channel == pSelf->cChannel) {
                             qInfo() << pDst->qsName << "moved in from" << oldChannel->qsName << "by" << pSrc->qsName;
+                            emit channelJoined(channel, pDst->qsName);
                             //g.l->log(Log::ChannelJoin, tr("%1 moved in from %2 by %3.")
                             //							   .arg(Log::formatClientUser(pDst, Log::Target))
                             //							   .arg(Log::formatChannel(oldChannel))
                             //							   .arg(Log::formatClientUser(pSrc, Log::Source)));
 						} else {
                             qInfo() << pDst->qsName << "moved to" << channel->qsName << "by" << pSrc->qsName;
+                            emit channelJoined(channel, pDst->qsName);
                             //g.l->log(Log::ChannelLeave, tr("%1 moved to %2 by %3.")
                             //								.arg(Log::formatClientUser(pDst, Log::Target))
                             //								.arg(Log::formatChannel(channel))

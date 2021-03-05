@@ -573,10 +573,11 @@ void ServerTableModel::onUserModelChanged()
     }
 }
 
-void ServerTableModel::onChannelJoined(Channel *channel)
+void ServerTableModel::onChannelJoined(Channel *channel, const QString &userName)
 {
     if (nullptr != channel) {
-        _roomsModel->insertUser(channel, _username);
+        const auto name = userName.isEmpty() ? _username : userName;
+        _roomsModel->insertUser(channel, name);
     }
 }
 
