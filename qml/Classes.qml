@@ -5,6 +5,12 @@ import "custom"
 Page {
     id: control
 
+    Component.onCompleted: {
+        classList.currentIndex = 0
+        servers.currentClassIndex = 0
+    }
+    Component.onDestruction: servers.currentClassIndex = -1
+
     background: Rectangle {
         color: Theme.backgroundColor
     }
@@ -53,9 +59,13 @@ Page {
             }
             MouseArea {
                 anchors.fill: parent
-                onClicked: classList.currentIndex = index
+                onClicked: {
+                    classList.currentIndex = index
+                    servers.currentClassIndex = index
+                }
                 onDoubleClicked: {
                     classList.currentIndex = index
+                    servers.currentClassIndex = index
                     goBtn.gotoAction()
                 }
             }

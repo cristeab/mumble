@@ -439,6 +439,8 @@ bool ServerTableModel::connectServer()
     g.sh->setConnectionInfo(srv.address, srv.port, srv.username, srv.password);
     g.sh->start(QThread::TimeCriticalPriority);
     setConnectedServerIndex(_currentIndex);
+    setConnectedClassIndex(_currentClassIndex);
+    qDebug() << "Connected server index" << _connectedServerIndex;
 
     return true;
 }
@@ -480,6 +482,8 @@ bool ServerTableModel::disconnectServer()
         qWarning() << "Cannot disconnect: nothing to do";
     }
     setConnectedServerIndex(INVALID_INDEX);
+    setConnectedClassIndex(INVALID_INDEX);
+    qDebug() << "Connected server index" << _connectedServerIndex;
     if (nullptr != _roomsModel) {
         _roomsModel->clear();
     }
