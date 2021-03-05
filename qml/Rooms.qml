@@ -119,7 +119,7 @@ Page {
             servers.joinRoom(roomsGrid.currentIndex)
         }
 
-        enabled: servers.roomsModel.currentRoomIndex !== roomsGrid.currentIndex
+        enabled: (servers.roomsModel.currentRoomIndex !== roomsGrid.currentIndex) || (servers.currentClassIndex !== servers.connectedClassIndex)
         anchors {
             left: roomsGrid.left
             bottom: parent.bottom

@@ -439,6 +439,8 @@ bool ServerTableModel::connectServer()
     g.sh->setConnectionInfo(srv.address, srv.port, srv.username, srv.password);
     g.sh->start(QThread::TimeCriticalPriority);
     setConnectedServerIndex(_currentIndex);
+    setConnectedClassIndex(_currentClassIndex);
+    qDebug() << "Connected server index" << _connectedServerIndex;
 
     return true;
 }
@@ -480,6 +482,8 @@ bool ServerTableModel::disconnectServer()
         qWarning() << "Cannot disconnect: nothing to do";
     }
     setConnectedServerIndex(INVALID_INDEX);
+    setConnectedClassIndex(INVALID_INDEX);
+    qDebug() << "Connected server index" << _connectedServerIndex;
     if (nullptr != _roomsModel) {
         _roomsModel->clear();
     }
@@ -573,10 +577,26 @@ void ServerTableModel::onUserModelChanged()
     }
 }
 
-void ServerTableModel::onChannelJoined(Channel *channel)
+void ServerTableModel::onChannelJoined(Channel *channel, const QString &userName)
 {
-    if (nullptr != channel) {
-        _roomsModel->insertUser(channel, _username);
+    const auto type = RoomsModel::channelType(channel);
+    switch (type) {
+    case RoomsModel::ChannelType::Room: {
+        const auto name = userName.isEmpty() ? _username : userName;
+        _roomsModel->insertUser(channel, name);
+    }
+        break;
+    case RoomsModel::ChannelType::Class:
+        if (!_classNameList.contains(channel->qsName)) {
+            _classNameList << channel->qsName;
+            _classNameList.sort();
+            emit classNameListChanged();
+        } else {
+            qDebug() << "Class already exists" << channel->qsName;
+        }
+        break;
+    default:
+        qWarning() << "Unknown channel type" << static_cast<int>(type);
     }
 }
 
@@ -584,19 +604,28 @@ void ServerTableModel::gotoClass(int index)
 {
     if ((0 <= index) && (index < _classModelItems.size())) {
         const auto *rootItem = _classModelItems.at(index);
-        _roomsModel->clear();
-        for (auto *child: rootItem->qlChildren) {
-            RoomsModel::RoomInfo roomInfo;
-            roomInfo.channel = child->cChan;
-            roomInfo.name = child->cChan->qsName;
-            for (auto *user: child->qlChildren) {
-                if (nullptr != user->pUser) {
-                    roomInfo.users << user->pUser->qsName;
+        if (nullptr != rootItem) {
+            _roomsModel->clear();
+            for (auto *child: rootItem->qlChildren) {
+                const auto type = RoomsModel::channelType(child->cChan);
+                if (RoomsModel::ChannelType::Room == type) {
+                    RoomsModel::RoomInfo roomInfo;
+                    roomInfo.channel = child->cChan;
+                    roomInfo.name = child->cChan->qsName;
+                    for (auto *user: qAsConst(child->qlChildren)) {
+                        if ((nullptr != user) && (nullptr != user->pUser)) {
+                            roomInfo.users << user->pUser->qsName;
+                        }
+                    }
+                    _roomsModel->append(roomInfo);
+                } else {
+                    qWarning() << "Unknown channel type" << static_cast<int>(type);
                 }
             }
-            _roomsModel->append(roomInfo);
+            setCurrentClassName(_classNameList.at(index));
+        } else {
+            qWarning() << "Root item is NULL";
         }
-        setCurrentClassName(_classNameList.at(index));
     } else {
         qCritical() << "Invalid index" << index;
     }

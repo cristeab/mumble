@@ -1,10 +1,8 @@
 #include "RoomsModel.h"
 #include "Channel.h"
-#include <QQmlEngine>
 
 RoomsModel::RoomsModel(QObject *parent) : QAbstractListModel(parent)
 {
-    qmlRegisterInterface<RoomsModel>("RoomsModel", 1);
 }
 
 int RoomsModel::rowCount(const QModelIndex& /*parent*/) const
@@ -54,7 +52,6 @@ void RoomsModel::append(const RoomInfo &roomInfo)
     emit layoutAboutToBeChanged();
     _rooms << roomInfo;
     emit layoutChanged();
-    _userPosition.clear();
 }
 
 Channel* RoomsModel::channel(int index) const
@@ -68,34 +65,56 @@ Channel* RoomsModel::channel(int index) const
 
 void RoomsModel::insertUser(Channel *channel, const QString &username)
 {
-    //remove user from previous room
-    if (_userPosition.isValid() && isValidIndex(_userPosition.roomIndex)) {
-        _rooms[_userPosition.roomIndex].users.removeAt(_userPosition.userIndex);
+    const auto type = channelType(channel);
+    if (ChannelType::Room == type) {
+        //remove user from previous room
+        for (auto &roomInfo: _rooms) {
+            if (roomInfo.users.contains(username)) {
+                roomInfo.users.removeAll(username);
+                qDebug() << "Removed" << username << "from room" << roomInfo.name;
+                break;
+            }
+        }
+        //insert user in room
+        for (int i = 0; i < _rooms.size(); ++i) {
+            auto &roomInfo = _rooms[i];
+            if (roomInfo.channel == channel) {
+                emit layoutAboutToBeChanged();
+                roomInfo.users << username;
+                emit layoutChanged();
+                setCurrentRoomIndex(INVALID_INDEX);//make sure the index is updated
+                setCurrentRoomIndex(i);
+                qDebug() << "Added" << username << "to room" << roomInfo.name;
+                return;
+            }
+        }
+        RoomInfo roomInfo;
+        roomInfo.channel = channel;
+        roomInfo.name = channel->qsName;
+        roomInfo.users << username;
+        emit layoutAboutToBeChanged();
+        _rooms << roomInfo;
+        emit layoutChanged();
+        setCurrentRoomIndex(INVALID_INDEX);//make sure the index is updated
+        setCurrentRoomIndex(_rooms.size() - 1);
+        qDebug() << "Created for" << username << "new room" << roomInfo.name;
+    } else {
+        qWarning() << "Unknown channel type" << static_cast<int>(type);
     }
+}
 
-    for (int i = 0; i < _rooms.size(); ++i) {
-        auto &roomInfo = _rooms[i];
-        if (roomInfo.channel == channel) {
-            emit layoutAboutToBeChanged();
-            roomInfo.users << username;
-            emit layoutChanged();
-            _userPosition.roomIndex = i;
-            _userPosition.userIndex = roomInfo.users.size() - 1;
-            setCurrentRoomIndex(INVALID_INDEX);//make sure the index is updated
-            setCurrentRoomIndex(i);
-            return;
+RoomsModel::ChannelType RoomsModel::channelType(Channel *channel)
+{
+    if (nullptr != channel) {
+        if (nullptr == channel->cParent) {
+            return ChannelType::Root;
+        }
+        if (nullptr == channel->cParent->cParent) {
+            return ChannelType::Class;
+        }
+        if (nullptr == channel->cParent->cParent->cParent) {
+            return ChannelType::Room;
         }
     }
-    qWarning() << "Create new room" << username;
-    RoomInfo roomInfo;
-    roomInfo.channel = channel;
-    roomInfo.name = channel->qsName;
-    roomInfo.users << username;
-    emit layoutAboutToBeChanged();
-    _rooms << roomInfo;
-    emit layoutChanged();
-    _userPosition.roomIndex = _rooms.size() - 1;
-    _userPosition.userIndex = roomInfo.users.size() - 1;
-    setCurrentRoomIndex(INVALID_INDEX);//make sure the index is updated
-    setCurrentRoomIndex(_userPosition.roomIndex);
+    return ChannelType::Other;
 }

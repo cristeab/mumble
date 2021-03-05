@@ -324,7 +324,7 @@ signals:
     void serverDisconnectedEvent(MumbleProto::Reject_RejectType rtLast,
                                  const QString &reason);
     void userModelChanged();
-    void channelJoined(Channel *channel);
+    void channelJoined(Channel *channel, const QString &userName);
 
 public:
 	MainWindow(QWidget *parent);
