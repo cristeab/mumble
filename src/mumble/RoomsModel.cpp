@@ -52,7 +52,6 @@ void RoomsModel::append(const RoomInfo &roomInfo)
     emit layoutAboutToBeChanged();
     _rooms << roomInfo;
     emit layoutChanged();
-    _userPosition.clear();
 }
 
 Channel* RoomsModel::channel(int index) const
@@ -69,19 +68,20 @@ void RoomsModel::insertUser(Channel *channel, const QString &username)
     const auto type = channelType(channel);
     if (ChannelType::Room == type) {
         //remove user from previous room
-        if (_userPosition.isValid() && isValidIndex(_userPosition.roomIndex)) {
-            _rooms[_userPosition.roomIndex].users.removeAt(_userPosition.userIndex);
-            qDebug() << "Removed" << username << "from room" << _rooms.at(_userPosition.roomIndex).name;
+        for (auto &roomInfo: _rooms) {
+            if (roomInfo.users.contains(username)) {
+                roomInfo.users.removeAll(username);
+                qDebug() << "Removed" << username << "from room" << roomInfo.name;
+                break;
+            }
         }
-
+        //insert user in room
         for (int i = 0; i < _rooms.size(); ++i) {
             auto &roomInfo = _rooms[i];
             if (roomInfo.channel == channel) {
                 emit layoutAboutToBeChanged();
                 roomInfo.users << username;
                 emit layoutChanged();
-                _userPosition.roomIndex = i;
-                _userPosition.userIndex = roomInfo.users.size() - 1;
                 setCurrentRoomIndex(INVALID_INDEX);//make sure the index is updated
                 setCurrentRoomIndex(i);
                 qDebug() << "Added" << username << "to room" << roomInfo.name;
@@ -95,10 +95,8 @@ void RoomsModel::insertUser(Channel *channel, const QString &username)
         emit layoutAboutToBeChanged();
         _rooms << roomInfo;
         emit layoutChanged();
-        _userPosition.roomIndex = _rooms.size() - 1;
-        _userPosition.userIndex = roomInfo.users.size() - 1;
         setCurrentRoomIndex(INVALID_INDEX);//make sure the index is updated
-        setCurrentRoomIndex(_userPosition.roomIndex);
+        setCurrentRoomIndex(_rooms.size() - 1);
         qDebug() << "Created for" << username << "new room" << roomInfo.name;
     } else {
         qWarning() << "Unknown channel type" << static_cast<int>(type);

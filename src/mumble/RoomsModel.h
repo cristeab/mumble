@@ -44,12 +44,6 @@ private:
         return ((index >= 0) && (index < _rooms.count()));
     }
     QList<RoomInfo> _rooms;
-    struct UserPosition {
-        int roomIndex = INVALID_INDEX;
-        int userIndex = INVALID_INDEX;
-        bool isValid() const { return (0 <= roomIndex) && (0 <= userIndex); }
-        void clear() { roomIndex = userIndex = INVALID_INDEX; }
-    } _userPosition;
 };
 
 Q_DECLARE_INTERFACE(RoomsModel, "com.bubbles.RoomsModel")
