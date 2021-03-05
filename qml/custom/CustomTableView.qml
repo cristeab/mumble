@@ -59,6 +59,7 @@ TableView {
             anchors.fill: parent
             onClicked: {
                 servers.currentIndex = controlDelegate.row
+                console.log("servers.currentIndex " + servers.currentIndex)
                 controlTable.forceLayout()
             }
         }

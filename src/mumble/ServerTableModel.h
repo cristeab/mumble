@@ -35,8 +35,12 @@ class ServerTableModel : public QAbstractTableModel
     QML_WRITABLE_PROPERTY(QString, username, setUsername, "")
     QML_READABLE_PROPERTY(QString, password, setPassword, "")
     QML_WRITABLE_PROPERTY(QString, label, setLabel, "")
+
     QML_WRITABLE_PROPERTY(int, currentIndex, setCurrentIndex, 0)
     QML_WRITABLE_PROPERTY(int, connectedServerIndex, setConnectedServerIndex, INVALID_INDEX)
+
+    QML_WRITABLE_PROPERTY(int, currentClassIndex, setCurrentClassIndex, INVALID_INDEX)
+    QML_WRITABLE_PROPERTY(int, connectedClassIndex, setConnectedClassIndex, INVALID_INDEX)
 
     QML_WRITABLE_PROPERTY(QString, dlgTitle, setDlgTitle, "")
     QML_WRITABLE_PROPERTY(QString, dlgTextLabel, setDlgTextLabel, "")
