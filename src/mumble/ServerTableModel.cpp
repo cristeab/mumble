@@ -575,9 +575,24 @@ void ServerTableModel::onUserModelChanged()
 
 void ServerTableModel::onChannelJoined(Channel *channel, const QString &userName)
 {
-    if (nullptr != channel) {
+    const auto type = RoomsModel::channelType(channel);
+    switch (type) {
+    case RoomsModel::ChannelType::Room: {
         const auto name = userName.isEmpty() ? _username : userName;
         _roomsModel->insertUser(channel, name);
+    }
+        break;
+    case RoomsModel::ChannelType::Class:
+        if (!_classNameList.contains(channel->qsName)) {
+            _classNameList << channel->qsName;
+            _classNameList.sort();
+            emit classNameListChanged();
+        } else {
+            qDebug() << "Class already exists" << channel->qsName;
+        }
+        break;
+    default:
+        qWarning() << "Unknown channel type" << static_cast<int>(type);
     }
 }
 
@@ -590,7 +605,7 @@ void ServerTableModel::gotoClass(int index)
             RoomsModel::RoomInfo roomInfo;
             roomInfo.channel = child->cChan;
             roomInfo.name = child->cChan->qsName;
-            for (auto *user: child->qlChildren) {
+            for (auto *user: qAsConst(child->qlChildren)) {
                 if (nullptr != user->pUser) {
                     roomInfo.users << user->pUser->qsName;
                 }
