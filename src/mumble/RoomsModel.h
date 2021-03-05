@@ -3,6 +3,7 @@
 #include "qmlhelpers.h"
 #include <QAbstractListModel>
 #include <QList>
+#include <QQmlEngine>
 
 class Channel;
 
@@ -10,6 +11,7 @@ class RoomsModel : public QAbstractListModel
 {
     Q_OBJECT
 
+    QML_INTERFACE
     QML_READABLE_PROPERTY(int, currentRoomIndex, setCurrentRoomIndex, INVALID_INDEX)
 
 public:
@@ -46,3 +48,5 @@ private:
         void clear() { roomIndex = userIndex = INVALID_INDEX; }
     } _userPosition;
 };
+
+Q_DECLARE_INTERFACE(RoomsModel, "com.bubbles.RoomsModel")

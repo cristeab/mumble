@@ -1,10 +1,8 @@
 #include "RoomsModel.h"
 #include "Channel.h"
-#include <QQmlEngine>
 
 RoomsModel::RoomsModel(QObject *parent) : QAbstractListModel(parent)
 {
-    qmlRegisterInterface<RoomsModel>("RoomsModel", 1);
 }
 
 int RoomsModel::rowCount(const QModelIndex& /*parent*/) const
@@ -71,6 +69,7 @@ void RoomsModel::insertUser(Channel *channel, const QString &username)
     //remove user from previous room
     if (_userPosition.isValid() && isValidIndex(_userPosition.roomIndex)) {
         _rooms[_userPosition.roomIndex].users.removeAt(_userPosition.userIndex);
+        qDebug() << "Removed" << username << "from room" << _rooms.at(_userPosition.roomIndex).name;
     }
 
     for (int i = 0; i < _rooms.size(); ++i) {
@@ -83,10 +82,10 @@ void RoomsModel::insertUser(Channel *channel, const QString &username)
             _userPosition.userIndex = roomInfo.users.size() - 1;
             setCurrentRoomIndex(INVALID_INDEX);//make sure the index is updated
             setCurrentRoomIndex(i);
+            qDebug() << "Added" << username << "to room" << roomInfo.name;
             return;
         }
     }
-    qWarning() << "Create new room" << username;
     RoomInfo roomInfo;
     roomInfo.channel = channel;
     roomInfo.name = channel->qsName;
@@ -98,4 +97,5 @@ void RoomsModel::insertUser(Channel *channel, const QString &username)
     _userPosition.userIndex = roomInfo.users.size() - 1;
     setCurrentRoomIndex(INVALID_INDEX);//make sure the index is updated
     setCurrentRoomIndex(_userPosition.roomIndex);
+    qDebug() << "Created for" << username << "new room" << roomInfo.name;
 }
