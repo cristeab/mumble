@@ -600,19 +600,28 @@ void ServerTableModel::gotoClass(int index)
 {
     if ((0 <= index) && (index < _classModelItems.size())) {
         const auto *rootItem = _classModelItems.at(index);
-        _roomsModel->clear();
-        for (auto *child: rootItem->qlChildren) {
-            RoomsModel::RoomInfo roomInfo;
-            roomInfo.channel = child->cChan;
-            roomInfo.name = child->cChan->qsName;
-            for (auto *user: qAsConst(child->qlChildren)) {
-                if (nullptr != user->pUser) {
-                    roomInfo.users << user->pUser->qsName;
+        if (nullptr != rootItem) {
+            _roomsModel->clear();
+            for (auto *child: rootItem->qlChildren) {
+                const auto type = RoomsModel::channelType(child->cChan);
+                if (RoomsModel::ChannelType::Room == type) {
+                    RoomsModel::RoomInfo roomInfo;
+                    roomInfo.channel = child->cChan;
+                    roomInfo.name = child->cChan->qsName;
+                    for (auto *user: qAsConst(child->qlChildren)) {
+                        if ((nullptr != user) && (nullptr != user->pUser)) {
+                            roomInfo.users << user->pUser->qsName;
+                        }
+                    }
+                    _roomsModel->append(roomInfo);
+                } else {
+                    qWarning() << "Unknown channel type" << static_cast<int>(type);
                 }
             }
-            _roomsModel->append(roomInfo);
+            setCurrentClassName(_classNameList.at(index));
+        } else {
+            qWarning() << "Root item is NULL";
         }
-        setCurrentClassName(_classNameList.at(index));
     } else {
         qCritical() << "Invalid index" << index;
     }
