@@ -1,0 +1,111 @@
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import ".."
+
+Page {
+    id: control
+
+    background: Rectangle {
+        color: Theme.backgroundColor
+    }
+
+    Label {
+        id: pageTitle
+        anchors {
+            top: parent.top
+            topMargin: Theme.windowMargin
+            left: parent.left
+            leftMargin: Theme.windowMargin
+            right: parent.right
+            rightMargin: 2 * Theme.windowMargin
+        }
+        text: qsTr("Certificate Authentication")
+        color: Theme.textColor
+        elide: Text.ElideRight
+        font.bold: true
+    }
+    Label {
+        id: pageSubTitle
+        anchors {
+            top: pageTitle.bottom
+            left: parent.left
+            leftMargin: 3 * Theme.windowMargin
+            right: parent.right
+            rightMargin: 3 * Theme.windowMargin
+        }
+        text: qsTr("Authenticating to servers without using passwords")
+        color: Theme.textColor
+        elide: Text.ElideRight
+    }
+
+    Rectangle {
+        id: headerSep
+        anchors {
+            top: pageSubTitle.bottom
+            topMargin: Theme.windowMargin
+            left: parent.left
+            leftMargin: Theme.windowMargin
+            right: parent.right
+            rightMargin: Theme.windowMargin
+        }
+        height: 1
+        color: "white"
+    }
+
+    Label {
+        id: contentText
+        anchors {
+            top: headerSep.bottom
+            topMargin: Theme.windowMargin
+            left: parent.left
+            leftMargin: 3 * Theme.windowMargin
+            right: parent.right
+            rightMargin: 3 * Theme.windowMargin
+        }
+        wrapMode: Text.WordWrap
+        text: qsTr("Bubbles can use certificates to authenticate with servers. Using certificates avoids passwords, meaning you don't need to disclose any password to the remote site. It also enables very easy user registration and a client side friends list independent of servers.\nWhile Bubbles can work without certificates, the majority of servers will expect you to have one.\nCreating a new certificate automatically is sufficient for most use cases. But Bubbles also supports certificates representing trust in the users ownership of an email address. These certificates are issued by third parties.")
+        color: Theme.textColor
+    }
+    GroupBox {
+        id: currentCert
+
+        readonly property var nameArr: [qsTr("Name"), qsTr("Email"), qsTr("Issuer"), qsTr("Expiry Date")]
+        readonly property var valueArr: [certModel.subjectName, certModel.subjectEmail, certModel.issuerName, certModel.expiry]
+
+        anchors {
+            top: contentText.bottom
+            topMargin: Theme.windowMargin
+            left: parent.left
+            leftMargin: 3 * Theme.windowMargin
+            right: parent.right
+            rightMargin: 3 * Theme.windowMargin
+        }
+        label: Label {
+            width: 0.8 * currentCert.width
+            text: qsTr("Current Certificate")
+            color: Theme.textColor
+            elide: Text.ElideRight
+        }
+        Column {
+            spacing: Theme.windowMargin
+            Repeater {
+                model: currentCert.nameArr.length
+                Row {
+                    spacing: Theme.windowMargin
+                    Label {
+                        width: 0.1 * currentCert.width
+                        text: currentCert.nameArr[index]
+                        color: Theme.textColor
+                        elide: Text.ElideRight
+                    }
+                    Label {
+                        width: 0.9 * currentCert.width
+                        text: currentCert.valueArr[index]
+                        color: Theme.textColor
+                        elide: Text.ElideRight
+                    }
+                }
+            }
+        }
+    }
+}
