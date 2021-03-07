@@ -16,11 +16,16 @@ class CertificateModel : public QObject
     QML_READABLE_PROPERTY(QString, issuerName, setIssuerName, "")
     QML_READABLE_PROPERTY(QString, expiry, setExpiry, "")
 
+    QML_WRITABLE_PROPERTY(QString, newSubjectName, setNewSubjectName, "")
+    QML_WRITABLE_PROPERTY(QString, newSubjectEmail, setNewSubjectEmail, "")
+
 public:
+    enum PageCount { NEW_CERT_PAGE_COUNT = 6, IMPORT_CERT_PAGE_COUNT = 4, EXPORT_CERT_PAGE_COUNT = 2 };
+    Q_ENUM(PageCount)
+
     explicit CertificateModel(QObject *parent = nullptr);
 
 private:
-    enum { NEW_CERT_PAGE_COUNT = 6, IMPORT_CERT_PAGE_COUNT = 4, EXPORT_CERT_PAGE_COUNT = 2 };
 
     void initializePage(int index);
     void setCert(const QList<QSslCertificate> &cert);

@@ -10,6 +10,9 @@ Row {
     property alias error: controlTextField.error
     property alias placeholderText: controlTextField.placeholderText
     property alias validator: controlTextField.validator
+    property alias acceptableInput: controlTextField.acceptableInput
+
+    signal editingFinished()
 
     spacing: 5
     width: parent.width
@@ -27,5 +30,6 @@ Row {
     CustomTextField {
         id: controlTextField
         width: parent.width - controlLabel.width - control.spacing
+        onEditingFinished: control.editingFinished()
     }
 }
