@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import "../custom"
 import ".."
 
 Page {
@@ -28,6 +29,7 @@ Page {
         id: pageSubTitle
         anchors {
             top: pageTitle.bottom
+            topMargin: Theme.windowMargin / 2
             left: parent.left
             leftMargin: 3 * Theme.windowMargin
             right: parent.right
@@ -49,7 +51,7 @@ Page {
             rightMargin: Theme.windowMargin
         }
         height: 1
-        color: "white"
+        color: Theme.separatorColor
     }
 
     Label {
@@ -104,6 +106,42 @@ Page {
                         color: Theme.textColor
                         elide: Text.ElideRight
                     }
+                }
+            }
+        }
+    }
+
+    GroupBox {
+        id: autoCert
+
+        readonly property var nameArr: [qsTr("Create a new certificate"), qsTr("Import a certificate"), qsTr("Export current certificate")]
+
+        anchors {
+            top: currentCert.bottom
+            topMargin: Theme.windowMargin
+            left: parent.left
+            leftMargin: 3 * Theme.windowMargin
+            right: parent.right
+            rightMargin: 3 * Theme.windowMargin
+        }
+        label: Label {
+            width: 0.8 * currentCert.width
+            text: qsTr("Automatic Certificate Creation")
+            color: Theme.textColor
+            elide: Text.ElideRight
+        }
+        ButtonGroup {
+            exclusive: true
+            buttons: autoCertCol.children
+            onClicked: console.log("clicked:", button.text)
+        }
+        Column {
+            id: autoCertCol
+            spacing: 0
+            Repeater {
+                model: autoCert.nameArr.length
+                CustomRadioButton {
+                    text: autoCert.nameArr[index]
                 }
             }
         }

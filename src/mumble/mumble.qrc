@@ -46,6 +46,7 @@
         <file alias="qml/custom/CustomSlider.qml">../../qml/custom/CustomSlider.qml</file>
         <file alias="qml/custom/IconLabel.qml">../../qml/custom/IconLabel.qml</file>
         <file alias="qml/custom/LabelToolTip.qml">../../qml/custom/LabelToolTip.qml</file>
+        <file alias="qml/custom/CustomRadioButton.qml">../../qml/custom/CustomRadioButton.qml</file>
         <file alias="qml/dialog/AddEditServer.qml">../../qml/dialog/AddEditServer.qml</file>
         <file alias="qml/dialog/LineEditDialog.qml">../../qml/dialog/LineEditDialog.qml</file>
         <file alias="qml/dialog/AddEditToken.qml">../../qml/dialog/AddEditToken.qml</file>
