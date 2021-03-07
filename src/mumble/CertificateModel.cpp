@@ -1,9 +1,12 @@
 #include "CertificateModel.h"
 #include "Global.h"
 #include <QUrl>
+#include <QQmlEngine>
 
 CertificateModel::CertificateModel(QObject *parent) : QObject(parent)
 {
+    qmlRegisterType<CertificateModel>("CertificateModel", 1, 0, "CertificateModel");
+
     setObjectName("certModel");
     initializePage(0);
 

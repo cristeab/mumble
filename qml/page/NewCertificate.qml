@@ -81,10 +81,17 @@ Page {
         LabelTextField {
             id: nameField
             text: qsTr("Name")
+            onEditingFinished: certModel.newSubjectName = nameField.editText
         }
         LabelTextField {
             id: emailField
             text: qsTr("Email")
+            validator: RegExpValidator { regExp:/\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/ }
+            onEditingFinished: {
+                if (emailField.acceptableInput) {
+                    certModel.newSubjectEmail = emailField.editText
+                }
+            }
         }
     }
 }

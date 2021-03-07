@@ -2,6 +2,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import "page"
 import "custom"
+import CertificateModel 1.0
 
 Page {
     id: control
@@ -66,7 +67,20 @@ Page {
             icon.source: "qrc:/img/chevron-circle-right.svg"
             width: backBtn.width
             height: backBtn.height
-            onClicked: view.currentIndex += 1
+            onClicked: {
+                if (CertificateModel.NEW_CERT_PAGE_COUNT === certModel.pageCount) {
+                    if (0 === view.currentIndex) {
+                        certModel.newSubjectName = ""
+                        certModel.newSubjectEmail = ""
+                    }
+                    if (1 === view.currentIndex) {
+                        if (("" === certModel.newSubjectName) || ("" === certModel.newSubjectEmail)) {
+                            return
+                        }
+                    }
+                }
+                view.currentIndex += 1
+            }
         }
     }
 
