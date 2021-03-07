@@ -53,6 +53,7 @@
         <file alias="qml/dialog/AddEditToken.qml">../../qml/dialog/AddEditToken.qml</file>
         <file alias="qml/dialog/MessageDialog.qml">../../qml/dialog/MessageDialog.qml</file>
         <file alias="qml/page/CertificateAuth.qml">../../qml/page/CertificateAuth.qml</file>
+        <file alias="qml/page/NewCertificate.qml">../../qml/page/NewCertificate.qml</file>
         <file alias="qml/qmldir">../../qml/qmldir</file>
         <file alias="qtquickcontrols2.conf">../../qml/qtquickcontrols2.conf</file>
     </qresource>

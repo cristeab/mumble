@@ -13,13 +13,18 @@ Page {
     SwipeView {
         id: view
 
-        readonly property var pageArr: ["qrc:/qml/page/CertificateAuth.qml"]
+        readonly property var pageArr: ["qrc:/qml/page/CertificateAuth.qml", "qrc:/qml/page/NewCertificate.qml"]
 
         function getPage(idx) {
             if ((0 <= idx) && (idx < certModel.pageCount)) {
-                return view.pageArr[0]
+                if (0 === idx) {
+                    return view.pageArr[idx]
+                }
+                if (1 === idx) {
+                    return view.pageArr[idx]
+                }
             }
-            return null
+            return ""
         }
 
         currentIndex: 0
