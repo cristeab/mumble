@@ -78,6 +78,7 @@ Page {
             onClicked: {
                 msgDlg.title = qsTr("Delete Server")
                 msgDlg.text = qsTr("Are you sure you want to delete ") + servers.currentServerName() + " ?"
+                msgDlg.okCancel = true
                 msgDlg.acceptCallback = servers.removeServer
                 msgDlg.showDlg()
             }
