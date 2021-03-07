@@ -78,6 +78,7 @@ public:
 
     Q_INVOKABLE void resetServer();
     Q_INVOKABLE void changeServer();
+    Q_INVOKABLE void removeServer();
     Q_INVOKABLE void startPingTick(bool start);
     Q_INVOKABLE bool isReachable(int row) {
         return isValidIndex(row) ? (0 < _servers.at(row).totalUsers) : false;
@@ -87,6 +88,9 @@ public:
     Q_INVOKABLE void onLineEditDlgAccepted();
     Q_INVOKABLE void gotoClass(int index);
     Q_INVOKABLE bool joinRoom(int index);
+    Q_INVOKABLE QString currentServerName() const {
+        return isValidIndex(_currentIndex) ? _servers.at(_currentIndex).name : "";
+    }
 
     int rowCount(const QModelIndex & = QModelIndex()) const override;
     int columnCount(const QModelIndex & = QModelIndex()) const override;
@@ -120,7 +124,7 @@ private:
     void setStats(ServerItem *si, double delayUs, int users, int totalUsers);
     static void recreateServerHandler();
 
-    QVector<ServerItem> _servers;
+    QList<ServerItem> _servers;
     QTimer _pingTick;
     /// bAllowHostLookup determines whether ConnectDialog can
     /// resolve hosts via DNS, Bonjour, and so on.

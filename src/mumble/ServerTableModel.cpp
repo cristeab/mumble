@@ -137,6 +137,21 @@ void ServerTableModel::changeServer()
     save();
 }
 
+void ServerTableModel::removeServer()
+{
+    if (isValidIndex(_currentIndex)) {
+        emit layoutAboutToBeChanged();
+        _servers.removeAt(_currentIndex);
+        emit layoutChanged();
+        save();
+        if (_currentIndex == _connectedServerIndex) {
+            disconnectServer();
+            setConnectedServerIndex(INVALID_INDEX);
+        }
+        setCurrentIndex(INVALID_INDEX);
+    }
+}
+
 void ServerTableModel::startPingTick(bool start)
 {
     qDebug() << "startPingTick" << start;
@@ -155,7 +170,7 @@ void ServerTableModel::load()
     }
     auto items = g.db->getFavorites();
     emit layoutAboutToBeChanged();
-    for (const auto &it: items) {
+    for (const auto &it: qAsConst(items)) {
         ServerItem srvItem;
         srvItem.name = it.qsName;
         srvItem.address = it.qsUrl;
