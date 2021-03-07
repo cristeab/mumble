@@ -11,29 +11,18 @@ Page {
 
     Component.onCompleted: srvTbl.forceLayout()
 
-    TabButton {
+    CustomTabButton {
         id: forwardBtn
         anchors {
             top: parent.top
             right: parent.right
         }
         visible: (0 <= servers.connectedServerIndex) && (0 < servers.classNameList.length)
-        display: AbstractButton.IconOnly
-        icon {
-            source: "qrc:/img/chevron-circle-right.svg"
-            color: forwardBtn.pressed ? Theme.tabButtonColorSel : Theme.tabButtonColor
-        }
-        font.pointSize: 5
+        text: qsTr("Forward")
+        icon.source: "qrc:/img/chevron-circle-right.svg"
         width: backBtn.width
         height: backBtn.height
-        background: Rectangle {
-            color: Theme.backgroundColor
-        }
         onClicked: tabView.push("qrc:/qml/Classes.qml")
-        ToolTip {
-            visible: forwardBtn.hovered
-            text: "Forward"
-        }
     }
 
     CustomTableView {
@@ -89,6 +78,7 @@ Page {
             onClicked: {
                 msgDlg.title = qsTr("Delete Server")
                 msgDlg.text = qsTr("Are you sure you want to delete ") + servers.currentServerName() + " ?"
+                msgDlg.okCancel = true
                 msgDlg.acceptCallback = servers.removeServer
                 msgDlg.showDlg()
             }

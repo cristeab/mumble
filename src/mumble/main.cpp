@@ -45,6 +45,7 @@
 #include "ServerTableModel.h"
 #include "AudioDeviceModel.h"
 #include "TokensModel.h"
+#include "CertificateModel.h"
 
 #include <QtCore/QLibraryInfo>
 #include <QtCore/QProcess>
@@ -586,10 +587,12 @@ int main(int argc, char **argv) {
     auto *srv = new ServerTableModel();
     auto *audioDev = new AudioDeviceModel();
     auto *tokens = new TokensModel();
+    auto *certModel = new CertificateModel();
     if (nullptr != context) {
         context->setContextProperty(srv->objectName(), srv);
         context->setContextProperty(audioDev->objectName(), audioDev);
         context->setContextProperty(tokens->objectName(), tokens);
+        context->setContextProperty(certModel->objectName(), certModel);
     } else {
         qDebug() << "Cannot get root context";
         return EXIT_FAILURE;
