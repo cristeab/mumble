@@ -1,6 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Window 2.12
+import "custom"
 
 ApplicationWindow {
     id: appWin
@@ -14,29 +15,18 @@ ApplicationWindow {
         color: Theme.backgroundColor
     }
 
-    TabButton {
+    CustomTabButton {
         id: backBtn
         anchors {
             top: parent.top
             left: parent.left
         }
         visible: 1 < tabView.depth
-        display: AbstractButton.IconOnly
-        icon {
-            source: "qrc:/img/chevron-circle-left.svg"
-            color: backBtn.pressed ? Theme.tabButtonColorSel : Theme.tabButtonColor
-        }
-        font.pointSize: 5
+        text: qsTr("Back")
+        icon.source: "qrc:/img/chevron-circle-left.svg"
         width: bar.width
         height: width + Theme.windowMargin
-        background: Rectangle {
-            color: Theme.backgroundColor
-        }
         onClicked: tabView.pop()
-        ToolTip {
-            visible: backBtn.hovered
-            text: "Back"
-        }
     }
 
     Column {
@@ -64,22 +54,17 @@ ApplicationWindow {
 
         Repeater {
             model: bar.names.length
-            TabButton {
+            CustomTabButton {
                 id: tabButton
                 property bool isSelected: bar.currentButtonIndex === index
                 property color textColor: isSelected ? Theme.tabButtonColorSel : Theme.tabButtonColor
-                display: AbstractButton.IconOnly
-                text: "<font color='" + tabButton.textColor + "'>" + bar.names[index] + "</font>"
+                text: bar.names[index]
                 icon {
                     source: bar.icons[index]
                     color: tabButton.textColor
                 }
-                font.pointSize: 5
                 width: bar.width
                 height: width + 2 * Theme.windowMargin
-                background: Rectangle {
-                    color: Theme.backgroundColor
-                }
                 onClicked: {
                     bar.currentButtonIndex = index
                     tabView.replace(bar.pages[index])
@@ -92,10 +77,6 @@ ApplicationWindow {
                     } else {
                         tokensModel.save()
                     }
-                }
-                ToolTip {
-                    visible: tabButton.hovered
-                    text: bar.names[index]
                 }
             }
         }

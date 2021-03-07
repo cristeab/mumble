@@ -12,7 +12,7 @@ QtObject {
 
     readonly property color backgroundColor: "#C2CCDA"
     readonly property color backgroundColor2: "#0F80FE"
-    readonly property color separatorColor: "#CAD3DE"
+    readonly property color separatorColor: "white"
     readonly property color tabButtonColor: "#130039"
     readonly property color tabButtonColorSel: "#0F80FE"
     readonly property color buttonBlueColor: "#0F80FE"
