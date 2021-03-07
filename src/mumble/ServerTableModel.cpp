@@ -427,6 +427,10 @@ void ServerTableModel::setStats(ServerItem *si, double delayUs, int users, int t
     si->currentUsers = users;
     si->totalUsers = totalUsers;
     emit layoutChanged();
+    //force current index update
+    const int cur = _currentIndex;
+    setCurrentIndex(INVALID_INDEX);
+    setCurrentIndex(cur);
 }
 
 bool ServerTableModel::connectServer()
