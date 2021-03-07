@@ -439,7 +439,6 @@ bool ServerTableModel::connectServer()
     g.sh->setConnectionInfo(srv.address, srv.port, srv.username, srv.password);
     g.sh->start(QThread::TimeCriticalPriority);
     setConnectedServerIndex(_currentIndex);
-    setConnectedClassIndex(_currentClassIndex);
     qDebug() << "Connected server index" << _connectedServerIndex;
 
     return true;
@@ -637,6 +636,7 @@ void ServerTableModel::joinRoom(int index)
     const auto *ch = _roomsModel->channel(index);
     if (nullptr != ch) {
         g.sh->joinChannel(g.uiSession, ch->iId);
+        setConnectedClassIndex(index);
     } else {
         qCritical() << "Cannot join room: invalid index" << index;
     }

@@ -78,6 +78,8 @@ Page {
         function gotoAction() {
             servers.gotoClass(classList.currentIndex)
             tabView.push("qrc:/qml/Rooms.qml")
+            console.log("server: cur " + servers.currentIndex + ", conn " + servers.connectedServerIndex)
+            console.log("class: cur " + servers.currentClassIndex + ", conn " + servers.connectedClassIndex)
         }
 
         anchors {
