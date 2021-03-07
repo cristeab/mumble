@@ -44,7 +44,7 @@ Page {
         id: headerSep
         anchors {
             top: pageSubTitle.bottom
-            topMargin: Theme.windowMargin
+            topMargin: 1.5 * Theme.windowMargin
             left: parent.left
             leftMargin: Theme.windowMargin
             right: parent.right
@@ -58,7 +58,7 @@ Page {
         id: contentText
         anchors {
             top: headerSep.bottom
-            topMargin: Theme.windowMargin
+            topMargin: 1.5 * Theme.windowMargin
             left: parent.left
             leftMargin: 3 * Theme.windowMargin
             right: parent.right
