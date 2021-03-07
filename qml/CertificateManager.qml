@@ -14,7 +14,7 @@ Page {
     SwipeView {
         id: view
 
-        readonly property var pageArr: ["qrc:/qml/page/CertificateAuth.qml", "qrc:/qml/page/NewCertificate.qml"]
+        readonly property var pageArr: ["qrc:/qml/page/CertificateAuth.qml", "qrc:/qml/page/NewCertificate.qml", "qrc:/qml/page/ReplaceCertificate.qml"]
 
         function getPage(idx) {
             if ((0 <= idx) && (idx < certModel.pageCount)) {
@@ -22,6 +22,9 @@ Page {
                     return view.pageArr[idx]
                 }
                 if (1 === idx) {
+                    return view.pageArr[idx]
+                }
+                if (2 === idx) {
                     return view.pageArr[idx]
                 }
             }
