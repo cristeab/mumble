@@ -137,6 +137,21 @@ void ServerTableModel::changeServer()
     save();
 }
 
+void ServerTableModel::removeServer()
+{
+    if (isValidIndex(_currentIndex)) {
+        emit layoutAboutToBeChanged();
+        _servers.removeAt(_currentIndex);
+        emit layoutChanged();
+        save();
+        if (_currentIndex == _connectedServerIndex) {
+            disconnectServer();
+            setConnectedServerIndex(INVALID_INDEX);
+        }
+        setCurrentIndex(INVALID_INDEX);
+    }
+}
+
 void ServerTableModel::startPingTick(bool start)
 {
     qDebug() << "startPingTick" << start;
@@ -155,7 +170,7 @@ void ServerTableModel::load()
     }
     auto items = g.db->getFavorites();
     emit layoutAboutToBeChanged();
-    for (const auto &it: items) {
+    for (const auto &it: qAsConst(items)) {
         ServerItem srvItem;
         srvItem.name = it.qsName;
         srvItem.address = it.qsUrl;
@@ -439,7 +454,6 @@ bool ServerTableModel::connectServer()
     g.sh->setConnectionInfo(srv.address, srv.port, srv.username, srv.password);
     g.sh->start(QThread::TimeCriticalPriority);
     setConnectedServerIndex(_currentIndex);
-    setConnectedClassIndex(_currentClassIndex);
     qDebug() << "Connected server index" << _connectedServerIndex;
 
     return true;
@@ -631,13 +645,18 @@ void ServerTableModel::gotoClass(int index)
     }
 }
 
-void ServerTableModel::joinRoom(int index)
+bool ServerTableModel::joinRoom(int index)
 {
     qDebug() << "Join room" << index;
     const auto *ch = _roomsModel->channel(index);
+    bool rc = false;
     if (nullptr != ch) {
         g.sh->joinChannel(g.uiSession, ch->iId);
+        _roomsModel->setCurrentRoomIndex(index);
+        rc = true;
+        qDebug() << "Connected class" << index;
     } else {
         qCritical() << "Cannot join room: invalid index" << index;
     }
+    return rc;
 }
