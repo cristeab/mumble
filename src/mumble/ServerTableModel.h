@@ -86,7 +86,7 @@ public:
     Q_INVOKABLE bool disconnectServer();
     Q_INVOKABLE void onLineEditDlgAccepted();
     Q_INVOKABLE void gotoClass(int index);
-    Q_INVOKABLE void joinRoom(int index);
+    Q_INVOKABLE bool joinRoom(int index);
 
     int rowCount(const QModelIndex & = QModelIndex()) const override;
     int columnCount(const QModelIndex & = QModelIndex()) const override;

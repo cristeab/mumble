@@ -630,14 +630,18 @@ void ServerTableModel::gotoClass(int index)
     }
 }
 
-void ServerTableModel::joinRoom(int index)
+bool ServerTableModel::joinRoom(int index)
 {
     qDebug() << "Join room" << index;
     const auto *ch = _roomsModel->channel(index);
+    bool rc = false;
     if (nullptr != ch) {
         g.sh->joinChannel(g.uiSession, ch->iId);
-        setConnectedClassIndex(index);
+        _roomsModel->setCurrentRoomIndex(index);
+        rc = true;
+        qDebug() << "Connected class" << index;
     } else {
         qCritical() << "Cannot join room: invalid index" << index;
     }
+    return rc;
 }
