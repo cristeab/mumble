@@ -26,11 +26,14 @@ public:
     Q_ENUM(PageCount)
 
     explicit CertificateModel(QObject *parent = nullptr);
+    Q_INVOKABLE bool generateNewCert();
 
 private:
 
     void initializePage(int index);
     void setCert(const QList<QSslCertificate> &cert);
+    Settings::KeyPair generateNewCert(const QString &name, const QString &email);
+    static bool validateCert(const Settings::KeyPair &kp);
 
     QList<QSslCertificate> _cert;
     Settings::KeyPair _current;

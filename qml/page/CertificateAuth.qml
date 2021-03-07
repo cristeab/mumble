@@ -141,6 +141,7 @@ Page {
             Repeater {
                 model: autoCert.nameArr.length
                 CustomRadioButton {
+                    checked: 0 === index
                     text: autoCert.nameArr[index]
                 }
             }

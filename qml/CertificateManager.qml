@@ -80,6 +80,14 @@ Page {
                         if (("" === certModel.newSubjectName) || ("" === certModel.newSubjectEmail)) {
                             return
                         }
+                        const rc = certModel.generateNewCert()
+                        if (!rc) {
+                            msgDlg.title = qsTr("Error")
+                            msgDlg.text = qsTr("There was an error generating your certificate. Please try again.")
+                            msgDlg.okCancel = false
+                            msgDlg.showDlg()
+                            return
+                        }
                     }
                 }
                 view.currentIndex += 1

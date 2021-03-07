@@ -1,4 +1,5 @@
 #include "CertificateModel.h"
+#include "SelfSignedCertificate.h"
 #include "Global.h"
 #include <QUrl>
 #include <QQmlEngine>
@@ -13,6 +14,36 @@ CertificateModel::CertificateModel(QObject *parent) : QObject(parent)
     connect(this, &CertificateModel::currentPageIndexChanged, this, [this]() {
         initializePage(_currentPageIndex);
     });
+}
+
+bool CertificateModel::generateNewCert()
+{
+    _new = generateNewCert(_newSubjectName, _newSubjectEmail);
+    const auto rc = validateCert(_new);
+
+    if (rc && !_new.first.isEmpty()) {
+        QSslCertificate qscCert = _new.first.at(0);
+        if (qscCert.expiryDate() <= QDateTime::currentDateTime()) {
+            setNewExpiry(QString::fromLatin1("<font color=\"red\"><b>%1</b></font>")
+                      .arg(qscCert.expiryDate().toString(Qt::SystemLocaleDate).toHtmlEscaped()));
+        } else {
+            setNewExpiry(qscCert.expiryDate().toString(Qt::SystemLocaleDate));
+        }
+
+        if (_cert.count() > 1) {
+            qscCert = _cert.last();
+        }
+
+        const QStringList &issuerNames = qscCert.issuerInfo(QSslCertificate::CommonName);
+        QString issuerName;
+        if (issuerNames.count() > 0) {
+            issuerName = issuerNames.at(0);
+        }
+
+        setNewIssuerName((issuerName == _newSubjectName) ? tr("Self-signed") : issuerName);
+    }
+
+    return rc;
 }
 
 void CertificateModel::setCert(const QList<QSslCertificate> &cert)
@@ -67,6 +98,21 @@ void CertificateModel::setCert(const QList<QSslCertificate> &cert)
     }
 }
 
+Settings::KeyPair CertificateModel::generateNewCert(const QString &name, const QString &email)
+{
+    QSslCertificate qscCert;
+    QSslKey qskKey;
+
+    // Ignore return value.
+    // The method sets qscCert and qskKey to null values if it fails.
+    SelfSignedCertificate::generateMumbleCertificate(name, email, qscCert, qskKey);
+
+    QList< QSslCertificate > qlCert;
+    qlCert << qscCert;
+
+    return Settings::KeyPair(qlCert, qskKey);
+}
+
 void CertificateModel::initializePage(int index)
 {
     _current = _new = g.s.kpCertificate;
@@ -78,4 +124,13 @@ void CertificateModel::initializePage(int index)
         setCert(_new.first);
         break;
     }
+}
+
+bool CertificateModel::validateCert(const Settings::KeyPair &kp)
+{
+    bool valid = !kp.second.isNull() && !kp.first.isEmpty();
+    for (const auto &cert: kp.first) {
+        valid = valid && !cert.isNull();
+    }
+    return valid;
 }
