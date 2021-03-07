@@ -116,7 +116,9 @@ Page {
         id: joinBtn
 
         function joinAction() {
-            servers.joinRoom(roomsGrid.currentIndex)
+            if (servers.joinRoom(roomsGrid.currentIndex)) {
+                servers.connectedClassIndex = servers.currentClassIndex
+            }
         }
 
         enabled: (servers.roomsModel.currentRoomIndex !== roomsGrid.currentIndex) || (servers.currentClassIndex !== servers.connectedClassIndex)
