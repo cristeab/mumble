@@ -121,8 +121,7 @@ ApplicationWindow {
         }
         function onDlgTitleChanged() {
             if ("" !== servers.dlgTitle) {
-                lineEditDlg.active = true
-                lineEditDlg.item.visible = true
+                lineEditDlg.showDlg()
             }
         }
     }
@@ -149,6 +148,12 @@ ApplicationWindow {
 
     Loader {
         id: lineEditDlg
+
+        function showDlg() {
+            lineEditDlg.active = true
+            lineEditDlg.item.visible = true
+        }
+
         anchors.fill: parent
         active: false
         source: "qrc:/qml/dialog/LineEditDialog.qml"
@@ -171,5 +176,23 @@ ApplicationWindow {
         anchors.fill: parent
         active: false
         source: "qrc:/qml/dialog/AddEditToken.qml"
+    }
+
+    Loader {
+        id: msgDlg
+
+        property string title: ""
+        property string text: ""
+        property bool okCancel: true
+        property var acceptCallback: null
+
+        function showDlg() {
+            msgDlg.active = true
+            msgDlg.item.visible = true
+        }
+
+        anchors.fill: parent
+        active: false
+        source: "qrc:/qml/dialog/MessageDialog.qml"
     }
 }

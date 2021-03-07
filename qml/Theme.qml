@@ -4,6 +4,7 @@ import QtQuick.Controls.Material 2.12
 pragma Singleton
 
 QtObject {
+    readonly property real dialogMargin: 80
     readonly property real windowMargin: 10
 
     readonly property real labelFontSize: 10
