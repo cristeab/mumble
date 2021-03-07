@@ -18,6 +18,8 @@ class CertificateModel : public QObject
 
     QML_WRITABLE_PROPERTY(QString, newSubjectName, setNewSubjectName, "")
     QML_WRITABLE_PROPERTY(QString, newSubjectEmail, setNewSubjectEmail, "")
+    QML_READABLE_PROPERTY(QString, newIssuerName, setNewIssuerName, "")
+    QML_READABLE_PROPERTY(QString, newExpiry, setNewExpiry, "")
 
 public:
     enum PageCount { NEW_CERT_PAGE_COUNT = 6, IMPORT_CERT_PAGE_COUNT = 4, EXPORT_CERT_PAGE_COUNT = 2 };
