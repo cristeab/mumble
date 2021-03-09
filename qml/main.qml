@@ -169,7 +169,7 @@ ApplicationWindow {
             title: qsTr("Select file to export certificate to")
             folder: shortcuts.home
             Component.onCompleted: visible = true
-            selectExisting: true
+            selectExisting: false
             selectFolder: false
             selectMultiple: false
             defaultSuffix: "p12"
