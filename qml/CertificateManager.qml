@@ -11,10 +11,12 @@ Page {
         color: Theme.backgroundColor
     }
 
+    Component.onCompleted: view.currentIndex = 0
+
     SwipeView {
         id: view
 
-        readonly property var pageArr: ["qrc:/qml/page/CertificateAuth.qml", "qrc:/qml/page/NewCertificate.qml", "qrc:/qml/page/ReplaceCertificate.qml", "qrc:/qml/page/ExportCertificate.qml", "", ""]
+        readonly property var pageArr: ["qrc:/qml/page/CertificateAuth.qml", "qrc:/qml/page/NewCertificate.qml", "qrc:/qml/page/ReplaceCertificate.qml", "qrc:/qml/page/ExportCertificate.qml", "qrc:/qml/page/FinishCertificate.qml"]
 
         currentIndex: 0
         clip: true
@@ -84,6 +86,9 @@ Page {
                         if (!rc) {
                             return
                         }
+                    }
+                    if (4 === view.currentIndex) {
+                        certModel.finish()
                     }
                 }
                 view.currentIndex += 1

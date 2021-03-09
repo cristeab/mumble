@@ -26,13 +26,14 @@ class CertificateModel : public QObject
     QML_READABLE_PROPERTY(QString, exportCertFilePath, setExportCertFilePath, "")
 
 public:
-    enum PageCount { NEW_CERT_PAGE_COUNT = 6, IMPORT_CERT_PAGE_COUNT = 4, EXPORT_CERT_PAGE_COUNT = 2 };
+    enum PageCount { NEW_CERT_PAGE_COUNT = 5, IMPORT_CERT_PAGE_COUNT = 4, EXPORT_CERT_PAGE_COUNT = 2 };
     Q_ENUM(PageCount)
 
     explicit CertificateModel(QObject *parent = nullptr);
     Q_INVOKABLE bool generateNewCert();
     Q_INVOKABLE void toLocalFile(const QUrl &fileUrl);
     Q_INVOKABLE bool exportCert();
+    Q_INVOKABLE void finish();
 
 signals:
     void showErrorDialog(const QString &msg);
