@@ -45,7 +45,7 @@ Page {
         }
         spacing: 2 * Theme.windowMargin
         CustomTabButton {
-            enabled: 0 < view.currentIndex
+            enabled: (0 < view.currentIndex) && nextBtn.enabled
             text: qsTr("Back")
             icon.source: "qrc:/img/chevron-circle-left.svg"
             width: backBtn.width
@@ -53,6 +53,7 @@ Page {
             onClicked: view.currentIndex -= 1
         }
         CustomTabButton {
+            id: nextBtn
             enabled: view.currentIndex < (certModel.pageCount - 1)
             text: qsTr("Next")
             icon.source: "qrc:/img/chevron-circle-right.svg"
