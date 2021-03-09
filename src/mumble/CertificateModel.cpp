@@ -1,8 +1,14 @@
 #include "CertificateModel.h"
 #include "SelfSignedCertificate.h"
-#include "Global.h"
 #include <QUrl>
 #include <QQmlEngine>
+#include <openssl/evp.h>
+#include <openssl/pkcs12.h>
+#include <openssl/x509.h>
+
+#include "Global.h"
+
+#define SSL_STRING(x) QString::fromLatin1(x).toUtf8().data()
 
 CertificateModel::CertificateModel(QObject *parent) : QObject(parent)
 {
@@ -14,6 +20,12 @@ CertificateModel::CertificateModel(QObject *parent) : QObject(parent)
     connect(this, &CertificateModel::currentPageIndexChanged, this, [this]() {
         initializePage(_currentPageIndex);
     });
+}
+
+void CertificateModel::toLocalFile(const QUrl &fileUrl)
+{
+    const auto filePath = fileUrl.isLocalFile() ? fileUrl.toLocalFile() : fileUrl.toString();
+    setExportCertFilePath(QDir::toNativeSeparators(filePath));
 }
 
 bool CertificateModel::generateNewCert()
@@ -133,4 +145,107 @@ bool CertificateModel::validateCert(const Settings::KeyPair &kp)
         valid = valid && !cert.isNull();
     }
     return valid;
+}
+
+bool CertificateModel::exportCert()
+{
+    if (_exportCertFilePath.isEmpty()) {
+        emit showErrorDialog(tr("Empty file path. Please choose a file path"));
+        return false;
+    }
+    const auto qba = exportCert(_new);
+    if (qba.isEmpty()) {
+        emit showErrorDialog(tr("Your certificate and key could not be exported to PKCS#12 format. There might be an error in your certificate."));
+        return false;
+    }
+    QFile f(_exportCertFilePath);
+    if (!f.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Unbuffered)) {
+        emit showErrorDialog(tr("The file could not be opened for writing. Please use another file."));
+        return false;
+    }
+    if (!f.setPermissions(QFile::ReadOwner | QFile::WriteOwner)) {
+        emit showErrorDialog(tr("The file's permissions could not be set. No certificate and key has been written. Please use another file."));
+        return false;
+    }
+    qint64 written = f.write(qba);
+    f.close();
+    if (written != qba.length()) {
+        emit showErrorDialog(tr("The file could not be written successfully. Please use another file."));
+        return false;
+    }
+    return true;
+}
+
+QByteArray CertificateModel::exportCert(const Settings::KeyPair &kp)
+{
+    X509 *x509            = nullptr;
+    EVP_PKEY *pkey        = nullptr;
+    PKCS12 *pkcs          = nullptr;
+    BIO *mem              = nullptr;
+    STACK_OF(X509) *certs = sk_X509_new_null();
+    const unsigned char *p;
+    char *data = nullptr;
+
+    if (kp.first.isEmpty())
+        return QByteArray();
+
+    QByteArray crt = kp.first.at(0).toDer();
+    QByteArray key = kp.second.toDer();
+    QByteArray qba;
+
+    p    = reinterpret_cast< const unsigned char * >(key.constData());
+    pkey = d2i_AutoPrivateKey(nullptr, &p, key.length());
+
+    if (pkey) {
+        p    = reinterpret_cast< const unsigned char * >(crt.constData());
+        x509 = d2i_X509(nullptr, &p, crt.length());
+
+        if (x509 && X509_check_private_key(x509, pkey)) {
+            X509_keyid_set1(x509, nullptr, 0);
+            X509_alias_set1(x509, nullptr, 0);
+
+
+            QList< QSslCertificate > qlCerts = kp.first;
+            qlCerts.removeFirst();
+
+            foreach (const QSslCertificate &cert, qlCerts) {
+                X509 *c = nullptr;
+                crt     = cert.toDer();
+                p       = reinterpret_cast< const unsigned char * >(crt.constData());
+
+                c = d2i_X509(nullptr, &p, crt.length());
+                if (c)
+                    sk_X509_push(certs, c);
+            }
+
+            pkcs = PKCS12_create(SSL_STRING(""), SSL_STRING("Bubbles Identity"), pkey, x509, certs, -1, -1, 0, 0, 0);
+            if (pkcs) {
+                long size;
+                mem = BIO_new(BIO_s_mem());
+                i2d_PKCS12_bio(mem, pkcs);
+                Q_UNUSED(BIO_flush(mem));
+                size = BIO_get_mem_data(mem, &data);
+                qba  = QByteArray(data, static_cast< int >(size));
+            }
+        }
+    }
+
+    if (pkey)
+        EVP_PKEY_free(pkey);
+    if (x509)
+        X509_free(x509);
+    if (pkcs)
+        PKCS12_free(pkcs);
+    if (mem)
+        BIO_free(mem);
+    if (certs)
+        sk_X509_free(certs);
+
+    return qba;
+}
+
+void CertificateModel::finish()
+{
+    qDebug() << "Finish";
+    g.s.kpCertificate = _new;
 }

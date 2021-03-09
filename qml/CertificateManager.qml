@@ -11,28 +11,16 @@ Page {
         color: Theme.backgroundColor
     }
 
+    Component.onCompleted: view.currentIndex = 0
+
     SwipeView {
         id: view
 
-        readonly property var pageArr: ["qrc:/qml/page/CertificateAuth.qml", "qrc:/qml/page/NewCertificate.qml", "qrc:/qml/page/ReplaceCertificate.qml"]
-
-        function getPage(idx) {
-            if ((0 <= idx) && (idx < certModel.pageCount)) {
-                if (0 === idx) {
-                    return view.pageArr[idx]
-                }
-                if (1 === idx) {
-                    return view.pageArr[idx]
-                }
-                if (2 === idx) {
-                    return view.pageArr[idx]
-                }
-            }
-            return ""
-        }
+        readonly property var pageArr: ["qrc:/qml/page/CertificateAuth.qml", "qrc:/qml/page/NewCertificate.qml", "qrc:/qml/page/ReplaceCertificate.qml", "qrc:/qml/page/ExportCertificate.qml", "qrc:/qml/page/FinishCertificate.qml"]
 
         currentIndex: 0
         clip: true
+        interactive: true
         anchors {
             top: parent.top
             left: parent.left
@@ -44,7 +32,7 @@ Page {
             model: certModel.pageCount
             Loader {
                 active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem
-                source: view.getPage(index)
+                source: view.pageArr[index]
             }
         }
     }
@@ -78,6 +66,10 @@ Page {
                     }
                     if (1 === view.currentIndex) {
                         if (("" === certModel.newSubjectName) || ("" === certModel.newSubjectEmail)) {
+                            msgDlg.title = qsTr("Error")
+                            msgDlg.text = qsTr("Invalid subject name of email. Please choose valid values.")
+                            msgDlg.okCancel = false
+                            msgDlg.showDlg()
                             return
                         }
                         const rc = certModel.generateNewCert()
@@ -88,6 +80,15 @@ Page {
                             msgDlg.showDlg()
                             return
                         }
+                    }
+                    if (3 === view.currentIndex) {
+                        const rc = certModel.exportCert()
+                        if (!rc) {
+                            return
+                        }
+                    }
+                    if (4 === view.currentIndex) {
+                        certModel.finish()
                     }
                 }
                 view.currentIndex += 1
