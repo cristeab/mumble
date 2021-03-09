@@ -243,3 +243,9 @@ QByteArray CertificateModel::exportCert(const Settings::KeyPair &kp)
 
     return qba;
 }
+
+void CertificateModel::finish()
+{
+    qDebug() << "Finish";
+    g.s.kpCertificate = _new;
+}
