@@ -69,14 +69,27 @@ Page {
         color: Theme.textColor
     }
 
-    /*Row {
+    Row {
         id: exportRow
-        spacing: Theme.windowMargin / 2
+        anchors {
+            top: contentText.bottom
+            topMargin: Theme.windowMargin
+            left: parent.left
+            leftMargin: 3 * Theme.windowMargin
+            right: parent.right
+            rightMargin: 3 * Theme.windowMargin
+        }
+        spacing: Theme.windowMargin
         LabelTextField {
             text: qsTr("Export to")
+            width: parent.width - saveAsBtn.width - exportRow.spacing
+            editText: certModel.exportCertFilePath
+            onEditingFinished: certModel.exportCertFilePath = editText
         }
         CustomButton {
+            id: saveAsBtn
             text: qsTr("Save As...")
+            onClicked: exportCertDlg.active = true
         }
     }
 
@@ -87,7 +100,7 @@ Page {
         readonly property var valueArr: [certModel.newSubjectName, certModel.newSubjectEmail, certModel.newIssuerName, certModel.newExpiry]
 
         anchors {
-            top: contentText.bottom
+            top: exportRow.bottom
             topMargin: Theme.windowMargin
             left: parent.left
             leftMargin: 3 * Theme.windowMargin
@@ -121,5 +134,5 @@ Page {
                 }
             }
         }
-    }*/
+    }
 }
