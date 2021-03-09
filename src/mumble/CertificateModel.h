@@ -3,6 +3,8 @@
 #include "qmlhelpers.h"
 #include "Settings.h"
 #include <QSslCertificate>
+#include <QUrl>
+#include <QDir>
 
 class CertificateModel : public QObject
 {
@@ -21,19 +23,26 @@ class CertificateModel : public QObject
     QML_READABLE_PROPERTY(QString, newIssuerName, setNewIssuerName, "")
     QML_READABLE_PROPERTY(QString, newExpiry, setNewExpiry, "")
 
+    QML_READABLE_PROPERTY(QString, exportCertFilePath, setExportCertFilePath, "")
+
 public:
     enum PageCount { NEW_CERT_PAGE_COUNT = 6, IMPORT_CERT_PAGE_COUNT = 4, EXPORT_CERT_PAGE_COUNT = 2 };
     Q_ENUM(PageCount)
 
     explicit CertificateModel(QObject *parent = nullptr);
     Q_INVOKABLE bool generateNewCert();
+    Q_INVOKABLE void toLocalFile(const QUrl &fileUrl);
+    Q_INVOKABLE bool exportCert();
+
+signals:
+    void showErrorDialog(const QString &msg);
 
 private:
-
     void initializePage(int index);
     void setCert(const QList<QSslCertificate> &cert);
     Settings::KeyPair generateNewCert(const QString &name, const QString &email);
     static bool validateCert(const Settings::KeyPair &kp);
+    static QByteArray exportCert(const Settings::KeyPair &kp);
 
     QList<QSslCertificate> _cert;
     Settings::KeyPair _current;

@@ -64,6 +64,10 @@ Page {
                     }
                     if (1 === view.currentIndex) {
                         if (("" === certModel.newSubjectName) || ("" === certModel.newSubjectEmail)) {
+                            msgDlg.title = qsTr("Error")
+                            msgDlg.text = qsTr("Invalid subject name of email. Please choose valid values.")
+                            msgDlg.okCancel = false
+                            msgDlg.showDlg()
                             return
                         }
                         const rc = certModel.generateNewCert()
@@ -72,6 +76,12 @@ Page {
                             msgDlg.text = qsTr("There was an error generating your certificate. Please try again.")
                             msgDlg.okCancel = false
                             msgDlg.showDlg()
+                            return
+                        }
+                    }
+                    if (3 === view.currentIndex) {
+                        const rc = certModel.exportCert()
+                        if (!rc) {
                             return
                         }
                     }

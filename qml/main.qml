@@ -1,6 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Window 2.12
+import QtQuick.Dialogs 1.2
 import "custom"
 
 ApplicationWindow {
@@ -159,6 +160,37 @@ ApplicationWindow {
         source: "qrc:/qml/dialog/AddEditToken.qml"
     }
 
+    Loader {
+        id: exportCertDlg
+
+        active: false
+        anchors.centerIn: parent
+        sourceComponent: FileDialog {
+            title: qsTr("Select file to export certificate to")
+            folder: shortcuts.home
+            Component.onCompleted: visible = true
+            selectExisting: true
+            selectFolder: false
+            selectMultiple: false
+            defaultSuffix: "p12"
+            nameFilters: [ "PKCS12 (*.p12 *.pfx *.pkcs12)", "All files (*)" ]
+            onAccepted: {
+                certModel.toLocalFile(fileUrl)
+                exportCertDlg.active = false
+            }
+            onRejected: exportCertDlg.active = false
+        }
+    }
+
+    Connections {
+        target: certModel
+        function onShowErrorDialog(msg) {
+            msgDlg.title = qsTr("Error")
+            msgDlg.text = msg
+            msgDlg.okCancel = false
+            msgDlg.showDlg()
+        }
+    }
     Loader {
         id: msgDlg
 
