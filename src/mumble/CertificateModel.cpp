@@ -30,6 +30,7 @@ void CertificateModel::toLocalFile(const QUrl &fileUrl)
 
 bool CertificateModel::generateNewCert()
 {
+    qDebug() << "generateNewCert";
     _new = generateNewCert(_newSubjectName, _newSubjectEmail);
     const auto rc = validateCert(_new);
 
@@ -149,6 +150,7 @@ bool CertificateModel::validateCert(const Settings::KeyPair &kp)
 
 bool CertificateModel::exportCert()
 {
+    qDebug() << "exportCert";
     if (_exportCertFilePath.isEmpty()) {
         emit showErrorDialog(tr("Empty file path. Please choose a file path"));
         return false;
@@ -248,4 +250,5 @@ void CertificateModel::finish()
 {
     qDebug() << "Finish";
     g.s.kpCertificate = _new;
+    initializePage(0);
 }
