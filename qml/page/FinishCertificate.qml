@@ -65,7 +65,7 @@ Page {
             rightMargin: 3 * Theme.windowMargin
         }
         wrapMode: Text.WordWrap
-        text: qsTr("Enjoy using Bubbles with strong authentication.")
+        text: qsTr("Press Next one more time to finish. Enjoy using Bubbles with strong authentication.")
         color: Theme.textColor
     }
 }

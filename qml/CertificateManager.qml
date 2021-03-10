@@ -45,7 +45,7 @@ Page {
         }
         spacing: 2 * Theme.windowMargin
         CustomTabButton {
-            enabled: 0 < view.currentIndex
+            enabled: (0 < view.currentIndex) && nextBtn.enabled
             text: qsTr("Back")
             icon.source: "qrc:/img/chevron-circle-left.svg"
             width: backBtn.width
@@ -53,12 +53,14 @@ Page {
             onClicked: view.currentIndex -= 1
         }
         CustomTabButton {
-            enabled: view.currentIndex < (certModel.pageCount - 1)
+            id: nextBtn
+            enabled: view.currentIndex < certModel.pageCount
             text: qsTr("Next")
             icon.source: "qrc:/img/chevron-circle-right.svg"
             width: backBtn.width
             height: backBtn.height
             onClicked: {
+                console.log("Current idx " + view.currentIndex)
                 if (CertificateModel.NEW_CERT_PAGE_COUNT === certModel.pageCount) {
                     if (0 === view.currentIndex) {
                         certModel.newSubjectName = ""
@@ -91,7 +93,11 @@ Page {
                         certModel.finish()
                     }
                 }
-                view.currentIndex += 1
+                if ((certModel.pageCount - 1) === view.currentIndex) {
+                    view.currentIndex = 0;
+                } else {
+                    view.currentIndex += 1
+                }
             }
         }
     }
