@@ -65,8 +65,7 @@ Page {
                     if (0 === view.currentIndex) {
                         certModel.newSubjectName = ""
                         certModel.newSubjectEmail = ""
-                    }
-                    if (1 === view.currentIndex) {
+                    } else if (1 === view.currentIndex) {
                         if (("" === certModel.newSubjectName) || ("" === certModel.newSubjectEmail)) {
                             msgDlg.title = qsTr("Error")
                             msgDlg.text = qsTr("Invalid subject name of email. Please choose valid values.")
@@ -82,14 +81,12 @@ Page {
                             msgDlg.showDlg()
                             return
                         }
-                    }
-                    if (3 === view.currentIndex) {
+                    } else if (3 === view.currentIndex) {
                         const rc = certModel.exportCert()
                         if (!rc) {
                             return
                         }
-                    }
-                    if (4 === view.currentIndex) {
+                    } else if (4 === view.currentIndex) {
                         certModel.finish()
                     }
                 }
