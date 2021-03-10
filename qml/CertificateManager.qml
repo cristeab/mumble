@@ -16,7 +16,22 @@ Page {
     SwipeView {
         id: view
 
-        readonly property var pageArr: ["qrc:/qml/page/CertificateAuth.qml", "qrc:/qml/page/NewCertificate.qml", "qrc:/qml/page/ReplaceCertificate.qml", "qrc:/qml/page/ExportCertificate.qml", "qrc:/qml/page/FinishCertificate.qml"]
+        readonly property var pageArr0: ["qrc:/qml/page/CertificateAuth.qml", "qrc:/qml/page/NewCertificate.qml", "qrc:/qml/page/ReplaceCertificate.qml", "qrc:/qml/page/ExportCertificate.qml", "qrc:/qml/page/FinishCertificate.qml"]
+        readonly property var pageArr1: ["qrc:/qml/page/CertificateAuth.qml", "qrc:/qml/page/ImportCertificate.qml", "qrc:/qml/page/ReplaceCertificate.qml", "qrc:/qml/page/FinishCertificate.qml"]
+        readonly property var pageArr2: ["qrc:/qml/page/CertificateAuth.qml", "qrc:/qml/page/ExportCertificate.qml"]
+
+        function getPage(idx) {
+            if (CertificateModel.NEW_CERT_PAGE_COUNT === certModel.pageCount) {
+                return view.pageArr0[idx]
+            }
+            if (CertificateModel.IMPORT_CERT_PAGE_COUNT === certModel.pageCount) {
+                return view.pageArr1[idx]
+            }
+            if (CertificateModel.EXPORT_CERT_PAGE_COUNT === certModel.pageCount) {
+                return view.pageArr2[idx]
+            }
+            return ""
+        }
 
         currentIndex: 0
         clip: true
@@ -32,7 +47,7 @@ Page {
             model: certModel.pageCount
             Loader {
                 active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem
-                source: view.pageArr[index]
+                source: view.pageArr0[index]
             }
         }
     }
