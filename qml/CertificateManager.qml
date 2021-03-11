@@ -16,7 +16,22 @@ Page {
     SwipeView {
         id: view
 
-        readonly property var pageArr: ["qrc:/qml/page/CertificateAuth.qml", "qrc:/qml/page/NewCertificate.qml", "qrc:/qml/page/ReplaceCertificate.qml", "qrc:/qml/page/ExportCertificate.qml", "qrc:/qml/page/FinishCertificate.qml"]
+        readonly property var pageArr0: ["qrc:/qml/page/CertificateAuth.qml", "qrc:/qml/page/NewCertificate.qml", "qrc:/qml/page/ReplaceCertificate.qml", "qrc:/qml/page/ExportCertificate.qml", "qrc:/qml/page/FinishCertificate.qml"]
+        readonly property var pageArr1: ["qrc:/qml/page/CertificateAuth.qml", "qrc:/qml/page/ImportCertificate.qml", "qrc:/qml/page/ReplaceCertificate.qml", "qrc:/qml/page/FinishCertificate.qml"]
+        readonly property var pageArr2: ["qrc:/qml/page/CertificateAuth.qml", "qrc:/qml/page/ExportCertificate.qml"]
+
+        function getPage(idx) {
+            if (CertificateModel.NEW_CERT_PAGE_COUNT === certModel.pageCount) {
+                return view.pageArr0[idx]
+            }
+            if (CertificateModel.IMPORT_CERT_PAGE_COUNT === certModel.pageCount) {
+                return view.pageArr1[idx]
+            }
+            if (CertificateModel.EXPORT_CERT_PAGE_COUNT === certModel.pageCount) {
+                return view.pageArr2[idx]
+            }
+            return ""
+        }
 
         currentIndex: 0
         clip: true
@@ -32,7 +47,7 @@ Page {
             model: certModel.pageCount
             Loader {
                 active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem
-                source: view.pageArr[index]
+                source: view.pageArr0[index]
             }
         }
     }
@@ -65,8 +80,7 @@ Page {
                     if (0 === view.currentIndex) {
                         certModel.newSubjectName = ""
                         certModel.newSubjectEmail = ""
-                    }
-                    if (1 === view.currentIndex) {
+                    } else if (1 === view.currentIndex) {
                         if (("" === certModel.newSubjectName) || ("" === certModel.newSubjectEmail)) {
                             msgDlg.title = qsTr("Error")
                             msgDlg.text = qsTr("Invalid subject name of email. Please choose valid values.")
@@ -82,14 +96,12 @@ Page {
                             msgDlg.showDlg()
                             return
                         }
-                    }
-                    if (3 === view.currentIndex) {
+                    } else if (3 === view.currentIndex) {
                         const rc = certModel.exportCert()
                         if (!rc) {
                             return
                         }
-                    }
-                    if (4 === view.currentIndex) {
+                    } else if (4 === view.currentIndex) {
                         certModel.finish()
                     }
                 }

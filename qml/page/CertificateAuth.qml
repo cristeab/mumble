@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import CertificateModel 1.0
 import "../custom"
 import ".."
 
@@ -141,8 +142,19 @@ Page {
             Repeater {
                 model: autoCert.nameArr.length
                 CustomRadioButton {
-                    checked: 0 === index
+                    checked: ((CertificateModel.NEW_CERT_PAGE_COUNT === certModel.pageCount) && (0 === index)) || ((CertificateModel.IMPORT_CERT_PAGE_COUNT === certModel.pageCount) && (1 === index)) || ((CertificateModel.EXPORT_CERT_PAGE_COUNT === certModel.pageCount) && (2 === index))
                     text: autoCert.nameArr[index]
+                    onCheckedChanged: {
+                        if (checked) {
+                            if (0 === index) {
+                                certModel.pageCount = CertificateModel.NEW_CERT_PAGE_COUNT
+                            } else if (1 === index) {
+                                certModel.pageCount = CertificateModel.IMPORT_CERT_PAGE_COUNT
+                            } else if (2 === index) {
+                                certModel.pageCount = CertificateModel.EXPORT_CERT_PAGE_COUNT
+                            }
+                        }
+                    }
                 }
             }
         }
