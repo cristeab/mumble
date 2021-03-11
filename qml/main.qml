@@ -177,7 +177,7 @@ ApplicationWindow {
         active: false
         anchors.centerIn: parent
         sourceComponent: FileDialog {
-            title: qsTr("Select file to export certificate to")
+            title: certDlg.selectExisting ? qsTr("Select file to import certificate from") : qsTr("Select file to export certificate to")
             folder: shortcuts.home
             Component.onCompleted: visible = true
             selectExisting: certDlg.selectExisting
