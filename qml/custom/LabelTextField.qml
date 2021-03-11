@@ -11,6 +11,7 @@ Row {
     property alias placeholderText: controlTextField.placeholderText
     property alias validator: controlTextField.validator
     property alias acceptableInput: controlTextField.acceptableInput
+    property alias echoMode: controlTextField.echoMode
 
     signal editingFinished()
 

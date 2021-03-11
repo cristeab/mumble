@@ -83,13 +83,13 @@ Page {
         LabelTextField {
             text: qsTr("Export to")
             width: parent.width - saveAsBtn.width - exportRow.spacing
-            editText: certModel.exportCertFilePath
-            onEditingFinished: certModel.exportCertFilePath = editText
+            editText: certModel.certFilePath
+            onEditingFinished: certModel.certFilePath = editText
         }
         CustomButton {
             id: saveAsBtn
             text: qsTr("Save As...")
-            onClicked: exportCertDlg.active = true
+            onClicked: certDlg.showExportDialog()
         }
     }
 
