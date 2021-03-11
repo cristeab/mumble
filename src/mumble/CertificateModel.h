@@ -28,7 +28,7 @@ class CertificateModel : public QObject
     QML_WRITABLE_PROPERTY(QString, certPassword, setCertPassword, "")
 
 public:
-    enum PageCount { NEW_CERT_PAGE_COUNT = 5, IMPORT_CERT_PAGE_COUNT = 4, EXPORT_CERT_PAGE_COUNT = 2 };
+    enum PageCount { NEW_CERT_PAGE_COUNT = 5, IMPORT_CERT_PAGE_COUNT = 4, EXPORT_CERT_PAGE_COUNT = 3 };
     Q_ENUM(PageCount)
 
     explicit CertificateModel(QObject *parent = nullptr);
