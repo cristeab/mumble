@@ -62,7 +62,7 @@ bool MumbleApplication::event(QEvent *e) {
 /// @return  Returns true if the forwarded event was suppressed
 ///          by GlobalShortcutWin. Otherwise, returns false.
 static bool gswForward(MSG *msg) {
-	GlobalShortcutWin *gsw = static_cast< GlobalShortcutWin * >(GlobalShortcutEngine::engine);
+    /*GlobalShortcutWin *gsw = static_cast< GlobalShortcutWin * >(GlobalShortcutEngine::engine);
 	if (!gsw) {
 		return false;
 	}
@@ -81,7 +81,7 @@ static bool gswForward(MSG *msg) {
 		case WM_SYSKEYDOWN:
 		case WM_SYSKEYUP:
 			return gsw->injectKeyboardMessage(msg);
-	}
+    }*/
 	return false;
 }
 

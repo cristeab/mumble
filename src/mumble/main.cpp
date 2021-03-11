@@ -598,11 +598,11 @@ int main(int argc, char **argv) {
 
 	Global::get().nam = new QNetworkAccessManager();
 
-#ifndef NO_CRASH_REPORT
+/*#ifndef NO_CRASH_REPORT
 	CrashReporter *cr = new CrashReporter();
 	cr->run();
 	delete cr;
-#endif
+#endif*/
 
 	// Initialize database
 	Global::get().db = new Database(QLatin1String("main"));
