@@ -18,7 +18,7 @@ Page {
 
         readonly property var pageArr0: ["qrc:/qml/page/CertificateAuth.qml", "qrc:/qml/page/NewCertificate.qml", "qrc:/qml/page/ReplaceCertificate.qml", "qrc:/qml/page/ExportCertificate.qml", "qrc:/qml/page/FinishCertificate.qml"]
         readonly property var pageArr1: ["qrc:/qml/page/CertificateAuth.qml", "qrc:/qml/page/ImportCertificate.qml", "qrc:/qml/page/ReplaceCertificate.qml", "qrc:/qml/page/FinishCertificate.qml"]
-        readonly property var pageArr2: ["qrc:/qml/page/CertificateAuth.qml", "qrc:/qml/page/ExportCertificate.qml", "qrc:/qml/page/FinishCertificate.qml"]
+        readonly property var pageArr2: ["qrc:/qml/page/CertificateAuth.qml", "qrc:/qml/page/ExportCertificate.qml"]
 
         function getPage(idx) {
             if (CertificateModel.NEW_CERT_PAGE_COUNT === certModel.pageCount) {
@@ -114,13 +114,13 @@ Page {
                         certModel.finish()
                     }
                 } else if (CertificateModel.EXPORT_CERT_PAGE_COUNT === certModel.pageCount) {
-                    if (1 === view.currentIndex) {
+                    if (0 === view.currentIndex) {
+                        certModel.initializePage(1)
+                    } else if (1 === view.currentIndex) {
                         const rc = certModel.exportCert()
                         if (!rc) {
                             return
                         }
-                    } else if (2 === view.currentIndex) {
-                        certModel.finish()
                     }
                 }
 

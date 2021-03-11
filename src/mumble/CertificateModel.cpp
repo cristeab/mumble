@@ -16,10 +16,6 @@ CertificateModel::CertificateModel(QObject *parent) : QObject(parent)
 
     setObjectName("certModel");
     initializePage(0);
-
-    connect(this, &CertificateModel::currentPageIndexChanged, this, [this]() {
-        initializePage(_currentPageIndex);
-    });
 }
 
 void CertificateModel::toLocalFile(const QUrl &fileUrl)
@@ -115,8 +111,8 @@ void CertificateModel::initializePage(int index)
     case 0:
         setCert(_current.first);
         break;
-    case 3:
-        setCert(_new.first);
+    case 1:
+        setupNewCertInfo();
         break;
     }
 }
