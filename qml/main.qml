@@ -161,24 +161,35 @@ ApplicationWindow {
     }
 
     Loader {
-        id: exportCertDlg
+        id: certDlg
+
+        property bool selectExisting: false
+
+        function showExportDialog() {
+            certDlg.selectExisting = false
+            certDlg.active = true
+        }
+        function showImportDialog() {
+            certDlg.selectExisting = true
+            certDlg.active = true
+        }
 
         active: false
         anchors.centerIn: parent
         sourceComponent: FileDialog {
-            title: qsTr("Select file to export certificate to")
+            title: certDlg.selectExisting ? qsTr("Select file to import certificate from") : qsTr("Select file to export certificate to")
             folder: shortcuts.home
             Component.onCompleted: visible = true
-            selectExisting: false
+            selectExisting: certDlg.selectExisting
             selectFolder: false
             selectMultiple: false
             defaultSuffix: "p12"
             nameFilters: [ "PKCS12 (*.p12 *.pfx *.pkcs12)", "All files (*)" ]
             onAccepted: {
                 certModel.toLocalFile(fileUrl)
-                exportCertDlg.active = false
+                certDlg.active = false
             }
-            onRejected: exportCertDlg.active = false
+            onRejected: certDlg.active = false
         }
     }
 

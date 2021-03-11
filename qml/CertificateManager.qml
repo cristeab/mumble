@@ -47,7 +47,7 @@ Page {
             model: certModel.pageCount
             Loader {
                 active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem
-                source: view.pageArr0[index]
+                source: view.getPage(index)
             }
         }
     }
@@ -104,7 +104,26 @@ Page {
                     } else if (4 === view.currentIndex) {
                         certModel.finish()
                     }
+                } else if (CertificateModel.IMPORT_CERT_PAGE_COUNT === certModel.pageCount) {
+                    if (1 === view.currentIndex) {
+                        const rc = certModel.importCert()
+                        if (!rc) {
+                            return
+                        }
+                    } else if (3 === view.currentIndex) {
+                        certModel.finish()
+                    }
+                } else if (CertificateModel.EXPORT_CERT_PAGE_COUNT === certModel.pageCount) {
+                    if (0 === view.currentIndex) {
+                        certModel.initializePage(1)
+                    } else if (1 === view.currentIndex) {
+                        const rc = certModel.exportCert()
+                        if (!rc) {
+                            return
+                        }
+                    }
                 }
+
                 if ((certModel.pageCount - 1) === view.currentIndex) {
                     view.currentIndex = 0;
                 } else {
