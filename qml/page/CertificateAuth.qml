@@ -149,8 +149,12 @@ Page {
                             if (0 === index) {
                                 certModel.pageCount = CertificateModel.NEW_CERT_PAGE_COUNT
                             } else if (1 === index) {
+                                certModel.certFilePath = ""
+                                certModel.requestPassword = false
+                                certModel.certPassword = ""
                                 certModel.pageCount = CertificateModel.IMPORT_CERT_PAGE_COUNT
                             } else if (2 === index) {
+                                certModel.certFilePath = ""
                                 certModel.pageCount = CertificateModel.EXPORT_CERT_PAGE_COUNT
                             }
                         }

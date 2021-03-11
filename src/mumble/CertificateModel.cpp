@@ -25,7 +25,7 @@ CertificateModel::CertificateModel(QObject *parent) : QObject(parent)
 void CertificateModel::toLocalFile(const QUrl &fileUrl)
 {
     const auto filePath = fileUrl.isLocalFile() ? fileUrl.toLocalFile() : fileUrl.toString();
-    setExportCertFilePath(QDir::toNativeSeparators(filePath));
+    setCertFilePath(QDir::toNativeSeparators(filePath));
 }
 
 bool CertificateModel::generateNewCert()
@@ -34,26 +34,8 @@ bool CertificateModel::generateNewCert()
     _new = generateNewCert(_newSubjectName, _newSubjectEmail);
     const auto rc = validateCert(_new);
 
-    if (rc && !_new.first.isEmpty()) {
-        QSslCertificate qscCert = _new.first.at(0);
-        if (qscCert.expiryDate() <= QDateTime::currentDateTime()) {
-            setNewExpiry(QString::fromLatin1("<font color=\"red\"><b>%1</b></font>")
-                      .arg(qscCert.expiryDate().toString(Qt::SystemLocaleDate).toHtmlEscaped()));
-        } else {
-            setNewExpiry(qscCert.expiryDate().toString(Qt::SystemLocaleDate));
-        }
-
-        if (_cert.count() > 1) {
-            qscCert = _cert.last();
-        }
-
-        const QStringList &issuerNames = qscCert.issuerInfo(QSslCertificate::CommonName);
-        QString issuerName;
-        if (issuerNames.count() > 0) {
-            issuerName = issuerNames.at(0);
-        }
-
-        setNewIssuerName((issuerName == _newSubjectName) ? tr("Self-signed") : issuerName);
+    if (rc) {
+        setupNewCertInfo();
     }
 
     return rc;
@@ -151,7 +133,7 @@ bool CertificateModel::validateCert(const Settings::KeyPair &kp)
 bool CertificateModel::exportCert()
 {
     qDebug() << "exportCert";
-    if (_exportCertFilePath.isEmpty()) {
+    if (_certFilePath.isEmpty()) {
         emit showErrorDialog(tr("Empty file path. Please choose a file path"));
         return false;
     }
@@ -160,7 +142,7 @@ bool CertificateModel::exportCert()
         emit showErrorDialog(tr("Your certificate and key could not be exported to PKCS#12 format. There might be an error in your certificate."));
         return false;
     }
-    QFile f(_exportCertFilePath);
+    QFile f(_certFilePath);
     if (!f.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Unbuffered)) {
         emit showErrorDialog(tr("The file could not be opened for writing. Please use another file."));
         return false;
@@ -251,4 +233,171 @@ void CertificateModel::finish()
     qDebug() << "Finish";
     g.s.kpCertificate = _new;
     initializePage(0);
+}
+
+bool CertificateModel::importCert(bool test)
+{
+    qDebug() << "importCert";
+    if (!test && _certFilePath.isEmpty()) {
+        emit showErrorDialog(tr("Empty file path. Please choose a file path"));
+        return false;
+    }
+    QFile f(_certFilePath);
+    if (!f.open(QIODevice::ReadOnly | QIODevice::Unbuffered)) {
+        if (!test) {
+            emit showErrorDialog(tr("The file could not be opened for reading. Please use another file."));
+            return false;
+        } else {
+            return true;
+        }
+    }
+    QByteArray qba = f.readAll();
+    f.close();
+    if (qba.isEmpty()) {
+        if (!test) {
+            emit showErrorDialog(tr("The file is empty or could not be read. Please use another file."));
+            return false;
+        } else {
+            return true;
+        }
+    }
+    const auto imp = importCert(qba, _certPassword);
+    if (!validateCert(imp)) {
+        if (!test) {
+            emit showErrorDialog(tr("The file did not contain a valid certificate and key. Please use another file."));
+        }
+        return false;
+    }
+    if (!test) {
+        _new = imp;
+        setupNewCertInfo();
+    }
+    return true;
+}
+
+Settings::KeyPair CertificateModel::importCert(const QByteArray &data, const QString &pw)
+{
+    X509 *x509            = nullptr;
+    EVP_PKEY *pkey        = nullptr;
+    PKCS12 *pkcs          = nullptr;
+    BIO *mem              = nullptr;
+    STACK_OF(X509) *certs = nullptr;
+    Settings::KeyPair kp;
+    int ret = 0;
+
+    mem = BIO_new_mem_buf(data.data(), data.size());
+    Q_UNUSED(BIO_set_close(mem, BIO_NOCLOSE));
+    pkcs = d2i_PKCS12_bio(mem, nullptr);
+    if (pkcs) {
+        ret = PKCS12_parse(pkcs, nullptr, &pkey, &x509, &certs);
+        if (pkcs && !pkey && !x509 && !pw.isEmpty()) {
+            if (certs) {
+                if (ret)
+                    sk_X509_free(certs);
+                certs = nullptr;
+            }
+            ret = PKCS12_parse(pkcs, pw.toUtf8().constData(), &pkey, &x509, &certs);
+        }
+        if (pkey && x509 && X509_check_private_key(x509, pkey)) {
+            unsigned char *dptr;
+            QByteArray key, crt;
+
+            key.resize(i2d_PrivateKey(pkey, nullptr));
+            dptr = reinterpret_cast< unsigned char * >(key.data());
+            i2d_PrivateKey(pkey, &dptr);
+
+            crt.resize(i2d_X509(x509, nullptr));
+            dptr = reinterpret_cast< unsigned char * >(crt.data());
+            i2d_X509(x509, &dptr);
+
+            QSslCertificate qscCert = QSslCertificate(crt, QSsl::Der);
+            QSslKey qskKey          = QSslKey(key, QSsl::Rsa, QSsl::Der);
+
+            QList< QSslCertificate > qlCerts;
+            qlCerts << qscCert;
+
+            if (certs) {
+                for (int i = 0; i < sk_X509_num(certs); ++i) {
+                    X509 *c = sk_X509_value(certs, i);
+
+                    crt.resize(i2d_X509(c, nullptr));
+                    dptr = reinterpret_cast< unsigned char * >(crt.data());
+                    i2d_X509(c, &dptr);
+
+                    QSslCertificate cert = QSslCertificate(crt, QSsl::Der);
+                    qlCerts << cert;
+                }
+            }
+            bool valid = !qskKey.isNull();
+            foreach (const QSslCertificate &cert, qlCerts)
+                valid = valid && !cert.isNull();
+            if (valid)
+                kp = Settings::KeyPair(qlCerts, qskKey);
+        }
+    }
+
+    if (ret) {
+        if (pkey)
+            EVP_PKEY_free(pkey);
+        if (x509)
+            X509_free(x509);
+        if (certs)
+            sk_X509_free(certs);
+    }
+    if (pkcs)
+        PKCS12_free(pkcs);
+    if (mem)
+        BIO_free(mem);
+
+    return kp;
+}
+
+void CertificateModel::setupNewCertInfo()
+{
+    if (_new.first.isEmpty()) {
+        setNewSubjectName("");
+        setNewSubjectEmail("");
+        setNewExpiry("");
+        setNewIssuerName("");
+    } else {
+        QSslCertificate qscCert = _new.first.at(0);
+
+        const QStringList &names = qscCert.subjectInfo(QSslCertificate::CommonName);
+        QString name;
+        if (names.count() > 0) {
+            name = names.at(0);
+        }
+
+        QStringList emails = qscCert.subjectAlternativeNames().values(QSsl::EmailEntry);
+
+        QString tmpName = name;
+        tmpName         = tmpName.replace(QLatin1String("\\x"), QLatin1String("%"));
+        tmpName         = QUrl::fromPercentEncoding(tmpName.toLatin1());
+        setNewSubjectName(tmpName);
+
+        if (emails.count() > 0) {
+            setNewSubjectEmail(emails.join(QLatin1String("\n")));
+        } else {
+            setNewSubjectEmail(tr("(none)"));
+        }
+
+        if (qscCert.expiryDate() <= QDateTime::currentDateTime()) {
+            setNewExpiry(QString::fromLatin1("<font color=\"red\"><b>%1</b></font>")
+                         .arg(qscCert.expiryDate().toString(Qt::SystemLocaleDate).toHtmlEscaped()));
+        } else {
+            setNewExpiry(qscCert.expiryDate().toString(Qt::SystemLocaleDate));
+        }
+
+        if (_new.first.count() > 1) {
+            qscCert = _new.first.last();
+        }
+
+        const QStringList &issuerNames = qscCert.issuerInfo(QSslCertificate::CommonName);
+        QString issuerName;
+        if (issuerNames.count() > 0) {
+            issuerName = issuerNames.at(0);
+        }
+
+        setNewIssuerName((issuerName == _newSubjectName) ? tr("Self-signed") : issuerName);
+    }
 }

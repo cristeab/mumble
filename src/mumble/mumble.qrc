@@ -57,6 +57,7 @@
         <file alias="qml/page/ReplaceCertificate.qml">../../qml/page/ReplaceCertificate.qml</file>
         <file alias="qml/page/ExportCertificate.qml">../../qml/page/ExportCertificate.qml</file>
         <file alias="qml/page/FinishCertificate.qml">../../qml/page/FinishCertificate.qml</file>
+        <file alias="qml/page/ImportCertificate.qml">../../qml/page/ImportCertificate.qml</file>
         <file alias="qml/qmldir">../../qml/qmldir</file>
         <file alias="qtquickcontrols2.conf">../../qml/qtquickcontrols2.conf</file>
     </qresource>

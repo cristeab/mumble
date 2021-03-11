@@ -23,7 +23,9 @@ class CertificateModel : public QObject
     QML_READABLE_PROPERTY(QString, newIssuerName, setNewIssuerName, "")
     QML_READABLE_PROPERTY(QString, newExpiry, setNewExpiry, "")
 
-    QML_READABLE_PROPERTY(QString, exportCertFilePath, setExportCertFilePath, "")
+    QML_WRITABLE_PROPERTY(QString, certFilePath, setCertFilePath, "")
+    QML_WRITABLE_PROPERTY(bool, requestPassword, setRequestPassword, "")
+    QML_WRITABLE_PROPERTY(QString, certPassword, setCertPassword, "")
 
 public:
     enum PageCount { NEW_CERT_PAGE_COUNT = 5, IMPORT_CERT_PAGE_COUNT = 4, EXPORT_CERT_PAGE_COUNT = 2 };
@@ -34,6 +36,7 @@ public:
     Q_INVOKABLE void toLocalFile(const QUrl &fileUrl);
     Q_INVOKABLE bool exportCert();
     Q_INVOKABLE void finish();
+    Q_INVOKABLE bool importCert(bool test = false);
 
 signals:
     void showErrorDialog(const QString &msg);
@@ -44,6 +47,8 @@ private:
     Settings::KeyPair generateNewCert(const QString &name, const QString &email);
     static bool validateCert(const Settings::KeyPair &kp);
     static QByteArray exportCert(const Settings::KeyPair &kp);
+    static Settings::KeyPair importCert(const QByteArray &data, const QString &pw = "");
+    void setupNewCertInfo();
 
     QList<QSslCertificate> _cert;
     Settings::KeyPair _current;
