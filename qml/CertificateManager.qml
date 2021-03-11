@@ -110,7 +110,7 @@ Page {
                         if (!rc) {
                             return
                         }
-                    } else if (2 === view.currentIndex) {
+                    } else if (3 === view.currentIndex) {
                         certModel.finish()
                     }
                 }
