@@ -14,7 +14,7 @@ if %errorlevel% neq 0 (
     exit /b %errorlevel%
 )
 
-cmake -G "Ninja" "-DVCPKG_TARGET_TRIPLET=x64-windows-static-md" "-DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%/scripts/buildsystems/vcpkg.cmake" "-Dpackaging=ON" "-Dtranslations=OFF" "-DRELEASE_ID=%RELEASE_ID%" "-DBUILD_NUMBER=%BUILD_NUMBER%" "-DCMAKE_INSTALL_PREFIX=%INSTALL_PATH%" "-DCMAKE_BUILD_TYPE=Release" ..
+cmake -G "Ninja" "-DVCPKG_TARGET_TRIPLET=x64-windows-static-md" "-DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%/scripts/buildsystems/vcpkg.cmake" "-Dpackaging=ON" "-Dtranslations=OFF" "-DRELEASE_ID=%RELEASE_ID%" "-DBUILD_NUMBER=%BUILD_NUMBER%" "-DCMAKE_INSTALL_PREFIX=%INSTALL_PATH%" "-DCMAKE_BUILD_TYPE=RelWithDebInfo" ..
 if %errorlevel% neq 0 (
     popd
     exit /b %errorlevel%

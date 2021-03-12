@@ -12,7 +12,7 @@ TabButton {
     }
     onClicked: tabView.pop()
     ToolTip {
-        visible: control.hovered
+        visible: control.hovered && ("" !== control.text)
         text: control.text
     }
 }
