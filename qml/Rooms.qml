@@ -44,7 +44,7 @@ Page {
         clip: true
         boundsBehavior: ListView.StopAtBounds
         model: servers.roomsModel
-        delegate: Item {
+        delegate: DropArea {
             id: delegateControl
 
             width: roomsGrid.cellWidth
@@ -91,6 +91,7 @@ Page {
                 boundsBehavior: ListView.StopAtBounds
                 model: users
                 delegate: Label {
+                    id: userIdLabel
                     width: parent.width
                     padding: Theme.windowMargin / 2
                     text: modelData
@@ -100,8 +101,23 @@ Page {
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
                     background: Item {}
+                    Drag.active: dragArea.drag.active
+                    Drag.hotSpot.x: 10
+                    Drag.hotSpot.y: 10
+                    Drag.onDragFinished: {
+                        console.log("Drag finished")
+                    }
+                    Drag.onDragStarted: {
+                        console.log("Drag started")
+                    }
+                    MouseArea {
+                        id: dragArea
+                        anchors.fill: parent
+                        drag.target: parent
+                    }
                 }
                 MouseArea {
+                    propagateComposedEvents: true
                     anchors.fill: parent
                     onClicked: roomsGrid.currentIndex = index
                     onDoubleClicked: {
