@@ -33,7 +33,7 @@ VS_VERSION_INFO VERSIONINFO
 			BLOCK "040904E4"
 			BEGIN
                 VALUE "CompanyName", "The Developers"
-                VALUE "FileDescription", "Low-latency VoIP client"
+                VALUE "FileDescription", "Bubbles"
 				VALUE "FileVersion", "@PROJECT_VERSION@"
 				VALUE "ProductVersion", "@PROJECT_VERSION@"
                 VALUE "LegalCopyright", "Copyright (c) 2005-@MUMBLE_BUILD_YEAR@ The Developers"
