@@ -11,8 +11,8 @@ TabButton {
         color: Theme.backgroundColor
     }
     onClicked: tabView.pop()
-    ToolTip {
+    /*ToolTip {
         visible: control.hovered && ("" !== control.text)
         text: control.text
-    }
+    }*/
 }
