@@ -554,11 +554,11 @@ int main(int argc, char **argv) {
 
 	g.nam = new QNetworkAccessManager();
 
-#ifndef NO_CRASH_REPORT
+/*#ifndef NO_CRASH_REPORT
 	CrashReporter *cr = new CrashReporter();
 	cr->run();
 	delete cr;
-#endif
+#endif*/
 
 	// Initialize database
 	g.db = new Database(QLatin1String("main"));

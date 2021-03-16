@@ -28,6 +28,8 @@ Page {
     GridView {
         id: roomsGrid
 
+        property int targetIndex: -1
+
         ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
         anchors {
             top: parent.top
@@ -44,11 +46,19 @@ Page {
         clip: true
         boundsBehavior: ListView.StopAtBounds
         model: servers.roomsModel
-        delegate: Item {
+        delegate: DropArea {
             id: delegateControl
 
             width: roomsGrid.cellWidth
             height: roomsGrid.cellHeight
+
+            onEntered: {
+                console.log("entered  " + index)
+                roomsGrid.targetIndex = index
+            }
+            onExited: {
+                console.log("entered  " + index)
+            }
 
             Rectangle {
                 anchors.fill: usersList
@@ -100,13 +110,36 @@ Page {
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
                     background: Item {}
+                    Drag.active: dragArea.drag.active
+                    Drag.hotSpot.x: 0
+                    Drag.hotSpot.y: 0
+                    MouseArea {
+                        id: dragArea
+                        anchors.fill: parent
+                        drag.target: parent
+                        onPressed: {
+                            roomsGrid.targetIndex = -1
+                            mouse.accepted = true
+                        }
+                        onReleased: {
+                            console.log("Drag area released " + roomsGrid.targetIndex)
+                            if (-1 !== roomsGrid.targetIndex) {
+                                servers.joinRoom(roomsGrid.targetIndex)
+                            }
+                            mouse.accepted = true
+                        }
+                    }
                 }
                 MouseArea {
+                    propagateComposedEvents: true
                     anchors.fill: parent
-                    onClicked: roomsGrid.currentIndex = index
-                    onDoubleClicked: {
+                    onPressed: {
                         roomsGrid.currentIndex = index
-                        joinBtn.joinAction()
+                        mouse.accepted = false
+                    }
+                    onReleased: {
+                        roomsGrid.currentIndex = index
+                        mouse.accepted = false
                     }
                 }
             }
@@ -115,8 +148,8 @@ Page {
     CustomButton {
         id: joinBtn
 
-        function joinAction() {
-            if (servers.joinRoom(roomsGrid.currentIndex)) {
+        function joinAction(idx) {
+            if (servers.joinRoom(idx)) {
                 servers.connectedClassIndex = servers.currentClassIndex
             }
         }
@@ -128,6 +161,6 @@ Page {
             bottomMargin: Theme.windowMargin
         }
         text: qsTr("Join room")
-        onClicked: joinBtn.joinAction()
+        onClicked: joinBtn.joinAction(roomsGrid.currentIndex)
     }
 }

@@ -6,10 +6,9 @@ import ".."
 Dialog {
     id: control
 
-    function getStandardButtons() {
-        return msgDlg.okCancel ? (Dialog.Ok | Dialog.Cancel) :  Dialog.Ok
+    background: Rectangle {
+        color: Theme.backgroundColor
     }
-
     implicitWidth: 400
     implicitHeight: 200
     x: (appWin.width-width)/2
@@ -32,7 +31,7 @@ Dialog {
     visible: "" !== controlLabel.text
     title: msgDlg.title
     modal: true
-    standardButtons: control.getStandardButtons()
+    closePolicy: Popup.NoAutoClose
     LabelToolTip {
         id: controlLabel
         text: msgDlg.text
@@ -42,5 +41,35 @@ Dialog {
         wrapMode: Text.WordWrap
         elide: Text.ElideRight
         clip: true
+    }
+
+    header: Rectangle {
+        color: Theme.backgroundColor
+        Label {
+            text: control.title
+            color: Theme.textColor
+            font {
+                bold: true
+                pointSize: Theme.titleFontSize
+            }
+            topPadding: Theme.windowMargin
+            leftPadding: Theme.windowMargin
+            bottomPadding: Theme.windowMargin
+        }
+    }
+
+    footer: DialogButtonBox {
+        CustomButton {
+            text: qsTr("OK")
+            DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
+        }
+        CustomButton {
+            visible: msgDlg.okCancel
+            text: qsTr("Cancel")
+            DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
+        }
+        background: Rectangle {
+            color: Theme.backgroundColor
+        }
     }
 }

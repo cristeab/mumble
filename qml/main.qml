@@ -59,7 +59,7 @@ ApplicationWindow {
                 id: tabButton
                 property bool isSelected: bar.currentButtonIndex === index
                 property color textColor: isSelected ? Theme.tabButtonColorSel : Theme.tabButtonColor
-                text: bar.names[index]
+                //text: bar.names[index]
                 icon {
                     source: bar.icons[index]
                     color: tabButton.textColor
