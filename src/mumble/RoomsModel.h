@@ -13,6 +13,8 @@ class RoomsModel : public QAbstractListModel
 
     QML_INTERFACE
     QML_READABLE_PROPERTY(int, currentRoomIndex, setCurrentRoomIndex, INVALID_INDEX)
+    QML_WRITABLE_PROPERTY(bool, microphoneOff, setMicrophoneOff, false)
+    QML_WRITABLE_PROPERTY(bool, speakerOff, setSpeakerOff, false)
 
 public:
     enum RoomRoles {
@@ -40,6 +42,8 @@ public:
 
 private:
     enum { INVALID_INDEX = -1 };
+    void onMicrophoneOffChanged();
+    void onSpeakerOffChanged();
     bool isValidIndex(int index) const {
         return ((index >= 0) && (index < _rooms.count()));
     }

@@ -1,8 +1,15 @@
 #include "RoomsModel.h"
 #include "Channel.h"
+#include "ServerHandler.h"
+#include "AudioInput.h"
+#include "Global.h"
 
 RoomsModel::RoomsModel(QObject *parent) : QAbstractListModel(parent)
 {
+    connect(this, &RoomsModel::microphoneOffChanged, this,
+            &RoomsModel::onMicrophoneOffChanged);
+    connect(this, &RoomsModel::speakerOffChanged, this,
+            &RoomsModel::onSpeakerOffChanged);
 }
 
 int RoomsModel::rowCount(const QModelIndex& /*parent*/) const
@@ -117,4 +124,24 @@ RoomsModel::ChannelType RoomsModel::channelType(Channel *channel)
         }
     }
     return ChannelType::Other;
+}
+
+void RoomsModel::onMicrophoneOffChanged()
+{
+    g.s.bMute = _microphoneOff;
+    if (g.sh) {
+        g.sh->setSelfMuteDeafState(g.s.bMute, g.s.bDeaf);
+    }
+}
+
+void RoomsModel::onSpeakerOffChanged()
+{
+    AudioInputPtr ai = g.ai;
+    if (ai) {
+        ai->tIdle.restart();
+    }
+    g.s.bDeaf = _speakerOff;
+    if (g.sh) {
+        g.sh->setSelfMuteDeafState(g.s.bMute, g.s.bDeaf);
+    }
 }
