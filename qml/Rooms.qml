@@ -28,6 +28,8 @@ Page {
     GridView {
         id: roomsGrid
 
+        property int targetIndex: -1
+
         ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
         anchors {
             top: parent.top
@@ -49,6 +51,14 @@ Page {
 
             width: roomsGrid.cellWidth
             height: roomsGrid.cellHeight
+
+            onEntered: {
+                console.log("entered  " + index)
+                roomsGrid.targetIndex = index
+            }
+            onExited: {
+                console.log("entered  " + index)
+            }
 
             Rectangle {
                 anchors.fill: usersList
@@ -91,7 +101,6 @@ Page {
                 boundsBehavior: ListView.StopAtBounds
                 model: users
                 delegate: Label {
-                    id: userIdLabel
                     width: parent.width
                     padding: Theme.windowMargin / 2
                     text: modelData
@@ -102,27 +111,35 @@ Page {
                     horizontalAlignment: Text.AlignHCenter
                     background: Item {}
                     Drag.active: dragArea.drag.active
-                    Drag.hotSpot.x: 10
-                    Drag.hotSpot.y: 10
-                    Drag.onDragFinished: {
-                        console.log("Drag finished")
-                    }
-                    Drag.onDragStarted: {
-                        console.log("Drag started")
-                    }
+                    Drag.hotSpot.x: 0
+                    Drag.hotSpot.y: 0
                     MouseArea {
                         id: dragArea
                         anchors.fill: parent
                         drag.target: parent
+                        onPressed: {
+                            roomsGrid.targetIndex = -1
+                            mouse.accepted = true
+                        }
+                        onReleased: {
+                            console.log("Drag area released " + roomsGrid.targetIndex)
+                            if (-1 !== roomsGrid.targetIndex) {
+                                servers.joinRoom(roomsGrid.targetIndex)
+                            }
+                            mouse.accepted = true
+                        }
                     }
                 }
                 MouseArea {
                     propagateComposedEvents: true
                     anchors.fill: parent
-                    onClicked: roomsGrid.currentIndex = index
-                    onDoubleClicked: {
+                    onPressed: {
                         roomsGrid.currentIndex = index
-                        joinBtn.joinAction()
+                        mouse.accepted = false
+                    }
+                    onReleased: {
+                        roomsGrid.currentIndex = index
+                        mouse.accepted = false
                     }
                 }
             }
@@ -131,8 +148,8 @@ Page {
     CustomButton {
         id: joinBtn
 
-        function joinAction() {
-            if (servers.joinRoom(roomsGrid.currentIndex)) {
+        function joinAction(idx) {
+            if (servers.joinRoom(idx)) {
                 servers.connectedClassIndex = servers.currentClassIndex
             }
         }
@@ -144,6 +161,6 @@ Page {
             bottomMargin: Theme.windowMargin
         }
         text: qsTr("Join room")
-        onClicked: joinBtn.joinAction()
+        onClicked: joinBtn.joinAction(roomsGrid.currentIndex)
     }
 }
