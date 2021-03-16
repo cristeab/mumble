@@ -12,6 +12,51 @@ Page {
     Component.onCompleted: roomsGrid.currentIndex = 0
     Component.onDestruction: servers.roomsModel.clear()
 
+    Row {
+        anchors {
+            top: parent.top
+            topMargin: Theme.windowMargin
+            left: parent.left
+            leftMargin: Theme.windowMargin
+        }
+        visible: (servers.currentClassIndex === servers.connectedClassIndex)
+        CustomTabButton {
+            id: micBtn
+            icon.source: servers.roomsModel.microphoneOff ? "qrc:/img/microphone-off.svg" : "qrc:/img/microphone.svg"
+            width: bar.width
+            height: width + Theme.windowMargin
+            onClicked: {
+                servers.roomsModel.microphoneOff = !servers.roomsModel.microphoneOff
+                if (servers.roomsModel.speakerOff) {
+                    servers.roomsModel.speakerOff = false
+                }
+                if (servers.roomsModel.microphoneOff) {
+                    volBtn.changeMic = false
+                }
+            }
+        }
+        CustomTabButton {
+            id: volBtn
+            property bool changeMic: false
+            icon.source: servers.roomsModel.speakerOff ? "qrc:/img/volume-off.svg" : "qrc:/img/volume.svg"
+            width: bar.width
+            height: width + Theme.windowMargin
+            onClicked: {
+                servers.roomsModel.speakerOff = !servers.roomsModel.speakerOff
+                if (volBtn.changeMic) {
+                    servers.roomsModel.microphoneOff = !servers.roomsModel.microphoneOff
+                    return
+                }
+                if (!servers.roomsModel.microphoneOff) {
+                    servers.roomsModel.microphoneOff = true
+                    volBtn.changeMic = true
+                } else {
+                    volBtn.changeMic = false
+                }
+            }
+        }
+    }
+
     Label {
         anchors {
             top: parent.top
