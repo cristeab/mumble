@@ -626,7 +626,7 @@ void ServerHandler::message(unsigned int msgType, const QByteArray &qbaMsg) {
 			if (((connection->csCrypt->uiRemoteGood == 0) || (connection->csCrypt->uiGood == 0)) && bUdp
 				&& (tTimestamp.elapsed() > 20000000ULL)) {
 				bUdp = false;
-                if (!NetworkConfig::TcpModeEnabled() && (nullptr != g.mw)) {
+                if (!NetworkConfig::TcpModeEnabled() && (nullptr != Global::get().mw)) {
 					if ((connection->csCrypt->uiRemoteGood == 0) && (connection->csCrypt->uiGood == 0))
 						Global::get().mw->msgBox(
 							tr("UDP packets cannot be sent to or received from the server. Switching to TCP mode."));

@@ -123,7 +123,7 @@ void SocketRPCClient::processXml() {
 				}
 			}
 			iter = qmRequest.find(QLatin1String("togglemute"));
-            if ((iter != qmRequest.constEnd()) && (nullptr != g.mw)) {
+            if ((iter != qmRequest.constEnd()) && (nullptr != Global::get().mw)) {
 				bool set = iter.value().toBool();
 				if (set == Global::get().s.bMute) {
 					Global::get().mw->qaAudioMute->setChecked(set);
@@ -150,7 +150,7 @@ void SocketRPCClient::processXml() {
 				}
 			}
 			iter = qmRequest.find(QLatin1String("toggledeaf"));
-            if ((iter != qmRequest.constEnd()) && (nullptr != g.mw)) {
+            if ((iter != qmRequest.constEnd()) && (nullptr != Global::get().mw)) {
 				bool set = iter.value().toBool();
 				if (set == Global::get().s.bDeaf) {
 					Global::get().mw->qaAudioDeaf->setChecked(set);

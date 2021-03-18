@@ -642,18 +642,18 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
     engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
-    g.mw = new MainWindow(nullptr);
-    g.mw->hide();
+    Global::get().mw = new MainWindow(nullptr);
+    Global::get().mw->hide();
 
     // Connect signals
-    QObject::connect(g.mw, &MainWindow::serverDisconnectedEvent, srv,
+    QObject::connect(Global::get().mw, &MainWindow::serverDisconnectedEvent, srv,
                      &ServerTableModel::onServerDisconnectedEvent);
-    QObject::connect(g.mw, &MainWindow::userModelChanged, srv,
+    QObject::connect(Global::get().mw, &MainWindow::userModelChanged, srv,
                      &ServerTableModel::onUserModelChanged);
-    QObject::connect(g.mw, &MainWindow::channelJoined, srv,
+    QObject::connect(Global::get().mw, &MainWindow::channelJoined, srv,
                      &ServerTableModel::onChannelJoined);
 
-	g.talkingUI = new TalkingUI();
+    Global::get().talkingUI = new TalkingUI();
 
 	// Set TalkingUI's position
 	Global::get().talkingUI->move(getTalkingUIPosition());

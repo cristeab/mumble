@@ -164,11 +164,11 @@ void ServerTableModel::startPingTick(bool start)
 
 void ServerTableModel::load()
 {
-    if (nullptr == g.db) {
+    if (nullptr == Global::get().db) {
         qCritical() << "Cannot access db";
         return;
     }
-    auto items = g.db->getFavorites();
+    auto items = Global::get().db->getFavorites();
     emit layoutAboutToBeChanged();
     for (const auto &it: qAsConst(items)) {
         ServerItem srvItem;
@@ -184,7 +184,7 @@ void ServerTableModel::load()
 
 void ServerTableModel::save()
 {
-    if (nullptr == g.db) {
+    if (nullptr == Global::get().db) {
         qCritical() << "Cannot access db";
         return;
     }
@@ -197,7 +197,7 @@ void ServerTableModel::save()
         favSrv.qsUsername = it.username;
         favs << favSrv;
     }
-    g.db->setFavorites(favs);
+    Global::get().db->setFavorites(favs);
 }
 
 void ServerTableModel::startDns(ServerItem *si)
@@ -455,8 +455,8 @@ bool ServerTableModel::connectServer()
 
     recreateServerHandler();
     const auto &srv = _servers.at(_currentIndex);
-    g.sh->setConnectionInfo(srv.address, srv.port, srv.username, srv.password);
-    g.sh->start(QThread::TimeCriticalPriority);
+    Global::get().sh->setConnectionInfo(srv.address, srv.port, srv.username, srv.password);
+    Global::get().sh->start(QThread::TimeCriticalPriority);
     setConnectedServerIndex(_currentIndex);
     qDebug() << "Connected server index" << _connectedServerIndex;
 
@@ -465,15 +465,15 @@ bool ServerTableModel::connectServer()
 
 void ServerTableModel::recreateServerHandler()
 {
-    ServerHandlerPtr sh = g.sh;
-    if (sh && sh->isRunning() && (nullptr != g.mw)) {
-        g.mw->on_qaServerDisconnect_triggered();
+    ServerHandlerPtr sh = Global::get().sh;
+    if (sh && sh->isRunning() && (nullptr != Global::get().mw)) {
+        Global::get().mw->on_qaServerDisconnect_triggered();
         sh->disconnect();
         sh->wait();
         QCoreApplication::instance()->processEvents();
     }
 
-    g.sh.reset();
+    Global::get().sh.reset();
     while (sh && !sh.unique()) {
         QThread::yieldCurrentThread();
     }
@@ -481,12 +481,12 @@ void ServerTableModel::recreateServerHandler()
 
     sh = ServerHandlerPtr(new ServerHandler());
     sh->moveToThread(sh.get());
-    g.sh = sh;
-    if (nullptr != g.mw) {
-        g.mw->connect(sh.get(), SIGNAL(connected()), g.mw, SLOT(serverConnected()));
-        g.mw->connect(sh.get(), SIGNAL(disconnected(QAbstractSocket::SocketError, QString)), g.mw,
+    Global::get().sh = sh;
+    if (nullptr != Global::get().mw) {
+        Global::get().mw->connect(sh.get(), SIGNAL(connected()), Global::get().mw, SLOT(serverConnected()));
+        Global::get().mw->connect(sh.get(), SIGNAL(disconnected(QAbstractSocket::SocketError, QString)), Global::get().mw,
                       SLOT(serverDisconnected(QAbstractSocket::SocketError, QString)));
-        g.mw->connect(sh.get(), SIGNAL(error(QAbstractSocket::SocketError, QString)), g.mw,
+        Global::get().mw->connect(sh.get(), SIGNAL(error(QAbstractSocket::SocketError, QString)), Global::get().mw,
                       SLOT(resolverError(QAbstractSocket::SocketError, QString)));
     }
 }
@@ -494,8 +494,8 @@ void ServerTableModel::recreateServerHandler()
 bool ServerTableModel::disconnectServer()
 {
     qInfo() << "Disconnect";
-    if (g.sh && g.sh->isRunning()) {
-        g.sh->disconnect();
+    if (Global::get().sh && Global::get().sh->isRunning()) {
+        Global::get().sh->disconnect();
     } else {
         qWarning() << "Cannot disconnect: nothing to do";
     }
@@ -516,11 +516,11 @@ void ServerTableModel::onLineEditDlgAccepted()
         setUsername(_dlgText);
     }
 
-    if (!g.s.bSuppressIdentity) {
-        g.db->setPassword(_hostname, _port, _username, _password);
+    if (!Global::get().s.bSuppressIdentity) {
+        Global::get().db->setPassword(_hostname, _port, _username, _password);
     }
-    g.sh->setConnectionInfo(_hostname, _port, _username, _password);
-    g.mw->on_Reconnect_timeout();
+    Global::get().sh->setConnectionInfo(_hostname, _port, _username, _password);
+    Global::get().mw->on_Reconnect_timeout();
 }
 
 void ServerTableModel::onServerDisconnectedEvent(MumbleProto::Reject_RejectType rtLast,
@@ -530,7 +530,7 @@ void ServerTableModel::onServerDisconnectedEvent(MumbleProto::Reject_RejectType 
 
     QString uname, pw, host;
     unsigned short port;
-    g.sh->getConnectionInfo(host, port, uname, pw);
+    Global::get().sh->getConnectionInfo(host, port, uname, pw);
     setHostname(host);
     setPort(port);
     setUsername(uname);
@@ -566,17 +566,17 @@ void ServerTableModel::onServerDisconnectedEvent(MumbleProto::Reject_RejectType 
     default:
         ;
     }
-    if (g.s.bReconnect && !reason.isEmpty()) {
-            g.mw->qaServerDisconnect->setEnabled(true);
-            if (g.mw->bRetryServer) {
-                g.mw->qtReconnect->start();
+    if (Global::get().s.bReconnect && !reason.isEmpty()) {
+            Global::get().mw->qaServerDisconnect->setEnabled(true);
+            if (Global::get().mw->bRetryServer) {
+                Global::get().mw->qtReconnect->start();
             }
         }
 }
 
 void ServerTableModel::onUserModelChanged()
 {
-    auto *userModel = g.mw->pmModel;
+    auto *userModel = Global::get().mw->pmModel;
     if (nullptr != userModel) {
         _classNameList.clear();
         _classModelItems.clear();
@@ -655,7 +655,7 @@ bool ServerTableModel::joinRoom(int index)
     const auto *ch = _roomsModel->channel(index);
     bool rc = false;
     if (nullptr != ch) {
-        g.sh->joinChannel(g.uiSession, ch->iId);
+        Global::get().sh->joinChannel(Global::get().uiSession, ch->iId);
         _roomsModel->setCurrentRoomIndex(index);
         rc = true;
         qDebug() << "Connected class" << index;

@@ -128,20 +128,20 @@ RoomsModel::ChannelType RoomsModel::channelType(Channel *channel)
 
 void RoomsModel::onMicrophoneOffChanged()
 {
-    g.s.bMute = _microphoneOff;
-    if (g.sh) {
-        g.sh->setSelfMuteDeafState(g.s.bMute, g.s.bDeaf);
+    Global::get().s.bMute = _microphoneOff;
+    if (Global::get().sh) {
+        Global::get().sh->setSelfMuteDeafState(Global::get().s.bMute, Global::get().s.bDeaf);
     }
 }
 
 void RoomsModel::onSpeakerOffChanged()
 {
-    AudioInputPtr ai = g.ai;
+    AudioInputPtr ai = Global::get().ai;
     if (ai) {
         ai->tIdle.restart();
     }
-    g.s.bDeaf = _speakerOff;
-    if (g.sh) {
-        g.sh->setSelfMuteDeafState(g.s.bMute, g.s.bDeaf);
+    Global::get().s.bDeaf = _speakerOff;
+    if (Global::get().sh) {
+        Global::get().sh->setSelfMuteDeafState(Global::get().s.bMute, Global::get().s.bDeaf);
     }
 }

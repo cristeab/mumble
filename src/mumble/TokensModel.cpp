@@ -38,13 +38,13 @@ QHash<int,QByteArray> TokensModel::roleNames() const
 
 void TokensModel::load()
 {
-    if ((nullptr == g.sh) || (nullptr == g.db)) {
+    if ((nullptr == Global::get().sh) || (nullptr == Global::get().db)) {
         qWarning() << "Cannot load tokens";
         return;
     }
-    _digest = g.sh->qbaDigest;
+    _digest = Global::get().sh->qbaDigest;
     emit layoutAboutToBeChanged();
-    _tokens = g.db->getTokens(_digest);
+    _tokens = Global::get().db->getTokens(_digest);
     _tokens.sort();
     emit layoutChanged();
 }
@@ -54,7 +54,7 @@ void TokensModel::save()
     if (_isSaved) {
         return;//nothing to do
     }
-    if ((nullptr == g.sh) || (nullptr == g.db)) {
+    if ((nullptr == Global::get().sh) || (nullptr == Global::get().db)) {
         qCritical() << "Cannot save tokens";
         return;
     }
@@ -64,8 +64,8 @@ void TokensModel::save()
             tok << it;
         }
     }
-    g.db->setTokens(_digest, tok);
-    g.sh->setTokens(tok);
+    Global::get().db->setTokens(_digest, tok);
+    Global::get().sh->setTokens(tok);
     _isSaved = true;
 }
 

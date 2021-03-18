@@ -19,12 +19,12 @@ AudioDeviceModel::AudioDeviceModel(QObject *parent) : QObject(parent)
     connect(this, &AudioDeviceModel::inputDeviceIndexChanged, this, [this]() {
         if ((0 <= _inputSystemIndex) && (_inputSystemIndex < _inputSystems.size())) {
             const auto &system = _inputSystems.at(_inputSystemIndex);
-            g.s.inputSystemIndex = _inputSystemIndex;
+            Global::get().s.inputSystemIndex = _inputSystemIndex;
             auto *air = AudioInputRegistrar::qmNew->value(system);
             if ((0 <= _inputDeviceIndex) && (_inputDeviceIndex < _inputDevices.size())) {
                 const auto &device = _inputDevices.at(_inputDeviceIndex);
-                air->setDeviceChoice(device, g.s);
-                g.s.inputDeviceIndex = _inputDeviceIndex;
+                air->setDeviceChoice(device, Global::get().s);
+                Global::get().s.inputDeviceIndex = _inputDeviceIndex;
                 qInfo() << "Current input device" << device;
             } else {
                 qCritical() << "Invalid input device index" << _inputDeviceIndex;
@@ -36,12 +36,12 @@ AudioDeviceModel::AudioDeviceModel(QObject *parent) : QObject(parent)
     connect(this, &AudioDeviceModel::outputDeviceIndexChanged, this, [this]() {
         if ((0 <= _outputSystemIndex) && (_outputSystemIndex < _outputSystems.size())) {
             const auto &system = _outputSystems.at(_outputSystemIndex);
-            g.s.outputSystemIndex = _outputSystemIndex;
+            Global::get().s.outputSystemIndex = _outputSystemIndex;
             auto *aor = AudioOutputRegistrar::qmNew->value(system);
             if ((0 <= _outputDeviceIndex) && (_outputDeviceIndex < _outputDevices.size())) {
                 const auto &device = _outputDevices.at(_outputDeviceIndex);
-                aor->setDeviceChoice(device, g.s);
-                g.s.outputDeviceIndex = _outputDeviceIndex;
+                aor->setDeviceChoice(device, Global::get().s);
+                Global::get().s.outputDeviceIndex = _outputDeviceIndex;
                 qInfo() << "Current output device" << device;
             } else {
                 qCritical() << "Invalid output device index" << _outputDeviceIndex;
@@ -52,34 +52,34 @@ AudioDeviceModel::AudioDeviceModel(QObject *parent) : QObject(parent)
     });
 
     connect(this, &AudioDeviceModel::sliderBelowValueChanged, this, [this]() {
-        g.s.fVADmin = _sliderBelowValue;
+        Global::get().s.fVADmin = _sliderBelowValue;
     });
     connect(this, &AudioDeviceModel::sliderAboveValueChanged, this, [this]() {
-        g.s.fVADmax = _sliderAboveValue;
+        Global::get().s.fVADmax = _sliderAboveValue;
     });
     connect(this, &AudioDeviceModel::framesChanged, this, [this]() {
-        g.s.iFramesPerPacket = framesPerPacket(_frames);
+        Global::get().s.iFramesPerPacket = framesPerPacket(_frames);
         updateBitrate();
     });
     connect(this, &AudioDeviceModel::qualityChanged, this, [this]() {
-        g.s.iQuality = _quality;
+        Global::get().s.iQuality = _quality;
         updateBitrate();
     });
 
     connect(this, &AudioDeviceModel::volumeChanged, this, [this]() {
-        g.s.fVolume = _volume / 100.0;
+        Global::get().s.fVolume = _volume / 100.0;
     });
     connect(this, &AudioDeviceModel::outputDelayChanged, this, [this]() {
-        g.s.iOutputDelay = _outputDelay;
+        Global::get().s.iOutputDelay = _outputDelay;
     });
     connect(this, &AudioDeviceModel::attenuationChanged, this, [this]() {
-        g.s.fOtherVolume = 1.0f - _attenuation / 100.0f;
+        Global::get().s.fOtherVolume = 1.0f - _attenuation / 100.0f;
     });
     connect(this, &AudioDeviceModel::whileOtherUsersTalkChanged, this, [this]() {
-        g.s.bAttenuateOthers = _whileOtherUsersTalk;
+        Global::get().s.bAttenuateOthers = _whileOtherUsersTalk;
     });
     connect(this, &AudioDeviceModel::whileYouTalkChanged, this, [this]() {
-        g.s.bAttenuateOthersOnTalk = _whileYouTalk;
+        Global::get().s.bAttenuateOthersOnTalk = _whileYouTalk;
     });
 
     _ticker.setSingleShot(false);
@@ -103,13 +103,13 @@ void AudioDeviceModel::init(bool input)
             emit inputDevicesChanged();
         }
         //load settings
-        setInputDeviceMute(g.s.bMute);
-        setInputSystemIndex(g.s.inputSystemIndex);
-        setInputDeviceIndex(g.s.inputDeviceIndex);
-        setSliderBelowValue(g.s.fVADmin);
-        setSliderAboveValue(g.s.fVADmax);
-        setFrames((1 == g.s.iFramesPerPacket) ? 1 : (1 + g.s.iFramesPerPacket / 2));
-        setQuality(g.s.iQuality);
+        setInputDeviceMute(Global::get().s.bMute);
+        setInputSystemIndex(Global::get().s.inputSystemIndex);
+        setInputDeviceIndex(Global::get().s.inputDeviceIndex);
+        setSliderBelowValue(Global::get().s.fVADmin);
+        setSliderAboveValue(Global::get().s.fVADmax);
+        setFrames((1 == Global::get().s.iFramesPerPacket) ? 1 : (1 + Global::get().s.iFramesPerPacket / 2));
+        setQuality(Global::get().s.iQuality);
         updateBitrate();
         //start ticker for audio bar
         _ticker.start();
@@ -128,23 +128,23 @@ void AudioDeviceModel::init(bool input)
             emit outputDevicesChanged();
         }
         //load settings
-        setOutputDeviceMute(g.s.bDeaf);
-        setOutputSystemIndex(g.s.outputSystemIndex);
-        setOutputDeviceIndex(g.s.outputDeviceIndex);
-        setVolume(std::round(100 * g.s.fVolume));
-        setOutputDelay(g.s.iOutputDelay);
-        setAttenuation(std::round((1.0f - g.s.fOtherVolume) * 100.0f + 0.5f));
-        setWhileOtherUsersTalk(g.s.bAttenuateOthers);
-        setWhileYouTalk(g.s.bAttenuateOthersOnTalk);
+        setOutputDeviceMute(Global::get().s.bDeaf);
+        setOutputSystemIndex(Global::get().s.outputSystemIndex);
+        setOutputDeviceIndex(Global::get().s.outputDeviceIndex);
+        setVolume(std::round(100 * Global::get().s.fVolume));
+        setOutputDelay(Global::get().s.iOutputDelay);
+        setAttenuation(std::round((1.0f - Global::get().s.fOtherVolume) * 100.0f + 0.5f));
+        setWhileOtherUsersTalk(Global::get().s.bAttenuateOthers);
+        setWhileYouTalk(Global::get().s.bAttenuateOthersOnTalk);
     }
 }
 
 void AudioDeviceModel::onDeviceMute()
 {
-    g.s.bMute = _inputDeviceMute;
-    g.s.bDeaf = _outputDeviceMute;
-    if (g.sh) {
-        g.sh->setSelfMuteDeafState(g.s.bMute, g.s.bDeaf);
+    Global::get().s.bMute = _inputDeviceMute;
+    Global::get().s.bDeaf = _outputDeviceMute;
+    if (Global::get().sh) {
+        Global::get().sh->setSelfMuteDeafState(Global::get().s.bMute, Global::get().s.bDeaf);
     } else {
         qWarning() << "Cannot set self mute/deaf";
     }
@@ -152,7 +152,7 @@ void AudioDeviceModel::onDeviceMute()
 
 void AudioDeviceModel::onTickerTimeout()
 {
-    AudioInputPtr ai = g.ai;
+    AudioInputPtr ai = Global::get().ai;
     if (!ai.get() || !ai->getSppPreprocess()) {
         return;
     }
@@ -171,14 +171,14 @@ void AudioDeviceModel::updateBitrate()
         overhead += 100 * 8 * 12;
     }
 
-    int posrate = g.s.bTransmitPosition ? 12 : 0;
+    int posrate = Global::get().s.bTransmitPosition ? 12 : 0;
     posrate = posrate * 100 * 8;
 
     overhead = overhead / _frames;
     posrate  = posrate / _frames;
 
     const int total = _quality + overhead + posrate;
-    setBitRateAlarm(g.uiSession && (total > g.iMaxBandwidth));
+    setBitRateAlarm(Global::get().uiSession && (total > Global::get().iMaxBandwidth));
 
     setBitRateText(tr("%1 kbit/s (Audio %2, Position %4, Overhead %3)")
                     .arg(total / 1000.0, 0, 'f', 1)

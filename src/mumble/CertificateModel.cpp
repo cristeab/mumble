@@ -106,7 +106,7 @@ Settings::KeyPair CertificateModel::generateNewCert(const QString &name, const Q
 
 void CertificateModel::initializePage(int index)
 {
-    _current = _new = g.s.kpCertificate;
+    _current = _new = Global::get().s.kpCertificate;
     switch (index) {
     case 0:
         setCert(_current.first);
@@ -227,7 +227,7 @@ QByteArray CertificateModel::exportCert(const Settings::KeyPair &kp)
 void CertificateModel::finish()
 {
     qDebug() << "Finish";
-    g.s.kpCertificate = _new;
+    Global::get().s.kpCertificate = _new;
     initializePage(0);
 }
 

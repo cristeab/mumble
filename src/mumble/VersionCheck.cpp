@@ -84,7 +84,7 @@ void VersionCheck::performRequest() {
 }
 
 void VersionCheck::fetched(QByteArray a, QUrl url) {
-    if (nullptr == g.mw) {
+    if (nullptr == Global::get().mw) {
         return;
     }
 	if (!a.isNull()) {

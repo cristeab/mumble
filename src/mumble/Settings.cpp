@@ -705,13 +705,13 @@ void Settings::load(QSettings *settings_ptr) {
 
 	LOAD(qsDatabaseLocation, "databaselocation");
 
-	SAVELOAD(bMute, "audio/mute");
-	SAVELOAD(bDeaf, "audio/deaf");
+    LOAD(bMute, "audio/mute");
+    LOAD(bDeaf, "audio/deaf");
 
-    SAVELOAD(inputSystemIndex, "audio/inputSystemIndex");
-    SAVELOAD(inputDeviceIndex, "audio/inputDeviceIndex");
-    SAVELOAD(outputSystemIndex, "audio/outputSystemIndex");
-    SAVELOAD(outputDeviceIndex, "audio/outputDeviceIndex");
+    LOAD(inputSystemIndex, "audio/inputSystemIndex");
+    LOAD(inputDeviceIndex, "audio/inputDeviceIndex");
+    LOAD(outputSystemIndex, "audio/outputSystemIndex");
+    LOAD(outputDeviceIndex, "audio/outputDeviceIndex");
     qDebug() << "Settings::load" << inputDeviceIndex;
 
 	LOADENUM(atTransmit, "audio/transmit");
@@ -1131,39 +1131,39 @@ void Settings::save() {
 
 	SAVE(qsDatabaseLocation, "databaselocation");
 
-	SAVELOAD(bMute, "audio/mute");
-	SAVELOAD(bDeaf, "audio/deaf");
+    SAVE(bMute, "audio/mute");
+    SAVE(bDeaf, "audio/deaf");
 
-    SAVELOAD(inputSystemIndex, "audio/inputSystemIndex");
-    SAVELOAD(inputDeviceIndex, "audio/inputDeviceIndex");
-    SAVELOAD(outputSystemIndex, "audio/outputSystemIndex");
-    SAVELOAD(outputDeviceIndex, "audio/outputDeviceIndex");
+    SAVE(inputSystemIndex, "audio/inputSystemIndex");
+    SAVE(inputDeviceIndex, "audio/inputDeviceIndex");
+    SAVE(outputSystemIndex, "audio/outputSystemIndex");
+    SAVE(outputDeviceIndex, "audio/outputDeviceIndex");
     qDebug() << "Settings::save" << inputDeviceIndex;
 
-	SAVELOAD(atTransmit, "audio/transmit");
-	SAVELOAD(uiDoublePush, "audio/doublepush");
-	SAVELOAD(pttHold, "audio/ptthold");
-	SAVELOAD(bTxAudioCue, "audio/pushclick");
-	SAVELOAD(qsTxAudioCueOn, "audio/pushclickon");
-	SAVELOAD(qsTxAudioCueOff, "audio/pushclickoff");
-	SAVELOAD(iQuality, "audio/quality");
-	SAVELOAD(iMinLoudness, "audio/loudness");
-	SAVELOAD(fVolume, "audio/volume");
-	SAVELOAD(fOtherVolume, "audio/othervolume");
-	SAVELOAD(bAttenuateOthers, "audio/attenuateothers");
-	SAVELOAD(bAttenuateOthersOnTalk, "audio/attenuateothersontalk");
-	SAVELOAD(bAttenuateUsersOnPrioritySpeak, "audio/attenuateusersonpriorityspeak");
-	SAVELOAD(bOnlyAttenuateSameOutput, "audio/onlyattenuatesameoutput");
-	SAVELOAD(bAttenuateLoopbacks, "audio/attenuateloopbacks");
-	SAVELOAD(vsVAD, "audio/vadsource");
-	SAVELOAD(fVADmin, "audio/vadmin");
-	SAVELOAD(fVADmax, "audio/vadmax");
-	SAVELOAD(noiseCancelMode, "audio/noiseCancelMode");
-	SAVELOAD(iSpeexNoiseCancelStrength, "audio/speexNoiseCancelStrength");
-	SAVELOAD(bAllowLowDelay, "audio/allowlowdelay");
-	SAVELOAD(uiAudioInputChannelMask, "audio/inputchannelmask");
-	SAVELOAD(iVoiceHold, "audio/voicehold");
-	SAVELOAD(iOutputDelay, "audio/outputdelay");
+    SAVE(atTransmit, "audio/transmit");
+    SAVE(uiDoublePush, "audio/doublepush");
+    SAVE(pttHold, "audio/ptthold");
+    SAVE(bTxAudioCue, "audio/pushclick");
+    SAVE(qsTxAudioCueOn, "audio/pushclickon");
+    SAVE(qsTxAudioCueOff, "audio/pushclickoff");
+    SAVE(iQuality, "audio/quality");
+    SAVE(iMinLoudness, "audio/loudness");
+    SAVE(fVolume, "audio/volume");
+    SAVE(fOtherVolume, "audio/othervolume");
+    SAVE(bAttenuateOthers, "audio/attenuateothers");
+    SAVE(bAttenuateOthersOnTalk, "audio/attenuateothersontalk");
+    SAVE(bAttenuateUsersOnPrioritySpeak, "audio/attenuateusersonpriorityspeak");
+    SAVE(bOnlyAttenuateSameOutput, "audio/onlyattenuatesameoutput");
+    SAVE(bAttenuateLoopbacks, "audio/attenuateloopbacks");
+    SAVE(vsVAD, "audio/vadsource");
+    SAVE(fVADmin, "audio/vadmin");
+    SAVE(fVADmax, "audio/vadmax");
+    SAVE(noiseCancelMode, "audio/noiseCancelMode");
+    SAVE(iSpeexNoiseCancelStrength, "audio/speexNoiseCancelStrength");
+    SAVE(bAllowLowDelay, "audio/allowlowdelay");
+    SAVE(uiAudioInputChannelMask, "audio/inputchannelmask");
+    SAVE(iVoiceHold, "audio/voicehold");
+    SAVE(iOutputDelay, "audio/outputdelay");
 
 	// Idle auto actions
 	SAVE(iIdleTime, "audio/idletime");

@@ -949,7 +949,7 @@ void MainWindow::msgChannelState(const MumbleProto::ChannelState &msg) {
 
 			ServerHandlerPtr sh = Global::get().sh;
 			if (sh)
-				c->bFiltered = g.db->isChannelFiltered(sh->qbaDigest, c->iId);
+                c->bFiltered = Global::get().db->isChannelFiltered(sh->qbaDigest, c->iId);
             emit userModelChanged();
 		} else {
 			qWarning("Server attempted state change on nonexistent channel");
@@ -1051,7 +1051,7 @@ void MainWindow::msgChannelRemove(const MumbleProto::ChannelRemove &msg) {
 		if (!pmModel->removeChannel(c, true)) {
             qCritical() << "Protocol violation. Server sent remove for occupied channel.";
             //g.l->log(Log::CriticalError, tr("Protocol violation. Server sent remove for occupied channel."));
-			Global::get()..sh->disconnect();
+            Global::get().sh->disconnect();
 			return;
 		}
 	}
@@ -1301,7 +1301,7 @@ void MainWindow::msgCodecVersion(const MumbleProto::CodecVersion &msg) {
 	static bool warnedOpus = false;
 	Global::get().bOpus                = msg.opus();
 
-	if (!g.oCodec && !warnedOpus) {
+    if (!Global::get().oCodec && !warnedOpus) {
         qCritical() << "Failed to load Opus, it will not be available for audio encoding/decoding.";
         //g.l->log(Log::CriticalError, tr("Failed to load Opus, it will not be available for audio encoding/decoding."));
 		warnedOpus = true;

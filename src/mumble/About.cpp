@@ -52,7 +52,7 @@ AboutDialog::AboutDialog(QWidget *p) : QDialog(p) {
 
 	QLabel *icon = new QLabel(about);
     if (nullptr != Global::get().mw) {
-        icon->setPixmap(Global::get().mw->qiIcon.pixmap(g.mw->qiIcon.actualSize(QSize(128, 128))));
+        icon->setPixmap(Global::get().mw->qiIcon.pixmap(Global::get().mw->qiIcon.actualSize(QSize(128, 128))));
     }
 
 	QLabel *text = new QLabel(about);

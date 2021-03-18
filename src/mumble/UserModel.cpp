@@ -399,12 +399,11 @@ QString UserModel::stringIndex(const QModelIndex &idx) const {
 
 QModelIndex UserModel::getSelectedIndex() const {
     if (nullptr != Global::get().mw) {
-	    QTreeView *v = Global::get().mw->qtvUsers;
-	    if (v) {
-		    QItemSelectionModel *sel = v->selectionModel();
+        QTreeView *v = Global::get().mw->qtvUsers;
+        if (v) {
+            QItemSelectionModel *sel = v->selectionModel();
 
-                return sel->currentIndex();
-            }
+            return sel->currentIndex();
         }
     }
 
@@ -977,7 +976,7 @@ void UserModel::expandAll(Channel *c) {
 }
 
 void UserModel::collapseEmpty(Channel *c) {
-    if (nullptr == g.mw) {
+    if (nullptr == Global::get().mw) {
         return;
     }
 	while (c) {
@@ -1185,7 +1184,7 @@ void UserModel::setComment(ClientUser *cu, const QString &comment) {
 				} else {
 					QToolTip::showText(QCursor::pos(), data(index(cu, 0), Qt::ToolTipRole).toString(), Global::get().mw->qtvUsers);
 				}
-            } else if ((cu->uiSession == ~uiSessionComment) && (nullptr != g.mw)) {
+            } else if ((cu->uiSession == ~uiSessionComment) && (nullptr != Global::get().mw)) {
 				uiSessionComment = 0;
 				if (cu->uiSession == Global::get().uiSession) {
 					QTimer::singleShot(0, Global::get().mw, SLOT(on_qaSelfComment_triggered()));
@@ -1244,9 +1243,9 @@ void UserModel::setComment(Channel *c, const QString &comment) {
 				iChannelDescription = -1;
 				item->bCommentSeen  = false;
 				if (bClicked) {
-					QRect r = g.mw->qtvUsers->visualRect(index(c));
-					QWhatsThis::showText(g.mw->qtvUsers->viewport()->mapToGlobal(r.bottomRight()),
-										 data(index(c, 0), Qt::ToolTipRole).toString(), g.mw->qtvUsers);
+                    QRect r = Global::get().mw->qtvUsers->visualRect(index(c));
+                    QWhatsThis::showText(Global::get().mw->qtvUsers->viewport()->mapToGlobal(r.bottomRight()),
+                                         data(index(c, 0), Qt::ToolTipRole).toString(), Global::get().mw->qtvUsers);
 				} else if (nullptr != Global::get().mw) {
 					QToolTip::showText(QCursor::pos(), data(index(c, 0), Qt::ToolTipRole).toString(), Global::get().mw->qtvUsers);
 				}
@@ -1422,7 +1421,7 @@ bool UserModel::isChannelListener(const QModelIndex &idx) const {
 void UserModel::setSelectedChannelListener(unsigned int userSession, int channelID) {
 	QModelIndex idx = channelListenerIndex(ClientUser::get(userSession), Channel::get(channelID));
 
-    if (!idx.isValid() || (nullptr == g.mw)) {
+    if (!idx.isValid() || (nullptr == Global::get().mw)) {
 		return;
 	}
 
@@ -1613,7 +1612,7 @@ ClientUser *UserModel::getSelectedUser() const {
 void UserModel::setSelectedUser(unsigned int session) {
 	QModelIndex idx = index(ClientUser::get(session));
 
-    if (!idx.isValid() || (nullptr == g.mw)) {
+    if (!idx.isValid() || (nullptr == Global::get().mw)) {
 		return;
 	}
 
@@ -1657,7 +1656,7 @@ Channel *UserModel::getSelectedChannel() const {
 void UserModel::setSelectedChannel(int id) {
 	QModelIndex idx = index(Channel::get(id));
 
-    if (!idx.isValid() || (nullptr == g.mw)) {
+    if (!idx.isValid() || (nullptr == Global::get().mw)) {
 		return;
 	}
 
@@ -1792,7 +1791,6 @@ bool UserModel::dropMimeData(const QMimeData *md, Qt::DropAction, int row, int c
 
                 if (ret == QMessageBox::No)
                     return false;
-            }
             break;
 			case Settings::DoNothing:
 				Global::get().l->log(Log::Information,
@@ -1818,7 +1816,6 @@ bool UserModel::dropMimeData(const QMimeData *md, Qt::DropAction, int row, int c
                 }
                 if (ret == QMessageBox::No)
                     return false;
-            }
             break;
 			case Settings::DoNothing:
 				Global::get().l->log(
@@ -1939,12 +1936,11 @@ bool UserModel::dropMimeData(const QMimeData *md, Qt::DropAction, int row, int c
 		}
 
         if (nullptr != Global::get().mw) {
-		    if (inewpos > INT_MAX || inewpos < INT_MIN) {
-			    QMessageBox::critical(Global::get().mw, QLatin1String("Mumble"),
-								  tr("Cannot perform this movement automatically, please reset the numeric sorting "
+            if (inewpos > INT_MAX || inewpos < INT_MIN) {
+                QMessageBox::critical(Global::get().mw, QLatin1String("Mumble"),
+                                      tr("Cannot perform this movement automatically, please reset the numeric sorting "
 									 "indicators or adjust it manually."));
-                    return false;
-                }
+                return false;
             }
         }
 
