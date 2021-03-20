@@ -21,6 +21,8 @@ CONFIG(debug, debug|release) {
 INCLUDEPATH += E:/projects/vcpkg/installed/x64-windows-static-md/include
 INCLUDEPATH += $$OUT_PWD/../mumble_proto
 CONFIG += no-bonjour
+CONFIG += no-classic-theme
+CONFIG += no-elevation
 LIBS += -lopus
 # ------------------------------------------
 

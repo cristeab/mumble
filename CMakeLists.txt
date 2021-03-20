@@ -38,8 +38,9 @@ find_program(WINDEPLOYQT windeployqt PATHS ${CMAKE_PREFIX_PATH}/bin/)
 install(PROGRAMS "${CMAKE_SOURCE_DIR}/build/${CMAKE_PROJECT_NAME}.exe" DESTINATION .)
 install(FILES ${CMAKE_SOURCE_DIR}/icons/bubbles.ico DESTINATION .)
 
-#install(FILES ${CMAKE_PREFIX_PATH}/../../Tools/OpenSSL/Win_x64/bin/libcrypto-1_1-x64.dll DESTINATION .)
-#install(FILES ${CMAKE_PREFIX_PATH}/../../Tools/OpenSSL/Win_x64/bin/libssl-1_1-x64.dll DESTINATION .)
+install(FILES ${CMAKE_SOURCE_DIR}/build/opus.dll DESTINATION .)
+install(FILES ${CMAKE_SOURCE_DIR}/build/rnnoise.dll DESTINATION .)
+install(FILES ${CMAKE_SOURCE_DIR}/build/speex.dll DESTINATION .)
 
 add_custom_target(windeployqt ALL
       DEPENDS ${CMAKE_PROJECT_NAME}.exe
