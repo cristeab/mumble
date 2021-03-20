@@ -14,7 +14,7 @@ CertificateModel::CertificateModel(QObject *parent) : QObject(parent)
 {
     qmlRegisterType<CertificateModel>("CertificateModel", 1, 0, "CertificateModel");
 
-    setObjectName("certModel");
+    setObjectName(QString::fromUtf8("certModel"));
     initializePage(0);
 }
 
@@ -42,10 +42,10 @@ void CertificateModel::setCert(const QList<QSslCertificate> &cert)
     _cert = cert;
 
     if (_cert.isEmpty()) {
-        setSubjectName("");
-        setSubjectEmail("");
-        setIssuerName("");
-        setExpiry("");
+        setSubjectName(QString());
+        setSubjectEmail(QString());
+        setIssuerName(QString());
+        setExpiry(QString());
     } else {
         QSslCertificate qscCert = _cert.at(0);
 
@@ -351,10 +351,10 @@ Settings::KeyPair CertificateModel::importCert(const QByteArray &data, const QSt
 void CertificateModel::setupNewCertInfo()
 {
     if (_new.first.isEmpty()) {
-        setNewSubjectName("");
-        setNewSubjectEmail("");
-        setNewExpiry("");
-        setNewIssuerName("");
+        setNewSubjectName(QString());
+        setNewSubjectEmail(QString());
+        setNewExpiry(QString());
+        setNewIssuerName(QString());
     } else {
         QSslCertificate qscCert = _new.first.at(0);
 

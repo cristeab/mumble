@@ -14,7 +14,7 @@
 
 ServerTableModel::ServerTableModel(QObject *parent) : QAbstractTableModel(parent)
 {
-    setObjectName("servers");
+    setObjectName(QString::fromUtf8("servers"));
 
     _socket4 = new QUdpSocket(this);
     _socket6 = new QUdpSocket(this);
@@ -54,10 +54,10 @@ QVariant ServerTableModel::data(const QModelIndex &index, int role) const
                 out = _servers.at(row).name;
                 break;
             case DELAY:
-                out = QString("%1 ms").arg(_servers.at(row).delayMs);
+                out = QString(QString::fromUtf8("%1 ms")).arg(_servers.at(row).delayMs);
                 break;
             case USERS:
-                out = QString("%1/%2").arg(_servers.at(row).currentUsers).arg(_servers.at(row).totalUsers);
+                out = QString(QString::fromUtf8("%1/%2")).arg(_servers.at(row).currentUsers).arg(_servers.at(row).totalUsers);
                 break;
             default:
                 qWarning() << "Unknown column index" << col;
@@ -106,10 +106,10 @@ void ServerTableModel::resetServer()
         setUsername(srv.username);
         setLabel(srv.name);
     } else {
-        setHostname("");
+        setHostname(QString());
         setPort(DEFAULT_PORT);
-        setUsername("");
-        setLabel("");
+        setUsername(QString());
+        setLabel(QString());
     }
 }
 

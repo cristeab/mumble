@@ -9,7 +9,7 @@
 
 AudioDeviceModel::AudioDeviceModel(QObject *parent) : QObject(parent)
 {
-    setObjectName("audioDevices");
+    setObjectName(QString::fromUtf8("audioDevices"));
 
     connect(this, &AudioDeviceModel::inputDeviceMuteChanged, this,
             &AudioDeviceModel::onDeviceMute);

@@ -5,7 +5,7 @@
 
 TokensModel::TokensModel(QObject *parent) : QAbstractListModel(parent)
 {
-    setObjectName("tokensModel");
+    setObjectName(QString::fromUtf8("tokensModel"));
 }
 
 int TokensModel::rowCount(const QModelIndex& /*parent*/) const
