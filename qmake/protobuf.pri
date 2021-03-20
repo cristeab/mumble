@@ -15,17 +15,18 @@ include(pkgconfig.pri)
 
 win32-msvc* {
 	# Legacy win32-static paths (protobuf 2.x)
-	INCLUDEPATH *= "$$PROTOBUF_PATH/vsprojects/include" "$$PROTOBUF_PATH/src" protobuf
-	CONFIG(debug, debug|release) {
-		QMAKE_LIBDIR *= "$$PROTOBUF_PATH/vsprojects/Debug"
-	} else {
-		QMAKE_LIBDIR *= "$$PROTOBUF_PATH/vsprojects/Release"
-	}
+        #INCLUDEPATH *= "$$PROTOBUF_PATH/vsprojects/include" "$$PROTOBUF_PATH/src" protobuf
+        #CONFIG(debug, debug|release) {
+        #	QMAKE_LIBDIR *= "$$PROTOBUF_PATH/vsprojects/Debug"
+        #} else {
+        #	QMAKE_LIBDIR *= "$$PROTOBUF_PATH/vsprojects/Release"
+        #}
 
 	# New win32-static paths (protobuf 3.2+)
 	INCLUDEPATH *= "$$PROTOBUF_PATH/include"
 	QMAKE_LIBDIR *= "$$PROTOBUF_PATH/lib"
 
+        LIBS += -LE:/projects/vcpkg/installed/x64-windows-static-md/lib
 	LIBS *= -llibprotobuf
 }
 

@@ -28,6 +28,9 @@ CONFIG += staticlib
 
 # Add protobuf dependency
 include(../../qmake/protobuf.pri)
+#--------------------------------
+INCLUDEPATH += E:/projects/vcpkg/installed/x64-windows-static-md/include
+#--------------------------------
 
 QMAKE_EXTRA_COMPILERS *= pb pbh
 

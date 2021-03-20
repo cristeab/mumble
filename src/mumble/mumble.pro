@@ -11,6 +11,20 @@ DEFINES *= MUMBLE
 TEMPLATE = app
 TARGET = mumble
 
+# ------------------------------------------
+CONFIG(debug, debug|release) {
+    LIBS += -LE:/projects/vcpkg/installed/x64-windows-static-md/debug/lib
+} else {
+    LIBS += -LE:/projects/vcpkg/installed/x64-windows-static-md/lib
+}
+INCLUDEPATH += E:/projects/vcpkg/installed/x64-windows-static-md/include
+INCLUDEPATH += E:/projects/build-main-Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/src/mumble_proto
+CONFIG += no-bonjour
+CONFIG += no-overlay
+CONFIG += no-plugins
+LIBS += -lopus
+# ------------------------------------------
+
 !CONFIG(qt4-legacy-compat) {
   CONFIG += no-qt4-legacy-compat
 }
@@ -218,7 +232,7 @@ CONFIG(qtspeech) {
   SOURCES *= TextToSpeech.cpp
 }
 
-RESOURCES *= mumble.qrc mumble_translations.qrc ../../themes/MumbleTheme.qrc
+RESOURCES *= mumble.qrc ../../themes/MumbleTheme.qrc
 
 !CONFIG(no-classic-theme) {
   RESOURCES *= ../../themes/ClassicTheme.qrc
@@ -412,7 +426,7 @@ win32 {
 
   # Boost
   win32-msvc* {
-    LIBS *= -llibboost_system-mt -llibboost_thread-mt
+    LIBS *= -lboost_system-vc140-mt -lboost_thread-vc140-mt
   }
   win32-g++ {
     LIBS *= -lboost_system-mt
@@ -467,7 +481,7 @@ win32 {
       }
     }
     win32-msvc* {
-      QMAKE_POST_LINK = $$QMAKE_POST_LINK$$escape_expand(\\n\\t)$$quote(mt.exe -nologo -updateresource:$(DESTDIR_TARGET);1 -manifest mumble.appcompat.manifest)
+      QMAKE_POST_LINK = $$QMAKE_POST_LINK$$escape_expand(\\n\\t)$$quote(mt.exe -nologo -updateresource:$(DESTDIR_TARGET);1 -manifest $$PWD/mumble.appcompat.manifest)
     }
   }
 }
