@@ -52,6 +52,7 @@ isEqual(QT_MAJOR_VERSION, 4) {
 CONFIG(static) {
   # On Windows, building a static client
   # means building the main app into a DLL.
+  message("Building a static client...")
   win32 {
     TEMPLATE = lib
     TARGET = mumble_app
