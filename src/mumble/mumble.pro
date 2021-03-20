@@ -19,7 +19,7 @@ CONFIG(debug, debug|release) {
     LIBS += -LE:/projects/vcpkg/installed/x64-windows-static-md/lib
 }
 INCLUDEPATH += E:/projects/vcpkg/installed/x64-windows-static-md/include
-INCLUDEPATH += E:/projects/build-main-Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/src/mumble_proto
+INCLUDEPATH += $$OUT_PWD/../mumble_proto
 CONFIG += no-bonjour
 LIBS += -lopus
 # ------------------------------------------
