@@ -42,6 +42,7 @@ install(FILES ${CMAKE_PREFIX_PATH}/../../Tools/OpenSSL/Win_x64/bin/libcrypto-1_1
 install(FILES ${CMAKE_PREFIX_PATH}/../../Tools/OpenSSL/Win_x64/bin/libssl-1_1-x64.dll DESTINATION .)
 
 install(FILES ${CMAKE_SOURCE_DIR}/build/celt0.0.7.0.dll DESTINATION .)
+install(FILES ${CMAKE_SOURCE_DIR}/build/celt0.0.11.0.dll DESTINATION .)
 install(FILES ${CMAKE_SOURCE_DIR}/build/opus.dll DESTINATION .)
 install(FILES ${CMAKE_SOURCE_DIR}/build/rnnoise.dll DESTINATION .)
 install(FILES ${CMAKE_SOURCE_DIR}/build/speex.dll DESTINATION .)
