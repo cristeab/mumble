@@ -4,8 +4,11 @@
 # Mumble source tree or at <https://www.mumble.info/LICENSE>.
 
 # ------------------------------------------
+DESTDIR = build
 CONFIG += no-server
 CONFIG += no-g15
+CONFIG += no-overlay
+CONFIG += no-plugins
 # ------------------------------------------
 
 include(qmake/compiler.pri)

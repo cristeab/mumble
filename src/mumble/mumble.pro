@@ -20,8 +20,6 @@ CONFIG(debug, debug|release) {
 INCLUDEPATH += E:/projects/vcpkg/installed/x64-windows-static-md/include
 INCLUDEPATH += E:/projects/build-main-Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/src/mumble_proto
 CONFIG += no-bonjour
-CONFIG += no-overlay
-CONFIG += no-plugins
 LIBS += -lopus
 # ------------------------------------------
 
