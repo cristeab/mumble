@@ -12,6 +12,7 @@ TEMPLATE = app
 TARGET = mumble
 
 # ------------------------------------------
+DESTDIR = $$PWD/../../build
 CONFIG(debug, debug|release) {
     LIBS += -LE:/projects/vcpkg/installed/x64-windows-static-md/debug/lib
 } else {
