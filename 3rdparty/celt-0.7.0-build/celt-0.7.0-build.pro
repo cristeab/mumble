@@ -1,5 +1,9 @@
 include(../../qmake/compiler.pri)
 
+# ------------------------------------------
+DESTDIR = $$PWD/../../build
+# ------------------------------------------
+
 BUILDDIR=$$basename(PWD)
 SOURCEDIR=$$replace(BUILDDIR,-build,-src)
 VERSION=$$replace(BUILDDIR,-build,)
