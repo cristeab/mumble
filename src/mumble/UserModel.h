@@ -142,6 +142,7 @@ class UserModel : public QAbstractItemModel {
 
 		unsigned int uiSessionComment;
 		int iChannelDescription;
+        ModelItem* rootItem() const { return miRoot; }
 	public slots:
 		/// Invalidates the model data of the ClientUser triggering this slot.
 		void userStateChanged();

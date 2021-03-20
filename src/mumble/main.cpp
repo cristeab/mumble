@@ -40,6 +40,14 @@
 #include "License.h"
 #include "EnvUtils.h"
 
+#include "ServerTableModel.h"
+#include "AudioDeviceModel.h"
+#include "TokensModel.h"
+#include "CertificateModel.h"
+
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
+
 #if defined(Q_OS_WIN) && defined(QT_NO_DEBUG)
 #include <shellapi.h> // For CommandLineToArgvW()
 #endif
@@ -103,7 +111,7 @@ int main(int argc, char **argv) {
 	a.setApplicationName(QLatin1String("Mumble"));
 	a.setOrganizationName(QLatin1String("Mumble"));
 	a.setOrganizationDomain(QLatin1String("mumble.sourceforge.net"));
-	a.setQuitOnLastWindowClosed(false);
+    a.setQuitOnLastWindowClosed(true);
 
 #if QT_VERSION >= 0x050100
 	a.setAttribute(Qt::AA_UseHighDpiPixmaps);
@@ -138,7 +146,7 @@ int main(int argc, char **argv) {
 	bool bRpcMode = false;
 	QString rpcCommand;
 	QUrl url;
-	if (a.arguments().count() > 1) {
+    /*if (a.arguments().count() > 1) {
 		QStringList args = a.arguments();
 		for (int i = 1; i < args.count(); ++i) {
 			if (args.at(i) == QLatin1String("-h") || args.at(i) == QLatin1String("--help")
@@ -254,7 +262,7 @@ int main(int argc, char **argv) {
 				}
 			}
 		}
-	}
+    }*/
 
 #ifdef USE_DBUS
 #ifdef Q_OS_WIN
@@ -413,11 +421,11 @@ int main(int argc, char **argv) {
 
 	g.nam = new QNetworkAccessManager();
 
-#ifndef NO_CRASH_REPORT
+/*#ifndef NO_CRASH_REPORT
 	CrashReporter *cr = new CrashReporter();
 	cr->run();
 	delete cr;
-#endif
+#endif*/
 
 	// Initialize logger
 	g.l = new Log();
@@ -441,8 +449,33 @@ int main(int argc, char **argv) {
 	a.processEvents();
 
 	// Main Window
-	g.mw=new MainWindow(NULL);
-	g.mw->show();
+    QQmlApplicationEngine engine;
+    //set properties
+    QQmlContext *context = engine.rootContext();//registered properties are available to all components
+    auto *srv = new ServerTableModel();
+    auto *audioDev = new AudioDeviceModel();
+    auto *tokens = new TokensModel();
+    auto *certModel = new CertificateModel();
+    if (nullptr != context) {
+        context->setContextProperty(srv->objectName(), srv);
+        context->setContextProperty(audioDev->objectName(), audioDev);
+        context->setContextProperty(tokens->objectName(), tokens);
+        context->setContextProperty(certModel->objectName(), certModel);
+    } else {
+        qDebug() << "Cannot get root context";
+        return EXIT_FAILURE;
+    }
+    engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
+    g.mw=new MainWindow(NULL);
+    g.mw->hide();
+
+    // Connect signals
+    QObject::connect(g.mw, &MainWindow::serverDisconnectedEvent, srv,
+                     &ServerTableModel::onServerDisconnectedEvent);
+    QObject::connect(g.mw, &MainWindow::userModelChanged, srv,
+                     &ServerTableModel::onUserModelChanged);
+    QObject::connect(g.mw, &MainWindow::channelJoined, srv,
+                     &ServerTableModel::onChannelJoined);
 
 #ifdef Q_OS_WIN
 	// Set mumble_mw_hwnd in os_win.cpp.
@@ -540,7 +573,7 @@ int main(int argc, char **argv) {
 		g.p->checkUpdates();
 	}
 
-	if (url.isValid()) {
+    /*if (url.isValid()) {
 		OpenURLEvent *oue = new OpenURLEvent(url);
 		qApp->postEvent(g.mw, oue);
 #ifdef Q_OS_MAC
@@ -550,7 +583,7 @@ int main(int argc, char **argv) {
 #endif
 	} else {
 		g.mw->on_qaServerConnect_triggered(true);
-	}
+    }*/
 
 	if (! g.bQuit)
 		res=a.exec();

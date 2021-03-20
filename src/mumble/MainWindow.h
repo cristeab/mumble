@@ -25,6 +25,7 @@
 #include "Usage.h"
 #include "UserLocalVolumeDialog.h"
 #include "MUComboBox.h"
+#include "Channel.h"
 
 #include "ui_MainWindow.h"
 
@@ -39,7 +40,6 @@ class GlobalShortcut;
 class TextToSpeech;
 class UserModel;
 class Tokens;
-class Channel;
 class UserInformation;
 class VoiceRecorderDialog;
 class PTTButtonWidget;
@@ -60,6 +60,7 @@ class OpenURLEvent : public QEvent {
 
 class MainWindow : public QMainWindow, public MessageHandler, public Ui::MainWindow {
 		friend class UserModel;
+        friend class ServerTableModel;
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(MainWindow)
@@ -295,6 +296,13 @@ class MainWindow : public QMainWindow, public MessageHandler, public Ui::MainWin
 		/// Updates the user's image directory to the given path (any included
 		/// filename is discarded).
 		void updateImagePath(QString filepath) const;
+
+    signals:
+        //signals used by the new UI
+        void serverDisconnectedEvent(MumbleProto::Reject_RejectType rtLast,
+                                     const QString &reason);
+        void userModelChanged();
+        void channelJoined(Channel *channel, const QString &userName);
 
 	public:
 		MainWindow(QWidget *parent);

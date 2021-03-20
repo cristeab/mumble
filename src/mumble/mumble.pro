@@ -9,7 +9,7 @@ include(../../qmake/lrelease.pri)
 
 DEFINES *= MUMBLE
 TEMPLATE = app
-TARGET = mumble
+TARGET = bubbles
 
 # ------------------------------------------
 DESTDIR = $$PWD/../../build
@@ -77,7 +77,7 @@ CONFIG(static) {
   CONFIG += static_qt_plugins
 }
 
-QT  *= network sql xml svg
+QT  *= network sql xml svg qml quick gui
 isEqual(QT_MAJOR_VERSION, 5) {
   QT *= widgets
 
@@ -158,7 +158,12 @@ HEADERS *= BanEditor.h \
     DeveloperConsole.h \
     PathListWidget.h \
     XMLTools.h \
-    SvgIcon.h
+    SvgIcon.h \
+    AudioDeviceModel.h \
+    CertificateModel.h \
+    RoomsModel.h \
+    ServerTableModel.h \
+    TokensModel.h
 
 SOURCES *= BanEditor.cpp \
     ACLEditor.cpp \
@@ -228,7 +233,12 @@ SOURCES *= BanEditor.cpp \
     DeveloperConsole.cpp \
     PathListWidget.cpp \
     XMLTools.cpp \
-    SvgIcon.cpp
+    SvgIcon.cpp \
+    AudioDeviceModel.cpp \
+    CertificateModel.cpp \
+    RoomsModel.cpp \
+    ServerTableModel.cpp \
+    TokensModel.cpp
 
 CONFIG(qtspeech) {
   SOURCES *= TextToSpeech.cpp

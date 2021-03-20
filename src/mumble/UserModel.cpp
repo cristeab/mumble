@@ -6,9 +6,8 @@
 #include "mumble_pch.hpp"
 
 #include "UserModel.h"
-
-#include "ClientUser.h"
 #include "Channel.h"
+#include "ClientUser.h"
 #include "Database.h"
 #include "LCD.h"
 #include "Log.h"

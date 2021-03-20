@@ -146,7 +146,7 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p) {
 
 	// Explicitely add actions to mainwindow so their shortcuts are available
 	// if only the main window is visible (e.g. minimal mode)
-	addActions(findChildren<QAction*>());
+    /*addActions(findChildren<QAction*>());
 
 	on_qmServer_aboutToShow();
 	on_qmSelf_aboutToShow();
@@ -157,7 +157,7 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p) {
 
 	setOnTop(g.s.aotbAlwaysOnTop == Settings::OnTopAlways ||
 	         (g.s.bMinimalView && g.s.aotbAlwaysOnTop == Settings::OnTopInMinimal) ||
-	         (!g.s.bMinimalView && g.s.aotbAlwaysOnTop == Settings::OnTopInNormal));
+             (!g.s.bMinimalView && g.s.aotbAlwaysOnTop == Settings::OnTopInNormal));*/
 
 #ifdef NO_UPDATE_CHECK
 	delete qaHelpVersionCheck;
@@ -211,7 +211,7 @@ void MainWindow::createActions() {
 	gsVolumeDown->setObjectName(QLatin1String("VolumeDown"));
 
 	qstiIcon = new QSystemTrayIcon(qiIcon, this);
-	qstiIcon->setToolTip(tr("Mumble -- %1").arg(QLatin1String(MUMBLE_RELEASE)));
+    qstiIcon->setToolTip(tr("Bubbles -- %1").arg(QLatin1String(MUMBLE_RELEASE)));
 	qstiIcon->setObjectName(QLatin1String("Icon"));
 
 	gsWhisper = new GlobalShortcut(this, idx++, tr("Whisper/Shout"), QVariant::fromValue(ShortcutTarget()));
@@ -2878,7 +2878,9 @@ void MainWindow::serverConnected() {
 }
 
 void MainWindow::serverDisconnected(QAbstractSocket::SocketError err, QString reason) {
-	g.uiSession = 0;
+    qDebug() << "serverDisconnected" << reason;
+
+    g.uiSession = 0;
 	g.pPermissions = ChanACL::None;
 	g.bAttenuateOthers = false;
 	qaServerDisconnect->setEnabled(false);
@@ -3012,7 +3014,8 @@ void MainWindow::serverDisconnected(QAbstractSocket::SocketError err, QString re
 		wf = Qt::Sheet;
 #endif
 
-		bool matched = true;
+        emit serverDisconnectedEvent(rtLast, reason);
+        /*bool matched = true;
 		switch (rtLast) {
 			case MumbleProto::Reject_RejectType_InvalidUsername:
 				uname = QInputDialog::getText(this, tr("Invalid username"),
@@ -3053,7 +3056,7 @@ void MainWindow::serverDisconnected(QAbstractSocket::SocketError err, QString re
 			if (bRetryServer) {
 				qtReconnect->start();
 			}
-		}
+        }*/
 	}
 	qstiIcon->setToolTip(tr("Mumble -- %1").arg(QLatin1String(MUMBLE_RELEASE)));
 	AudioInput::setMaxBandwidth(-1);

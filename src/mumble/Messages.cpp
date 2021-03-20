@@ -91,8 +91,9 @@ void MainWindow::msgReject(const MumbleProto::Reject &msg) {
 			break;
 	}
 
-	g.l->log(Log::ServerDisconnected, tr("Server connection rejected: %1.").arg(reason));
-	g.l->setIgnore(Log::ServerDisconnected, 1);
+    //g.l->log(Log::ServerDisconnected, tr("Server connection rejected: %1.").arg(reason));
+    //g.l->setIgnore(Log::ServerDisconnected, 1);
+    qWarning() << "Server connection rejected:" << reason;
 }
 
 void MainWindow::msgServerSync(const MumbleProto::ServerSync &msg) {
@@ -104,7 +105,8 @@ void MainWindow::msgServerSync(const MumbleProto::ServerSync &msg) {
 	if (msg.has_welcome_text()) {
 		QString str = u8(msg.welcome_text());
 		if (!str.isEmpty()) {
-			g.l->log(Log::Information, tr("Welcome message: %1").arg(str));
+            qInfo() << "Welcome message:" << str;
+            //g.l->log(Log::Information, tr("Welcome message: %1").arg(str));
 		}
 	}
 	pmModel->ensureSelfVisible();
@@ -161,9 +163,11 @@ void MainWindow::msgServerConfig(const MumbleProto::ServerConfig &msg) {
 	if (msg.has_welcome_text()) {
 		QString str = u8(msg.welcome_text());
 		if (!str.isEmpty()) {
-			g.l->log(Log::Information, tr("Welcome message: %1").arg(str));
+            //g.l->log(Log::Information, tr("Welcome message: %1").arg(str));
+            qInfo() << "Welcome message:" << str;
 		}
 	}
+    qDebug() << "msgServerConfig";
 	if (msg.has_max_bandwidth())
 		AudioInput::setMaxBandwidth(msg.max_bandwidth());
 	if (msg.has_allow_html())
@@ -177,6 +181,7 @@ void MainWindow::msgServerConfig(const MumbleProto::ServerConfig &msg) {
 }
 
 void MainWindow::msgPermissionDenied(const MumbleProto::PermissionDenied &msg) {
+    qDebug() << "msgPermissionDenied" << msg.type();
 	switch (msg.type()) {
 		case MumbleProto::PermissionDenied_DenyType_Permission: {
 				VICTIM_INIT;
@@ -272,6 +277,8 @@ void MainWindow::msgUserState(const MumbleProto::UserState &msg) {
 	ClientUser *pDst = ClientUser::get(msg.session());
 	Channel *channel = NULL;
 
+    qDebug() << "msgUserState";
+
 	if (msg.has_channel_id()) {
 		channel = Channel::get(msg.channel_id());
 		if (!channel) {
@@ -298,9 +305,11 @@ void MainWindow::msgUserState(const MumbleProto::UserState &msg) {
 
 		if (pSelf) {
 			if (pDst->cChannel == pSelf->cChannel) {
-				g.l->log(Log::ChannelJoinConnect, tr("%1 connected and entered channel.").arg(Log::formatClientUser(pDst, Log::Source)));
+                qInfo() << pDst->qsName << "connected and entered channel";
+                //g.l->log(Log::ChannelJoinConnect, tr("%1 connected and entered channel.").arg(Log::formatClientUser(pDst, Log::Source)));
 			} else {
-				g.l->log(Log::UserJoin, tr("%1 connected.").arg(Log::formatClientUser(pDst, Log::Source)));
+                qInfo() << pDst->qsName << "connected";
+                //g.l->log(Log::UserJoin, tr("%1 connected.").arg(Log::formatClientUser(pDst, Log::Source)));
 			}
 		}
 	}
@@ -313,6 +322,7 @@ void MainWindow::msgUserState(const MumbleProto::UserState &msg) {
 		Channel *oldChannel = pDst->cChannel;
 		if (channel != oldChannel) {
 			pmModel->moveUser(pDst, channel);
+            emit channelJoined(channel, pDst->qsName);
 
 			if (pSelf) {
 				if (pDst == pSelf) {
@@ -608,6 +618,8 @@ void MainWindow::msgChannelState(const MumbleProto::ChannelState &msg) {
 	if (! msg.has_channel_id())
 		return;
 
+    qDebug() << "msgChannelState";
+
 	Channel *c = Channel::get(msg.channel_id());
 	Channel *p = msg.has_parent() ? Channel::get(msg.parent()) : NULL;
 
@@ -621,7 +633,7 @@ void MainWindow::msgChannelState(const MumbleProto::ChannelState &msg) {
 			ServerHandlerPtr sh = g.sh;
 			if (sh)
 				c->bFiltered = g.db->isChannelFiltered(sh->qbaDigest, c->iId);
-
+            emit userModelChanged();
 		} else {
 			qWarning("Server attempted state change on nonexistent channel");
 			return;
@@ -692,6 +704,7 @@ void MainWindow::msgChannelState(const MumbleProto::ChannelState &msg) {
 }
 
 void MainWindow::msgChannelRemove(const MumbleProto::ChannelRemove &msg) {
+    qDebug() << "msgChannelRemove";
 	Channel *c = Channel::get(msg.channel_id());
 	if (c && (c->iId != 0)) {
 		if (c->bFiltered) {
@@ -711,6 +724,8 @@ void MainWindow::msgChannelRemove(const MumbleProto::ChannelRemove &msg) {
 void MainWindow::msgTextMessage(const MumbleProto::TextMessage &msg) {
 	ACTOR_INIT;
 	QString target;
+
+    qDebug() << "msgTextMessage";
 
 	// Silently drop the message if this user is set to "ignore"
 	if (pSrc && pSrc->bLocalIgnore)
@@ -802,6 +817,7 @@ void MainWindow::msgContextActionModify(const MumbleProto::ContextActionModify &
 }
 
 void MainWindow::removeContextAction(const MumbleProto::ContextActionModify &msg) {
+    qDebug() << "removeContextAction";
 	QString action = u8(msg.action());
 
 	QSet<QAction *> qs;
