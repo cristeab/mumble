@@ -26,7 +26,7 @@ win32-msvc* {
 	INCLUDEPATH *= "$$PROTOBUF_PATH/include"
 	QMAKE_LIBDIR *= "$$PROTOBUF_PATH/lib"
 
-        LIBS += -LE:/projects/vcpkg/installed/x64-windows-static-md/lib
+        LIBS += -L$$PROTOBUF_PATH/lib
 	LIBS *= -llibprotobuf
 }
 

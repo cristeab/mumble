@@ -14,11 +14,11 @@ TARGET = bubbles
 # ------------------------------------------
 DESTDIR = $$PWD/../../build
 CONFIG(debug, debug|release) {
-    LIBS += -LE:/projects/vcpkg/installed/x64-windows-static-md/debug/lib
+    LIBS += -L$$(VCPKG_PATH)/debug/lib
 } else {
-    LIBS += -LE:/projects/vcpkg/installed/x64-windows-static-md/lib
+    LIBS += -L$$(VCPKG_PATH)/lib
 }
-INCLUDEPATH += E:/projects/vcpkg/installed/x64-windows-static-md/include
+INCLUDEPATH += $$(VCPKG_PATH)/include
 INCLUDEPATH += $$OUT_PWD/../mumble_proto
 CONFIG += no-bonjour
 CONFIG += no-classic-theme
