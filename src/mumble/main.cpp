@@ -494,12 +494,12 @@ int main(int argc, char **argv) {
 	g.l->log(Log::Information, MainWindow::tr("Welcome to Mumble."));
 
 	// Plugins
-	g.p = new Plugins(NULL);
-	g.p->rescanPlugins();
+    //g.p = new Plugins(NULL);
+    //g.p->rescanPlugins();
 
 	Audio::start();
 
-	a.setQuitOnLastWindowClosed(false);
+    a.setQuitOnLastWindowClosed(true);
 
 	// Configuration updates
 	bool runaudiowizard = false;
@@ -519,9 +519,10 @@ int main(int argc, char **argv) {
 	}
 
 	if (runaudiowizard) {
-		AudioWizard *aw = new AudioWizard(g.mw);
+        qInfo() << "Run audio wizard";
+        /*AudioWizard *aw = new AudioWizard(g.mw);
 		aw->exec();
-		delete aw;
+        delete aw;*/
 	}
 
 	g.s.uiUpdateCounter = 2;
@@ -555,8 +556,10 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	if (QDateTime::currentDateTime().daysTo(g.s.kpCertificate.first.first().expiryDate()) < 14)
-		g.l->log(Log::Warning, CertWizard::tr("<b>Certificate Expiry:</b> Your certificate is about to expire. You need to renew it, or you will no longer be able to connect to servers you are registered on."));
+    if (QDateTime::currentDateTime().daysTo(g.s.kpCertificate.first.first().expiryDate()) < 14) {
+        qWarning() << "Your certificate is about to expire. You need to renew it, or you will no longer be able to connect to servers you are registered on.";
+        //g.l->log(Log::Warning, CertWizard::tr("<b>Certificate Expiry:</b> Your certificate is about to expire. You need to renew it, or you will no longer be able to connect to servers you are registered on."));
+    }
 
 #ifdef QT_NO_DEBUG
 #ifndef SNAPSHOT_BUILD
