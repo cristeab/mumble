@@ -519,7 +519,7 @@ int main(int argc, char **argv) {
 	}
 
 	if (runaudiowizard) {
-        qInfo() << "Run audio wizard";
+        qInfo() << "Must run audio wizard";
         /*AudioWizard *aw = new AudioWizard(g.mw);
 		aw->exec();
         delete aw;*/
@@ -534,7 +534,7 @@ int main(int argc, char **argv) {
 		QDir qd(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation));
 #endif
 
-		QFile qf(qd.absoluteFilePath(QLatin1String("MumbleAutomaticCertificateBackup.p12")));
+        /*QFile qf(qd.absoluteFilePath(QLatin1String("MumbleAutomaticCertificateBackup.p12")));
 		if (qf.open(QIODevice::ReadOnly | QIODevice::Unbuffered)) {
 			Settings::KeyPair kp = CertWizard::importCert(qf.readAll());
 			qf.close();
@@ -553,7 +553,14 @@ int main(int argc, char **argv) {
 					qf.close();
 				}
 			}
-		}
+        }*/
+        qWarning() << "Generate automatically new certificate";
+        QFile qf(qd.absoluteFilePath(QLatin1String("MumbleAutomaticCertificateBackup.p12")));
+        g.s.kpCertificate = CertWizard::generateNewCert();
+        if (qf.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Unbuffered)) {
+            qf.write(CertWizard::exportCert(g.s.kpCertificate));
+            qf.close();
+        }
 	}
 
     if (QDateTime::currentDateTime().daysTo(g.s.kpCertificate.first.first().expiryDate()) < 14) {
