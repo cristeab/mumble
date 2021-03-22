@@ -189,7 +189,7 @@ void ServerTableModel::save()
         return;
     }
     QList<FavoriteServer> favs;
-    for (const auto &it: _servers) {
+    for (const auto &it: qAsConst(_servers)) {
         FavoriteServer favSrv;
         favSrv.qsName = it.name;
         favSrv.qsUrl = it.address;
