@@ -85,7 +85,7 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p) {
         SvgIcon::addSvgPixmapsToIcon(qiIcon, QLatin1String("skin:bubbles.svg"));
 #else
 	{
-        SvgIcon::addSvgPixmapsToIcon(qiIcon, QLatin1String("skin:bubbles.svg"));
+        SvgIcon::addSvgPixmapsToIcon(qiIcon, QLatin1String(":/bubbles.svg"));
 	}
 
 	// Set application icon except on MacOSX, where the window-icon
