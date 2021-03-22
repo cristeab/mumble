@@ -82,10 +82,10 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p) {
 	if (QFile::exists(QLatin1String("skin:mumble.icns")))
 		qiIcon.addFile(QLatin1String("skin:mumble.icns"));
 	else
-		SvgIcon::addSvgPixmapsToIcon(qiIcon, QLatin1String("skin:mumble.svg"));
+        SvgIcon::addSvgPixmapsToIcon(qiIcon, QLatin1String("skin:bubbles.svg"));
 #else
 	{
-		SvgIcon::addSvgPixmapsToIcon(qiIcon, QLatin1String("skin:mumble.svg"));
+        SvgIcon::addSvgPixmapsToIcon(qiIcon, QLatin1String("skin:bubbles.svg"));
 	}
 
 	// Set application icon except on MacOSX, where the window-icon

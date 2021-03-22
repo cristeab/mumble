@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.19)
 project(Bubbles
         VERSION "1.0.0"
         DESCRIPTION "Low-latency VoIP client"
-        HOMEPAGE_URL "https://www.bubbles.dk/?fbclid=IwAR3IbdabfqtJ_bnVtclbi7r_RsJuSSFiHxZLpggqOAMB6SYEDLe75f8tCtk")
+        HOMEPAGE_URL "www.bubbles.dk")
 
 #installer setup
 set(CMAKE_MSVC_ARCH x64)
