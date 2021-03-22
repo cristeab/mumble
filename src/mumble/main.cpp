@@ -579,11 +579,11 @@ int main(int argc, char **argv) {
 #else
 	g.mw->msgBox(MainWindow::tr("Skipping version check in debug mode."));
 #endif
-	if (g.s.bPluginCheck) {
+    /*if (g.s.bPluginCheck) {
 		g.p->checkUpdates();
 	}
 
-    /*if (url.isValid()) {
+    if (url.isValid()) {
 		OpenURLEvent *oue = new OpenURLEvent(url);
 		qApp->postEvent(g.mw, oue);
 #ifdef Q_OS_MAC
@@ -626,7 +626,7 @@ int main(int argc, char **argv) {
 	delete g.lcd;
 
 	delete g.db;
-	delete g.p;
+    //delete g.p;
 	delete g.l;
 
 #ifdef USE_BONJOUR

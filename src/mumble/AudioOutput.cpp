@@ -413,7 +413,7 @@ bool AudioOutput::mix(void *outbuff, unsigned int nsamp) {
 		for (unsigned int i=0;i<iChannels;++i)
 			svol[i] = mul * fSpeakerVolume[i];
 
-		if (g.s.bPositionalAudio && (iChannels > 1) && g.p->fetch() && (g.bPosTest || g.p->fCameraPosition[0] != 0 || g.p->fCameraPosition[1] != 0 || g.p->fCameraPosition[2] != 0)) {
+        /*if (g.s.bPositionalAudio && (iChannels > 1) && g.p->fetch() && (g.bPosTest || g.p->fCameraPosition[0] != 0 || g.p->fCameraPosition[1] != 0 || g.p->fCameraPosition[2] != 0)) {
 
 			float front[3] = { g.p->fCameraFront[0], g.p->fCameraFront[1], g.p->fCameraFront[2] };
 			float top[3] = { g.p->fCameraTop[0], g.p->fCameraTop[1], g.p->fCameraTop[2] };
@@ -464,19 +464,19 @@ bool AudioOutput::mix(void *outbuff, unsigned int nsamp) {
 			// Calculate right vector as front X top
 			float right[3] = {top[1]*front[2] - top[2]*front[1], top[2]*front[0] - top[0]*front[2], top[0]*front[1] - top[1] * front[0] };
 
-			/*
+
 						qWarning("Front: %f %f %f", front[0], front[1], front[2]);
 						qWarning("Top: %f %f %f", top[0], top[1], top[2]);
 						qWarning("Right: %f %f %f", right[0], right[1], right[2]);
-			*/
-			// Rotate speakers to match orientation
+
+            // Rotate speakers to match orientation
 			for (unsigned int i=0;i<iChannels;++i) {
 				speaker[3*i+0] = fSpeakers[3*i+0] * right[0] + fSpeakers[3*i+1] * top[0] + fSpeakers[3*i+2] * front[0];
 				speaker[3*i+1] = fSpeakers[3*i+0] * right[1] + fSpeakers[3*i+1] * top[1] + fSpeakers[3*i+2] * front[1];
 				speaker[3*i+2] = fSpeakers[3*i+0] * right[2] + fSpeakers[3*i+1] * top[2] + fSpeakers[3*i+2] * front[2];
 			}
 			validListener = true;
-		}
+        }*/
 
 		foreach(AudioOutputUser *aop, qlMix) {
 			const float * RESTRICT pfBuffer = aop->pfBuffer;

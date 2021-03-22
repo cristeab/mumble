@@ -2381,7 +2381,7 @@ void MainWindow::on_qaAudioStats_triggered() {
 }
 
 void MainWindow::on_qaAudioUnlink_triggered() {
-	g.p->bUnlink = true;
+    //g.p->bUnlink = true;
 }
 
 void MainWindow::on_qaConfigDialog_triggered() {

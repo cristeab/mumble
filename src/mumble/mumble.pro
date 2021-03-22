@@ -23,6 +23,7 @@ INCLUDEPATH += $$OUT_PWD/../mumble_proto
 CONFIG += no-bonjour
 CONFIG += no-classic-theme
 CONFIG += no-elevation
+CONFIG += no-manual-plugin
 LIBS += -lopus
 # ------------------------------------------
 
@@ -117,7 +118,6 @@ HEADERS *= BanEditor.h \
     UserModel.h \
     Audio.h \
     ConfigDialog.h \
-    Plugins.h \
     PTTButtonWidget.h \
     LookConfig.h \
     Overlay.h \
@@ -191,7 +191,6 @@ SOURCES *= BanEditor.cpp \
     UserModel.cpp \
     Audio.cpp \
     ConfigDialog.cpp \
-    Plugins.cpp \
     PTTButtonWidget.cpp \
     LookConfig.cpp \
     OverlayClient.cpp \
