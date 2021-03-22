@@ -195,28 +195,25 @@ ApplicationWindow {
 
     Connections {
         target: certModel
-        function onShowErrorDialog(msg) {
-            msgDlg.title = qsTr("Error")
-            msgDlg.text = msg
-            msgDlg.okCancel = false
-            msgDlg.showDlg()
+        function onShowDialog(title, text) {
+            msgDlg.showDialog(title, text)
         }
     }
-    Loader {
+    QtObject {
         id: msgDlg
 
-        property string title: ""
-        property string text: ""
-        property bool okCancel: true
-        property var acceptCallback: null
-
-        function showDlg() {
-            msgDlg.active = true
-            msgDlg.item.visible = true
+        function showDialog(title, text, okCalcel=false, callback=null) {
+            const comp = Qt.createComponent("qrc:/qml/dialog/MessageDialog.qml")
+            const dlg = comp.createObject(appWin, {
+                                              "title": title,
+                                              "text": text,
+                                              "okCancel": okCalcel,
+                                              "acceptCallback": callback,
+                                              "visible": true
+                                          })
+            if (null === dlg) {
+                console.error("Cannot create incoming call dialog")
+            }
         }
-
-        anchors.fill: parent
-        active: false
-        source: "qrc:/qml/dialog/MessageDialog.qml"
     }
 }

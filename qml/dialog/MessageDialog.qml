@@ -6,6 +6,11 @@ import ".."
 Dialog {
     id: control
 
+    property string title: ""
+    property string text: ""
+    property bool okCancel: true
+    property var acceptCallback: null
+
     background: Rectangle {
         color: Theme.backgroundColor
     }
@@ -15,26 +20,19 @@ Dialog {
     y: (appWin.height-height)/2
     z: 2
     onAccepted: {
-        if (null !== msgDlg.acceptCallback) {
-            msgDlg.acceptCallback()
-            msgDlg.acceptCallback = null
+        if (null !== control.acceptCallback) {
+            control.acceptCallback()
         }
-        msgDlg.text = ""
-        msgDlg.okCancel = false
-        msgDlg.active = false
+        control.destroy()
     }
-    onRejected: {
-        msgDlg.text = ""
-        msgDlg.okCancel = false
-        msgDlg.active = false
-    }
+    onRejected: control.destroy()
     visible: "" !== controlLabel.text
-    title: msgDlg.title
+    title: control.title
     modal: true
     closePolicy: Popup.NoAutoClose
     LabelToolTip {
         id: controlLabel
-        text: msgDlg.text
+        text: control.text
         anchors.fill: parent
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
@@ -64,7 +62,7 @@ Dialog {
             DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
         }
         CustomButton {
-            visible: msgDlg.okCancel
+            visible: control.okCancel
             text: qsTr("Cancel")
             DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
         }

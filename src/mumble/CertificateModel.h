@@ -39,7 +39,7 @@ public:
     Q_INVOKABLE void initializePage(int index);
 
 signals:
-    void showErrorDialog(const QString &msg);
+    void showDialog(const QString &title, const QString &msg);
 
 private:
     void setCert(const QList<QSslCertificate> &cert);
@@ -48,6 +48,9 @@ private:
     static QByteArray exportCert(const Settings::KeyPair &kp);
     static Settings::KeyPair importCert(const QByteArray &data, const QString &pw = QString());
     void setupNewCertInfo();
+    void showErrorDialog(const QString &msg) {
+        emit showDialog(tr("Error"), msg);
+    }
 
     QList<QSslCertificate> _cert;
     Settings::KeyPair _current;

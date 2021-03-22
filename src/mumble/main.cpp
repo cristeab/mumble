@@ -519,6 +519,7 @@ int main(int argc, char **argv) {
 	}
 
 	if (runaudiowizard) {
+        certModel->showDialog(QObject::tr("Warning"), QObject::tr("Please make sure the audio devices are correctly setup"));
         qInfo() << "Must run audio wizard";
         /*AudioWizard *aw = new AudioWizard(g.mw);
 		aw->exec();
@@ -564,7 +565,9 @@ int main(int argc, char **argv) {
 	}
 
     if (QDateTime::currentDateTime().daysTo(g.s.kpCertificate.first.first().expiryDate()) < 14) {
-        qWarning() << "Your certificate is about to expire. You need to renew it, or you will no longer be able to connect to servers you are registered on.";
+        const QString msg = QObject::tr("Your certificate is about to expire. You need to renew it, or you will no longer be able to connect to servers you are registered on.");
+        qWarning() << msg;
+        certModel->showDialog(QObject::tr("Warning"), msg);
         //g.l->log(Log::Warning, CertWizard::tr("<b>Certificate Expiry:</b> Your certificate is about to expire. You need to renew it, or you will no longer be able to connect to servers you are registered on."));
     }
 

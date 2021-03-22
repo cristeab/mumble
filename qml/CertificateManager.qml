@@ -82,18 +82,14 @@ Page {
                         certModel.newSubjectEmail = ""
                     } else if (1 === view.currentIndex) {
                         if (("" === certModel.newSubjectName) || ("" === certModel.newSubjectEmail)) {
-                            msgDlg.title = qsTr("Error")
-                            msgDlg.text = qsTr("Invalid subject name of email. Please choose valid values.")
-                            msgDlg.okCancel = false
-                            msgDlg.showDlg()
+                            msgDlg.showDialog(qsTr("Error"),
+                                              qsTr("Invalid subject name of email. Please choose valid values."))
                             return
                         }
                         const rc = certModel.generateNewCert()
                         if (!rc) {
-                            msgDlg.title = qsTr("Error")
-                            msgDlg.text = qsTr("There was an error generating your certificate. Please try again.")
-                            msgDlg.okCancel = false
-                            msgDlg.showDlg()
+                            msgDlg.showDialog(qsTr("Error"),
+                                              qsTr("There was an error generating your certificate. Please try again."))
                             return
                         }
                     } else if (3 === view.currentIndex) {

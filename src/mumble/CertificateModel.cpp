@@ -130,27 +130,27 @@ bool CertificateModel::exportCert()
 {
     qDebug() << "exportCert";
     if (_certFilePath.isEmpty()) {
-        emit showErrorDialog(tr("Empty file path. Please choose a file path"));
+        showErrorDialog(tr("Empty file path. Please choose a file path"));
         return false;
     }
     const auto qba = exportCert(_new);
     if (qba.isEmpty()) {
-        emit showErrorDialog(tr("Your certificate and key could not be exported to PKCS#12 format. There might be an error in your certificate."));
+        showErrorDialog(tr("Your certificate and key could not be exported to PKCS#12 format. There might be an error in your certificate."));
         return false;
     }
     QFile f(_certFilePath);
     if (!f.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Unbuffered)) {
-        emit showErrorDialog(tr("The file could not be opened for writing. Please use another file."));
+        showErrorDialog(tr("The file could not be opened for writing. Please use another file."));
         return false;
     }
     if (!f.setPermissions(QFile::ReadOwner | QFile::WriteOwner)) {
-        emit showErrorDialog(tr("The file's permissions could not be set. No certificate and key has been written. Please use another file."));
+        showErrorDialog(tr("The file's permissions could not be set. No certificate and key has been written. Please use another file."));
         return false;
     }
     qint64 written = f.write(qba);
     f.close();
     if (written != qba.length()) {
-        emit showErrorDialog(tr("The file could not be written successfully. Please use another file."));
+        showErrorDialog(tr("The file could not be written successfully. Please use another file."));
         return false;
     }
     return true;
@@ -235,13 +235,13 @@ bool CertificateModel::importCert(bool test)
 {
     qDebug() << "importCert";
     if (!test && _certFilePath.isEmpty()) {
-        emit showErrorDialog(tr("Empty file path. Please choose a file path"));
+        showErrorDialog(tr("Empty file path. Please choose a file path"));
         return false;
     }
     QFile f(_certFilePath);
     if (!f.open(QIODevice::ReadOnly | QIODevice::Unbuffered)) {
         if (!test) {
-            emit showErrorDialog(tr("The file could not be opened for reading. Please use another file."));
+            showErrorDialog(tr("The file could not be opened for reading. Please use another file."));
             return false;
         } else {
             return true;
@@ -251,7 +251,7 @@ bool CertificateModel::importCert(bool test)
     f.close();
     if (qba.isEmpty()) {
         if (!test) {
-            emit showErrorDialog(tr("The file is empty or could not be read. Please use another file."));
+            showErrorDialog(tr("The file is empty or could not be read. Please use another file."));
             return false;
         } else {
             return true;
@@ -260,7 +260,7 @@ bool CertificateModel::importCert(bool test)
     const auto imp = importCert(qba, _certPassword);
     if (!validateCert(imp)) {
         if (!test) {
-            emit showErrorDialog(tr("The file did not contain a valid certificate and key. Please use another file."));
+            showErrorDialog(tr("The file did not contain a valid certificate and key. Please use another file."));
         }
         return false;
     }

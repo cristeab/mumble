@@ -76,11 +76,10 @@ Page {
         CustomButton {
             text: qsTr("Remove")
             onClicked: {
-                msgDlg.title = qsTr("Delete Server")
-                msgDlg.text = qsTr("Are you sure you want to delete ") + servers.currentServerName() + " ?"
-                msgDlg.okCancel = true
-                msgDlg.acceptCallback = servers.removeServer
-                msgDlg.showDlg()
+                msgDlg.showDialog(qsTr("Delete Server"),
+                                  qsTr("Are you sure you want to delete ") + servers.currentServerName() + " ?",
+                                  true,
+                                  servers.removeServer)
             }
         }
     }
