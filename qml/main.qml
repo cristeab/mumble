@@ -28,9 +28,11 @@ ApplicationWindow {
         }
         visible: 1 < tabView.depth
         text: qsTr("Back")
-        icon.source: "qrc:/img/chevron-circle-left.svg"
-        width: bar.width
-        height: width + Theme.windowMargin
+        icon {
+            width: Theme.buttonIconWidth
+            height: Theme.buttonIconWidth
+            source: "qrc:/img/chevron-circle-left.svg"
+        }
         onClicked: tabView.pop()
     }
 
@@ -66,8 +68,8 @@ ApplicationWindow {
                 icon {
                     source: bar.icons[index]
                     color: tabButton.textColor
-                    width: 50
-                    height: 50
+                    width: Theme.tabIconWidth
+                    height: Theme.tabIconWidth
                 }
                 width: bar.width
                 height: width + 2 * Theme.windowMargin

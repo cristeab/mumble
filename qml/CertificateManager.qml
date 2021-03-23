@@ -62,18 +62,22 @@ Page {
         CustomTabButton {
             enabled: (0 < view.currentIndex) && nextBtn.enabled
             text: qsTr("Back")
-            icon.source: "qrc:/img/chevron-circle-left.svg"
-            width: backBtn.width
-            height: backBtn.height
+            icon {
+                width: Theme.buttonIconWidth
+                height: Theme.buttonIconWidth
+                source: "qrc:/img/chevron-circle-left.svg"
+            }
             onClicked: view.currentIndex -= 1
         }
         CustomTabButton {
             id: nextBtn
             enabled: view.currentIndex < certModel.pageCount
             text: qsTr("Next")
-            icon.source: "qrc:/img/chevron-circle-right.svg"
-            width: backBtn.width
-            height: backBtn.height
+            icon {
+                width: Theme.buttonIconWidth
+                height: Theme.buttonIconWidth
+                source: "qrc:/img/chevron-circle-right.svg"
+            }
             onClicked: {
                 console.log("Current idx " + view.currentIndex)
                 if (CertificateModel.NEW_CERT_PAGE_COUNT === certModel.pageCount) {
