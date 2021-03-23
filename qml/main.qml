@@ -66,8 +66,8 @@ ApplicationWindow {
                 icon {
                     source: bar.icons[index]
                     color: tabButton.textColor
-                    width: 0.5 * tabButton.width
-                    height: width
+                    width: 50
+                    height: 50
                 }
                 width: bar.width
                 height: width + 2 * Theme.windowMargin
