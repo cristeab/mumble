@@ -377,9 +377,9 @@ void MainWindow::setupGui()  {
 void MainWindow::updateWindowTitle() {
 	QString title;
 	if (g.s.bMinimalView) {
-		title = tr("Mumble - Minimal View -- %1");
+        title = tr("Bubbles - Minimal View -- %1");
 	} else {
-		title = tr("Mumble -- %1");
+        title = tr("Bubbles -- %1");
 	}
 	setWindowTitle(title.arg(QLatin1String(MUMBLE_RELEASE)));
 }
@@ -436,7 +436,7 @@ void MainWindow::closeEvent(QCloseEvent *e) {
 #ifndef Q_OS_MAC
 	ServerHandlerPtr sh = g.sh;
 	if (sh && sh->isRunning() && g.s.bAskOnQuit && !bSuppressAskOnQuit) {
-		QMessageBox mb(QMessageBox::Warning, QLatin1String("Mumble"), tr("Mumble is currently connected to a server. Do you want to Close or Minimize it?"), QMessageBox::NoButton, this);
+        QMessageBox mb(QMessageBox::Warning, QLatin1String("Bubbles"), tr("Bubbles is currently connected to a server. Do you want to Close or Minimize it?"), QMessageBox::NoButton, this);
 		QPushButton *qpbClose = mb.addButton(tr("Close"), QMessageBox::YesRole);
 		QPushButton *qpbMinimize = mb.addButton(tr("Minimize"), QMessageBox::NoRole);
 		QPushButton *qpbCancel = mb.addButton(tr("Cancel"), QMessageBox::RejectRole);
@@ -757,7 +757,7 @@ void MainWindow::on_qteLog_customContextMenuRequested(const QPoint &mpos) {
 
 void MainWindow::saveImageAs() {
 	QDateTime now = QDateTime::currentDateTime();
-	QString defaultFname = QString::fromLatin1("Mumble-%1.jpg").arg(now.toString(QString::fromLatin1("yyyy-MM-dd-HHmmss")));
+    QString defaultFname = QString::fromLatin1("Bubbles-%1.jpg").arg(now.toString(QString::fromLatin1("yyyy-MM-dd-HHmmss")));
 
 	QString fname = QFileDialog::getSaveFileName(this, tr("Save Image File"), getImagePath(defaultFname), tr("Images (*.png *.jpg *.jpeg)"));
 	if (fname.isNull()) {
@@ -847,7 +847,7 @@ void MainWindow::openUrl(const QUrl &url) {
 		return;
 	}
 	if (url.scheme() != QLatin1String("mumble")) {
-		g.l->log(Log::Warning, tr("URL scheme is not 'mumble'"));
+        g.l->log(Log::Warning, tr("URL scheme is not 'mumble'"));
 		return;
 	}
 
@@ -1414,7 +1414,7 @@ void MainWindow::on_qaServerInformation_triggered() {
 	}
 	qsAudio=tr("<h2>Audio bandwidth</h2><p>Maximum %1 kbit/s<br />Current %2 kbit/s<br />Codec: %3</p>").arg(g.iMaxBandwidth / 1000.0,0,'f',1).arg(g.iAudioBandwidth / 1000.0,0,'f',1).arg(currentCodec());
 
-	QMessageBox qmb(QMessageBox::Information, tr("Mumble Server Information"), qsVersion + qsControl + qsVoice + qsCrypt + qsAudio, QMessageBox::Ok, this);
+    QMessageBox qmb(QMessageBox::Information, tr("Bubbles Server Information"), qsVersion + qsControl + qsVoice + qsCrypt + qsAudio, QMessageBox::Ok, this);
 	qmb.setDefaultButton(QMessageBox::Ok);
 	qmb.setEscapeButton(QMessageBox::Ok);
 
@@ -1807,7 +1807,7 @@ void MainWindow::on_qaUserCommentReset_triggered() {
 
 	unsigned int session = p->uiSession;
 
-	int ret = QMessageBox::question(this, QLatin1String("Mumble"),
+    int ret = QMessageBox::question(this, QLatin1String("Bubbles"),
 	                                tr("Are you sure you want to reset the comment of user %1?").arg(Qt::escape(p->qsName)),
 	                                QMessageBox::Yes, QMessageBox::No);
 	if (ret == QMessageBox::Yes) {
@@ -1823,7 +1823,7 @@ void MainWindow::on_qaUserTextureReset_triggered() {
 
 	unsigned int session = p->uiSession;
 
-	int ret = QMessageBox::question(this, QLatin1String("Mumble"),
+    int ret = QMessageBox::question(this, QLatin1String("Bubbles"),
 	                                tr("Are you sure you want to reset the avatar of user %1?").arg(Qt::escape(p->qsName)),
 	                                QMessageBox::Yes, QMessageBox::No);
 	if (ret == QMessageBox::Yes) {
@@ -2056,7 +2056,7 @@ void MainWindow::on_qaChannelRemove_triggered() {
 
 	int id = c->iId;
 
-	ret=QMessageBox::question(this, QLatin1String("Mumble"), tr("Are you sure you want to delete %1 and all its sub-channels?").arg(Qt::escape(c->qsName)), QMessageBox::Yes, QMessageBox::No);
+    ret=QMessageBox::question(this, QLatin1String("Bubbles"), tr("Are you sure you want to delete %1 and all its sub-channels?").arg(Qt::escape(c->qsName)), QMessageBox::Yes, QMessageBox::No);
 
 	c = Channel::get(id);
 	if (!c)
@@ -2396,8 +2396,8 @@ void MainWindow::on_qaConfigDialog_triggered() {
 		if (g.s.requireRestartToApply) {
 			if (g.s.requireRestartToApply && QMessageBox::question(
 				        this,
-				        tr("Restart Mumble?"),
-				        tr("Some settings will only apply after a restart of Mumble. Restart Mumble now?"),
+                        tr("Restart Bubbles?"),
+                        tr("Some settings will only apply after a restart of Bubbles. Restart Bubbles now?"),
 				        QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes) {
 		
 				bSuppressAskOnQuit = true;
@@ -2973,7 +2973,7 @@ void MainWindow::serverDisconnected(QAbstractSocket::SocketError err, QString re
 			foreach(QSslError e, g.sh->qlErrors)
 				qsl << QString::fromLatin1("<li>%1</li>").arg(Qt::escape(e.errorString()));
 
-			QMessageBox qmb(QMessageBox::Warning, QLatin1String("Mumble"),
+            QMessageBox qmb(QMessageBox::Warning, QLatin1String("Bubbles"),
 			                tr("<p>%1</p><ul>%2</ul><p>The specific errors with this certificate are:</p><ol>%3</ol>"
 			                   "<p>Do you wish to accept this certificate anyway?<br />(It will also be stored so you won't be asked this again.)</p>"
 			                  ).arg(basereason).arg(digests_section).arg(qsl.join(QString())), QMessageBox::Yes | QMessageBox::No, this);
@@ -2998,7 +2998,7 @@ void MainWindow::serverDisconnected(QAbstractSocket::SocketError err, QString re
 			}
 		}
 	} else if (err == QAbstractSocket::SslHandshakeFailedError) {
-		QMessageBox::warning(this, tr("SSL Version mismatch"), tr("This server is using an older encryption standard, and is no longer supported by modern versions of Mumble."), QMessageBox::Ok);
+        QMessageBox::warning(this, tr("SSL Version mismatch"), tr("This server is using an older encryption standard, and is no longer supported by modern versions of Bubbles."), QMessageBox::Ok);
 	} else {
 		bool ok = false;
 
@@ -3058,7 +3058,7 @@ void MainWindow::serverDisconnected(QAbstractSocket::SocketError err, QString re
 			}
         }*/
 	}
-	qstiIcon->setToolTip(tr("Mumble -- %1").arg(QLatin1String(MUMBLE_RELEASE)));
+    qstiIcon->setToolTip(tr("Bubbles -- %1").arg(QLatin1String(MUMBLE_RELEASE)));
 	AudioInput::setMaxBandwidth(-1);
 }
 

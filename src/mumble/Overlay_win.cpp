@@ -130,7 +130,7 @@ OverlayPrivateWin::~OverlayPrivateWin() {
 	m_active = false;
 
 	if (!CloseHandle(m_mumble_handle)) {
-		qFatal("OverlayPrivateWin: unable to close Mumble process handle.");
+        qFatal("OverlayPrivateWin: unable to close Bubbles process handle.");
 		return;
 	}
 

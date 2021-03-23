@@ -823,7 +823,7 @@ void OverlayConfig::on_qpbLoadPreset_clicked() {
 	QString fn = QFileDialog::getOpenFileName(this,
 	             tr("Load Overlay Presets"),
 	             QDir::homePath(),
-	             tr("Mumble overlay presets (*.mumblelay)"));
+                 tr("Bubbles overlay presets (*.bubbleslay)"));
 
 	if (fn.isEmpty()) {
 		return;
