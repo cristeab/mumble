@@ -7,6 +7,8 @@ import "custom"
 ApplicationWindow {
     id: appWin
 
+    readonly property bool isFullScreen: appWin.visibility === ApplicationWindow.FullScreen
+
     title: qsTr("Bubbles")
     width: 800
     height: 600
@@ -50,7 +52,7 @@ ApplicationWindow {
             left: parent.left
             verticalCenter: parent.verticalCenter
         }
-        width: 60
+        width: 0.075 * appWin.width
         spacing: 0
 
         Repeater {
@@ -59,7 +61,6 @@ ApplicationWindow {
                 id: tabButton
                 property bool isSelected: bar.currentButtonIndex === index
                 property color textColor: isSelected ? Theme.tabButtonColorSel : Theme.tabButtonColor
-                //text: bar.names[index]
                 icon {
                     source: bar.icons[index]
                     color: tabButton.textColor
@@ -91,7 +92,6 @@ ApplicationWindow {
             left: bar.right
             right: parent.right
         }
-        width: parent.width
         initialItem: "qrc:/qml/Servers.qml"
     }
     Connections {

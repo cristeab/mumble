@@ -6,7 +6,7 @@ import ".."
 Dialog {
     id: control
 
-    property string title: ""
+    title: ""
     property string text: ""
     property bool okCancel: true
     property var acceptCallback: null
@@ -27,7 +27,6 @@ Dialog {
     }
     onRejected: control.destroy()
     visible: "" !== controlLabel.text
-    title: control.title
     modal: true
     closePolicy: Popup.NoAutoClose
     LabelToolTip {
@@ -48,7 +47,7 @@ Dialog {
             color: Theme.textColor
             font {
                 bold: true
-                pointSize: Theme.titleFontSize
+                pointSize: appWin.isFullScreen ? Theme.bigTitleFontSize : Theme.titleFontSize
             }
             topPadding: Theme.windowMargin
             leftPadding: Theme.windowMargin

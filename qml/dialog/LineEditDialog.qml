@@ -81,7 +81,7 @@ Dialog {
             color: Theme.textColor
             font {
                 bold: true
-                pointSize: Theme.titleFontSize
+                pointSize: appWin.isFullScreen ? Theme.bigTitleFontSize : Theme.titleFontSize
             }
             topPadding: Theme.windowMargin
             leftPadding: Theme.windowMargin

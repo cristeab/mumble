@@ -10,6 +10,7 @@ Button {
     contentItem: Label {
         anchors.centerIn: parent
         text: control.text
+        font.pointSize: appWin.isFullScreen ? Theme.bigLabelFontSize : Theme.labelFontSize
         color: control.textColor
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter

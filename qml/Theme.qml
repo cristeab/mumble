@@ -10,6 +10,9 @@ QtObject {
     readonly property real labelFontSize: 10
     readonly property real titleFontSize: 12
 
+    readonly property real bigLabelFontSize: 14
+    readonly property real bigTitleFontSize: 16
+
     readonly property color backgroundColor: "#C2CCDA"
     readonly property color backgroundColor2: "#0F80FE"
     readonly property color separatorColor: "white"
