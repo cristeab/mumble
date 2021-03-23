@@ -63,7 +63,7 @@ static void mumbleMessageOutputQString(QtMsgType type, const QString &msg) {
 	OutputDebugStringA(qPrintable(fmsg));
 	le->addLogEntry(fmsg);
 	if (type == QtFatalMsg) {
-		::MessageBoxA(NULL, qPrintable(msg), "Mumble", MB_OK | MB_ICONERROR);
+        ::MessageBoxA(NULL, qPrintable(msg), "Bubbles", MB_OK | MB_ICONERROR);
 		exit(0);
 	}
 }

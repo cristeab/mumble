@@ -489,9 +489,9 @@ int main(int argc, char **argv) {
 	QDBusConnection::sessionBus().registerService(QLatin1String("net.sourceforge.mumble.mumble"));
 #endif
 
-	SocketRPC *srpc = new SocketRPC(QLatin1String("Mumble"));
+    //SocketRPC *srpc = new SocketRPC(QLatin1String("Mumble"));
 
-	g.l->log(Log::Information, MainWindow::tr("Welcome to Mumble."));
+    g.l->log(Log::Information, MainWindow::tr("Welcome to Bubbles."));
 
 	// Plugins
     //g.p = new Plugins(NULL);
@@ -616,7 +616,7 @@ int main(int argc, char **argv) {
 	if (sh)
 		sh->disconnect();
 
-	delete srpc;
+    //delete srpc;
 
 	g.sh.reset();
 	while (sh && ! sh.unique())
@@ -707,8 +707,8 @@ int main(int argc, char **argv) {
 #endif
 		if(!ok) {
 			QMessageBox::warning(NULL,
-			                     QApplication::tr("Failed to restart mumble"),
-			                     QApplication::tr("Mumble failed to restart itself. Please restart it manually.")
+                                 QApplication::tr("Failed to restart Bubbles"),
+                                 QApplication::tr("Bubbles failed to restart itself. Please restart it manually.")
 			);
 			return 1;
 		}
