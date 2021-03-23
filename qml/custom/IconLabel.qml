@@ -20,5 +20,6 @@ Column {
         color: Theme.textColor
         wrapMode: Text.WordWrap
         width: parent.width
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
     }
 }

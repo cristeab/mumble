@@ -38,6 +38,7 @@ Dialog {
         wrapMode: Text.WordWrap
         elide: Text.ElideRight
         clip: true
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
     }
 
     header: Rectangle {

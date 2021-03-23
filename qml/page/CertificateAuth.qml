@@ -24,7 +24,10 @@ Page {
         text: qsTr("Certificate Authentication")
         color: Theme.textColor
         elide: Text.ElideRight
-        font.bold: true
+        font {
+            bold: true
+            pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
+        }
     }
     Label {
         id: pageSubTitle
@@ -37,6 +40,7 @@ Page {
             rightMargin: 3 * Theme.windowMargin
         }
         text: qsTr("Authenticating to servers without using passwords")
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
         color: Theme.textColor
         elide: Text.ElideRight
     }
@@ -68,6 +72,7 @@ Page {
         wrapMode: Text.WordWrap
         text: qsTr("Bubbles can use certificates to authenticate with servers. Using certificates avoids passwords, meaning you don't need to disclose any password to the remote site. It also enables very easy user registration and a client side friends list independent of servers.\nWhile Bubbles can work without certificates, the majority of servers will expect you to have one.\nCreating a new certificate automatically is sufficient for most use cases. But Bubbles also supports certificates representing trust in the users ownership of an email address. These certificates are issued by third parties.")
         color: Theme.textColor
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
     }
     GroupBox {
         id: currentCert
@@ -86,6 +91,7 @@ Page {
         label: Label {
             width: 0.8 * currentCert.width
             text: qsTr("Current Certificate")
+            font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
             color: Theme.textColor
             elide: Text.ElideRight
         }
@@ -100,12 +106,14 @@ Page {
                         text: currentCert.nameArr[index]
                         color: Theme.textColor
                         elide: Text.ElideRight
+                        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
                     }
                     Label {
                         width: 0.9 * currentCert.width
                         text: currentCert.valueArr[index]
                         color: Theme.textColor
                         elide: Text.ElideRight
+                        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
                     }
                 }
             }
@@ -128,6 +136,7 @@ Page {
         label: Label {
             width: 0.8 * currentCert.width
             text: qsTr("Automatic Certificate Creation")
+            font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
             color: Theme.textColor
             elide: Text.ElideRight
         }

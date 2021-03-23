@@ -46,6 +46,7 @@ Page {
                 }
                 text: name
                 padding: Theme.windowMargin / 2
+                font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
             }
             onClicked: tokensModel.currentIndex = index
             swipe.enabled: true
@@ -85,6 +86,7 @@ Page {
                         width: parent.width
                         horizontalAlignment: Label.AlignHCenter
                         topPadding: 3
+                        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
                     }
                 }
             }
@@ -123,6 +125,7 @@ Page {
                         horizontalAlignment: Label.AlignHCenter
                         topPadding: 3
                         wrapMode: Text.WordWrap
+                        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
                     }
                 }
             }

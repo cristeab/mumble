@@ -23,7 +23,10 @@ Page {
         text: qsTr("Replace Certificate")
         color: Theme.textColor
         elide: Text.ElideRight
-        font.bold: true
+        font {
+            bold: true
+            pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
+        }
     }
     Label {
         id: pageSubTitle
@@ -38,6 +41,7 @@ Page {
         text: qsTr("Replace existing certificate with new certificate?")
         color: Theme.textColor
         elide: Text.ElideRight
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
     }
 
     Rectangle {
@@ -67,6 +71,7 @@ Page {
         wrapMode: Text.WordWrap
         text: qsTr("You already have a certificate stored in Bubbles, and you are about to replace it.\nIf you are upgrading to a certificate issued to you by a trusted CA and the email addresses match your current certificate, this is completely safe, and servers you connect to will automatically recognize the strong certificate for your email address.\nIf this is not the case, you will no longer be recognized by any server you previously have authenticated with. If you haven't been registered on any server yet, this is nothing to worry about.\nAre you sure you wish to replace your certificate?")
         color: Theme.textColor
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
     }
 
     Row {
@@ -104,12 +109,14 @@ Page {
                             text: currentCert.nameArr[index]
                             color: Theme.textColor
                             elide: Text.ElideRight
+                            font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
                         }
                         Label {
                             width: 0.8 * currentCert.width
                             text: currentCert.valueArr[index]
                             color: Theme.textColor
                             elide: Text.ElideRight
+                            font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
                         }
                     }
                 }
@@ -137,12 +144,14 @@ Page {
                             text: currentCert.nameArr[index]
                             color: Theme.textColor
                             elide: Text.ElideRight
+                            font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
                         }
                         Label {
                             width: 0.8 * newCert.width
                             text: newCert.valueArr[index]
                             color: Theme.textColor
                             elide: Text.ElideRight
+                            font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
                         }
                     }
                 }

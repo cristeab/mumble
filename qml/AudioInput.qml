@@ -63,6 +63,7 @@ Page {
         }
         color: Theme.textColor
         text: qsTr("Sound limitation")
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
     }
     CustomRangeSlider {
         id: sliderFrame
@@ -107,6 +108,7 @@ Page {
         }
         color: Theme.textColor
         text: qsTr("Compression")
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
     }
     CustomSlider {
         id: qualitySlider
@@ -167,5 +169,6 @@ Page {
         clip: true
         text: audioDevices.bitRateText
         color: audioDevices.bitRateAlarm ? Theme.errorColor : Theme.textColor
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
     }
 }

@@ -24,7 +24,10 @@ Page {
         text: qsTr("Import Certificate")
         color: Theme.textColor
         elide: Text.ElideRight
-        font.bold: true
+        font {
+            bold: true
+            pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
+        }
     }
     Label {
         id: pageSubTitle
@@ -39,6 +42,7 @@ Page {
         text: qsTr("PKCS #12 Certificate Import")
         color: Theme.textColor
         elide: Text.ElideRight
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
     }
 
     Rectangle {
@@ -68,6 +72,7 @@ Page {
         wrapMode: Text.WordWrap
         text: qsTr("Bubbles can import certificates stored in PKCS #12 format. This is the format used when exporting a key from Bubbles, and also when exporting keys from Firefox, Internet Explorer, Opera etc.\nIf the file is password protected, you will need the password to import the certificate.")
         color: Theme.textColor
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
     }
 
     Row {
@@ -131,6 +136,7 @@ Page {
             text: qsTr("Current Certificate")
             color: Theme.textColor
             elide: Text.ElideRight
+            font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
         }
         Column {
             spacing: Theme.windowMargin
@@ -143,12 +149,14 @@ Page {
                         text: currentCert.nameArr[index]
                         color: Theme.textColor
                         elide: Text.ElideRight
+                        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
                     }
                     Label {
                         width: 0.9 * currentCert.width
                         text: currentCert.valueArr[index]
                         color: Theme.textColor
                         elide: Text.ElideRight
+                        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
                     }
                 }
             }

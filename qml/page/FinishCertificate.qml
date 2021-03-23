@@ -23,7 +23,10 @@ Page {
         text: qsTr("Finish")
         color: Theme.textColor
         elide: Text.ElideRight
-        font.bold: true
+        font {
+            bold: true
+            pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
+        }
     }
     Label {
         id: pageSubTitle
@@ -36,6 +39,7 @@ Page {
             rightMargin: 3 * Theme.windowMargin
         }
         text: qsTr("Certificate-based authentication is ready for use")
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
         color: Theme.textColor
         elide: Text.ElideRight
     }
@@ -67,5 +71,6 @@ Page {
         wrapMode: Text.WordWrap
         text: qsTr("Press Next one more time to finish. Enjoy using Bubbles with strong authentication.")
         color: Theme.textColor
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
     }
 }

@@ -10,4 +10,5 @@ TabButton {
     background: Rectangle {
         color: Theme.backgroundColor
     }
+    font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
 }

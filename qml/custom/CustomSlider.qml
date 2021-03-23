@@ -25,6 +25,7 @@ Row {
         elide: Text.ElideRight
         wrapMode: Text.WordWrap
         maximumLineCount: 2
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
     }
     Slider {
         id: middleSlider
@@ -38,5 +39,6 @@ Row {
         color: Theme.textColor
         clip: true
         elide: Text.ElideRight
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
     }
 }

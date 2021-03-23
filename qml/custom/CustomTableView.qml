@@ -22,7 +22,7 @@ TableView {
                 width: controlTable.columnWidthProvider(modelData) - (modelData === 2 ? 0 : 2)
                 text: servers.headerData(modelData, Qt.Horizontal)
                 color: Theme.textColor2
-                font.pixelSize: appWin.isBig ? Theme.bigHeaderFontSize : Theme.headerFontSize
+                font.pointSize: appWin.isBig ? Theme.bigHeaderFontSize : Theme.headerFontSize
                 padding: Theme.windowMargin
                 verticalAlignment: Text.AlignVCenter
                 background: Rectangle { color: Theme.tableBackgroundColor }
@@ -47,6 +47,7 @@ TableView {
 
         padding: Theme.windowMargin
         text: (((0 === col) || servers.isReachable(row))) ? display : ""
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
         color: Theme.textColor2
         clip: true
         elide: Text.ElideRight

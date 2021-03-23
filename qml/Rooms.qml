@@ -65,7 +65,7 @@ Page {
         }
         text: servers.currentClassName
         color: Theme.textColor
-        font.pixelSize: 16
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
         clip: true
         elide: Text.ElideRight
     }
@@ -138,6 +138,7 @@ Page {
                     padding: Theme.windowMargin / 2
                     verticalAlignment: Text.AlignVCenter
                     background: Rectangle { color: Theme.tableBackgroundColor }
+                    font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
                 }
                 topMargin: usersListHeader.implicitHeight
 
@@ -149,6 +150,7 @@ Page {
                     width: parent.width
                     padding: Theme.windowMargin / 2
                     text: modelData
+                    font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
                     color: delegateControl.GridView.isCurrentItem ? Theme.textColor2 : Theme.textColor
                     clip: true
                     elide: Text.ElideRight

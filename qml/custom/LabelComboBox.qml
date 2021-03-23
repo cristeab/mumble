@@ -17,7 +17,7 @@ Row {
         color: Theme.textColor
         font {
             italic: true
-            pointSize: Theme.labelFontSize
+            pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
         }
     }
     ComboBox {
@@ -30,5 +30,6 @@ Row {
         popup.background: Rectangle {
             color: Theme.tableBackgroundColor
         }
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
     }
 }

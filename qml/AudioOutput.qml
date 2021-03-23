@@ -63,6 +63,7 @@ Page {
         }
         color: Theme.textColor
         text: qsTr("Audio output")
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
     }
     CustomSlider {
         id: volSlider

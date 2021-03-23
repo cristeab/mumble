@@ -6,6 +6,7 @@ import ".."
 RadioButton {
     id: control
 
+    font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
     Material.accent: Theme.backgroundColor2
     background: Rectangle {
         color: Theme.backgroundColor

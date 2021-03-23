@@ -49,6 +49,7 @@ Dialog {
             clip: true
             elide: Text.ElideRight
             color: Theme.textColor
+            font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
         }
         CustomTextField {
             width: parent.width

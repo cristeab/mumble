@@ -9,6 +9,7 @@ TextField {
     selectByMouse: true
     color: Theme.textColor
     Material.accent: Theme.textColor
+    font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
     background: Rectangle {
         anchors.fill: parent
         color: "transparent"

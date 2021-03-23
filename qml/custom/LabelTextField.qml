@@ -27,9 +27,11 @@ Row {
         width: 100
         elide: Text.ElideRight
         color: control.error ? Theme.errorColor : Theme.textColor
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
     }
     CustomTextField {
         id: controlTextField
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
         width: parent.width - controlLabel.width - control.spacing
         onEditingFinished: control.editingFinished()
     }

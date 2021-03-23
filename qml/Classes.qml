@@ -23,7 +23,7 @@ Page {
             width: parent.width
             text: qsTr("Class name")
             color: Theme.textColor2
-            font.pixelSize: 15
+            font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
             padding: Theme.windowMargin
             verticalAlignment: Text.AlignVCenter
             background: Rectangle { color: Theme.tableBackgroundColor }
@@ -49,6 +49,7 @@ Page {
             width: parent.width
             padding: Theme.windowMargin
             text: modelData
+            font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
             color: Theme.textColor2
             clip: true
             elide: Text.ElideRight

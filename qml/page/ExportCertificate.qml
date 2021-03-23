@@ -21,6 +21,7 @@ Page {
             rightMargin: 2 * Theme.windowMargin
         }
         text: qsTr("Export Certificate")
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
         color: Theme.textColor
         elide: Text.ElideRight
         font.bold: true
@@ -36,6 +37,7 @@ Page {
             rightMargin: 3 * Theme.windowMargin
         }
         text: qsTr("Make a backup of your certificate")
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
         color: Theme.textColor
         elide: Text.ElideRight
     }
@@ -67,6 +69,7 @@ Page {
         wrapMode: Text.WordWrap
         text: qsTr("If you ever lose your current certificate, which will happen if your computer suffers a hardware failure or you reinstall your machine, you will no longer be able to authenticate to any server you are registered on. It is therefore <b>mandatory</b> that you make a backup of your certificate. We strongly recommend you store this backup on removable storage, such as a USB flash drive.<br>Note that this file will not be encrypted, and if anyone gains access to it, they will be able to impersonate you, so take good care of it.")
         color: Theme.textColor
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
     }
 
     Row {
@@ -112,6 +115,7 @@ Page {
             text: qsTr("Certificate Details")
             color: Theme.textColor
             elide: Text.ElideRight
+            font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
         }
         Column {
             spacing: Theme.windowMargin
@@ -124,12 +128,14 @@ Page {
                         text: currentCert.nameArr[index]
                         color: Theme.textColor
                         elide: Text.ElideRight
+                        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
                     }
                     Label {
                         width: 0.9 * currentCert.width
                         text: currentCert.valueArr[index]
                         color: Theme.textColor
                         elide: Text.ElideRight
+                        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
                     }
                 }
             }

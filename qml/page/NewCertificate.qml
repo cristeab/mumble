@@ -23,7 +23,10 @@ Page {
         text: qsTr("New Certificate")
         color: Theme.textColor
         elide: Text.ElideRight
-        font.bold: true
+        font {
+            bold: true
+            pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
+        }
     }
     Label {
         id: pageSubTitle
@@ -38,6 +41,7 @@ Page {
         text: qsTr("Generate a new certificate for strong authentication")
         color: Theme.textColor
         elide: Text.ElideRight
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
     }
 
     Rectangle {
@@ -67,6 +71,7 @@ Page {
         wrapMode: Text.WordWrap
         text: qsTr("Bubbles will now generate a strong certificate for authentication to servers.\nIf you wish, you may provide some additional information to be stored in the certificate, which will be presented to servers when you connect. If you provide a valid email address, you can upgrade to a CA issued email certificate later on, which provides strong identification.")
         color: Theme.textColor
+        font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
     }
 
     Column {

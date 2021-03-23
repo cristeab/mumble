@@ -6,6 +6,7 @@ import ".."
 CheckBox {
     id: control
 
+    font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
     checkable: true
     Material.accent: Theme.backgroundColor2
     background: Rectangle {
