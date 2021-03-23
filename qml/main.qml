@@ -8,6 +8,8 @@ ApplicationWindow {
     id: appWin
 
     readonly property bool isFullScreen: appWin.visibility === ApplicationWindow.FullScreen
+    readonly property bool isLandscape: Qt.LandscapeOrientation === Screen.primaryOrientation
+    readonly property bool isBig: isFullScreen && isLandscape
 
     title: qsTr("Bubbles")
     width: 800

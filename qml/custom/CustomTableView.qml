@@ -5,7 +5,7 @@ import ".."
 TableView {
     id: controlTable
 
-    readonly property var columnWidths: [440, 120, 120]
+    readonly property var columnWidths: [0.55 * appWin.width, 0.15 * appWin.width, 0.15 * appWin.width]
 
     ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
     visible: 0 < controlTable.rows
@@ -22,7 +22,7 @@ TableView {
                 width: controlTable.columnWidthProvider(modelData) - (modelData === 2 ? 0 : 2)
                 text: servers.headerData(modelData, Qt.Horizontal)
                 color: Theme.textColor2
-                font.pixelSize: 15
+                font.pixelSize: appWin.isBig ? Theme.bigHeaderFontSize : Theme.headerFontSize
                 padding: Theme.windowMargin
                 verticalAlignment: Text.AlignVCenter
                 background: Rectangle { color: Theme.tableBackgroundColor }

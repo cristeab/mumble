@@ -108,9 +108,9 @@ int main(int argc, char **argv) {
 
 	// Initialize application object.
 	MumbleApplication a(argc, argv);
-	a.setApplicationName(QLatin1String("Mumble"));
-	a.setOrganizationName(QLatin1String("Mumble"));
-	a.setOrganizationDomain(QLatin1String("mumble.sourceforge.net"));
+    a.setApplicationName(QLatin1String("Bubbles"));
+    a.setOrganizationName(QLatin1String("Bubbles"));
+    a.setOrganizationDomain(QLatin1String("www.bubbles.dk"));
     a.setQuitOnLastWindowClosed(true);
 
 #if QT_VERSION >= 0x050100
