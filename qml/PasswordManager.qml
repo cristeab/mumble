@@ -150,8 +150,6 @@ Page {
             color: addButton.pressed ? Theme.tabButtonColorSel : Theme.tabButtonColor
         }
         onClicked: addEditTokenDlg.addToken()
-        height: 60
-        width: height
         ToolTip {
             visible: addButton.hovered
             text: qsTr("Add a token")
