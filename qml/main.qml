@@ -16,6 +16,14 @@ ApplicationWindow {
     height: 600
     visible: true
 
+    onVisibilityChanged: {
+        if (Window.Hidden !== visibility) {
+            bar.currentButtonIndex = 1
+            bar.currentButtonIndex = 0
+            console.log("visibility changed")
+        }
+    }
+
     background: Rectangle {
         color: Theme.backgroundColor
     }
@@ -69,7 +77,7 @@ ApplicationWindow {
                     source: bar.icons[index]
                     color: tabButton.textColor
                     width: ((1 === index) ? 0.8 : 1.0) * Theme.tabIconWidth
-                    height: Theme.tabIconWidth
+                    height: ((1 === index) ? 0.8 : 1.0) * Theme.tabIconWidth
                 }
                 width: bar.width
                 height: width + 2 * Theme.windowMargin
