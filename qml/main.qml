@@ -17,7 +17,7 @@ ApplicationWindow {
     visible: true
 
     Component.onCompleted: {
-        appWin.showFullScreen()
+        appWin.showMaximized()
         appWin.raise()
     }
 
