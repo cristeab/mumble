@@ -18,6 +18,7 @@ ApplicationWindow {
 
     Component.onCompleted: {
         appWin.showMaximized()
+        tabView.initialItem = "qrc:/qml/Servers.qml"
         appWin.raise()
     }
 
@@ -103,7 +104,6 @@ ApplicationWindow {
             left: bar.right
             right: parent.right
         }
-        initialItem: "qrc:/qml/Servers.qml"
     }
     Connections {
         target: servers
