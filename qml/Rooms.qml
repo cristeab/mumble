@@ -22,9 +22,11 @@ Page {
         visible: (servers.currentClassIndex === servers.connectedClassIndex)
         CustomTabButton {
             id: micBtn
-            icon.source: servers.roomsModel.microphoneOff ? "qrc:/img/microphone-off.svg" : "qrc:/img/microphone.svg"
-            width: bar.width
-            height: width + Theme.windowMargin
+            icon {
+                source: servers.roomsModel.microphoneOff ? "qrc:/img/microphone-off.svg" : "qrc:/img/microphone.svg"
+                width: 0.8 * Theme.tabIconWidth
+                height: Theme.tabIconWidth
+            }
             onClicked: {
                 servers.roomsModel.microphoneOff = !servers.roomsModel.microphoneOff
                 if (servers.roomsModel.speakerOff) {
@@ -38,9 +40,11 @@ Page {
         CustomTabButton {
             id: volBtn
             property bool changeMic: false
-            icon.source: servers.roomsModel.speakerOff ? "qrc:/img/volume-off.svg" : "qrc:/img/volume.svg"
-            width: bar.width
-            height: width + Theme.windowMargin
+            icon {
+                source: servers.roomsModel.speakerOff ? "qrc:/img/volume-off.svg" : "qrc:/img/volume.svg"
+                width: Theme.tabIconWidth
+                height: Theme.tabIconWidth
+            }
             onClicked: {
                 servers.roomsModel.speakerOff = !servers.roomsModel.speakerOff
                 if (volBtn.changeMic) {
@@ -60,7 +64,7 @@ Page {
     Label {
         anchors {
             top: parent.top
-            topMargin: 3 * Theme.windowMargin
+            topMargin: 6 * Theme.windowMargin
             horizontalCenter: parent.horizontalCenter
         }
         text: servers.currentClassName
@@ -134,7 +138,7 @@ Page {
                     elide: Text.ElideRight
                     text: name
                     color: Theme.textColor2
-                    font.pixelSize: 15
+                    font.pixelSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
                     padding: Theme.windowMargin / 2
                     verticalAlignment: Text.AlignVCenter
                     background: Rectangle { color: Theme.tableBackgroundColor }

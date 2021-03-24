@@ -31,7 +31,7 @@ Dialog {
         color: Theme.backgroundColor
     }
     implicitWidth: 400
-    implicitHeight: dlgColumn.height + 120
+    implicitHeight: dlgColumn.height + 150
     x: (appWin.width-width)/2
     y: (appWin.height-height)/2
     title: (-1 === servers.currentIndex) ? qsTr("Add Server") : qsTr("Edit Server")

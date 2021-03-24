@@ -77,8 +77,6 @@ ApplicationWindow {
                     width: ((1 === index) ? 0.8 : 1.0) * Theme.tabIconWidth
                     height: Theme.tabIconWidth
                 }
-                width: bar.width
-                height: width + 2 * Theme.windowMargin
                 onClicked: {
                     bar.currentButtonIndex = index
                     tabView.replace(bar.pages[index])
