@@ -23,6 +23,10 @@ ApplicationWindow {
             console.log("visibility changed")
         }
     }
+    Component.onCompleted: {
+        appWin.showFullScreen()
+        appWin.raise()
+    }
 
     background: Rectangle {
         color: Theme.backgroundColor
@@ -77,7 +81,7 @@ ApplicationWindow {
                     source: bar.icons[index]
                     color: tabButton.textColor
                     width: ((1 === index) ? 0.8 : 1.0) * Theme.tabIconWidth
-                    height: ((1 === index) ? 0.8 : 1.0) * Theme.tabIconWidth
+                    height: Theme.tabIconWidth
                 }
                 width: bar.width
                 height: width + 2 * Theme.windowMargin
