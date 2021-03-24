@@ -11,7 +11,7 @@ Column {
         id: controlIcon
         source: "qrc:/img/info-circle-solid.svg"
         mipmap: true
-        height: 20
+        height: 40
         width: height
         fillMode: Image.PreserveAspectFit
     }
