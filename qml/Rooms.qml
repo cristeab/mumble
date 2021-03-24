@@ -24,8 +24,8 @@ Page {
             id: micBtn
             icon {
                 source: servers.roomsModel.microphoneOff ? "qrc:/img/microphone-off.svg" : "qrc:/img/microphone.svg"
-                width: 0.8 * Theme.tabIconWidth
-                height: Theme.tabIconWidth
+                width: 0.8 * Theme.smallTabIconWidth
+                height: Theme.smallTabIconWidth
             }
             onClicked: {
                 servers.roomsModel.microphoneOff = !servers.roomsModel.microphoneOff
@@ -42,8 +42,8 @@ Page {
             property bool changeMic: false
             icon {
                 source: servers.roomsModel.speakerOff ? "qrc:/img/volume-off.svg" : "qrc:/img/volume.svg"
-                width: Theme.tabIconWidth
-                height: Theme.tabIconWidth
+                width: Theme.smallTabIconWidth
+                height: Theme.smallTabIconWidth
             }
             onClicked: {
                 servers.roomsModel.speakerOff = !servers.roomsModel.speakerOff
@@ -64,7 +64,7 @@ Page {
     Label {
         anchors {
             top: parent.top
-            topMargin: 6 * Theme.windowMargin
+            topMargin: 2 * Theme.windowMargin
             horizontalCenter: parent.horizontalCenter
         }
         text: servers.currentClassName
