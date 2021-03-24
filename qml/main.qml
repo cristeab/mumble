@@ -16,13 +16,6 @@ ApplicationWindow {
     height: 600
     visible: true
 
-    onVisibilityChanged: {
-        if (Window.Hidden !== visibility) {
-            bar.currentButtonIndex = 1
-            bar.currentButtonIndex = 0
-            console.log("visibility changed")
-        }
-    }
     Component.onCompleted: {
         appWin.showFullScreen()
         appWin.raise()
