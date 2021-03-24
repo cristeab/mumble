@@ -7,15 +7,17 @@ QtObject {
     readonly property real dialogMargin: 80
     readonly property real windowMargin: 10
 
-    readonly property real labelFontSize: 10
-    readonly property real titleFontSize: 12
+    readonly property real labelFontSize: 12
+    readonly property real titleFontSize: 13
     readonly property real headerFontSize: 15
     readonly property real buttonIconWidth: 20
     readonly property real tabIconWidth: 50
 
-    readonly property real bigLabelFontSize: 14
-    readonly property real bigTitleFontSize: 16
+    readonly property real bigLabelFontSize: 16
+    readonly property real bigTitleFontSize: 17
     readonly property real bigHeaderFontSize: 19
+
+    readonly property real sliderWidth: 26
 
     readonly property color backgroundColor: "#C2CCDA"
     readonly property color backgroundColor2: "#0F80FE"

@@ -53,7 +53,7 @@ RangeSlider {
     first.handle: Rectangle {
         x: control.leftPadding + control.first.visualPosition * (control.availableWidth - width)
         y: control.topPadding + control.availableHeight / 2 - height / 2
-        implicitWidth: 13
+        implicitWidth: Theme.sliderWidth
         implicitHeight: control.height + Theme.windowMargin
         radius: 3
         color: control.first.pressed ? Theme.sliderPressedColor : Theme.sliderReleasedColor
@@ -67,7 +67,7 @@ RangeSlider {
     second.handle: Rectangle {
         x: control.leftPadding + control.second.visualPosition * (control.availableWidth - width)
         y: control.topPadding + control.availableHeight / 2 - height / 2
-        implicitWidth: 13
+        implicitWidth: Theme.sliderWidth
         implicitHeight: control.height + Theme.windowMargin
         radius: 3
         color: control.second.pressed ? Theme.sliderPressedColor : Theme.sliderReleasedColor

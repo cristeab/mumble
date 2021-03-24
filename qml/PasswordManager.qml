@@ -144,6 +144,8 @@ Page {
         }
         display: AbstractButton.IconOnly
         icon {
+            width: Theme.buttonIconWidth
+            height: Theme.buttonIconWidth
             source: "qrc:/img/plus-circle-solid.svg"
             color: addButton.pressed ? Theme.tabButtonColorSel : Theme.tabButtonColor
         }
