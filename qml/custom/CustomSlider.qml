@@ -19,7 +19,7 @@ Row {
     Label {
         id: leftLabel
         anchors.verticalCenter: middleSlider.verticalCenter
-        width: 130
+        width: 150
         color: Theme.textColor
         clip: true
         elide: Text.ElideRight
@@ -44,7 +44,7 @@ Row {
     Label {
         id: rightLabel
         anchors.verticalCenter: middleSlider.verticalCenter
-        width: 100
+        width: 120
         color: Theme.textColor
         clip: true
         elide: Text.ElideRight
