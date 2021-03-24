@@ -139,7 +139,10 @@ Page {
         count: view.count
         currentIndex: view.currentIndex
 
-        anchors.bottom: parent.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors {
+            bottom: parent.bottom
+            bottomMargin: Theme.windowMargin
+            horizontalCenter: parent.horizontalCenter
+        }
     }
 }
