@@ -19,9 +19,11 @@ Page {
         }
         visible: (0 <= servers.connectedServerIndex) && (0 < servers.classNameList.length)
         text: qsTr("Forward")
-        icon.source: "qrc:/img/chevron-circle-right.svg"
-        width: backBtn.width
-        height: backBtn.height
+        icon {
+            width: Theme.buttonIconWidth
+            height: Theme.buttonIconWidth
+            source: "qrc:/img/chevron-circle-right.svg"
+        }
         onClicked: tabView.push("qrc:/qml/Classes.qml")
     }
 

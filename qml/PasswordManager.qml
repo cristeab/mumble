@@ -144,12 +144,12 @@ Page {
         }
         display: AbstractButton.IconOnly
         icon {
+            width: Theme.buttonIconWidth
+            height: Theme.buttonIconWidth
             source: "qrc:/img/plus-circle-solid.svg"
             color: addButton.pressed ? Theme.tabButtonColorSel : Theme.tabButtonColor
         }
         onClicked: addEditTokenDlg.addToken()
-        height: 60
-        width: height
         ToolTip {
             visible: addButton.hovered
             text: qsTr("Add a token")

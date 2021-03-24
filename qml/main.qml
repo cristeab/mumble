@@ -16,6 +16,12 @@ ApplicationWindow {
     height: 600
     visible: true
 
+    Component.onCompleted: {
+        appWin.showMaximized()
+        appWin.raise()
+        tabView.activeFocus = true
+    }
+
     background: Rectangle {
         color: Theme.backgroundColor
     }
@@ -28,9 +34,11 @@ ApplicationWindow {
         }
         visible: 1 < tabView.depth
         text: qsTr("Back")
-        icon.source: "qrc:/img/chevron-circle-left.svg"
-        width: bar.width
-        height: width + Theme.windowMargin
+        icon {
+            width: Theme.buttonIconWidth
+            height: Theme.buttonIconWidth
+            source: "qrc:/img/chevron-circle-left.svg"
+        }
         onClicked: tabView.pop()
     }
 
@@ -55,7 +63,7 @@ ApplicationWindow {
             verticalCenter: parent.verticalCenter
         }
         width: 0.075 * appWin.width
-        spacing: 0
+        spacing: Theme.windowMargin
 
         Repeater {
             model: bar.names.length
@@ -66,11 +74,9 @@ ApplicationWindow {
                 icon {
                     source: bar.icons[index]
                     color: tabButton.textColor
-                    width: 0.5 * tabButton.width
-                    height: width
+                    width: ((1 === index) ? 0.8 : 1.0) * Theme.tabIconWidth
+                    height: Theme.tabIconWidth
                 }
-                width: bar.width
-                height: width + 2 * Theme.windowMargin
                 onClicked: {
                     bar.currentButtonIndex = index
                     tabView.replace(bar.pages[index])

@@ -19,7 +19,7 @@ Row {
     Label {
         id: leftLabel
         anchors.verticalCenter: middleSlider.verticalCenter
-        width: 100
+        width: 150
         color: Theme.textColor
         clip: true
         elide: Text.ElideRight
@@ -31,11 +31,20 @@ Row {
         id: middleSlider
         width: control.width - leftLabel.width - rightLabel.width - 2 * control.spacing
         Material.accent: Theme.backgroundColor2
+        handle: Rectangle {
+            x: middleSlider.leftPadding + middleSlider.visualPosition * (middleSlider.availableWidth - width)
+            y: middleSlider.topPadding + middleSlider.availableHeight / 2 - height / 2
+            implicitWidth: Theme.sliderWidth
+            implicitHeight: Theme.sliderWidth
+            radius: Theme.sliderWidth / 2
+            color: middleSlider.pressed ? "#f0f0f0" : "#f6f6f6"
+            border.color: "#bdbebf"
+        }
     }
     Label {
         id: rightLabel
         anchors.verticalCenter: middleSlider.verticalCenter
-        width: 50
+        width: 120
         color: Theme.textColor
         clip: true
         elide: Text.ElideRight

@@ -14,7 +14,7 @@ Page {
         id: pageTitle
         anchors {
             top: parent.top
-            topMargin: Theme.windowMargin
+            topMargin: 8 * Theme.windowMargin
             left: parent.left
             leftMargin: Theme.windowMargin
             right: parent.right
