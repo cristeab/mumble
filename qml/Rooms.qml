@@ -20,6 +20,7 @@ Page {
             leftMargin: Theme.windowMargin
         }
         visible: (servers.currentClassIndex === servers.connectedClassIndex)
+        spacing: Theme.windowMargin
         CustomTabButton {
             id: micBtn
             icon {
@@ -137,11 +138,10 @@ Page {
                     clip: true
                     elide: Text.ElideRight
                     text: name
-                    color: Theme.textColor2
-                    font.pixelSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
                     padding: Theme.windowMargin / 2
                     verticalAlignment: Text.AlignVCenter
                     background: Rectangle { color: Theme.tableBackgroundColor }
+                    color: Theme.textColor2
                     font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
                 }
                 topMargin: usersListHeader.implicitHeight

@@ -63,7 +63,7 @@ ApplicationWindow {
             verticalCenter: parent.verticalCenter
         }
         width: 0.075 * appWin.width
-        spacing: 0
+        spacing: Theme.windowMargin
 
         Repeater {
             model: bar.names.length
