@@ -24,7 +24,7 @@ Page {
             height: Theme.buttonIconWidth
             source: "qrc:/img/chevron-circle-right.svg"
         }
-        onClicked: tabView.push("qrc:/qml/Classes.qml")
+        onClicked: tabView.push("qrc:/qml/Schools.qml")
     }
 
     CustomTableView {

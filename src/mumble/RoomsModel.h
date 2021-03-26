@@ -26,7 +26,7 @@ public:
         QString name;
         QStringList users;
     };
-    enum class ChannelType { Root, Class, Room, Other };
+    enum class ChannelType { Root, School, Class, Room, Other };
 
     explicit RoomsModel(QObject *parent = nullptr);
     int rowCount(const QModelIndex &parent = QModelIndex()) const;

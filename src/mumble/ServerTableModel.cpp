@@ -578,16 +578,16 @@ void ServerTableModel::onUserModelChanged()
 {
     auto *userModel = g.mw->pmModel;
     if (nullptr != userModel) {
-        _classNameList.clear();
-        _classModelItems.clear();
+        _schoolNameList.clear();
+        _schoolModelItems.clear();
         const auto *rootItem = userModel->rootItem();
         for (auto *child: rootItem->qlChildren) {
-            _classNameList << child->cChan->qsName;
-            _classModelItems << child;
+            _schoolNameList << child->cChan->qsName;
+            _schoolModelItems << child;
         }
-        emit classNameListChanged();
-        if (1 == _classNameList.size()) {
-            emit classesAvailable();
+        emit schoolNameListChanged();
+        if (1 == _schoolNameList.size()) {
+            emit schoolsAvailable();
             qDebug() << "onUserModelChanged";
         }
     } else {
@@ -613,8 +613,43 @@ void ServerTableModel::onChannelJoined(Channel *channel, const QString &userName
             qDebug() << "Class already exists" << channel->qsName;
         }
         break;
+    case RoomsModel::ChannelType::School:
+        if (!_schoolNameList.contains(channel->qsName)) {
+            _schoolNameList << channel->qsName;
+            _schoolNameList.sort();
+            emit schoolNameListChanged();
+        } else {
+            qDebug() << "School already exists" << channel->qsName;
+        }
+        break;
     default:
         qWarning() << "Unknown channel type" << static_cast<int>(type);
+    }
+}
+
+void ServerTableModel::gotoSchool(int index)
+{
+    if ((0 <= index) && (index < _schoolModelItems.size())) {
+        const auto *rootItem = _schoolModelItems.at(index);
+        if (nullptr != rootItem) {
+            _classModelItems.clear();
+            _classNameList.clear();
+            for (auto *child: rootItem->qlChildren) {
+                const auto type = RoomsModel::channelType(child->cChan);
+                if (RoomsModel::ChannelType::Class == type) {
+                    _classModelItems << child;
+                    _classNameList << child->cChan->qsName;
+                } else {
+                    qWarning() << "Unknown channel type" << static_cast<int>(type);
+                }
+            }
+            emit classNameListChanged();
+            setCurrentSchoolName(_schoolNameList.at(index));
+        } else {
+            qWarning() << "Root item is NULL";
+        }
+    } else {
+        qCritical() << "Invalid index" << index;
     }
 }
 

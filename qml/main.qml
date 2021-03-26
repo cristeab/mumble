@@ -106,9 +106,9 @@ ApplicationWindow {
     }
     Connections {
         target: servers
-        function onClassesAvailable() {
+        function onSchoolsAvailable() {
             if (1 === tabView.depth) {
-                tabView.push("qrc:/qml/Classes.qml")
+                tabView.push("qrc:/qml/Schools.qml")
             }
         }
         function onDlgTitleChanged() {
