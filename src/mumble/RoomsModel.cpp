@@ -117,9 +117,12 @@ RoomsModel::ChannelType RoomsModel::channelType(Channel *channel)
             return ChannelType::Root;
         }
         if (nullptr == channel->cParent->cParent) {
-            return ChannelType::Class;
+            return ChannelType::School;
         }
         if (nullptr == channel->cParent->cParent->cParent) {
+            return ChannelType::Class;
+        }
+        if (nullptr == channel->cParent->cParent->cParent->cParent) {
             return ChannelType::Room;
         }
     }

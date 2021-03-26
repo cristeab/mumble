@@ -47,8 +47,10 @@ class ServerTableModel : public QAbstractTableModel
     QML_WRITABLE_PROPERTY(QString, dlgText, setDlgText, QString())
     QML_WRITABLE_PROPERTY(bool, dlgIsPassword, setDlgIsPassword, false)
 
+    QML_WRITABLE_PROPERTY(QStringList, schoolNameList, setSchoolNameList, QStringList())
     QML_WRITABLE_PROPERTY(QStringList, classNameList, setClassNameList, QStringList())
     QML_CONSTANT_PROPERTY_PTR(RoomsModel, roomsModel)
+    QML_READABLE_PROPERTY(QString, currentSchoolName, setCurrentSchoolName, QString())
     QML_READABLE_PROPERTY(QString, currentClassName, setCurrentClassName, QString())
 
 public:
@@ -86,6 +88,7 @@ public:
     Q_INVOKABLE bool connectServer();
     Q_INVOKABLE bool disconnectServer();
     Q_INVOKABLE void onLineEditDlgAccepted();
+    Q_INVOKABLE void gotoSchool(int index);
     Q_INVOKABLE void gotoClass(int index);
     Q_INVOKABLE bool joinRoom(int index);
     Q_INVOKABLE QString currentServerName() const {
@@ -104,7 +107,7 @@ public:
     void onChannelJoined(Channel *channel, const QString &userName);
 
 signals:
-    void classesAvailable();
+    void schoolsAvailable();
 
 private:
     enum { NAME = 0, DELAY, USERS, COLUMN_COUNT };
@@ -147,6 +150,7 @@ private:
     QUdpSocket *_socket4 = nullptr;
     QUdpSocket *_socket6 = nullptr;
     QList<ModelItem*> _classModelItems;
+    QList<ModelItem*> _schoolModelItems;
 
 #ifdef USE_ZEROCONF
 protected:

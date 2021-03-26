@@ -35,7 +35,7 @@ Page {
 
         currentIndex: 0
         clip: true
-        interactive: true
+        interactive: false
         anchors {
             top: parent.top
             left: parent.left
