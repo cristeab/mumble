@@ -390,11 +390,11 @@ int main(int argc, char **argv) {
 	qWarning("Locale is \"%s\" (System: \"%s\")", qPrintable(locale), qPrintable(qsSystemLocale));
 
 	QTranslator translator;
-	if (translator.load(QLatin1String(":mumble_") + locale))
+    if (translator.load(QLatin1String(":bubbles_") + locale))
 		a.installTranslator(&translator);
 
 	QTranslator loctranslator;
-	if (loctranslator.load(QLatin1String("mumble_") + locale, a.applicationDirPath()))
+    if (loctranslator.load(QLatin1String("bubbles_") + locale, a.applicationDirPath()))
 		a.installTranslator(&loctranslator); // Can overwrite strings from bundled mumble translation
 
 	// With modularization of Qt 5 some - but not all - of the qt_<locale>.ts files have become

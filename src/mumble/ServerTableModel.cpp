@@ -50,8 +50,10 @@ QVariant ServerTableModel::data(const QModelIndex &index, int role) const
     case Qt::EditRole:
         if (isValidIndex(row)) {
             switch (col) {
-            case NAME:
-                out = _servers.at(row).name;
+            case NAME: {
+                const auto name = _servers.at(row).name;
+                out = !name.isEmpty() ? name : _servers.at(row).hostname;
+            }
                 break;
             case DELAY:
                 out = QString(QString::fromUtf8("%1 ms")).arg(_servers.at(row).delayMs);
@@ -172,10 +174,11 @@ void ServerTableModel::load()
     emit layoutAboutToBeChanged();
     for (const auto &it: qAsConst(items)) {
         ServerItem srvItem;
-        srvItem.name = it.qsName;
+        srvItem.hostname = it.qsHostname;
         srvItem.address = it.qsUrl;
         srvItem.port = it.usPort;
         srvItem.username = it.qsUsername;
+        srvItem.name = it.qsName;
         _servers << srvItem;
         startDns(&_servers.last());
     }
@@ -191,10 +194,11 @@ void ServerTableModel::save()
     QList<FavoriteServer> favs;
     for (const auto &it: qAsConst(_servers)) {
         FavoriteServer favSrv;
-        favSrv.qsName = it.name;
+        favSrv.qsHostname = it.hostname;
         favSrv.qsUrl = it.address;
         favSrv.usPort = it.port;
         favSrv.qsUsername = it.username;
+        favSrv.qsName = it.name;
         favs << favSrv;
     }
     g.db->setFavorites(favs);

@@ -42,18 +42,15 @@ void TokensModel::load()
         qWarning() << "Cannot load tokens";
         return;
     }
-    _digest = g.sh->qbaDigest;
+    const auto digest = g.sh->qbaDigest;
     emit layoutAboutToBeChanged();
-    _tokens = g.db->getTokens(_digest);
+    _tokens = g.db->getTokens(digest);
     _tokens.sort();
     emit layoutChanged();
 }
 
 void TokensModel::save()
 {
-    if (_isSaved) {
-        return;//nothing to do
-    }
     if ((nullptr == g.sh) || (nullptr == g.db)) {
         qCritical() << "Cannot save tokens";
         return;
@@ -64,9 +61,9 @@ void TokensModel::save()
             tok << it;
         }
     }
-    g.db->setTokens(_digest, tok);
+    const auto digest = g.sh->qbaDigest;
+    g.db->setTokens(digest, tok);
     g.sh->setTokens(tok);
-    _isSaved = true;
 }
 
 void TokensModel::remove(int index)
@@ -75,7 +72,7 @@ void TokensModel::remove(int index)
         emit layoutAboutToBeChanged();
         _tokens.removeAt(index);
         emit layoutChanged();
-        _isSaved = false;
+        save();
     }
 }
 
@@ -87,13 +84,13 @@ void TokensModel::setCurrentToken(const QString &token)
         _tokens.sort();
         emit layoutChanged();
         setCurrentIndex(INVALID_INDEX);
-        _isSaved = false;
+        save();
     } else if (INVALID_INDEX == _currentIndex) {
         emit layoutAboutToBeChanged();
         _tokens << token;
         _tokens.sort();
         emit layoutChanged();
         setCurrentIndex(INVALID_INDEX);
-        _isSaved = false;
+        save();
     }
 }
