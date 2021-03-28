@@ -33,5 +33,4 @@ private:
     }
     void save();
     QStringList _tokens;
-    QByteArray _digest;
 };

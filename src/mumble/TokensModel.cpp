@@ -42,9 +42,9 @@ void TokensModel::load()
         qWarning() << "Cannot load tokens";
         return;
     }
-    _digest = g.sh->qbaDigest;
+    const auto digest = g.sh->qbaDigest;
     emit layoutAboutToBeChanged();
-    _tokens = g.db->getTokens(_digest);
+    _tokens = g.db->getTokens(digest);
     _tokens.sort();
     emit layoutChanged();
 }
@@ -61,7 +61,8 @@ void TokensModel::save()
             tok << it;
         }
     }
-    g.db->setTokens(_digest, tok);
+    const auto digest = g.sh->qbaDigest;
+    g.db->setTokens(digest, tok);
     g.sh->setTokens(tok);
 }
 
