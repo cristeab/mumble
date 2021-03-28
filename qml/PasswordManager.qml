@@ -12,6 +12,7 @@ Page {
 
     ListView {
         id: tokensList
+        enabled: addButton.enabled
         readonly property int swipeWidth: 70
         ScrollBar.vertical: ScrollBar {
             policy: ScrollBar.AsNeeded
@@ -142,6 +143,7 @@ Page {
         background: Rectangle {
             color: Theme.backgroundColor
         }
+        enabled: 0 <= servers.connectedServerIndex
         display: AbstractButton.IconOnly
         icon {
             width: Theme.buttonIconWidth
