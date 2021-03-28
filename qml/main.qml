@@ -86,8 +86,6 @@ ApplicationWindow {
                     }
                     if (3 === index) {
                         tokensModel.load()
-                    } else {
-                        tokensModel.save()
                     }
                 }
             }

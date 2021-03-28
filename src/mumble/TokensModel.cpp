@@ -51,9 +51,6 @@ void TokensModel::load()
 
 void TokensModel::save()
 {
-    if (_isSaved) {
-        return;//nothing to do
-    }
     if ((nullptr == g.sh) || (nullptr == g.db)) {
         qCritical() << "Cannot save tokens";
         return;
@@ -66,7 +63,6 @@ void TokensModel::save()
     }
     g.db->setTokens(_digest, tok);
     g.sh->setTokens(tok);
-    _isSaved = true;
 }
 
 void TokensModel::remove(int index)
@@ -75,7 +71,7 @@ void TokensModel::remove(int index)
         emit layoutAboutToBeChanged();
         _tokens.removeAt(index);
         emit layoutChanged();
-        _isSaved = false;
+        save();
     }
 }
 
@@ -87,13 +83,13 @@ void TokensModel::setCurrentToken(const QString &token)
         _tokens.sort();
         emit layoutChanged();
         setCurrentIndex(INVALID_INDEX);
-        _isSaved = false;
+        save();
     } else if (INVALID_INDEX == _currentIndex) {
         emit layoutAboutToBeChanged();
         _tokens << token;
         _tokens.sort();
         emit layoutChanged();
         setCurrentIndex(INVALID_INDEX);
-        _isSaved = false;
+        save();
     }
 }

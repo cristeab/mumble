@@ -20,7 +20,6 @@ public:
     QHash<int,QByteArray> roleNames() const override;
 
     Q_INVOKABLE void load();
-    Q_INVOKABLE void save();
     Q_INVOKABLE void remove(int index);
     Q_INVOKABLE QString currentToken() const {
         return isValidIndex(_currentIndex) ? _tokens.at(_currentIndex) : QString();
@@ -32,7 +31,7 @@ private:
     bool isValidIndex(int index) const {
         return (0 <= index) && (index < _tokens.size());
     }
+    void save();
     QStringList _tokens;
-    bool _isSaved = true;
     QByteArray _digest;
 };
