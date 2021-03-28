@@ -30,7 +30,7 @@ Dialog {
     background: Rectangle {
         color: Theme.backgroundColor
     }
-    implicitWidth: 400
+    implicitWidth: 500
     implicitHeight: dlgColumn.height + 150
     x: (appWin.width-width)/2
     y: (appWin.height-height)/2
