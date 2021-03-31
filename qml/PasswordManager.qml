@@ -167,6 +167,6 @@ Page {
             right: parent.right
             rightMargin: 2 * Theme.windowMargin
         }
-        text: qsTr("This is an editable list of access tokens on the connected server. An access token is a text string, which can be used as a password for very simple access management on channels. Mumble will remember the tokens you've used and resend them to the server next time you reconnect, so you don't have to enter these every time.")
+        text: qsTr("This is an editable list of access tokens on the connected server. An access token is a text string, which can be used as a password for very simple access management on channels. Bubbles will remember the tokens you've used and resend them to the server next time you reconnect, so you don't have to enter these every time.")
     }
 }

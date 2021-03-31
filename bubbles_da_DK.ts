@@ -87,57 +87,57 @@
     <message>
         <location filename="qml/AudioInput.qml" line="21"/>
         <source>Mute microphone</source>
-        <translation type="unfinished"></translation>
+        <translation>Mute mikrofon</translation>
     </message>
     <message>
         <location filename="qml/AudioInput.qml" line="26"/>
         <source>Reconnect automatically</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilslut automatisk</translation>
     </message>
     <message>
         <location filename="qml/AudioInput.qml" line="41"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>System</translation>
     </message>
     <message>
         <location filename="qml/AudioInput.qml" line="48"/>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Enhed</translation>
     </message>
     <message>
         <location filename="qml/AudioInput.qml" line="65"/>
         <source>Sound limitation</source>
-        <translation type="unfinished"></translation>
+        <translation>Lyd afgrænsning</translation>
     </message>
     <message>
         <location filename="qml/AudioInput.qml" line="98"/>
         <source>Adjust the sliders such that when you speak the voice exceeds the green field, but when you are quiet the background noise is in the red field.</source>
-        <translation type="unfinished"></translation>
+        <translation>Juster slideren således at feltet når det grønne når du snakker, men når du er stille, er baggrundstøjen&#xa0;i&#xa0;det røde felt.</translation>
     </message>
     <message>
         <location filename="qml/AudioInput.qml" line="110"/>
         <source>Compression</source>
-        <translation type="unfinished"></translation>
+        <translation>Kompression</translation>
     </message>
     <message>
         <location filename="qml/AudioInput.qml" line="128"/>
         <source>Quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Lyd kvalitet</translation>
     </message>
     <message>
         <location filename="qml/AudioInput.qml" line="132"/>
         <source>Quality of compression (peak bandwidth)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kompressionskvalitet (maksimal båndbredde)</translation>
     </message>
     <message>
         <location filename="qml/AudioInput.qml" line="151"/>
         <source>Audio per packet</source>
-        <translation type="unfinished"></translation>
+        <translation>Lyd pr. pakke</translation>
     </message>
     <message>
         <location filename="qml/AudioInput.qml" line="155"/>
         <source>How many audio frames to send per packet</source>
-        <translation type="unfinished"></translation>
+        <translation>Hvor mange lydrammer der skal sendes pr. pakke</translation>
     </message>
 </context>
 <context>
@@ -145,77 +145,77 @@
     <message>
         <location filename="qml/AudioOutput.qml" line="21"/>
         <source>Mute speakers</source>
-        <translation type="unfinished"></translation>
+        <translation>Mute hovedtelefon</translation>
     </message>
     <message>
         <location filename="qml/AudioOutput.qml" line="26"/>
         <source>Reconnect automatically</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilslut&#xa0;automatisk</translation>
     </message>
     <message>
         <location filename="qml/AudioOutput.qml" line="41"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>System</translation>
     </message>
     <message>
         <location filename="qml/AudioOutput.qml" line="48"/>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Enhed</translation>
     </message>
     <message>
         <location filename="qml/AudioOutput.qml" line="65"/>
         <source>Audio output</source>
-        <translation type="unfinished"></translation>
+        <translation>Lyd output</translation>
     </message>
     <message>
         <location filename="qml/AudioOutput.qml" line="83"/>
         <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Lydstyrke</translation>
     </message>
     <message>
         <location filename="qml/AudioOutput.qml" line="87"/>
         <source>Volume of incoming speech</source>
-        <translation type="unfinished"></translation>
+        <translation>Volumen af ​​indkommende tale</translation>
     </message>
     <message>
         <location filename="qml/AudioOutput.qml" line="105"/>
         <source>Output delay</source>
-        <translation type="unfinished"></translation>
+        <translation>Output forsinkelse</translation>
     </message>
     <message>
         <location filename="qml/AudioOutput.qml" line="109"/>
         <source>Amount of data to buffer</source>
-        <translation type="unfinished"></translation>
+        <translation>Mængden af ​​data, der skal buffer</translation>
     </message>
     <message>
         <location filename="qml/AudioOutput.qml" line="128"/>
         <source>Attenuate applications by...</source>
-        <translation type="unfinished"></translation>
+        <translation>Dæmp andre applicationer med...</translation>
     </message>
     <message>
         <location filename="qml/AudioOutput.qml" line="132"/>
         <source>Attenuation of other applications during speech</source>
-        <translation type="unfinished"></translation>
+        <translation>Dæmpning af andre applikationer under talen</translation>
     </message>
     <message>
         <location filename="qml/AudioOutput.qml" line="144"/>
         <source>while other users talk</source>
-        <translation type="unfinished"></translation>
+        <translation>Når andre snakker</translation>
     </message>
     <message>
         <location filename="qml/AudioOutput.qml" line="149"/>
-        <source>If checked Mumble lowers the volume of other applications while other users talk</source>
-        <translation type="unfinished"></translation>
+        <source>If checked Bubbles lowers the volume of other applications while other users talk</source>
+        <translation>Hvis dette er markeret, sænker Bubbles lydstyrken for andre applikationer, mens andre brugere taler</translation>
     </message>
     <message>
         <location filename="qml/AudioOutput.qml" line="154"/>
         <source>while you talk</source>
-        <translation type="unfinished"></translation>
+        <translation>Når jeg snakker</translation>
     </message>
     <message>
         <location filename="qml/AudioOutput.qml" line="159"/>
-        <source>If checked Mumble lowers the volume of other applications while you talk</source>
-        <translation type="unfinished"></translation>
+        <source>If checked Bubbles lowers the volume of other applications while you talk</source>
+        <translation>Hvis dette er markeret, reducerer Bubbles lyden af ​​andre applikationer, mens du taler</translation>
     </message>
 </context>
 <context>
@@ -317,12 +317,12 @@ Creating a new certificate automatically is sufficient for most use cases. But B
     <message>
         <location filename="qml/Classes.qml" line="24"/>
         <source>Class name</source>
-        <translation type="unfinished"></translation>
+        <translation>Klassens navn</translation>
     </message>
     <message>
         <location filename="qml/Classes.qml" line="91"/>
         <source>Go to class</source>
-        <translation type="unfinished"></translation>
+        <translation>Gå til time</translation>
     </message>
 </context>
 <context>
@@ -330,12 +330,12 @@ Creating a new certificate automatically is sufficient for most use cases. But B
     <message>
         <location filename="qml/custom/CustomRangeSlider.qml" line="63"/>
         <source>Signal values below this count as silence</source>
-        <translation type="unfinished"></translation>
+        <translation>Signalværdier under dette tæller som stilhed</translation>
     </message>
     <message>
         <location filename="qml/custom/CustomRangeSlider.qml" line="77"/>
         <source>Signal values above this count as voice</source>
-        <translation type="unfinished"></translation>
+        <translation>Signalværdier over dette tæller som stemme</translation>
     </message>
 </context>
 <context>
@@ -343,12 +343,12 @@ Creating a new certificate automatically is sufficient for most use cases. But B
     <message>
         <location filename="qml/page/ExportCertificate.qml" line="23"/>
         <source>Export Certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportcertifikat</translation>
     </message>
     <message>
         <location filename="qml/page/ExportCertificate.qml" line="39"/>
         <source>Make a backup of your certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Lav en sikkerhedskopi af dit certifikat</translation>
     </message>
     <message>
         <location filename="qml/page/ExportCertificate.qml" line="70"/>
@@ -473,22 +473,22 @@ If the file is password protected, you will need the password to import the cert
     <message>
         <location filename="qml/dialog/LineEditDialog.qml" line="60"/>
         <source>Your password</source>
-        <translation type="unfinished"></translation>
+        <translation>Dit kodeord</translation>
     </message>
     <message>
         <location filename="qml/dialog/LineEditDialog.qml" line="60"/>
         <source>Your username</source>
-        <translation type="unfinished"></translation>
+        <translation>Dit brugernavn</translation>
     </message>
     <message>
         <location filename="qml/dialog/LineEditDialog.qml" line="95"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilføj</translation>
     </message>
     <message>
         <location filename="qml/dialog/LineEditDialog.qml" line="99"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Fortryd</translation>
     </message>
 </context>
 <context>
@@ -496,12 +496,12 @@ If the file is password protected, you will need the password to import the cert
     <message>
         <location filename="qml/dialog/MessageDialog.qml" line="61"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilføj</translation>
     </message>
     <message>
         <location filename="qml/dialog/MessageDialog.qml" line="66"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Fortryd</translation>
     </message>
 </context>
 <context>
@@ -538,22 +538,22 @@ If you wish, you may provide some additional information to be stored in the cer
     <message>
         <location filename="qml/PasswordManager.qml" line="82"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Slet</translation>
     </message>
     <message>
         <location filename="qml/PasswordManager.qml" line="120"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigere</translation>
     </message>
     <message>
         <location filename="qml/PasswordManager.qml" line="157"/>
         <source>Add a token</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilføj et token</translation>
     </message>
     <message>
         <location filename="qml/PasswordManager.qml" line="170"/>
-        <source>This is an editable list of access tokens on the connected server. An access token is a text string, which can be used as a password for very simple access management on channels. Mumble will remember the tokens you&apos;ve used and resend them to the server next time you reconnect, so you don&apos;t have to enter these every time.</source>
-        <translation type="unfinished"></translation>
+        <source>This is an editable list of access tokens on the connected server. An access token is a text string, which can be used as a password for very simple access management on channels. Bubbles will remember the tokens you&apos;ve used and resend them to the server next time you reconnect, so you don&apos;t have to enter these every time.</source>
+        <translation>Dette er en redigerbar liste af kodeord&#xa0;på dine tilsluttede serverer, der sikre at du har tilladelse til at tilslutte din skoles virtuelle rum.</translation>
     </message>
 </context>
 <context>
@@ -612,7 +612,7 @@ Are you sure you wish to replace your certificate?</source>
     <message>
         <location filename="qml/Rooms.qml" line="214"/>
         <source>Join room</source>
-        <translation type="unfinished"></translation>
+        <translation>Deltag i værelset</translation>
     </message>
 </context>
 <context>
@@ -620,12 +620,12 @@ Are you sure you wish to replace your certificate?</source>
     <message>
         <location filename="qml/Schools.qml" line="20"/>
         <source>School name</source>
-        <translation type="unfinished"></translation>
+        <translation>Skole navn</translation>
     </message>
     <message>
         <location filename="qml/Schools.qml" line="81"/>
         <source>Go to school</source>
-        <translation type="unfinished"></translation>
+        <translation>Gå i skole</translation>
     </message>
 </context>
 <context>
@@ -633,42 +633,42 @@ Are you sure you wish to replace your certificate?</source>
     <message>
         <location filename="qml/Servers.qml" line="21"/>
         <source>Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Frem</translation>
     </message>
     <message>
         <location filename="qml/Servers.qml" line="54"/>
         <source>Disconnect</source>
-        <translation type="unfinished"></translation>
+        <translation>Koble fra</translation>
     </message>
     <message>
         <location filename="qml/Servers.qml" line="54"/>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Opret forbindelse</translation>
     </message>
     <message>
         <location filename="qml/Servers.qml" line="70"/>
         <source>Add New...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilføj ny...</translation>
     </message>
     <message>
         <location filename="qml/Servers.qml" line="75"/>
         <source>Edit...</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigere...</translation>
     </message>
     <message>
         <location filename="qml/Servers.qml" line="79"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjerne</translation>
     </message>
     <message>
         <location filename="qml/Servers.qml" line="81"/>
         <source>Delete Server</source>
-        <translation type="unfinished"></translation>
+        <translation>Slet server</translation>
     </message>
     <message>
         <location filename="qml/Servers.qml" line="82"/>
         <source>Are you sure you want to delete </source>
-        <translation type="unfinished"></translation>
+        <translation>Er du sikker på, at du vil slette </translation>
     </message>
 </context>
 <context>
@@ -681,42 +681,42 @@ Are you sure you wish to replace your certificate?</source>
     <message>
         <location filename="qml/main.qml" line="36"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilbage</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="51"/>
         <source>Servers</source>
-        <translation type="unfinished"></translation>
+        <translation>Servere</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="51"/>
         <source>Audio Input</source>
-        <translation type="unfinished"></translation>
+        <translation>Lydindgang</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="51"/>
         <source>Audio Output</source>
-        <translation type="unfinished"></translation>
+        <translation>Lydudgang</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="51"/>
         <source>Password Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Adgangskodeadministrator</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="51"/>
         <source>Certificate Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Certifikat Manager</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="188"/>
         <source>Select file to import certificate from</source>
-        <translation type="unfinished"></translation>
+        <translation>Vælg fil, du vil importere certifikat fra</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="188"/>
         <source>Select file to export certificate to</source>
-        <translation type="unfinished"></translation>
+        <translation>Vælg fil, du vil eksportere certifikat til</translation>
     </message>
 </context>
 </TS>
