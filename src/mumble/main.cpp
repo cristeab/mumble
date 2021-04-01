@@ -386,7 +386,7 @@ int main(int argc, char **argv) {
 	}
 #endif
 
-	const QString locale = g.s.qsLanguage.isEmpty() ? qsSystemLocale : g.s.qsLanguage;
+    const QString locale = qsSystemLocale;//g.s.qsLanguage.isEmpty() ? qsSystemLocale : g.s.qsLanguage;
 	qWarning("Locale is \"%s\" (System: \"%s\")", qPrintable(locale), qPrintable(qsSystemLocale));
 
     const auto fileName = QLatin1String(":/bubbles_%1").arg(locale);
