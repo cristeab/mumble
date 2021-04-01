@@ -561,6 +561,19 @@ If the file is password protected, you will need the password to import the cert
     </message>
 </context>
 <context>
+    <name>MainWindow</name>
+    <message>
+        <location filename="src/mumble/main.cpp" line="501"/>
+        <source>Welcome to Bubbles.</source>
+        <translation>Velkommen til Bubbles.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/main.cpp" line="590"/>
+        <source>Skipping version check in debug mode.</source>
+        <translation>Spring over versionskontrol i fejlretningstilstand.</translation>
+    </message>
+</context>
+<context>
     <name>MessageDialog</name>
     <message>
         <location filename="qml/dialog/MessageDialog.qml" line="61"/>
@@ -623,6 +636,38 @@ If you wish, you may provide some additional information to be stored in the cer
         <location filename="qml/PasswordManager.qml" line="170"/>
         <source>This is an editable list of access tokens on the connected server. An access token is a text string, which can be used as a password for very simple access management on channels. Bubbles will remember the tokens you&apos;ve used and resend them to the server next time you reconnect, so you don&apos;t have to enter these every time.</source>
         <translation>Dette er en redigerbar liste af kodeord&#xa0;på dine tilsluttede serverer, der sikre at du har tilladelse til at tilslutte din skoles virtuelle rum.</translation>
+    </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <location filename="src/mumble/main.cpp" line="717"/>
+        <source>Failed to restart Bubbles</source>
+        <translation>Kunne ikke genstarte Bubbles</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/main.cpp" line="718"/>
+        <source>Bubbles failed to restart itself. Please restart it manually.</source>
+        <translation>Bubbles kunne ikke genstarte sig selv. Genstart det manuelt.</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="src/mumble/main.cpp" line="529"/>
+        <location filename="src/mumble/main.cpp" line="577"/>
+        <source>Warning</source>
+        <translation>Advarsel</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/main.cpp" line="529"/>
+        <source>Please make sure the audio devices are correctly setup</source>
+        <translation>Sørg for, at lydenhederne er korrekt konfigureret</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/main.cpp" line="575"/>
+        <source>Your certificate is about to expire. You need to renew it, or you will no longer be able to connect to servers you are registered on.</source>
+        <translation>Dit certifikat udløber. Du skal forny den, ellers kan du ikke længere oprette forbindelse til servere, du er registreret på.</translation>
     </message>
 </context>
 <context>

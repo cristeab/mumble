@@ -1,8 +1,0 @@
-src/mumble/ServerTableModel.h
-src/mumble/ServerTableModel.cpp
-src/mumble/AudioDeviceModel.h
-src/mumble/AudioDeviceModel.cpp
-src/mumble/TokensModel.h
-src/mumble/TokensModel.cpp
-src/mumble/CertificateModel.h
-src/mumble/CertificateModel.cpp
