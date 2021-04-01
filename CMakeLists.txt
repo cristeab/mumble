@@ -46,6 +46,7 @@ install(FILES ${CMAKE_SOURCE_DIR}/build/celt0.0.11.0.dll DESTINATION .)
 install(FILES ${CMAKE_SOURCE_DIR}/build/opus.dll DESTINATION .)
 install(FILES ${CMAKE_SOURCE_DIR}/build/rnnoise.dll DESTINATION .)
 install(FILES ${CMAKE_SOURCE_DIR}/build/speex.dll DESTINATION .)
+install(FILES ${CMAKE_SOURCE_DIR}/bubbles_da_DK.qm DESTINATION .)
 
 add_custom_target(windeployqt ALL
       DEPENDS ${CMAKE_PROJECT_NAME}.exe
