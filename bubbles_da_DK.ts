@@ -83,6 +83,14 @@
     </message>
 </context>
 <context>
+    <name>AudioDeviceModel</name>
+    <message>
+        <location filename="src/mumble/AudioDeviceModel.cpp" line="183"/>
+        <source>%1 kbit/s (Audio %2, Position %4, Overhead %3)</source>
+        <translation>%1 kbit/s (Lyd %2, Position %4, Overhead %3)</translation>
+    </message>
+</context>
+<context>
     <name>AudioInput</name>
     <message>
         <location filename="qml/AudioInput.qml" line="21"/>
@@ -288,7 +296,7 @@ Creating a new certificate automatically is sufficient for most use cases. But B
     <message>
         <location filename="qml/CertificateManager.qml" line="64"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="qml/CertificateManager.qml" line="75"/>
@@ -309,6 +317,67 @@ Creating a new certificate automatically is sufficient for most use cases. But B
     <message>
         <location filename="qml/CertificateManager.qml" line="96"/>
         <source>There was an error generating your certificate. Please try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CertificateModel</name>
+    <message>
+        <location filename="src/mumble/CertificateModel.h" line="52"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/mumble/CertificateModel.cpp" line="68"/>
+        <location filename="src/mumble/CertificateModel.cpp" line="377"/>
+        <source>(none)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/mumble/CertificateModel.cpp" line="88"/>
+        <location filename="src/mumble/CertificateModel.cpp" line="397"/>
+        <source>Self-signed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/mumble/CertificateModel.cpp" line="133"/>
+        <location filename="src/mumble/CertificateModel.cpp" line="238"/>
+        <source>Empty file path. Please choose a file path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/mumble/CertificateModel.cpp" line="138"/>
+        <source>Your certificate and key could not be exported to PKCS#12 format. There might be an error in your certificate.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/mumble/CertificateModel.cpp" line="143"/>
+        <source>The file could not be opened for writing. Please use another file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/mumble/CertificateModel.cpp" line="147"/>
+        <source>The file&apos;s permissions could not be set. No certificate and key has been written. Please use another file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/mumble/CertificateModel.cpp" line="153"/>
+        <source>The file could not be written successfully. Please use another file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/mumble/CertificateModel.cpp" line="244"/>
+        <source>The file could not be opened for reading. Please use another file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/mumble/CertificateModel.cpp" line="254"/>
+        <source>The file is empty or could not be read. Please use another file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/mumble/CertificateModel.cpp" line="263"/>
+        <source>The file did not contain a valid certificate and key. Please use another file.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -629,6 +698,68 @@ Are you sure you wish to replace your certificate?</source>
     </message>
 </context>
 <context>
+    <name>ServerTableModel</name>
+    <message>
+        <location filename="src/mumble/ServerTableModel.cpp" line="87"/>
+        <source>Server Name</source>
+        <translation>Server navn</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/ServerTableModel.cpp" line="90"/>
+        <source>Delay</source>
+        <translation>Forsinke</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/ServerTableModel.cpp" line="93"/>
+        <source>Users</source>
+        <translation>Brugere</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/ServerTableModel.cpp" line="545"/>
+        <source>Invalid username</source>
+        <translation>Ugyldigt brugernavn</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/ServerTableModel.cpp" line="546"/>
+        <source>You connected with an invalid username, please try another one.</source>
+        <translation>Du har forbindelse til et ugyldigt brugernavn. Prøv et andet.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/ServerTableModel.cpp" line="551"/>
+        <source>Username in use</source>
+        <translation>Brugernavn i brug</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/ServerTableModel.cpp" line="552"/>
+        <source>That username is already in use, please try another username.</source>
+        <translation>Dette brugernavn er allerede i brug, prøv et andet brugernavn.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/ServerTableModel.cpp" line="557"/>
+        <source>Wrong certificate or password</source>
+        <translation>Forkert certifikat eller adgangskode</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/ServerTableModel.cpp" line="558"/>
+        <source>Wrong certificate or password for registered user. If you are
+certain this user is protected by a password please retry.
+Otherwise abort and check your certificate and username.</source>
+        <translation>Forkert certifikat eller adgangskode til registreret bruger. Hvis du er
+visse denne bruger er beskyttet af en adgangskode, prøv igen.
+Ellers afbryder og tjek dit certifikat og brugernavn.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/ServerTableModel.cpp" line="565"/>
+        <source>Wrong password</source>
+        <translation>Forkert kodeord</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/ServerTableModel.cpp" line="566"/>
+        <source>Wrong server password for unregistered user account, please try again.</source>
+        <translation>Forkert serveradgangskode til uregistreret brugerkonto, prøv igen.</translation>
+    </message>
+</context>
+<context>
     <name>Servers</name>
     <message>
         <location filename="qml/Servers.qml" line="21"/>
@@ -676,7 +807,7 @@ Are you sure you wish to replace your certificate?</source>
     <message>
         <location filename="qml/main.qml" line="14"/>
         <source>Bubbles</source>
-        <translation type="unfinished"></translation>
+        <translation>Bubbles</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="36"/>

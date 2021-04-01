@@ -18,3 +18,4 @@ Bubbles - Mumble clone with touch screen support for Windows
 ## Translations Generation
 
 "C:\Qt\5.15.2\msvc2019_64\bin\lupdate.exe" E:\projects\mumble\src\mumble\mumble.qrc -ts bubbles_da_DK.ts
+"C:\Qt\5.15.2\msvc2019_64\bin\lrelease.exe" bubbles_da_DK.ts
