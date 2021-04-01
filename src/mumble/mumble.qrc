@@ -63,5 +63,6 @@
         <file alias="qml/page/ImportCertificate.qml">../../qml/page/ImportCertificate.qml</file>
         <file alias="qml/qmldir">../../qml/qmldir</file>
         <file alias="qtquickcontrols2.conf">../../qml/qtquickcontrols2.conf</file>
+        <file alias="bubbles_da_DK.qm">../../bubbles_da_DK.qm</file>
     </qresource>
 </RCC>

@@ -146,7 +146,7 @@ Page {
             onCheckedChanged: audioDevices.whileOtherUsersTalk = checked
             ToolTip {
                 visible: whileOtherCheckBox.hovered
-                text: qsTr("If checked Mumble lowers the volume of other applications while other users talk")
+                text: qsTr("If checked Bubbles lowers the volume of other applications while other users talk")
             }
         }
         CustomCheckBox {
@@ -156,7 +156,7 @@ Page {
             onCheckedChanged: audioDevices.whileYouTalk = checked
             ToolTip {
                 visible: whileYouCheckBox.hovered
-                text: qsTr("If checked Mumble lowers the volume of other applications while you talk")
+                text: qsTr("If checked Bubbles lowers the volume of other applications while you talk")
             }
         }
     }

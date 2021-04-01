@@ -283,7 +283,7 @@ FORMS *= ConfigDialog.ui \
     VoiceRecorderDialog.ui
 
 # Include TRANSLATIONS variable
-include(translations.pri)
+#include(translations.pri)
 
 PRECOMPILED_HEADER = mumble_pch.hpp
 INCLUDEPATH *= ../../3rdparty/qqbonjour-src

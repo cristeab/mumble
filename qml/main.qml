@@ -19,7 +19,6 @@ ApplicationWindow {
     Component.onCompleted: {
         appWin.showMaximized()
         appWin.raise()
-        tabView.activeFocus = true
     }
 
     background: Rectangle {
