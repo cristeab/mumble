@@ -389,13 +389,20 @@ int main(int argc, char **argv) {
 	const QString locale = g.s.qsLanguage.isEmpty() ? qsSystemLocale : g.s.qsLanguage;
 	qWarning("Locale is \"%s\" (System: \"%s\")", qPrintable(locale), qPrintable(qsSystemLocale));
 
+    const auto fileName = QLatin1String(":/bubbles_%1").arg(locale);
+    qDebug() << "Translator" << fileName;
 	QTranslator translator;
-    if (translator.load(QLatin1String(":bubbles_") + locale))
+    if (translator.load(fileName)) {
+        qDebug() << "Install translator";
 		a.installTranslator(&translator);
+    }
 
+    qDebug() << "Translator path" << a.applicationDirPath();
 	QTranslator loctranslator;
-    if (loctranslator.load(QLatin1String("bubbles_") + locale, a.applicationDirPath()))
-		a.installTranslator(&loctranslator); // Can overwrite strings from bundled mumble translation
+    if (loctranslator.load(QLatin1String("bubbles_%1").arg(locale), a.applicationDirPath())) {
+        qDebug() << "Install translator";
+        a.installTranslator(&loctranslator); // Can overwrite strings from bundled mumble translation
+    }
 
 	// With modularization of Qt 5 some - but not all - of the qt_<locale>.ts files have become
 	// so-called meta catalogues which no longer contain actual translations but refer to other
