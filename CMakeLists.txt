@@ -30,7 +30,8 @@ set(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}\\\\icons\\\\bubbles.bmp")
 set(CPACK_NSIS_URL_INFO_ABOUT "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}")
 set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "ExecWait '\\\"$INSTDIR\\\\${VC_REDIST_FILENAME}\\\" /install /passive /norestart'
       CreateShortCut \\\"$DESKTOP\\\\${CMAKE_PROJECT_NAME}.lnk\\\" \\\"$INSTDIR\\\\${CMAKE_PROJECT_NAME}.exe\\\" \\\"\\\" \\\"$INSTDIR\\\\bubbles.ico\\\"
-      CreateShortCut \\\"$SMPROGRAMS\\\\${CMAKE_PROJECT_NAME}.lnk\\\" \\\"$INSTDIR\\\\${CMAKE_PROJECT_NAME}.exe\\\" \\\"\\\" \\\"$INSTDIR\\\\bubbles.ico\\\"")
+      CreateShortCut \\\"$SMPROGRAMS\\\\${CMAKE_PROJECT_NAME}.lnk\\\" \\\"$INSTDIR\\\\${CMAKE_PROJECT_NAME}.exe\\\" \\\"\\\" \\\"$INSTDIR\\\\bubbles.ico\\\"
+      CreateShortCut \\\"$SMSTARTUP\\\\${CMAKE_PROJECT_NAME}.lnk\\\" \\\"$INSTDIR\\\\${CMAKE_PROJECT_NAME}.exe\\\" \\\"\\\" \\\"$INSTDIR\\\\bubbles.ico\\\"")
 set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "Delete \\\"$DESKTOP\\\\${CMAKE_PROJECT_NAME}.lnk\\\"
       Delete \\\"$SMPROGRAMS\\\\${CMAKE_PROJECT_NAME}.lnk\\\"")
 
