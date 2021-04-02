@@ -84,7 +84,9 @@ ApplicationWindow {
                         audioDevices.init(1 === index)
                     }
                     if (3 === index) {
-                        tokensModel.load()
+                        if (0 <= servers.connectedServerIndex) {
+                            tokensModel.load()
+                        }
                     }
                 }
             }
