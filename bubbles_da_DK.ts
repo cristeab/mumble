@@ -21,7 +21,7 @@
     <message>
         <location filename="qml/dialog/AddEditServer.qml" line="70"/>
         <source>Port</source>
-        <translation>Havn</translation>
+        <translation>Navn</translation>
     </message>
     <message>
         <location filename="qml/dialog/AddEditServer.qml" line="81"/>
@@ -46,7 +46,7 @@
     <message>
         <location filename="qml/dialog/AddEditServer.qml" line="112"/>
         <source>OK</source>
-        <translation>Tilføj</translation>
+        <translation>Slet</translation>
     </message>
     <message>
         <location filename="qml/dialog/AddEditServer.qml" line="116"/>
@@ -74,7 +74,7 @@
     <message>
         <location filename="qml/dialog/AddEditToken.qml" line="73"/>
         <source>OK</source>
-        <translation>Tilføj</translation>
+        <translation>Slet</translation>
     </message>
     <message>
         <location filename="qml/dialog/AddEditToken.qml" line="77"/>
@@ -552,7 +552,7 @@ If the file is password protected, you will need the password to import the cert
     <message>
         <location filename="qml/dialog/LineEditDialog.qml" line="95"/>
         <source>OK</source>
-        <translation>Tilføj</translation>
+        <translation>Slet</translation>
     </message>
     <message>
         <location filename="qml/dialog/LineEditDialog.qml" line="99"/>
@@ -578,7 +578,7 @@ If the file is password protected, you will need the password to import the cert
     <message>
         <location filename="qml/dialog/MessageDialog.qml" line="61"/>
         <source>OK</source>
-        <translation>Tilføj</translation>
+        <translation>Slet</translation>
     </message>
     <message>
         <location filename="qml/dialog/MessageDialog.qml" line="66"/>
@@ -834,7 +834,7 @@ Ellers afbryder og tjek dit certifikat og brugernavn.</translation>
     <message>
         <location filename="qml/Servers.qml" line="79"/>
         <source>Remove</source>
-        <translation>Fjerne</translation>
+        <translation>Fjern</translation>
     </message>
     <message>
         <location filename="qml/Servers.qml" line="81"/>
