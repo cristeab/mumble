@@ -82,7 +82,7 @@ Page {
                 console.log("server: cur " + servers.currentIndex + ", conn " + servers.connectedServerIndex)
                 console.log("class: cur " + servers.currentClassIndex + ", conn " + servers.connectedClassIndex)
             } else {
-                msgDlg.showDialog(qsTr("You were denied access to this class"))
+                msgDlg.showDialog(qsTr("Error"), qsTr("You were denied access to this class"))
             }
         }
 
