@@ -182,6 +182,7 @@ void MainWindow::msgServerConfig(const MumbleProto::ServerConfig &msg) {
 
 void MainWindow::msgPermissionDenied(const MumbleProto::PermissionDenied &msg) {
     qDebug() << "msgPermissionDenied" << msg.type();
+    QString errMsg;
 	switch (msg.type()) {
 		case MumbleProto::PermissionDenied_DenyType_Permission: {
 				VICTIM_INIT;
@@ -190,22 +191,28 @@ void MainWindow::msgPermissionDenied(const MumbleProto::PermissionDenied &msg) {
 				if (! c)
 					return;
 				QString pname = ChanACL::permName(static_cast<ChanACL::Permissions>(msg.permission()));
-				if (pDst == pSelf)
-					g.l->log(Log::PermissionDenied, tr("You were denied %1 privileges in %2.").arg(Log::msgColor(pname, Log::Privilege)).arg(Log::formatChannel(c)));
-				else
-					g.l->log(Log::PermissionDenied, tr("%3 was denied %1 privileges in %2.").arg(Log::msgColor(pname, Log::Privilege)).arg(Log::formatChannel(c)).arg(Log::formatClientUser(pDst, Log::Target)));
+                if (pDst == pSelf) {
+                    errMsg = tr("You were denied %1 privileges in %2.").arg(Log::msgColor(pname, Log::Privilege)).arg(Log::formatChannel(c));
+                    g.l->log(Log::PermissionDenied, errMsg);
+                } else {
+                    errMsg = tr("%3 was denied %1 privileges in %2.").arg(Log::msgColor(pname, Log::Privilege)).arg(Log::formatChannel(c)).arg(Log::formatClientUser(pDst, Log::Target));
+                    g.l->log(Log::PermissionDenied, errMsg);
+                }
 			}
 			break;
 		case MumbleProto::PermissionDenied_DenyType_SuperUser: {
-				g.l->log(Log::PermissionDenied, tr("Denied: Cannot modify SuperUser."));
+                errMsg = tr("Denied: Cannot modify SuperUser.");
+                g.l->log(Log::PermissionDenied, errMsg);
 			}
 			break;
 		case MumbleProto::PermissionDenied_DenyType_ChannelName: {
-				g.l->log(Log::PermissionDenied, tr("Denied: Invalid channel name."));
+                errMsg = tr("Denied: Invalid channel name.");
+                g.l->log(Log::PermissionDenied, errMsg);
 			}
 			break;
 		case MumbleProto::PermissionDenied_DenyType_TextTooLong: {
-				g.l->log(Log::PermissionDenied, tr("Denied: Text message too long."));
+                errMsg = tr("Denied: Text message too long.");
+                g.l->log(Log::PermissionDenied, errMsg);
 			}
 			break;
 		case MumbleProto::PermissionDenied_DenyType_H9K: {
@@ -227,45 +234,61 @@ void MainWindow::msgPermissionDenied(const MumbleProto::PermissionDenied &msg) {
 			}
 			break;
 		case MumbleProto::PermissionDenied_DenyType_TemporaryChannel: {
-				g.l->log(Log::PermissionDenied, tr("Denied: Operation not permitted in temporary channel."));
+                errMsg = tr("Denied: Operation not permitted in temporary channel.");
+                g.l->log(Log::PermissionDenied, errMsg);
 			}
 			break;
 		case MumbleProto::PermissionDenied_DenyType_MissingCertificate: {
 				VICTIM_INIT;
 				SELF_INIT;
-				if (pDst == pSelf)
-					g.l->log(Log::PermissionDenied, tr("You need a certificate to perform this operation."));
-				else
-					g.l->log(Log::PermissionDenied, tr("%1 does not have a certificate.").arg(Log::formatClientUser(pDst, Log::Target)));
+                if (pDst == pSelf) {
+                    errMsg = tr("You need a certificate to perform this operation.");
+                    g.l->log(Log::PermissionDenied, errMsg);
+                } else {
+                    errMsg = tr("%1 does not have a certificate.").arg(Log::formatClientUser(pDst, Log::Target));
+                    g.l->log(Log::PermissionDenied, errMsg);
+                }
 			}
 			break;
 		case MumbleProto::PermissionDenied_DenyType_UserName: {
-				if (msg.has_name())
-					g.l->log(Log::PermissionDenied, tr("Invalid username: %1.").arg(Qt::escape(u8(msg.name()))));
-				else
-					g.l->log(Log::PermissionDenied, tr("Invalid username."));
+                if (msg.has_name()) {
+                    errMsg = tr("Invalid username: %1.").arg(Qt::escape(u8(msg.name())));
+                    g.l->log(Log::PermissionDenied, errMsg);
+                } else {
+                    errMsg = tr("Invalid username.");
+                    g.l->log(Log::PermissionDenied, errMsg);
+                }
 			}
 			break;
 		case MumbleProto::PermissionDenied_DenyType_ChannelFull: {
-				g.l->log(Log::PermissionDenied, tr("Channel is full."));
+                errMsg = tr("Channel is full.");
+                g.l->log(Log::PermissionDenied, errMsg);
 			}
 			break;
 		case MumbleProto::PermissionDenied_DenyType_NestingLimit: {
-				g.l->log(Log::PermissionDenied, tr("Channel nesting limit reached."));
+                errMsg = tr("Channel nesting limit reached.");
+                g.l->log(Log::PermissionDenied, errMsg);
 			}
 			break;
 		case MumbleProto::PermissionDenied_DenyType_ChannelCountLimit: {
-				g.l->log(Log::PermissionDenied, tr("Channel count limit reached. Need to delete channels before creating new ones."));
+                errMsg = tr("Channel count limit reached. Need to delete channels before creating new ones.");
+                g.l->log(Log::PermissionDenied, errMsg);
 			}
 			break;
 		default: {
-				if (msg.has_reason())
-					g.l->log(Log::PermissionDenied, tr("Denied: %1.").arg(Qt::escape(u8(msg.reason()))));
-				else
-					g.l->log(Log::PermissionDenied, tr("Permission denied."));
+                if (msg.has_reason()) {
+                    errMsg = tr("Denied: %1.").arg(Qt::escape(u8(msg.reason())));
+                    g.l->log(Log::PermissionDenied, errMsg);
+                } else {
+                    errMsg = tr("Permission denied.");
+                    g.l->log(Log::PermissionDenied, errMsg);
+                }
 			}
 			break;
 	}
+    if (!errMsg.isEmpty()) {
+        emit showDialog(tr("Error"), errMsg);
+    }
 }
 
 void MainWindow::msgUDPTunnel(const MumbleProto::UDPTunnel &) {

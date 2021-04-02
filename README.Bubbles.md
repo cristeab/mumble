@@ -17,5 +17,5 @@ Bubbles - Mumble clone with touch screen support for Windows
 
 ## Translations Generation
 
-"C:\Qt\5.15.2\msvc2019_64\bin\lupdate.exe" E:\projects\mumble\src\mumble\mumble.qrc src/mumble/ServerTableModel.h src/mumble/ServerTableModel.cpp src/mumble/AudioDeviceModel.h src/mumble/AudioDeviceModel.cpp src/mumble/TokensModel.h src/mumble/TokensModel.cpp src/mumble/CertificateModel.h src/mumble/CertificateModel.cpp src/mumble/main.cpp -ts bubbles_da_DK.ts
+"C:\Qt\5.15.2\msvc2019_64\bin\lupdate.exe" E:\projects\mumble\src\mumble\mumble.qrc src/mumble/ServerTableModel.h src/mumble/ServerTableModel.cpp src/mumble/AudioDeviceModel.h src/mumble/AudioDeviceModel.cpp src/mumble/TokensModel.h src/mumble/TokensModel.cpp src/mumble/CertificateModel.h src/mumble/CertificateModel.cpp src/mumble/main.cpp src/mumble/Messages.cpp -ts bubbles_da_DK.ts
 "C:\Qt\5.15.2\msvc2019_64\bin\lrelease.exe" bubbles_da_DK.ts

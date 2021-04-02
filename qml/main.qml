@@ -219,7 +219,7 @@ ApplicationWindow {
                                               "visible": true
                                           })
             if (null === dlg) {
-                console.error("Cannot create incoming call dialog")
+                console.error("Cannot create message dialog")
             }
         }
     }
