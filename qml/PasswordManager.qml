@@ -16,6 +16,7 @@ Page {
         color: Theme.textColor
         wrapMode: Text.WordWrap
         width: parent.width
+        horizontalAlignment: Text.AlignHCenter
         text: qsTr("Please connect to a server before adding access tokens")
         font.pointSize: appWin.isBig ? Theme.bigHeaderFontSize : Theme.headerFontSize
     }
