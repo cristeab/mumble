@@ -694,10 +694,16 @@ bool ServerTableModel::joinRoom(int index)
     const auto *ch = _roomsModel->channel(index);
     bool rc = false;
     if (nullptr != ch) {
-        g.sh->joinChannel(g.uiSession, ch->iId);
-        _roomsModel->setCurrentRoomIndex(index);
-        rc = true;
-        qDebug() << "Connected class" << index;
+        ChanACL::Permissions p = static_cast<ChanACL::Permissions>(ch->uiPermissions);
+        const bool allowed = p & (ChanACL::Write | ChanACL::Enter);
+        g.sh->joinChannel(g.uiSession, ch->iId);//make sure the error message is shown
+        if (allowed) {
+            _roomsModel->setCurrentRoomIndex(index);
+            rc = true;
+            qInfo() << "Connected class" << index;
+        } else {
+            qWarning() << "Cannot connect to class" << index;
+        }
     } else {
         qCritical() << "Cannot join room: invalid index" << index;
     }

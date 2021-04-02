@@ -303,6 +303,7 @@ class MainWindow : public QMainWindow, public MessageHandler, public Ui::MainWin
                                      const QString &reason);
         void userModelChanged();
         void channelJoined(Channel *channel, const QString &userName);
+        void showDialog(const QString &title, const QString &msg);
 
 	public:
 		MainWindow(QWidget *parent);

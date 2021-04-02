@@ -84,7 +84,9 @@ ApplicationWindow {
                         audioDevices.init(1 === index)
                     }
                     if (3 === index) {
-                        tokensModel.load()
+                        if (0 <= servers.connectedServerIndex) {
+                            tokensModel.load()
+                        }
                     }
                 }
             }
@@ -219,7 +221,7 @@ ApplicationWindow {
                                               "visible": true
                                           })
             if (null === dlg) {
-                console.error("Cannot create incoming call dialog")
+                console.error("Cannot create message dialog")
             }
         }
     }
