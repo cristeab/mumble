@@ -69,8 +69,11 @@ Page {
         id: goBtn
 
         function gotoAction() {
-            servers.gotoSchool(schoolList.currentIndex)
-            tabView.push("qrc:/qml/Classes.qml")
+            if (servers.gotoSchool(schoolList.currentIndex)) {
+                tabView.push("qrc:/qml/Classes.qml")
+            } else {
+                msgDlg.showDialog(qsTr("Error"), qsTr("You were denied access to this school"))
+            }
         }
 
         anchors {

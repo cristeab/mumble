@@ -77,10 +77,13 @@ Page {
         id: goBtn
 
         function gotoAction() {
-            servers.gotoClass(classList.currentIndex)
-            tabView.push("qrc:/qml/Rooms.qml")
-            console.log("server: cur " + servers.currentIndex + ", conn " + servers.connectedServerIndex)
-            console.log("class: cur " + servers.currentClassIndex + ", conn " + servers.connectedClassIndex)
+            if (servers.gotoClass(classList.currentIndex)) {
+                tabView.push("qrc:/qml/Rooms.qml")
+                console.log("server: cur " + servers.currentIndex + ", conn " + servers.connectedServerIndex)
+                console.log("class: cur " + servers.currentClassIndex + ", conn " + servers.connectedClassIndex)
+            } else {
+                msgDlg.showDialog(qsTr("Error"), qsTr("You were denied access to this class"))
+            }
         }
 
         anchors {
