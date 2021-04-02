@@ -88,8 +88,8 @@ public:
     Q_INVOKABLE bool connectServer();
     Q_INVOKABLE bool disconnectServer();
     Q_INVOKABLE void onLineEditDlgAccepted();
-    Q_INVOKABLE void gotoSchool(int index);
-    Q_INVOKABLE void gotoClass(int index);
+    Q_INVOKABLE bool gotoSchool(int index);
+    Q_INVOKABLE bool gotoClass(int index);
     Q_INVOKABLE bool joinRoom(int index);
     Q_INVOKABLE QString currentServerName() const {
         return isValidIndex(_currentIndex) ? _servers.at(_currentIndex).name : QString();
@@ -126,6 +126,7 @@ private:
     void lookedUp();
     void setStats(ServerItem *si, double delayUs, int users, int totalUsers);
     static void recreateServerHandler();
+    static bool isAllowed(const Channel *ch);
 
     QList<ServerItem> _servers;
     QTimer _pingTick;
