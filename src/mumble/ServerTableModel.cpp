@@ -637,7 +637,7 @@ bool ServerTableModel::gotoSchool(int index)
     if ((0 <= index) && (index < _schoolModelItems.size())) {
         const auto *rootItem = _schoolModelItems.at(index);
         if (nullptr != rootItem) {
-            const auto *ch =rootItem->cChan;
+            auto *ch =rootItem->cChan;
             if (isAllowed(ch)) {
                 _classModelItems.clear();
                 _classNameList.clear();
@@ -671,7 +671,7 @@ bool ServerTableModel::gotoClass(int index)
     if ((0 <= index) && (index < _classModelItems.size())) {
         const auto *rootItem = _classModelItems.at(index);
         if (nullptr != rootItem) {
-            const auto *ch =rootItem->cChan;
+            auto *ch =rootItem->cChan;
             if (isAllowed(ch)) {
                 _roomsModel->clear();
                 for (auto *child: rootItem->qlChildren) {
@@ -707,7 +707,7 @@ bool ServerTableModel::gotoClass(int index)
 bool ServerTableModel::joinRoom(int index)
 {
     qDebug() << "Join room" << index;
-    const auto *ch = _roomsModel->channel(index);
+    auto *ch = _roomsModel->channel(index);
     bool rc = false;
     if (nullptr != ch) {
         g.sh->joinChannel(g.uiSession, ch->iId);//make sure the error message is shown
@@ -724,11 +724,20 @@ bool ServerTableModel::joinRoom(int index)
     return rc;
 }
 
-bool ServerTableModel::isAllowed(const Channel *ch)
+bool ServerTableModel::isAllowed(Channel *ch)
 {
     bool rc = false;
     if (nullptr != ch) {
         ChanACL::Permissions p = static_cast<ChanACL::Permissions>(ch->uiPermissions);
+        if (ch && ! p) {
+            g.sh->requestChannelPermissions(ch->iId);
+            if (ch->iId == 0) {
+                p = g.pPermissions;
+            } else {
+                p = ChanACL::All;
+            }
+            ch->uiPermissions = p;
+        }
         rc = p & (ChanACL::Write | ChanACL::Enter);
     }
     return rc;
