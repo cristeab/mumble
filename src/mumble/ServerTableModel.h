@@ -126,7 +126,7 @@ private:
     void lookedUp();
     void setStats(ServerItem *si, double delayUs, int users, int totalUsers);
     static void recreateServerHandler();
-    static bool isAllowed(const Channel *ch);
+    static bool isAllowed(Channel *ch);
 
     QList<ServerItem> _servers;
     QTimer _pingTick;

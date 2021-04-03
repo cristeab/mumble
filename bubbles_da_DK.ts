@@ -1090,7 +1090,7 @@ If you wish, you may provide some additional information to be stored in the cer
     <message>
         <location filename="qml/PasswordManager.qml" line="20"/>
         <source>Please connect to a server before adding access tokens</source>
-        <translation type="unfinished"></translation>
+        <translation>Opret forbindelse til en server, inden du tilføjer adgangstokener</translation>
     </message>
     <message>
         <location filename="qml/PasswordManager.qml" line="92"/>
