@@ -31,7 +31,7 @@ ApplicationWindow {
             top: parent.top
             left: parent.left
         }
-        visible: 1 < tabView.depth
+        visible: (1 < tabView.depth) && (0 === bar.currentButtonIndex)
         text: qsTr("Back")
         icon {
             width: Theme.buttonIconWidth
@@ -50,6 +50,8 @@ ApplicationWindow {
         readonly property var names: [qsTr("Servers"), qsTr("Audio Input"), qsTr("Audio Output"), qsTr("Password Manager"), qsTr("Certificate Manager")]
         readonly property var icons: ["qrc:/img/server.svg", "qrc:/img/microphone.svg", "qrc:/img/volume.svg", "qrc:/img/key.svg", "qrc:/img/certificate.svg"]
         readonly property var pages: ["qrc:/qml/Servers.qml", "qrc:/qml/AudioInput.qml", "qrc:/qml/AudioOutput.qml", "qrc:/qml/PasswordManager.qml", "qrc:/qml/CertificateManager.qml"]
+
+        readonly property var serversPages: ["qrc:/qml/Servers.qml", "qrc:/qml/Schools.qml", "qrc:/qml/Classes.qml", "qrc:/qml/Rooms.qml"]
 
         Component.onCompleted: {
             if (0 === bar.currentButtonIndex) {
@@ -78,7 +80,12 @@ ApplicationWindow {
                 }
                 onClicked: {
                     bar.currentButtonIndex = index
-                    tabView.replace(bar.pages[index])
+                    if ((0 === index) && (1 < tabView.depth)) {
+                        console.log("Restoring servers tab " + tabView.depth)
+                        tabView.replace(bar.serversPages[tabView.depth - 1])
+                    } else {
+                        tabView.replace(bar.pages[index])
+                    }
                     servers.startPingTick(0 === index)
                     if ((1 === index) || (2 === index)) {
                         audioDevices.init(1 === index)
