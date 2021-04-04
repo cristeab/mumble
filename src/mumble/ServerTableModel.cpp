@@ -205,7 +205,10 @@ void ServerTableModel::save()
 void ServerTableModel::timeTick()
 {
     for (const auto &it: qAsConst(_servers)) {
-        sendPing(QHostAddress(it.address), it.port);
+        const auto host = QHostAddress(it.address);
+        if (!host.isNull()) {
+            sendPing(host, it.port);
+        }
     }
 }
 
@@ -290,6 +293,7 @@ void ServerTableModel::lookUp()
 {
     for (int i = 0; i < _servers.size(); ++i) {
         const auto &srv = _servers.at(i);
+        qDebug() << "lookup" << srv.hostname << srv.address;
         if (!srv.hostname.isEmpty() && srv.address.isEmpty()) {
             QHostInfo::lookupHost(srv.hostname, this, [this, i](const QHostInfo &hi) {
                 if (!isValidIndex(i)) {
