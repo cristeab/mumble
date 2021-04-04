@@ -485,6 +485,8 @@ int main(int argc, char **argv) {
                      &ServerTableModel::onChannelJoined);
     QObject::connect(g.mw, &MainWindow::showDialog, certModel,
                      &CertificateModel::showDialog);
+    QObject::connect(g.mw, &MainWindow::channelAllowedChanged, srv,
+                     &ServerTableModel::channelAllowedChanged);
 
 #ifdef Q_OS_WIN
 	// Set mumble_mw_hwnd in os_win.cpp.

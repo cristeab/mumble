@@ -88,9 +88,14 @@ public:
     Q_INVOKABLE bool connectServer();
     Q_INVOKABLE bool disconnectServer();
     Q_INVOKABLE void onLineEditDlgAccepted();
+
     Q_INVOKABLE bool gotoSchool(int index);
     Q_INVOKABLE bool gotoClass(int index);
     Q_INVOKABLE bool joinRoom(int index);
+    Q_INVOKABLE bool gotoSchoolInternal();
+    Q_INVOKABLE bool gotoClassInternal();
+    Q_INVOKABLE bool joinRoomInternal();
+
     Q_INVOKABLE QString currentServerName() const {
         return isValidIndex(_currentIndex) ? _servers.at(_currentIndex).name : QString();
     }
@@ -108,6 +113,7 @@ public:
 
 signals:
     void schoolsAvailable();
+    void channelAllowedChanged(bool allowed);
 
 private:
     enum { NAME = 0, DELAY, USERS, COLUMN_COUNT };
@@ -126,7 +132,7 @@ private:
     void lookedUp();
     void setStats(ServerItem *si, double delayUs, int users, int totalUsers);
     static void recreateServerHandler();
-    static bool isAllowed(Channel *ch);
+    void isAllowed(Channel *ch);
 
     QList<ServerItem> _servers;
     QTimer _pingTick;
@@ -152,6 +158,7 @@ private:
     QUdpSocket *_socket6 = nullptr;
     QList<ModelItem*> _classModelItems;
     QList<ModelItem*> _schoolModelItems;
+    int _channelActionIndex = -1;
 
 #ifdef USE_ZEROCONF
 protected:

@@ -637,25 +637,10 @@ bool ServerTableModel::gotoSchool(int index)
     if ((0 <= index) && (index < _schoolModelItems.size())) {
         const auto *rootItem = _schoolModelItems.at(index);
         if (nullptr != rootItem) {
+            _channelActionIndex = index;
             auto *ch =rootItem->cChan;
-            if (isAllowed(ch)) {
-                _classModelItems.clear();
-                _classNameList.clear();
-                for (auto *child: rootItem->qlChildren) {
-                    const auto type = RoomsModel::channelType(child->cChan);
-                    if (RoomsModel::ChannelType::Class == type) {
-                        _classModelItems << child;
-                        _classNameList << child->cChan->qsName;
-                    } else {
-                        qWarning() << "Unknown channel type" << static_cast<int>(type);
-                    }
-                }
-                emit classNameListChanged();
-                setCurrentSchoolName(_schoolNameList.at(index));
-                rc = true;
-            } else {
-                qWarning() << "Cannot enter school" << index;
-            }
+            isAllowed(ch);
+            rc = true;
         } else {
             qWarning() << "Root item is NULL";
         }
@@ -671,30 +656,10 @@ bool ServerTableModel::gotoClass(int index)
     if ((0 <= index) && (index < _classModelItems.size())) {
         const auto *rootItem = _classModelItems.at(index);
         if (nullptr != rootItem) {
+            _channelActionIndex = index;
             auto *ch =rootItem->cChan;
-            if (isAllowed(ch)) {
-                _roomsModel->clear();
-                for (auto *child: rootItem->qlChildren) {
-                    const auto type = RoomsModel::channelType(child->cChan);
-                    if (RoomsModel::ChannelType::Room == type) {
-                        RoomsModel::RoomInfo roomInfo;
-                        roomInfo.channel = child->cChan;
-                        roomInfo.name = child->cChan->qsName;
-                        for (auto *user: qAsConst(child->qlChildren)) {
-                            if ((nullptr != user) && (nullptr != user->pUser)) {
-                                roomInfo.users << user->pUser->qsName;
-                            }
-                        }
-                        _roomsModel->append(roomInfo);
-                    } else {
-                        qWarning() << "Unknown channel type" << static_cast<int>(type);
-                    }
-                }
-                setCurrentClassName(_classNameList.at(index));
-                rc = true;
-            } else {
-                qWarning() << "Cannot enter class" << index;
-            }
+            isAllowed(ch);
+            rc = true;
         } else {
             qWarning() << "Root item is NULL";
         }
@@ -710,26 +675,26 @@ bool ServerTableModel::joinRoom(int index)
     auto *ch = _roomsModel->channel(index);
     bool rc = false;
     if (nullptr != ch) {
+        _channelActionIndex = index;
         g.sh->joinChannel(g.uiSession, ch->iId);//make sure the error message is shown
-        if (isAllowed(ch)) {
-            _roomsModel->setCurrentRoomIndex(index);
-            rc = true;
-            qInfo() << "Connected class" << index;
-        } else {
-            qWarning() << "Cannot connect to class" << index;
-        }
+        isAllowed(ch);
+        rc = true;
+        qInfo() << "Connected class" << index;
     } else {
         qCritical() << "Cannot join room: invalid index" << index;
     }
     return rc;
 }
 
-bool ServerTableModel::isAllowed(Channel *ch)
+void ServerTableModel::isAllowed(Channel *ch)
 {
-    bool rc = false;
     if (nullptr != ch) {
         ChanACL::Permissions p = static_cast<ChanACL::Permissions>(ch->uiPermissions);
-        if (ch && ! p) {
+        if (p) {
+            const bool allowed = p & (ChanACL::Write | ChanACL::Enter);
+            emit channelAllowedChanged(allowed);
+        } else {
+            qInfo() << "Request channel permissions";
             g.sh->requestChannelPermissions(ch->iId);
             if (ch->iId == 0) {
                 p = g.pPermissions;
@@ -738,7 +703,90 @@ bool ServerTableModel::isAllowed(Channel *ch)
             }
             ch->uiPermissions = p;
         }
-        rc = p & (ChanACL::Write | ChanACL::Enter);
     }
+}
+
+bool ServerTableModel::gotoSchoolInternal()
+{
+    bool rc = false;
+    if ((0 <= _channelActionIndex) && (_channelActionIndex < _schoolModelItems.size())) {
+        const auto *rootItem = _schoolModelItems.at(_channelActionIndex);
+        if (nullptr != rootItem) {
+            auto *ch =rootItem->cChan;
+            isAllowed(ch);
+            _classModelItems.clear();
+            _classNameList.clear();
+            for (auto *child: rootItem->qlChildren) {
+                const auto type = RoomsModel::channelType(child->cChan);
+                if (RoomsModel::ChannelType::Class == type) {
+                    _classModelItems << child;
+                    _classNameList << child->cChan->qsName;
+                } else {
+                    qWarning() << "Unknown channel type" << static_cast<int>(type);
+                }
+            }
+            emit classNameListChanged();
+            setCurrentSchoolName(_schoolNameList.at(_channelActionIndex));
+            rc = true;
+        } else {
+            qWarning() << "Root item is NULL";
+        }
+    } else {
+        qCritical() << "Invalid index" << _channelActionIndex;
+    }
+    _channelActionIndex = -1;
+    return rc;
+}
+
+bool ServerTableModel::gotoClassInternal()
+{
+    bool rc = false;
+    if ((0 <= _channelActionIndex) && (_channelActionIndex < _classModelItems.size())) {
+        const auto *rootItem = _classModelItems.at(_channelActionIndex);
+        if (nullptr != rootItem) {
+            auto *ch =rootItem->cChan;
+            isAllowed(ch);
+            _roomsModel->clear();
+            for (auto *child: rootItem->qlChildren) {
+                const auto type = RoomsModel::channelType(child->cChan);
+                if (RoomsModel::ChannelType::Room == type) {
+                    RoomsModel::RoomInfo roomInfo;
+                    roomInfo.channel = child->cChan;
+                    roomInfo.name = child->cChan->qsName;
+                    for (auto *user: qAsConst(child->qlChildren)) {
+                        if ((nullptr != user) && (nullptr != user->pUser)) {
+                            roomInfo.users << user->pUser->qsName;
+                        }
+                    }
+                    _roomsModel->append(roomInfo);
+                } else {
+                    qWarning() << "Unknown channel type" << static_cast<int>(type);
+                }
+            }
+            setCurrentClassName(_classNameList.at(_channelActionIndex));
+            rc = true;
+        } else {
+            qWarning() << "Root item is NULL";
+        }
+    } else {
+        qCritical() << "Invalid index" << _channelActionIndex;
+    }
+    _channelActionIndex = -1;
+    return rc;
+}
+
+bool ServerTableModel::joinRoomInternal()
+{
+    qDebug() << "Join room" << _channelActionIndex;
+    bool rc = false;
+    auto *ch = _roomsModel->channel(_channelActionIndex);
+    if (nullptr != ch) {
+        _roomsModel->setCurrentRoomIndex(_channelActionIndex);
+        rc = true;
+        qInfo() << "Connected class" << _channelActionIndex;
+    } else {
+        qCritical() << "Cannot join room: invalid index" << _channelActionIndex;
+    }
+    _channelActionIndex = -1;
     return rc;
 }
