@@ -110,10 +110,11 @@ public:
                                    const QString &reason);
     void onUserModelChanged();
     void onChannelJoined(Channel *channel, const QString &userName);
+    void onChannelAllowedChanged(int id, bool allowed);
 
 signals:
     void schoolsAvailable();
-    void channelAllowedChanged(bool allowed);
+    void currentChannelAllowedChanged(bool allowed);
 
 private:
     enum { NAME = 0, DELAY, USERS, COLUMN_COUNT };
@@ -148,6 +149,7 @@ private:
     QList<ModelItem*> _classModelItems;
     QList<ModelItem*> _schoolModelItems;
     int _channelActionIndex = -1;
+    int _currentChannelId = -1;
 
 #ifdef USE_ZEROCONF
 protected:

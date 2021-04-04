@@ -122,7 +122,7 @@ ApplicationWindow {
                 lineEditDlg.showDlg()
             }
         }
-        function onChannelAllowedChanged(allowed) {
+        function onCurrentChannelAllowedChanged(allowed) {
             const idx = tabView.depth - 1
             if (1 === idx) {
                 if (allowed && servers.gotoSchoolInternal()) {
