@@ -124,7 +124,6 @@ void ServerTableModel::changeServer()
         server.port = _port;
         server.username = _username;
         server.name = _label;
-        lookUp();
     } else {
         ServerItem server;
         server.hostname = _hostname;
@@ -132,8 +131,8 @@ void ServerTableModel::changeServer()
         server.username = _username;
         server.name = _label;
         _servers.append(server);
-        lookUp();
     }
+    lookUp();
     emit layoutChanged();
     save();
 }
@@ -179,9 +178,9 @@ void ServerTableModel::load()
         srvItem.username = it.qsUsername;
         srvItem.name = it.qsName;
         _servers << srvItem;
-        lookUp();
     }
     emit layoutChanged();
+    lookUp();
 }
 
 void ServerTableModel::save()
@@ -301,6 +300,7 @@ void ServerTableModel::lookUp()
                     if (!it.isNull()) {
                         const auto &addr = it.toString();
                         if (!addr.isEmpty()) {
+                            qDebug() << "Got address for host" << hi.hostName() << addr;
                             _servers[i].address = addr;
                             break;
                         }
