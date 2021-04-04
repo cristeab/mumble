@@ -1237,7 +1237,7 @@ Are you sure you wish to replace your certificate?</source>
     <message>
         <location filename="src/mumble/ServerTableModel.cpp" line="90"/>
         <source>Delay</source>
-        <translation>Forsinke</translation>
+        <translation>Forsinkelse</translation>
     </message>
     <message>
         <location filename="src/mumble/ServerTableModel.cpp" line="93"/>

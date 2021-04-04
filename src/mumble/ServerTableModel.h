@@ -88,9 +88,14 @@ public:
     Q_INVOKABLE bool connectServer();
     Q_INVOKABLE bool disconnectServer();
     Q_INVOKABLE void onLineEditDlgAccepted();
+
     Q_INVOKABLE bool gotoSchool(int index);
     Q_INVOKABLE bool gotoClass(int index);
     Q_INVOKABLE bool joinRoom(int index);
+    Q_INVOKABLE bool gotoSchoolInternal();
+    Q_INVOKABLE bool gotoClassInternal();
+    Q_INVOKABLE bool joinRoomInternal();
+
     Q_INVOKABLE QString currentServerName() const {
         return isValidIndex(_currentIndex) ? _servers.at(_currentIndex).name : QString();
     }
@@ -108,6 +113,7 @@ public:
 
 signals:
     void schoolsAvailable();
+    void channelAllowedChanged(bool allowed);
 
 private:
     enum { NAME = 0, DELAY, USERS, COLUMN_COUNT };
@@ -119,27 +125,16 @@ private:
     void load();
     void save();
     void timeTick();
-    void startDns(ServerItem *si);
-    void stopDns(ServerItem *si);
     void sendPing(const QHostAddress &host, unsigned short port);
     void udpReply();
-    void lookedUp();
+    void lookUp();
     void setStats(ServerItem *si, double delayUs, int users, int totalUsers);
     static void recreateServerHandler();
-    static bool isAllowed(Channel *ch);
+    void isAllowed(Channel *ch);
+    void pingServer(ServerItem *srv);
 
     QList<ServerItem> _servers;
     QTimer _pingTick;
-    /// bAllowHostLookup determines whether ConnectDialog can
-    /// resolve hosts via DNS, Bonjour, and so on.
-    bool _allowHostLookup = true;
-    /// bAllowZeroconf determines whether ConfigDialog can use
-    /// zeroconf to find nearby servers on the local network.
-    bool _allowZeroconf = true;
-    QList<UnresolvedServerAddress> _dnsLookup;
-    QSet<UnresolvedServerAddress> _dnsActive;
-    QHash< UnresolvedServerAddress, QSet< ServerItem * > > _dnsWait;
-    QHash< UnresolvedServerAddress, QList< ServerAddress > > _dnsCache;
 
     QHash< ServerAddress, quint64 > _pingRand;
     QHash< ServerAddress, QSet< ServerItem * > > _pings;
@@ -152,6 +147,7 @@ private:
     QUdpSocket *_socket6 = nullptr;
     QList<ModelItem*> _classModelItems;
     QList<ModelItem*> _schoolModelItems;
+    int _channelActionIndex = -1;
 
 #ifdef USE_ZEROCONF
 protected:

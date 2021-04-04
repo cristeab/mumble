@@ -74,7 +74,11 @@ Dialog {
                 bottom: 0
                 top: 65535
             }
-            onEditTextChanged: servers.port = parseInt(editText)
+            onEditTextChanged: {
+                if ("" !== port.editText) {
+                    servers.port = parseInt(port.editText)
+                }
+            }
         }
         LabelTextField {
             id: username
