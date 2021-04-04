@@ -629,8 +629,6 @@ bool ServerTableModel::gotoSchoolInternal()
     if ((0 <= _channelActionIndex) && (_channelActionIndex < _schoolModelItems.size())) {
         const auto *rootItem = _schoolModelItems.at(_channelActionIndex);
         if (nullptr != rootItem) {
-            auto *ch =rootItem->cChan;
-            isAllowed(ch);
             _classModelItems.clear();
             _classNameList.clear();
             for (auto *child: rootItem->qlChildren) {
@@ -661,8 +659,6 @@ bool ServerTableModel::gotoClassInternal()
     if ((0 <= _channelActionIndex) && (_channelActionIndex < _classModelItems.size())) {
         const auto *rootItem = _classModelItems.at(_channelActionIndex);
         if (nullptr != rootItem) {
-            auto *ch =rootItem->cChan;
-            isAllowed(ch);
             _roomsModel->clear();
             for (auto *child: rootItem->qlChildren) {
                 const auto type = RoomsModel::channelType(child->cChan);
