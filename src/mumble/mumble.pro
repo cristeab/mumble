@@ -24,6 +24,7 @@ CONFIG += no-bonjour
 CONFIG += no-classic-theme
 CONFIG += no-elevation
 CONFIG += no-manual-plugin
+CONFIG += no-speechd
 LIBS += -lopus
 # ------------------------------------------
 
