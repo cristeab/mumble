@@ -537,6 +537,15 @@ void ServerTableModel::onChannelJoined(Channel *channel, const QString &userName
     }
 }
 
+void ServerTableModel::onChannelAllowedChanged(int id, bool allowed)
+{
+    if ((0 < _currentChannelId) && (_currentChannelId == id)) {
+        qInfo() << "Got permissions for" << id << allowed;
+        _currentChannelId = -1;
+        emit currentChannelAllowedChanged(allowed);
+    }
+}
+
 bool ServerTableModel::gotoSchool(int index)
 {
     bool rc = false;
@@ -597,10 +606,12 @@ void ServerTableModel::isAllowed(Channel *ch)
     if (nullptr != ch) {
         ChanACL::Permissions p = static_cast<ChanACL::Permissions>(ch->uiPermissions);
         if (p) {
+            qInfo() << "Got channel permissions" << ch->iId;
             const bool allowed = p & (ChanACL::Write | ChanACL::Enter);
-            emit channelAllowedChanged(allowed);
+            emit currentChannelAllowedChanged(allowed);
         } else {
-            qInfo() << "Request channel permissions";
+            qInfo() << "Request channel permissions" << ch->iId;
+            _currentChannelId = ch->iId;
             g.sh->requestChannelPermissions(ch->iId);
             if (ch->iId == 0) {
                 p = g.pPermissions;
@@ -618,8 +629,6 @@ bool ServerTableModel::gotoSchoolInternal()
     if ((0 <= _channelActionIndex) && (_channelActionIndex < _schoolModelItems.size())) {
         const auto *rootItem = _schoolModelItems.at(_channelActionIndex);
         if (nullptr != rootItem) {
-            auto *ch =rootItem->cChan;
-            isAllowed(ch);
             _classModelItems.clear();
             _classNameList.clear();
             for (auto *child: rootItem->qlChildren) {
@@ -650,8 +659,6 @@ bool ServerTableModel::gotoClassInternal()
     if ((0 <= _channelActionIndex) && (_channelActionIndex < _classModelItems.size())) {
         const auto *rootItem = _classModelItems.at(_channelActionIndex);
         if (nullptr != rootItem) {
-            auto *ch =rootItem->cChan;
-            isAllowed(ch);
             _roomsModel->clear();
             for (auto *child: rootItem->qlChildren) {
                 const auto type = RoomsModel::channelType(child->cChan);

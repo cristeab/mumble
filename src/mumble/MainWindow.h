@@ -304,7 +304,7 @@ class MainWindow : public QMainWindow, public MessageHandler, public Ui::MainWin
         void userModelChanged();
         void channelJoined(Channel *channel, const QString &userName);
         void showDialog(const QString &title, const QString &msg);
-        void channelAllowedChanged(bool allowed);
+        void channelAllowedChanged(int id, bool allowed);
 
 	public:
 		MainWindow(QWidget *parent);

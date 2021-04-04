@@ -2235,11 +2235,7 @@ void MainWindow::updateMenuPermissions() {
 		qaUserInformation->setEnabled(false);
 	}
 
-    const bool allowed = p & (ChanACL::Write | ChanACL::Enter);
-    qaChannelJoin->setEnabled(allowed);
-    emit channelAllowedChanged(allowed);
-    qDebug() << "updateMenuPermissions" << allowed;
-
+    qaChannelJoin->setEnabled(p & (ChanACL::Write | ChanACL::Enter));
 	qaChannelAdd->setEnabled(p & (ChanACL::Write | ChanACL::MakeChannel | ChanACL::MakeTempChannel));
 	qaChannelRemove->setEnabled(p & ChanACL::Write);
 	qaChannelACL->setEnabled((p & ChanACL::Write) || (pparent & ChanACL::Write));

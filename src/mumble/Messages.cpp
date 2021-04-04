@@ -905,6 +905,9 @@ void MainWindow::msgPermissionQuery(const MumbleProto::PermissionQuery &msg) {
 		if (c == current) {
 			updateMenuPermissions();
 		}
+
+        const bool allowed = c->uiPermissions & (ChanACL::Write | ChanACL::Enter);
+        emit channelAllowedChanged(c->iId, allowed);
 	}
 }
 
