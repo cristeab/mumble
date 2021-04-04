@@ -292,26 +292,41 @@ void ServerTableModel::udpReply()
 void ServerTableModel::lookUp()
 {
     for (int i = 0; i < _servers.size(); ++i) {
-        const auto &srv = _servers.at(i);
+        const auto &srv = _servers[i];
         qDebug() << "lookup" << srv.hostname << srv.address;
-        if (!srv.hostname.isEmpty() && srv.address.isEmpty()) {
-            QHostInfo::lookupHost(srv.hostname, this, [this, i](const QHostInfo &hi) {
-                if (!isValidIndex(i)) {
-                    return;
-                }
-                const auto addrList = hi.addresses();
-                for (const auto &it: addrList) {
-                    if (!it.isNull()) {
-                        const auto &addr = it.toString();
-                        if (!addr.isEmpty()) {
-                            qDebug() << "Got address for host" << hi.hostName() << addr;
-                            _servers[i].address = addr;
-                            break;
+        if (!srv.hostname.isEmpty()) {
+            if (srv.address.isEmpty()) {
+                QHostInfo::lookupHost(srv.hostname, this, [this, i](const QHostInfo &hi) {
+                    if (!isValidIndex(i)) {
+                        return;
+                    }
+                    const auto addrList = hi.addresses();
+                    for (const auto &it: addrList) {
+                        if (!it.isNull()) {
+                            const auto &addr = it.toString();
+                            if (!addr.isEmpty()) {
+                                qDebug() << "Got address for host" << hi.hostName() << addr;
+                                _servers[i].address = addr;
+                                pingServer(&_servers[i]);
+                                break;
+                            }
                         }
                     }
-                }
-            });
+                });
+            } else {
+                pingServer(&_servers[i]);
+            }
+        } else {
+            qCritical() << "Found server with empty hostname" << i;
         }
+    }
+}
+
+void ServerTableModel::pingServer(ServerItem *srv)
+{
+    if (nullptr != srv) {
+        ServerAddress addr(QHostAddress(srv->address), srv->port);
+        _pings[addr].insert(srv);
     }
 }
 

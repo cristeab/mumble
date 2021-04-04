@@ -131,6 +131,7 @@ private:
     void setStats(ServerItem *si, double delayUs, int users, int totalUsers);
     static void recreateServerHandler();
     void isAllowed(Channel *ch);
+    void pingServer(ServerItem *srv);
 
     QList<ServerItem> _servers;
     QTimer _pingTick;
