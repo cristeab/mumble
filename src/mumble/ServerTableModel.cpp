@@ -119,13 +119,12 @@ void ServerTableModel::changeServer()
 {
     emit layoutAboutToBeChanged();
     if (isValidIndex(_currentIndex)) {
-        stopDns(&_servers[_currentIndex]);
         auto &server = _servers[_currentIndex];
         server.hostname = _hostname;
         server.port = _port;
         server.username = _username;
         server.name = _label;
-        startDns(&_servers[_currentIndex]);
+        lookUp();
     } else {
         ServerItem server;
         server.hostname = _hostname;
@@ -133,7 +132,7 @@ void ServerTableModel::changeServer()
         server.username = _username;
         server.name = _label;
         _servers.append(server);
-        startDns(&_servers.last());
+        lookUp();
     }
     emit layoutChanged();
     save();
@@ -180,7 +179,7 @@ void ServerTableModel::load()
         srvItem.username = it.qsUsername;
         srvItem.name = it.qsName;
         _servers << srvItem;
-        startDns(&_servers.last());
+        lookUp();
     }
     emit layoutChanged();
 }
@@ -204,115 +203,9 @@ void ServerTableModel::save()
     g.db->setFavorites(favs);
 }
 
-void ServerTableModel::startDns(ServerItem *si)
-{
-    if (!_allowHostLookup) {
-        return;
-    }
-
-    QString hostname    = si->hostname.toLower();
-    unsigned short port = si->port;
-    UnresolvedServerAddress unresolved(hostname, port);
-
-    if (si->address.isEmpty()) {
-        // Determine if qsHostname is an IP address
-        // or a hostname. If it is an IP address, we
-        // can treat it as resolved as-is.
-        QHostAddress qha(si->hostname);
-        bool hostnameIsIPAddress = !qha.isNull();
-        if (hostnameIsIPAddress) {
-            si->address = si->hostname;
-        }
-    }
-
-    if (!si->address.isEmpty()) {
-        ServerAddress addr(QHostAddress(si->address), si->port);
-        _pings[addr].insert(si);
-        return;
-    }
-#ifdef USE_ZEROCONF
-    if (_allowZeroconf && si->hostname.isEmpty() && !si->zeroconfRecord.serviceName.isEmpty()) {
-        if (!qlBonjourActive.contains(si->zeroconfRecord)) {
-            g.zeroconf->startResolver(si->zeroconfRecord);
-            qlBonjourActive.append(si->zeroconfRecord);
-        }
-        return;
-    }
-#endif
-    if (!_dnsWait.contains(unresolved)) {
-        _dnsLookup.prepend(unresolved);
-    }
-    _dnsWait[unresolved].insert(si);
-}
-
-void ServerTableModel::stopDns(ServerItem *si)
-{
-    if (!_allowHostLookup) {
-        return;
-    }
-
-    ServerAddress addr(QHostAddress(si->address), si->port);
-    if (_pings.contains(addr)) {
-        _pings[addr].remove(si);
-        if (_pings[addr].isEmpty()) {
-            _pings.remove(addr);
-            _pingRand.remove(addr);
-        }
-    }
-
-    QString hostname    = si->hostname.toLower();
-    unsigned short port = si->port;
-    UnresolvedServerAddress unresolved(hostname, port);
-
-    if (_dnsWait.contains(unresolved)) {
-        _dnsWait[unresolved].remove(si);
-        if (_dnsWait[unresolved].isEmpty()) {
-            _dnsWait.remove(unresolved);
-            _dnsLookup.removeAll(unresolved);
-        }
-    }
-}
-
 void ServerTableModel::timeTick()
 {
-    if (_allowHostLookup) {
-        // Start DNS Lookup of first unknown hostname
-        foreach (const UnresolvedServerAddress &unresolved, _dnsLookup) {
-            if (_dnsActive.contains(unresolved)) {
-                continue;
-            }
-
-            _dnsLookup.removeAll(unresolved);
-            _dnsLookup.append(unresolved);
-
-            _dnsActive.insert(unresolved);
-            ServerResolver *sr = new ServerResolver();
-            QObject::connect(sr, &ServerResolver::resolved, this, &ServerTableModel::lookedUp);
-            sr->resolve(unresolved.hostname, unresolved.port);
-            break;
-        }
-    }
-
-    ServerItem *si = nullptr;
-    if ((_currentTimer.elapsed() >= TICK_THRESHOLD_US) && isValidIndex(_currentIndex)) {
-        si = &_servers[_currentIndex];
-    }
-
-    if (si) {
-        QString hostname    = si->hostname.toLower();
-        unsigned short port = si->port;
-        UnresolvedServerAddress unresolved(hostname, port);
-
-        if (si->address.isEmpty()) {
-            if (!hostname.isEmpty()) {
-                _dnsLookup.removeAll(unresolved);
-                _dnsLookup.prepend(unresolved);
-            }
-            si = nullptr;
-        }
-    }
-
-    for (const auto &it: _servers) {
+    for (const auto &it: qAsConst(_servers)) {
         sendPing(QHostAddress(it.address), it.port);
     }
 }
@@ -394,33 +287,27 @@ void ServerTableModel::udpReply()
     }
 }
 
-void ServerTableModel::lookedUp()
+void ServerTableModel::lookUp()
 {
-    ServerResolver *sr = qobject_cast< ServerResolver * >(QObject::sender());
-    sr->deleteLater();
-
-    QString hostname    = sr->hostname().toLower();
-    unsigned short port = sr->port();
-    UnresolvedServerAddress unresolved(hostname, port);
-
-    _dnsActive.remove(unresolved);
-
-    // An error occurred, or no records were found.
-    if (sr->records().size() == 0) {
-        return;
-    }
-
-    QSet< ServerAddress > qs;
-    foreach (ServerResolverRecord record, sr->records()) {
-        foreach (const HostAddress &ha, record.addresses()) { qs.insert(ServerAddress(ha, record.port())); }
-    }
-
-    _dnsLookup.removeAll(unresolved);
-    _dnsCache.insert(unresolved, qs.values());
-    _dnsWait.remove(unresolved);
-
-    for (const auto &addr: qs) {
-        sendPing(addr.host.toAddress(), addr.port);
+    for (int i = 0; i < _servers.size(); ++i) {
+        const auto &srv = _servers.at(i);
+        if (!srv.hostname.isEmpty() && srv.address.isEmpty()) {
+            QHostInfo::lookupHost(srv.hostname, this, [this, i](const QHostInfo &hi) {
+                if (!isValidIndex(i)) {
+                    return;
+                }
+                const auto addrList = hi.addresses();
+                for (const auto &it: addrList) {
+                    if (!it.isNull()) {
+                        const auto &addr = it.toString();
+                        if (!addr.isEmpty()) {
+                            _servers[i].address = addr;
+                            break;
+                        }
+                    }
+                }
+            });
+        }
     }
 }
 

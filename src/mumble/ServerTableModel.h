@@ -125,27 +125,15 @@ private:
     void load();
     void save();
     void timeTick();
-    void startDns(ServerItem *si);
-    void stopDns(ServerItem *si);
     void sendPing(const QHostAddress &host, unsigned short port);
     void udpReply();
-    void lookedUp();
+    void lookUp();
     void setStats(ServerItem *si, double delayUs, int users, int totalUsers);
     static void recreateServerHandler();
     void isAllowed(Channel *ch);
 
     QList<ServerItem> _servers;
     QTimer _pingTick;
-    /// bAllowHostLookup determines whether ConnectDialog can
-    /// resolve hosts via DNS, Bonjour, and so on.
-    bool _allowHostLookup = true;
-    /// bAllowZeroconf determines whether ConfigDialog can use
-    /// zeroconf to find nearby servers on the local network.
-    bool _allowZeroconf = true;
-    QList<UnresolvedServerAddress> _dnsLookup;
-    QSet<UnresolvedServerAddress> _dnsActive;
-    QHash< UnresolvedServerAddress, QSet< ServerItem * > > _dnsWait;
-    QHash< UnresolvedServerAddress, QList< ServerAddress > > _dnsCache;
 
     QHash< ServerAddress, quint64 > _pingRand;
     QHash< ServerAddress, QSet< ServerItem * > > _pings;
