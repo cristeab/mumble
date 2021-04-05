@@ -110,6 +110,22 @@ void RoomsModel::insertUser(Channel *channel, const QString &username)
     }
 }
 
+void RoomsModel::removeUser(const QString &username)
+{
+    if (username.isEmpty()) {
+        return;//nothing to do
+    }
+    for (auto &roomInfo: _rooms) {
+        if (roomInfo.users.contains(username)) {
+            emit layoutAboutToBeChanged();
+            roomInfo.users.removeAll(username);
+            emit layoutChanged();
+            qDebug() << "Removed" << username << "from room" << roomInfo.name;
+            break;
+        }
+    }
+}
+
 RoomsModel::ChannelType RoomsModel::channelType(Channel *channel)
 {
     if (nullptr != channel) {

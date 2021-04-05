@@ -107,7 +107,10 @@ Page {
                 roomsGrid.targetIndex = index
             }
             onExited: {
-                console.log("entered  " + index)
+                console.log("exited  " + index)
+            }
+            onDropped: {
+                console.log("dropped " + index)
             }
 
             Rectangle {

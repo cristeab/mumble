@@ -537,6 +537,9 @@ void ServerTableModel::onChannelJoined(Channel *channel, const QString &userName
     default:
         qWarning() << "Unknown channel type" << static_cast<int>(type);
     }
+    if (RoomsModel::ChannelType::Room != type) {
+        _roomsModel->removeUser(userName);
+    }
 }
 
 void ServerTableModel::onChannelAllowedChanged(int id, bool allowed)
