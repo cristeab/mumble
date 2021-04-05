@@ -521,25 +521,25 @@ void Log::log(MsgType mt, const QString &console, const QString &terse, bool own
 		}
 
 		// Message notification with static sounds
-		if ((flags & Settings::LogSoundfile)) {
+        /*if ((flags & Settings::LogSoundfile)) {
 			QString sSound = g.s.qmMessageSounds.value(mt);
 			AudioOutputPtr ao = g.ao;
 			if (!ao || !ao->playSample(sSound, false)) {
 				qWarning() << "Sound file" << sSound << "is not a valid audio file, fallback to TTS.";
 				flags ^= Settings::LogSoundfile | Settings::LogTTS; // Fallback to TTS
 			}
-		}
+        }*/
 	} else if (!g.s.bTTSMessageReadBack) {
 		return;
 	}
 
 	// Message notification with Text-To-Speech
-	if (g.s.bDeaf || !g.s.bTTS || !(flags & Settings::LogTTS)) {
+    /*if (g.s.bDeaf || !g.s.bTTS || !(flags & Settings::LogTTS)) {
 		return;
-	}
+    }
 
 	// Apply simplifications to spoken text
-	QRegExp identifyURL(QLatin1String("[a-z-]+://[^ <]*"),
+    QRegExp identifyURL(QLatin1String("[a-z-]+://[^ <]*"),
 	                    Qt::CaseInsensitive,
 	                    QRegExp::RegExp2);
 
@@ -575,7 +575,7 @@ void Log::log(MsgType mt, const QString &console, const QString &terse, bool own
 	if (plain.length() <= g.s.iTTSThreshold)
 		tts->say(plain);
 	else if ((! terse.isEmpty()) && (terse.length() <= g.s.iTTSThreshold))
-		tts->say(terse);
+        tts->say(terse);*/
 }
 
 // Post a notification using the MainWindow's QSystemTrayIcon.
