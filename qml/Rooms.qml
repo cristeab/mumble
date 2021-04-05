@@ -153,7 +153,7 @@ Page {
                 delegate: Label {
                     width: parent.width
                     padding: Theme.windowMargin / 2
-                    text: modelData
+                    text: (servers.currentUsername === modelData) ? ("<b><big>" + modelData + "</big></b>") : modelData
                     font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
                     color: delegateControl.GridView.isCurrentItem ? Theme.textColor2 : Theme.textColor
                     clip: true
