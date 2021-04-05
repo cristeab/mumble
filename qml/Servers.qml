@@ -5,19 +5,18 @@ import "custom"
 Page {
     id: control
 
+    Component.onCompleted: srvTbl.forceLayout()
+
     background: Rectangle {
         color: Theme.backgroundColor
     }
 
-    Component.onCompleted: srvTbl.forceLayout()
-
     CustomTabButton {
-        id: forwardBtn
         anchors {
             top: parent.top
             right: parent.right
         }
-        visible: (0 <= servers.connectedServerIndex) && (0 < servers.classNameList.length)
+        visible: (0 <= servers.connectedServerIndex) && (0 < servers.schoolNameList.length)
         text: qsTr("Forward")
         icon {
             width: Theme.buttonIconWidth
