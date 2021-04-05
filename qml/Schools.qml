@@ -11,6 +11,21 @@ Page {
         color: Theme.backgroundColor
     }
 
+    CustomTabButton {
+        anchors {
+            top: parent.top
+            right: parent.right
+        }
+        visible: (0 <= servers.connectedServerIndex) && (0 < servers.classNameList.length)
+        text: qsTr("Forward")
+        icon {
+            width: Theme.buttonIconWidth
+            height: Theme.buttonIconWidth
+            source: "qrc:/img/chevron-circle-right.svg"
+        }
+        onClicked: tabView.push("qrc:/qml/Classes.qml")
+    }
+
     ListView {
         id: schoolList
 

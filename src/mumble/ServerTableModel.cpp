@@ -368,6 +368,7 @@ bool ServerTableModel::connectServer()
     g.sh->setConnectionInfo(srv.address, srv.port, srv.username, srv.password);
     g.sh->start(QThread::TimeCriticalPriority);
     setConnectedServerIndex(_currentIndex);
+    setCurrentUsername(srv.username);
     qDebug() << "Connected server index" << _connectedServerIndex;
 
     return true;
@@ -415,6 +416,7 @@ bool ServerTableModel::disconnectServer()
     if (nullptr != _roomsModel) {
         _roomsModel->clear();
     }
+    setCurrentUsername(QString());
     return true;
 }
 
@@ -510,7 +512,7 @@ void ServerTableModel::onChannelJoined(Channel *channel, const QString &userName
     const auto type = RoomsModel::channelType(channel);
     switch (type) {
     case RoomsModel::ChannelType::Room: {
-        const auto name = userName.isEmpty() ? _username : userName;
+        auto name = userName.isEmpty() ? _username : userName;
         _roomsModel->insertUser(channel, name);
     }
         break;
@@ -534,6 +536,9 @@ void ServerTableModel::onChannelJoined(Channel *channel, const QString &userName
         break;
     default:
         qWarning() << "Unknown channel type" << static_cast<int>(type);
+    }
+    if (RoomsModel::ChannelType::Room != type) {
+        _roomsModel->removeUser(userName);
     }
 }
 
