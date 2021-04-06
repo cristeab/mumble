@@ -112,7 +112,7 @@ public:
     void onServerDisconnectedEvent(MumbleProto::Reject_RejectType rtLast,
                                    const QString &reason);
     void onUserModelChanged();
-    void onChannelJoined(Channel *channel, const QString &username);
+    void onChannelJoined(Channel *channel, const QString &username, unsigned int session);
     void onChannelAllowedChanged(int id, bool allowed);
 
 signals:

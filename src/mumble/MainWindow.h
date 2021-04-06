@@ -302,7 +302,7 @@ class MainWindow : public QMainWindow, public MessageHandler, public Ui::MainWin
         void serverDisconnectedEvent(MumbleProto::Reject_RejectType rtLast,
                                      const QString &reason);
         void userModelChanged();
-        void channelJoined(Channel *channel, const QString &userName);
+        void channelJoined(Channel *channel, const QString &userName, unsigned int session);
         void showDialog(const QString &title, const QString &msg);
         void channelAllowedChanged(int id, bool allowed);
 

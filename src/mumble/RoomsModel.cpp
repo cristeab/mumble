@@ -54,11 +54,18 @@ void RoomsModel::clear()
     emit layoutChanged();
 }
 
-void RoomsModel::append(const RoomInfo &roomInfo)
+void RoomsModel::append(const RoomInfo &roomInfo, const QHash<QString, unsigned int> &sessions)
 {
     emit layoutAboutToBeChanged();
     _rooms << roomInfo;
     emit layoutChanged();
+    QHashIterator<QString, unsigned int> it(sessions);
+    while (it.hasNext()) {
+        it.next();
+        if (!_sessions.contains(it.key())) {
+            _sessions[it.key()] = it.value();
+        }
+    }
 }
 
 Channel* RoomsModel::channel(int index) const
@@ -70,10 +77,15 @@ Channel* RoomsModel::channel(int index) const
     return ch;
 }
 
-void RoomsModel::insertUser(Channel *channel, const QString &username)
+void RoomsModel::insertUser(Channel *channel, const QString &username, unsigned int session)
 {
+    qInfo() << "Insert user" << username << session;
     const auto type = channelType(channel);
     if (ChannelType::Room == type) {
+        //insert session if needed
+        if (!_sessions.contains(username)) {
+            _sessions[username] = session;
+        }
         //remove user from previous room
         for (auto &roomInfo: _rooms) {
             if (roomInfo.users.contains(username)) {
@@ -120,6 +132,7 @@ void RoomsModel::removeUser(const QString &username)
             emit layoutAboutToBeChanged();
             roomInfo.users.removeAll(username);
             emit layoutChanged();
+            _sessions.remove(username);
             qDebug() << "Removed" << username << "from room" << roomInfo.name;
             break;
         }
@@ -152,6 +165,16 @@ RoomsModel::ChannelType RoomsModel::channelType(Channel *channel)
         }
     }
     return ChannelType::Other;
+}
+
+unsigned int RoomsModel::userSession(const QString &username) const
+{
+    const auto ok = _sessions.contains(username);
+    const auto s = ok ? _sessions.value(username) : g.uiSession;
+    if (!ok) {
+        qWarning() << "Cannot find session for" << username;
+    }
+    return s;
 }
 
 void RoomsModel::onMicrophoneOffChanged()

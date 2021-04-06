@@ -345,7 +345,7 @@ void MainWindow::msgUserState(const MumbleProto::UserState &msg) {
 		Channel *oldChannel = pDst->cChannel;
 		if (channel != oldChannel) {
 			pmModel->moveUser(pDst, channel);
-            emit channelJoined(channel, pDst->qsName);
+            emit channelJoined(channel, pDst->qsName, pDst->uiSession);
 
 			if (pSelf) {
 				if (pDst == pSelf) {
