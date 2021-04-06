@@ -106,11 +106,13 @@ void ServerTableModel::resetServer()
         setHostname(srv.hostname);
         setPort(srv.port);
         setUsername(srv.username);
+        setPassword(srv.password);
         setLabel(srv.name);
     } else {
         setHostname(QString());
         setPort(DEFAULT_PORT);
         setUsername(QString());
+        setPassword(QString());
         setLabel(QString());
     }
 }
@@ -123,12 +125,14 @@ void ServerTableModel::changeServer()
         server.hostname = _hostname;
         server.port = _port;
         server.username = _username;
+        server.password = _password;
         server.name = _label;
     } else {
         ServerItem server;
         server.hostname = _hostname;
         server.port = _port;
         server.username = _username;
+        server.password = _password;
         server.name = _label;
         _servers.append(server);
     }
@@ -176,6 +180,7 @@ void ServerTableModel::load()
         srvItem.address = it.qsUrl;
         srvItem.port = it.usPort;
         srvItem.username = it.qsUsername;
+        srvItem.password = it.qsPassword;
         srvItem.name = it.qsName;
         _servers << srvItem;
     }
@@ -193,6 +198,7 @@ void ServerTableModel::save()
     for (const auto &it: qAsConst(_servers)) {
         FavoriteServer favSrv;
         favSrv.qsHostname = it.hostname;
+        favSrv.qsPassword = it.password;
         favSrv.qsUrl = it.address;
         favSrv.usPort = it.port;
         favSrv.qsUsername = it.username;

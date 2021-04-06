@@ -88,6 +88,15 @@ Dialog {
             onEditTextChanged: servers.username = editText
         }
         LabelTextField {
+            id: password
+            visible: servers.superUserName === servers.username
+            text: qsTr("Password")
+            editText: servers.password
+            placeholderText: qsTr("Your password")
+            onEditTextChanged: servers.password = editText
+            echoMode: TextInput.Password
+        }
+        LabelTextField {
             id: label
             text: qsTr("Label")
             editText: servers.label

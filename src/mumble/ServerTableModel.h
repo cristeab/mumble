@@ -54,6 +54,7 @@ class ServerTableModel : public QAbstractTableModel
     QML_READABLE_PROPERTY(QString, currentClassName, setCurrentClassName, QString())
 
     QML_READABLE_PROPERTY(QString, currentUsername, setCurrentUsername, QString())
+    QML_CONSTANT_PROPERTY(QString, superUserName, QString::fromUtf8("SuperUser"))
 
 public:
     struct ServerItem {
