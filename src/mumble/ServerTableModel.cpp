@@ -106,11 +106,13 @@ void ServerTableModel::resetServer()
         setHostname(srv.hostname);
         setPort(srv.port);
         setUsername(srv.username);
+        setPassword(srv.password);
         setLabel(srv.name);
     } else {
         setHostname(QString());
         setPort(DEFAULT_PORT);
         setUsername(QString());
+        setPassword(QString());
         setLabel(QString());
     }
 }
@@ -123,12 +125,14 @@ void ServerTableModel::changeServer()
         server.hostname = _hostname;
         server.port = _port;
         server.username = _username;
+        server.password = _password;
         server.name = _label;
     } else {
         ServerItem server;
         server.hostname = _hostname;
         server.port = _port;
         server.username = _username;
+        server.password = _password;
         server.name = _label;
         _servers.append(server);
     }
@@ -176,6 +180,7 @@ void ServerTableModel::load()
         srvItem.address = it.qsUrl;
         srvItem.port = it.usPort;
         srvItem.username = it.qsUsername;
+        srvItem.password = it.qsPassword;
         srvItem.name = it.qsName;
         _servers << srvItem;
     }
@@ -193,6 +198,7 @@ void ServerTableModel::save()
     for (const auto &it: qAsConst(_servers)) {
         FavoriteServer favSrv;
         favSrv.qsHostname = it.hostname;
+        favSrv.qsPassword = it.password;
         favSrv.qsUrl = it.address;
         favSrv.usPort = it.port;
         favSrv.qsUsername = it.username;
@@ -427,6 +433,14 @@ void ServerTableModel::onLineEditDlgAccepted()
     } else {
         setUsername(_dlgText);
     }
+    if (isValidIndex(_currentIndex)) {
+        auto &server = _servers[_currentIndex];
+        server.username = _username;
+        server.password = _password;
+        save();
+    } else {
+        qWarning() << "Invalid index" << _currentIndex;
+    }
 
     if (!g.s.bSuppressIdentity) {
         g.db->setPassword(_hostname, _port, _username, _password);
@@ -589,9 +603,20 @@ bool ServerTableModel::gotoClass(int index)
     return rc;
 }
 
-bool ServerTableModel::joinRoom(int index)
+bool ServerTableModel::joinRoom(int index, const QString &username)
 {
-    qDebug() << "Join room" << index;
+    qDebug() << "Join room" << index << username;
+    if (!username.isEmpty()) {
+        const bool isSuperUser = _currentUsername == _superUserName;
+        if (!isSuperUser) {
+            const bool isSelf = _currentUsername == username;
+            if (!isSelf) {
+                qDebug() << "Normal user can move only self";
+                _roomsModel->updateRooms(-1);
+                return true;
+            }
+        }
+    }
     auto *ch = _roomsModel->channel(index);
     bool rc = false;
     if (nullptr != ch) {
@@ -699,9 +724,9 @@ bool ServerTableModel::joinRoomInternal()
     bool rc = false;
     auto *ch = _roomsModel->channel(_channelActionIndex);
     if (nullptr != ch) {
-        _roomsModel->setCurrentRoomIndex(_channelActionIndex);
+        _roomsModel->updateRooms(_channelActionIndex);
         rc = true;
-        qInfo() << "Connected class" << _channelActionIndex;
+        qInfo() << "Connected room" << _channelActionIndex;
     } else {
         qCritical() << "Cannot join room: invalid index" << _channelActionIndex;
     }

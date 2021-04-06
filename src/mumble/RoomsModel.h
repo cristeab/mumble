@@ -38,6 +38,7 @@ public:
     Channel* channel(int index) const;
     void insertUser(Channel *channel, const QString &username);
     void removeUser(const QString &username);
+    void updateRooms(int currentRoomIndex);
 
     static ChannelType channelType(Channel *channel);
 

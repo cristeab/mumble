@@ -126,6 +126,15 @@ void RoomsModel::removeUser(const QString &username)
     }
 }
 
+void RoomsModel::updateRooms(int currentRoomIndex)
+{
+    emit layoutAboutToBeChanged();
+    if (-1 < currentRoomIndex) {
+        setCurrentRoomIndex(currentRoomIndex);
+    }
+    emit layoutChanged();
+}
+
 RoomsModel::ChannelType RoomsModel::channelType(Channel *channel)
 {
     if (nullptr != channel) {
