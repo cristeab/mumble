@@ -78,7 +78,8 @@ Page {
     GridView {
         id: roomsGrid
 
-        property int targetIndex: -1
+        property int channelIndex: -1
+        property int userIndex: -1
 
         ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
         anchors {
@@ -103,14 +104,14 @@ Page {
             height: roomsGrid.cellHeight
 
             onEntered: {
-                console.log("entered  " + index)
-                roomsGrid.targetIndex = index
+                console.log("Drag entered  " + index)
+                roomsGrid.channelIndex = index
             }
             onExited: {
-                console.log("exited  " + index)
+                console.log("Drag exited  " + index)
             }
             onDropped: {
-                console.log("dropped " + index)
+                console.log("Drag dropped " + index)
             }
 
             Rectangle {
@@ -172,13 +173,14 @@ Page {
                         anchors.fill: parent
                         drag.target: parent
                         onPressed: {
-                            roomsGrid.targetIndex = -1
+                            roomsGrid.channelIndex = -1
+                            roomsGrid.userIndex = index
                             mouse.accepted = true
                         }
                         onReleased: {
-                            console.log("Drag area released " + roomsGrid.targetIndex)
-                            if (-1 !== roomsGrid.targetIndex) {
-                                servers.joinRoom(roomsGrid.targetIndex)
+                            console.log("Drag area released: user " + roomsGrid.userIndex + ", channel " + roomsGrid.channelIndex)
+                            if (-1 !== roomsGrid.channelIndex) {
+                                servers.joinRoom(roomsGrid.channelIndex)
                             }
                             mouse.accepted = true
                         }

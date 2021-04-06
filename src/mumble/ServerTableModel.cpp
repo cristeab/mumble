@@ -713,9 +713,9 @@ bool ServerTableModel::joinRoomInternal()
     bool rc = false;
     auto *ch = _roomsModel->channel(_channelActionIndex);
     if (nullptr != ch) {
-        _roomsModel->setCurrentRoomIndex(_channelActionIndex);
+        _roomsModel->updateRooms(_channelActionIndex);
         rc = true;
-        qInfo() << "Connected class" << _channelActionIndex;
+        qInfo() << "Connected room" << _channelActionIndex;
     } else {
         qCritical() << "Cannot join room: invalid index" << _channelActionIndex;
     }
