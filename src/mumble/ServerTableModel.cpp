@@ -521,13 +521,13 @@ void ServerTableModel::onUserModelChanged()
     }
 }
 
-void ServerTableModel::onChannelJoined(Channel *channel, const QString &userName)
+void ServerTableModel::onChannelJoined(Channel *channel, const QString &userName, unsigned int session)
 {
     const auto type = RoomsModel::channelType(channel);
     switch (type) {
     case RoomsModel::ChannelType::Room: {
         auto name = userName.isEmpty() ? _username : userName;
-        _roomsModel->insertUser(channel, name);
+        _roomsModel->insertUser(channel, name, session);
     }
         break;
     case RoomsModel::ChannelType::Class:
@@ -621,7 +621,8 @@ bool ServerTableModel::joinRoom(int index, const QString &username)
     bool rc = false;
     if (nullptr != ch) {
         _channelActionIndex = index;
-        g.sh->joinChannel(g.uiSession, ch->iId);//make sure the error message is shown
+        const auto session = _roomsModel->userSession(username);
+        g.sh->joinChannel(session, ch->iId);//make sure the error message is shown
         isAllowed(ch);
         rc = true;
         qInfo() << "Connected class" << index;
@@ -696,12 +697,15 @@ bool ServerTableModel::gotoClassInternal()
                     RoomsModel::RoomInfo roomInfo;
                     roomInfo.channel = child->cChan;
                     roomInfo.name = child->cChan->qsName;
+                    QHash<QString, unsigned int> sessions;
                     for (auto *user: qAsConst(child->qlChildren)) {
                         if ((nullptr != user) && (nullptr != user->pUser)) {
-                            roomInfo.users << user->pUser->qsName;
+                            const auto username = user->pUser->qsName;
+                            roomInfo.users << username;
+                            sessions[username] = user->pUser->uiSession;
                         }
                     }
-                    _roomsModel->append(roomInfo);
+                    _roomsModel->append(roomInfo, sessions);
                 } else {
                     qWarning() << "Unknown channel type" << static_cast<int>(type);
                 }
