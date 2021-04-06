@@ -94,7 +94,7 @@ public:
 
     Q_INVOKABLE bool gotoSchool(int index);
     Q_INVOKABLE bool gotoClass(int index);
-    Q_INVOKABLE bool joinRoom(int index);
+    Q_INVOKABLE bool joinRoom(int index, const QString &userName);
     Q_INVOKABLE bool gotoSchoolInternal();
     Q_INVOKABLE bool gotoClassInternal();
     Q_INVOKABLE bool joinRoomInternal();
@@ -112,7 +112,7 @@ public:
     void onServerDisconnectedEvent(MumbleProto::Reject_RejectType rtLast,
                                    const QString &reason);
     void onUserModelChanged();
-    void onChannelJoined(Channel *channel, const QString &userName);
+    void onChannelJoined(Channel *channel, const QString &username);
     void onChannelAllowedChanged(int id, bool allowed);
 
 signals:

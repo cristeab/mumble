@@ -79,7 +79,7 @@ Page {
         id: roomsGrid
 
         property int channelIndex: -1
-        property int userIndex: -1
+        property string userName: ""
 
         ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
         anchors {
@@ -174,13 +174,13 @@ Page {
                         drag.target: parent
                         onPressed: {
                             roomsGrid.channelIndex = -1
-                            roomsGrid.userIndex = index
+                            roomsGrid.userName = modelData
                             mouse.accepted = true
                         }
                         onReleased: {
-                            console.log("Drag area released: user " + roomsGrid.userIndex + ", channel " + roomsGrid.channelIndex)
+                            console.log("Drag area released: user " + roomsGrid.userName + ", channel " + roomsGrid.channelIndex)
                             if (-1 !== roomsGrid.channelIndex) {
-                                servers.joinRoom(roomsGrid.channelIndex)
+                                servers.joinRoom(roomsGrid.channelIndex, roomsGrid.userName)
                             }
                             mouse.accepted = true
                         }
@@ -205,7 +205,7 @@ Page {
         id: joinBtn
 
         function joinAction(idx) {
-            if (servers.joinRoom(idx)) {
+            if (servers.joinRoom(idx, servers.username)) {
                 servers.connectedClassIndex = servers.currentClassIndex
             }
         }

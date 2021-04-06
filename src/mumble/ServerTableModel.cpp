@@ -603,9 +603,20 @@ bool ServerTableModel::gotoClass(int index)
     return rc;
 }
 
-bool ServerTableModel::joinRoom(int index)
+bool ServerTableModel::joinRoom(int index, const QString &username)
 {
-    qDebug() << "Join room" << index;
+    qDebug() << "Join room" << index << username;
+    if (!username.isEmpty()) {
+        const bool isSuperUser = _currentUsername == _superUserName;
+        if (!isSuperUser) {
+            const bool isSelf = _currentUsername == username;
+            if (!isSelf) {
+                qDebug() << "Normal user can move only self";
+                _roomsModel->updateRooms(-1);
+                return true;
+            }
+        }
+    }
     auto *ch = _roomsModel->channel(index);
     bool rc = false;
     if (nullptr != ch) {

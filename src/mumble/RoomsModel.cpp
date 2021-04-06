@@ -129,7 +129,9 @@ void RoomsModel::removeUser(const QString &username)
 void RoomsModel::updateRooms(int currentRoomIndex)
 {
     emit layoutAboutToBeChanged();
-    setCurrentRoomIndex(currentRoomIndex);
+    if (-1 < currentRoomIndex) {
+        setCurrentRoomIndex(currentRoomIndex);
+    }
     emit layoutChanged();
 }
 
