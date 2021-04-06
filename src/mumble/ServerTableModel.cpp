@@ -433,6 +433,14 @@ void ServerTableModel::onLineEditDlgAccepted()
     } else {
         setUsername(_dlgText);
     }
+    if (isValidIndex(_currentIndex)) {
+        auto &server = _servers[_currentIndex];
+        server.username = _username;
+        server.password = _password;
+        save();
+    } else {
+        qWarning() << "Invalid index" << _currentIndex;
+    }
 
     if (!g.s.bSuppressIdentity) {
         g.db->setPassword(_hostname, _port, _username, _password);
