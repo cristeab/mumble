@@ -301,7 +301,12 @@ void ServerTableModel::lookUp()
         const auto &srv = _servers[i];
         qDebug() << "lookup" << srv.hostname << srv.address;
         if (!srv.hostname.isEmpty()) {
-            if (srv.address.isEmpty()) {
+            const QHostAddress addr(srv.hostname);
+            if (!addr.isNull()) {
+                qInfo() << "Server hostname is an IP address";
+                _servers[i].address = srv.hostname;
+                pingServer(&_servers[i]);
+            } else {
                 QHostInfo::lookupHost(srv.hostname, this, [this, i](const QHostInfo &hi) {
                     if (!isValidIndex(i)) {
                         return;
@@ -319,8 +324,6 @@ void ServerTableModel::lookUp()
                         }
                     }
                 });
-            } else {
-                pingServer(&_servers[i]);
             }
         } else {
             qCritical() << "Found server with empty hostname" << i;
