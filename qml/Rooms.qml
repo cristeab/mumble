@@ -167,12 +167,13 @@ Page {
                     horizontalAlignment: Text.AlignHCenter
                     background: Item {}
                     Drag.active: dragArea.drag.active
-                    Drag.hotSpot.x: 0
+                    Drag.hotSpot.x: width / 2
                     Drag.hotSpot.y: 0
                     MouseArea {
                         id: dragArea
                         anchors.fill: parent
                         drag.target: parent
+                        hoverEnabled: true
                         onPressed: {
                             roomsGrid.channelIndex = -1
                             roomsGrid.userName = modelData
