@@ -104,11 +104,12 @@ Page {
             height: roomsGrid.cellHeight
 
             onEntered: {
-                console.log("Drag entered  " + index)
+                console.log("Drag entered  " + index + " : " + drag.x + "," + drag.y)
+                console.log("Cell: w " + roomsGrid.cellWidth + ", h " + roomsGrid.cellHeight)
                 roomsGrid.channelIndex = index
             }
             onExited: {
-                console.log("Drag exited  " + index)
+                console.log("Drag exited  " + index + " : " + drag.x + "," + drag.y)
             }
             onDropped: {
                 console.log("Drag dropped " + index)
@@ -166,19 +167,20 @@ Page {
                     horizontalAlignment: Text.AlignHCenter
                     background: Item {}
                     Drag.active: dragArea.drag.active
-                    Drag.hotSpot.x: 0
+                    Drag.hotSpot.x: width / 2
                     Drag.hotSpot.y: 0
                     MouseArea {
                         id: dragArea
                         anchors.fill: parent
                         drag.target: parent
+                        hoverEnabled: true
                         onPressed: {
                             roomsGrid.channelIndex = -1
                             roomsGrid.userName = modelData
                             mouse.accepted = true
                         }
                         onReleased: {
-                            console.log("Drag area released: user " + roomsGrid.userName + ", channel " + roomsGrid.channelIndex)
+                            console.log("Mouse released: user " + roomsGrid.userName + ", channel " + roomsGrid.channelIndex)
                             if (-1 !== roomsGrid.channelIndex) {
                                 servers.joinRoom(roomsGrid.channelIndex, roomsGrid.userName)
                             }

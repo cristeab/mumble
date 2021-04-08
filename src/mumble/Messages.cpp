@@ -334,6 +334,7 @@ void MainWindow::msgUserState(const MumbleProto::UserState &msg) {
                 qInfo() << pDst->qsName << "connected";
                 //g.l->log(Log::UserJoin, tr("%1 connected.").arg(Log::formatClientUser(pDst, Log::Source)));
 			}
+            emit channelJoined(pDst->cChannel, pDst->qsName, pDst->uiSession);
 		}
 	}
 
@@ -614,27 +615,41 @@ void MainWindow::msgUserRemove(const MumbleProto::UserRemove &msg) {
 	SELF_INIT;
 
 	QString reason = Qt::escape(u8(msg.reason()));
+    QString errMsg;
 
 	if (pDst == pSelf) {
 		bRetryServer = false;
-		if (msg.ban())
-			g.l->log(Log::YouKicked, tr("You were kicked and banned from the server by %1: %2.").arg(Log::formatClientUser(pSrc, Log::Source)).arg(reason));
-		else
-			g.l->log(Log::YouKicked, tr("You were kicked from the server by %1: %2.").arg(Log::formatClientUser(pSrc, Log::Source)).arg(reason));
+        if (msg.ban()) {
+            errMsg = tr("You were kicked and banned from the server by %1: %2.").arg(Log::formatClientUser(pSrc, Log::Source)).arg(reason);
+            g.l->log(Log::YouKicked, errMsg);
+        } else {
+            errMsg = tr("You were kicked from the server by %1: %2.").arg(Log::formatClientUser(pSrc, Log::Source)).arg(reason);
+            g.l->log(Log::YouKicked, errMsg);
+        }
 	} else if (pSrc) {
-		if (msg.ban())
-			g.l->log((pSrc == pSelf) ? Log::YouKicked : Log::UserKicked, tr("%3 was kicked and banned from the server by %1: %2.").arg(Log::formatClientUser(pSrc, Log::Source)).arg(reason).arg(Log::formatClientUser(pDst, Log::Target)));
-		else
-			g.l->log((pSrc == pSelf) ? Log::YouKicked : Log::UserKicked, tr("%3 was kicked from the server by %1: %2.").arg(Log::formatClientUser(pSrc, Log::Source)).arg(reason).arg(Log::formatClientUser(pDst, Log::Target)));
+        if (msg.ban()) {
+            errMsg = tr("%3 was kicked and banned from the server by %1: %2.").arg(Log::formatClientUser(pSrc, Log::Source)).arg(reason).arg(Log::formatClientUser(pDst, Log::Target));
+            g.l->log((pSrc == pSelf) ? Log::YouKicked : Log::UserKicked, errMsg);
+        } else {
+            errMsg = tr("%3 was kicked from the server by %1: %2.").arg(Log::formatClientUser(pSrc, Log::Source)).arg(reason).arg(Log::formatClientUser(pDst, Log::Target));
+            g.l->log((pSrc == pSelf) ? Log::YouKicked : Log::UserKicked, errMsg);
+        }
 	} else {
 		if (pDst->cChannel == pSelf->cChannel || pDst->cChannel->allLinks().contains(pSelf->cChannel)) {
-			g.l->log(Log::ChannelLeaveDisconnect, tr("%1 left channel and disconnected.").arg(Log::formatClientUser(pDst, Log::Source)));
+            errMsg = tr("%1 left channel and disconnected.").arg(Log::formatClientUser(pDst, Log::Source));
+            g.l->log(Log::ChannelLeaveDisconnect, errMsg);
+            emit userDisconnected(pDst->qsName);
 		} else {
-			g.l->log(Log::UserLeave, tr("%1 disconnected.").arg(Log::formatClientUser(pDst, Log::Source)));
+            errMsg = tr("%1 disconnected.").arg(Log::formatClientUser(pDst, Log::Source));
+            g.l->log(Log::UserLeave, errMsg);
 		}
 	}
-	if (pDst != pSelf)
+    if (pDst != pSelf) {
 		pmModel->removeUser(pDst);
+    }
+    if (!errMsg.isEmpty()) {
+        qWarning() << errMsg;
+    }
 }
 
 void MainWindow::msgChannelState(const MumbleProto::ChannelState &msg) {

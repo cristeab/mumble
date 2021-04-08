@@ -526,6 +526,7 @@ void ServerTableModel::onUserModelChanged()
 
 void ServerTableModel::onChannelJoined(Channel *channel, const QString &userName, unsigned int session)
 {
+    qDebug() << "onChannelJoined" << channel << userName << session;
     const auto type = RoomsModel::channelType(channel);
     switch (type) {
     case RoomsModel::ChannelType::Room: {
@@ -555,7 +556,7 @@ void ServerTableModel::onChannelJoined(Channel *channel, const QString &userName
         qWarning() << "Unknown channel type" << static_cast<int>(type);
     }
     if (RoomsModel::ChannelType::Room != type) {
-        _roomsModel->removeUser(userName);
+       onUserDisconnected(userName);
     }
 }
 
@@ -728,4 +729,11 @@ bool ServerTableModel::joinRoomInternal()
     }
     _channelActionIndex = -1;
     return rc;
+}
+
+void ServerTableModel::onUserDisconnected(const QString &username)
+{
+    if (!username.isEmpty()) {
+        _roomsModel->removeUser(username);
+    }
 }

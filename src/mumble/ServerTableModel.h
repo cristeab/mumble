@@ -114,6 +114,7 @@ public:
     void onUserModelChanged();
     void onChannelJoined(Channel *channel, const QString &username, unsigned int session);
     void onChannelAllowedChanged(int id, bool allowed);
+    void onUserDisconnected(const QString &username);
 
 signals:
     void schoolsAvailable();
