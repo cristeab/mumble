@@ -125,6 +125,7 @@ void RoomsModel::insertUser(Channel *channel, const QString &username, unsigned 
 void RoomsModel::removeUser(const QString &username)
 {
     if (username.isEmpty()) {
+        qWarning() << "Empty username";
         return;//nothing to do
     }
     for (auto &roomInfo: _rooms) {

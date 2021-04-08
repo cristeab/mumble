@@ -496,11 +496,11 @@ void ServerTableModel::onServerDisconnectedEvent(MumbleProto::Reject_RejectType 
         ;
     }
     if (g.s.bReconnect && !reason.isEmpty()) {
-            g.mw->qaServerDisconnect->setEnabled(true);
-            if (g.mw->bRetryServer) {
-                g.mw->qtReconnect->start();
-            }
+        g.mw->qaServerDisconnect->setEnabled(true);
+        if (g.mw->bRetryServer) {
+            g.mw->qtReconnect->start();
         }
+    }
 }
 
 void ServerTableModel::onUserModelChanged()
