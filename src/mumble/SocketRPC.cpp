@@ -100,9 +100,9 @@ void SocketRPCClient::processXml() {
 			qmReply.insert(iter.key(), iter.value());
 
 		if (request.nodeName() == QLatin1String("focus")) {
-			g.mw->show();
-			g.mw->raise();
-			g.mw->activateWindow();
+            //g.mw->show();
+            //g.mw->raise();
+            //g.mw->activateWindow();
 
 			ack = true;
 		} else if (request.nodeName() == QLatin1String("self")) {

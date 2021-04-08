@@ -141,8 +141,8 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p) {
 	connect(qteChat, SIGNAL(entered(QString)), this, SLOT(sendChatbarMessage(QString)));
 
 	// Tray
-	connect(qstiIcon, SIGNAL(messageClicked()), this, SLOT(showRaiseWindow()));
-	connect(qaShow, SIGNAL(triggered()), this, SLOT(showRaiseWindow()));
+    //connect(qstiIcon, SIGNAL(messageClicked()), this, SLOT(showRaiseWindow()));
+    //connect(qaShow, SIGNAL(triggered()), this, SLOT(showRaiseWindow()));
 
 	// Explicitely add actions to mainwindow so their shortcuts are available
 	// if only the main window is visible (e.g. minimal mode)
@@ -444,7 +444,7 @@ void MainWindow::closeEvent(QCloseEvent *e) {
 		mb.setEscapeButton(qpbCancel);
 		mb.exec();
 		if (mb.clickedButton() == qpbMinimize) {
-			showMinimized();
+            //showMinimized();
 			e->ignore();
 			return;
 		} else if (mb.clickedButton() == qpbCancel) {
@@ -3110,17 +3110,17 @@ void MainWindow::trayAboutToShow() {
 }
 
 void MainWindow::showRaiseWindow() {
-	if (isMinimized()) {
+    /*if (isMinimized()) {
 		setWindowState((windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
 	}
 
 	show();
 	raise();
-	activateWindow();
+    activateWindow();*/
 }
 
 void MainWindow::on_Icon_activated(QSystemTrayIcon::ActivationReason reason) {
-	switch (reason) {
+    /*switch (reason) {
 		case QSystemTrayIcon::Trigger:
 		case QSystemTrayIcon::DoubleClick:
 		case QSystemTrayIcon::MiddleClick:
@@ -3130,7 +3130,7 @@ void MainWindow::on_Icon_activated(QSystemTrayIcon::ActivationReason reason) {
 			showMinimized();
 		}
 		default: break;
-	}
+    }*/
 }
 
 /**

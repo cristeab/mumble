@@ -81,9 +81,9 @@ void MumbleDBus::getTalkingUsers(const QDBusMessage &msg) {
 }
 
 void MumbleDBus::focus() {
-	g.mw->show();
-	g.mw->raise();
-	g.mw->activateWindow();
+    //g.mw->show();
+    //g.mw->raise();
+    //g.mw->activateWindow();
 }
 
 void MumbleDBus::setSelfMuted(bool mute) {
