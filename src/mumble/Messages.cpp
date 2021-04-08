@@ -638,11 +638,11 @@ void MainWindow::msgUserRemove(const MumbleProto::UserRemove &msg) {
 		if (pDst->cChannel == pSelf->cChannel || pDst->cChannel->allLinks().contains(pSelf->cChannel)) {
             errMsg = tr("%1 left channel and disconnected.").arg(Log::formatClientUser(pDst, Log::Source));
             g.l->log(Log::ChannelLeaveDisconnect, errMsg);
-            emit userDisconnected(pDst->qsName);
 		} else {
             errMsg = tr("%1 disconnected.").arg(Log::formatClientUser(pDst, Log::Source));
             g.l->log(Log::UserLeave, errMsg);
 		}
+        emit userDisconnected(pDst->qsName);
 	}
     if (pDst != pSelf) {
 		pmModel->removeUser(pDst);
