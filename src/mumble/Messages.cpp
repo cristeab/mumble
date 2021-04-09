@@ -617,6 +617,8 @@ void MainWindow::msgUserRemove(const MumbleProto::UserRemove &msg) {
 	QString reason = Qt::escape(u8(msg.reason()));
     QString errMsg;
 
+    qDebug() << "msgUserRemove" << reason;
+
 	if (pDst == pSelf) {
 		bRetryServer = false;
         if (msg.ban()) {
