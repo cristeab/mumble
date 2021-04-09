@@ -107,16 +107,7 @@ void RoomsModel::insertUser(Channel *channel, const QString &username, unsigned 
                 return;
             }
         }
-        RoomInfo roomInfo;
-        roomInfo.channel = channel;
-        roomInfo.name = channel->qsName;
-        roomInfo.users << username;
-        emit layoutAboutToBeChanged();
-        _rooms << roomInfo;
-        emit layoutChanged();
-        setCurrentRoomIndex(INVALID_INDEX);//make sure the index is updated
-        setCurrentRoomIndex(_rooms.size() - 1);
-        qDebug() << "Created for" << username << "new room" << roomInfo.name;
+        qWarning() << "No room" << channel->qsName << "has been found for" << username;
     } else {
         qWarning() << "Unknown channel type" << static_cast<int>(type);
     }

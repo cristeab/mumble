@@ -104,12 +104,11 @@ Page {
             height: roomsGrid.cellHeight
 
             onEntered: {
-                console.log("Drag entered  " + index + " : " + drag.x + "," + drag.y)
-                console.log("Cell: w " + roomsGrid.cellWidth + ", h " + roomsGrid.cellHeight)
+                console.log("Drag entered  " + index)
                 roomsGrid.channelIndex = index
             }
             onExited: {
-                console.log("Drag exited  " + index + " : " + drag.x + "," + drag.y)
+                console.log("Drag exited  " + index)
             }
             onDropped: {
                 console.log("Drag dropped " + index)
