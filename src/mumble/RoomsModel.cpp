@@ -64,6 +64,9 @@ void RoomsModel::append(const RoomInfo &roomInfo, const QHash<QString, unsigned 
         it.next();
         if (!_sessions.contains(it.key())) {
             _sessions[it.key()] = it.value();
+        } else if (_sessions[it.key()] != it.value()) {
+            qWarning() << it.key() << "already has session" << _sessions[it.key()] << "new" << it.value();
+            _sessions[it.key()] = it.value();
         }
     }
 }

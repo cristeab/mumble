@@ -571,6 +571,7 @@ void ServerTableModel::onChannelAllowedChanged(int id, bool allowed)
 
 bool ServerTableModel::gotoSchool(int index)
 {
+    qDebug() << "gotoSchool" << index;
     bool rc = false;
     if ((0 <= index) && (index < _schoolModelItems.size())) {
         const auto *rootItem = _schoolModelItems.at(index);
@@ -590,6 +591,7 @@ bool ServerTableModel::gotoSchool(int index)
 
 bool ServerTableModel::gotoClass(int index)
 {
+    qDebug() << "gotoClass" << index;
     bool rc = false;
     if ((0 <= index) && (index < _classModelItems.size())) {
         const auto *rootItem = _classModelItems.at(index);
@@ -615,6 +617,7 @@ bool ServerTableModel::joinRoom(int index, const QString &username)
     if (nullptr != ch) {
         _channelActionIndex = index;
         const auto session = _roomsModel->userSession(username);
+        qDebug() << "joinChannel" << session << ch->iId;
         g.sh->joinChannel(session, ch->iId);//make sure the error message is shown
         isAllowed(ch);
         rc = true;
@@ -699,6 +702,7 @@ bool ServerTableModel::gotoClassInternal()
                         }
                     }
                     _roomsModel->append(roomInfo, sessions);
+                    qDebug() << "Room" << roomInfo.name << "has" << roomInfo.users;
                 } else {
                     qWarning() << "Unknown channel type" << static_cast<int>(type);
                 }
