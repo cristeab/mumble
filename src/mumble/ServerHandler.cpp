@@ -858,6 +858,7 @@ void ServerHandler::registerUser(unsigned int uiSession) {
 }
 
 void ServerHandler::kickBanUser(unsigned int uiSession, const QString &reason, bool ban) {
+    qDebug() << "kickBanUser" << uiSession << reason << ban;
 	MumbleProto::UserRemove mpur;
 	mpur.set_session(uiSession);
 	mpur.set_reason(u8(reason));
