@@ -10,7 +10,6 @@ Page {
     }
 
     Component.onCompleted: roomsGrid.currentIndex = 0
-    Component.onDestruction: servers.roomsModel.clear()
 
     Row {
         anchors {
