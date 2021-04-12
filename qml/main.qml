@@ -242,6 +242,11 @@ ApplicationWindow {
         function onShowDialog(title, msg, okCancel) {
             msgDlg.showDialog(title, msg, okCancel)
         }
+        function onResetServersView() {
+            tabView.clear()
+            tabView.push("qrc:/qml/Servers.qml")
+            bar.currentButtonIndex = 0
+        }
     }
     QtObject {
         id: msgDlg
