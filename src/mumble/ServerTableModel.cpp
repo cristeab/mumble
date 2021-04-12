@@ -161,7 +161,7 @@ void ServerTableModel::startPingTick(bool start)
     qDebug() << "startPingTick" << start;
     if (start) {
         _pingTick.start();
-    } else {
+    } else if (!isValidIndex(_reconnectServerIndex)) {
         _pingTick.stop();
     }
 }
@@ -254,6 +254,7 @@ void ServerTableModel::sendPing(const QHostAddress &host, unsigned short port)
 
         ++si->sent;
     }
+    testConnectivity();
 }
 
 void ServerTableModel::udpReply()
@@ -739,5 +740,26 @@ void ServerTableModel::onUserDisconnected(const QString &username)
 {
     if (!username.isEmpty()) {
         _roomsModel->removeUser(username);
+    }
+}
+
+void ServerTableModel::testConnectivity()
+{
+    bool connLost = true;
+    for (const auto &si: qAsConst(_servers)) {
+        if ((0 != si.delayMs) || (0 != si.totalUsers)) {
+            connLost = false;
+            break;
+        }
+    }
+    if (connLost && isValidIndex(_connectedServerIndex)) {
+        _reconnectServerIndex = _connectedServerIndex;
+        disconnectServer();
+        emit showDialog(tr("Warning"), tr("Connection lost"), false);
+    } else if (!connLost && isValidIndex(_reconnectServerIndex)) {
+        _currentIndex = _reconnectServerIndex;
+        _reconnectServerIndex = INVALID_INDEX;
+        connectServer();
+        emit showDialog(tr("Information"), tr("Connection restored"), false);
     }
 }

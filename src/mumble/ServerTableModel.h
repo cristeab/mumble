@@ -119,6 +119,7 @@ public:
 signals:
     void schoolsAvailable();
     void currentChannelAllowedChanged(bool allowed);
+    void showDialog(const QString &title, const QString &msg, bool okCancel);
 
 private:
     enum { NAME = 0, DELAY, USERS, COLUMN_COUNT };
@@ -137,6 +138,7 @@ private:
     static void recreateServerHandler();
     void isAllowed(Channel *ch);
     void pingServer(ServerItem *srv);
+    void testConnectivity();
 
     QList<ServerItem> _servers;
     QTimer _pingTick;
@@ -152,8 +154,9 @@ private:
     QUdpSocket *_socket6 = nullptr;
     QList<ModelItem*> _classModelItems;
     QList<ModelItem*> _schoolModelItems;
-    int _channelActionIndex = -1;
-    int _currentChannelId = -1;
+    int _channelActionIndex =INVALID_INDEX;
+    int _currentChannelId = INVALID_INDEX;
+    int _reconnectServerIndex = INVALID_INDEX;
 
 #ifdef USE_ZEROCONF
 protected:
