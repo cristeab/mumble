@@ -121,6 +121,7 @@ signals:
     void currentChannelAllowedChanged(bool allowed);
     void showDialog(const QString &title, const QString &msg, bool okCancel);
     void closeDialog();
+    void resetServersView();
 
 private:
     enum { NAME = 0, DELAY, USERS, COLUMN_COUNT };

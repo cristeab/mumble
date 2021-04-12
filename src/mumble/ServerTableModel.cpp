@@ -420,13 +420,18 @@ bool ServerTableModel::disconnectServer()
     } else {
         qWarning() << "Cannot disconnect: nothing to do";
     }
+    qDebug() << "Connected server index" << _connectedServerIndex;
+
+    //don't clear models when reconnecting
     setConnectedServerIndex(INVALID_INDEX);
     setConnectedClassIndex(INVALID_INDEX);
-    qDebug() << "Connected server index" << _connectedServerIndex;
+    setSchoolNameList(QStringList());
+    setClassNameList(QStringList());
     if (nullptr != _roomsModel) {
         _roomsModel->clear();
     }
     setCurrentUsername(QString());
+
     return true;
 }
 
@@ -752,8 +757,9 @@ void ServerTableModel::testConnectivity()
             break;
         }
     }
-    if (connLost && isValidIndex(_connectedServerIndex)) {
+    if (connLost && isValidIndex(_connectedServerIndex) && !isValidIndex(_reconnectServerIndex)) {
         _reconnectServerIndex = _connectedServerIndex;
+        emit resetServersView();
         disconnectServer();
         emit showDialog(tr("Warning"), tr("Connection lost"), false);
     } else if (!connLost && isValidIndex(_reconnectServerIndex)) {
