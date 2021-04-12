@@ -120,6 +120,7 @@ signals:
     void schoolsAvailable();
     void currentChannelAllowedChanged(bool allowed);
     void showDialog(const QString &title, const QString &msg, bool okCancel);
+    void closeDialog();
 
 private:
     enum { NAME = 0, DELAY, USERS, COLUMN_COUNT };

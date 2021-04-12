@@ -11,6 +11,13 @@ Dialog {
     property bool okCancel: true
     property var acceptCallback: null
 
+    Connections {
+        target: servers
+        function onCloseDialog() {
+            control.destroy()
+        }
+    }
+
     background: Rectangle {
         color: Theme.backgroundColor
     }

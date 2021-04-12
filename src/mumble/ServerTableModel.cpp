@@ -757,6 +757,7 @@ void ServerTableModel::testConnectivity()
         disconnectServer();
         emit showDialog(tr("Warning"), tr("Connection lost"), false);
     } else if (!connLost && isValidIndex(_reconnectServerIndex)) {
+        emit closeDialog();//close previous dialog if any
         _currentIndex = _reconnectServerIndex;
         _reconnectServerIndex = INVALID_INDEX;
         connectServer();
