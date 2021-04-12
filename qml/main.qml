@@ -233,8 +233,14 @@ ApplicationWindow {
 
     Connections {
         target: certModel
-        function onShowDialog(title, text) {
-            msgDlg.showDialog(title, text)
+        function onShowDialog(title, msg) {
+            msgDlg.showDialog(title, msg)
+        }
+    }
+    Connections {
+        target: servers
+        function onShowDialog(title, msg, okCancel) {
+            msgDlg.showDialog(title, msg, okCancel)
         }
     }
     QtObject {
