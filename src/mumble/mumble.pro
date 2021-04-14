@@ -244,11 +244,7 @@ CONFIG(qtspeech) {
   SOURCES *= TextToSpeech.cpp
 }
 
-RESOURCES *= mumble.qrc ../../themes/MumbleTheme.qrc
-
-!CONFIG(no-classic-theme) {
-  RESOURCES *= ../../themes/ClassicTheme.qrc
-}
+RESOURCES *= mumble.qrc
 
 # Add the various mumble_flags_XX.qrc files to RESOURCES...
 include(flags/mumble_flags.pri)
