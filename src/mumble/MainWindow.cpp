@@ -43,7 +43,6 @@
 #include "VoiceRecorderDialog.h"
 #include "../SignalCurry.h"
 #include "Settings.h"
-#include "Themes.h"
 #include "SSLCipherInfo.h"
 #include "SvgIcon.h"
 

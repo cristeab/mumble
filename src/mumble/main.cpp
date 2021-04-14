@@ -35,7 +35,6 @@
 #include "SSL.h"
 #include "MumbleApplication.h"
 #include "ApplicationPalette.h"
-#include "Themes.h"
 #include "UserLockFile.h"
 #include "License.h"
 #include "EnvUtils.h"
@@ -374,8 +373,6 @@ int main(int argc, char **argv) {
 	DeferInit::run_initializers();
 
 	ApplicationPalette applicationPalette;
-	
-	Themes::apply();
 
 	QString qsSystemLocale = QLocale::system().name();
 

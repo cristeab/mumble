@@ -17,7 +17,6 @@
 #include "ServerHandler.h"
 #include "MainWindow.h"
 #include "GlobalShortcut.h"
-#include "Themes.h"
 
 // We define a global macro called 'g'. This can lead to issues when included code uses 'g' as a type or parameter name (like protobuf 3.7 does). As such, for now, we have to make this our last include.
 #include "Global.h"
@@ -358,7 +357,6 @@ void OverlayClient::hideGui() {
 #ifdef Q_OS_MAC
 	qApp->setAttribute(Qt::AA_DontUseNativeMenuBar, false);
 	g.mw->setUnifiedTitleAndToolBarOnMac(true);
-	Themes::apply();
 #endif
 
 	setupScene(false);

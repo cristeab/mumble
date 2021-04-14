@@ -152,8 +152,6 @@ HEADERS *= BanEditor.h \
     OverlayEditorScene.h \
     MumbleApplication.h \
     ApplicationPalette.h \
-    ThemeInfo.h \
-    Themes.h \
     OverlayPositionableItem.h \
     widgets/MUComboBox.h \
     DeveloperConsole.h \
@@ -226,8 +224,6 @@ SOURCES *= BanEditor.cpp \
     WebFetch.cpp \
     MumbleApplication.cpp \
     ../../3rdparty/smallft-src/smallft.cpp \
-    ThemeInfo.cpp \
-    Themes.cpp \
     OverlayPositionableItem.cpp \
     widgets/MUComboBox.cpp \
     DeveloperConsole.cpp \

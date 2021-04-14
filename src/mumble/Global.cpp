@@ -165,8 +165,6 @@ Global::Global() {
 		qdBasePath.mkpath(QLatin1String("Plugins"));
 	if (! qdBasePath.exists(QLatin1String("Overlay")))
 		qdBasePath.mkpath(QLatin1String("Overlay"));
-	if (! qdBasePath.exists(QLatin1String("Themes")))
-		qdBasePath.mkpath(QLatin1String("Themes"));
 
 	qs->setIniCodec("UTF-8");
 }
