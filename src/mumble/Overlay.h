@@ -19,8 +19,6 @@
 #include "OverlayText.h"
 #include "../../overlay/overlay.h"
 
-#include "ui_OverlayEditor.h"
-
 class ClientUser;
 class Overlay;
 class QLocalServer;

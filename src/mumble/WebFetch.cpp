@@ -8,7 +8,6 @@
 #include "WebFetch.h"
 
 #include "Global.h"
-#include "NetworkConfig.h"
 
 WebFetch::WebFetch(QString service, QUrl url, QObject *obj, const char *slot)
 	: QObject()
@@ -24,7 +23,6 @@ WebFetch::WebFetch(QString service, QUrl url, QObject *obj, const char *slot)
 		url.setHost(serviceHost());
 	}
 
-	qnr = Network::get(url);
 	connect(qnr, SIGNAL(finished()), this, SLOT(finished()));
 	connect(this, SIGNAL(fetched(QByteArray,QUrl,QMap<QString,QString>)), obj, slot);
 }

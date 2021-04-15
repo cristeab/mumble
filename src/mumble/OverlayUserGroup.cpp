@@ -16,7 +16,6 @@
 #include "ClientUser.h"
 #include "Message.h"
 #include "Database.h"
-#include "NetworkConfig.h"
 #include "ServerHandler.h"
 #include "MainWindow.h"
 #include "GlobalShortcut.h"

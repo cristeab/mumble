@@ -9,11 +9,7 @@
 
 #include "About.h"
 #include "ACL.h"
-#include "ACLEditor.h"
 #include "AudioInput.h"
-#include "AudioStats.h"
-#include "AudioWizard.h"
-#include "BanEditor.h"
 #include "CELTCodec.h"
 #include "OpusCodec.h"
 #include "Cert.h"
@@ -25,19 +21,13 @@
 #include "GlobalShortcut.h"
 #include "Log.h"
 #include "Net.h"
-#include "NetworkConfig.h"
 #include "OverlayClient.h"
 #include "Plugins.h"
-#include "PTTButtonWidget.h"
-#include "RichTextEditor.h"
 #include "ServerHandler.h"
 #include "TextMessage.h"
-#include "Tokens.h"
 #include "User.h"
-#include "UserEdit.h"
 #include "UserInformation.h"
 #include "UserModel.h"
-#include "UserLocalVolumeDialog.h"
 #include "VersionCheck.h"
 #include "ViewCert.h"
 #include "VoiceRecorderDialog.h"
@@ -107,14 +97,9 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p) {
 
 	Channel::add(0, tr("Root"));
 
-	aclEdit = NULL;
-	banEdit = NULL;
-	userEdit = NULL;
 	tokenEdit = NULL;
 
 	voiceRecorderDialog = NULL;
-
-	qwPTTButtonWidget = NULL;
 
 #if QT_VERSION < 0x050000
 	cuContextUser = QWeakPointer<ClientUser>();
@@ -132,26 +117,11 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p) {
 	qmDeveloper = new QMenu(tr("&Developer"), this);
 
 	createActions();
-	setupUi(this);
-	setupGui();
-
-	connect(qmUser, SIGNAL(aboutToShow()), this, SLOT(qmUser_aboutToShow()));
-	connect(qmChannel, SIGNAL(aboutToShow()), this, SLOT(qmChannel_aboutToShow()));
-	connect(qteChat, SIGNAL(entered(QString)), this, SLOT(sendChatbarMessage(QString)));
-
-	// Tray
-    //connect(qstiIcon, SIGNAL(messageClicked()), this, SLOT(showRaiseWindow()));
-    //connect(qaShow, SIGNAL(triggered()), this, SLOT(showRaiseWindow()));
 
 	// Explicitely add actions to mainwindow so their shortcuts are available
 	// if only the main window is visible (e.g. minimal mode)
     /*addActions(findChildren<QAction*>());
 
-	on_qmServer_aboutToShow();
-	on_qmSelf_aboutToShow();
-	qmChannel_aboutToShow();
-	qmUser_aboutToShow();
-	on_qmConfig_aboutToShow();
 	qmDeveloper->addAction(qaDeveloperConsole);
 
 	setOnTop(g.s.aotbAlwaysOnTop == Settings::OnTopAlways ||
@@ -244,135 +214,6 @@ void MainWindow::createActions() {
 #endif
 }
 
-void MainWindow::setupGui()  {
-	updateWindowTitle();
-	setCentralWidget(qtvUsers);
-	setAcceptDrops(true);
-
-#ifdef Q_OS_MAC
-	QMenu *qmWindow = new QMenu(tr("&Window"), this);
-	menubar->insertMenu(qmHelp->menuAction(), qmWindow);
-	qmWindow->addAction(tr("Minimize"), this, SLOT(showMinimized()), QKeySequence(tr("Ctrl+M")));
-
-	qtvUsers->setAttribute(Qt::WA_MacShowFocusRect, false);
-	qteChat->setAttribute(Qt::WA_MacShowFocusRect, false);
-	qteChat->setFrameShape(QFrame::NoFrame);
-	qteLog->setFrameStyle(QFrame::NoFrame);
-#endif
-
-	LogDocument *ld = new LogDocument(qteLog);
-	qteLog->setDocument(ld);
-
-	qteLog->document()->setMaximumBlockCount(g.s.iMaxLogBlocks);
-	qteLog->document()->setDefaultStyleSheet(qApp->styleSheet());
-
-	pmModel = new UserModel(qtvUsers);
-	qtvUsers->setModel(pmModel);
-	qtvUsers->setRowHidden(0, QModelIndex(), true);
-	qtvUsers->ensurePolished();
-
-	qaAudioMute->setChecked(g.s.bMute);
-	qaAudioDeaf->setChecked(g.s.bDeaf);
-#ifdef USE_NO_TTS
-	qaAudioTTS->setChecked(false);
-	qaAudioTTS->setDisabled(true);
-#else
-	qaAudioTTS->setChecked(g.s.bTTS);
-#endif
-	qaFilterToggle->setChecked(g.s.bFilterActive);
-
-	qaHelpWhatsThis->setShortcuts(QKeySequence::WhatsThis);
-
-	qaConfigMinimal->setChecked(g.s.bMinimalView);
-	qaConfigHideFrame->setChecked(g.s.bHideFrame);
-
-	connect(gsResetAudio, SIGNAL(down(QVariant)), qaAudioReset, SLOT(trigger()));
-	connect(gsUnlink, SIGNAL(down(QVariant)), qaAudioUnlink, SLOT(trigger()));
-	connect(gsMinimal, SIGNAL(down(QVariant)), qaConfigMinimal, SLOT(trigger()));
-
-	dtbLogDockTitle = new DockTitleBar();
-	qdwLog->setTitleBarWidget(dtbLogDockTitle);
-
-	foreach(QWidget *w, qdwLog->findChildren<QWidget *>()) {
-		w->installEventFilter(dtbLogDockTitle);
-		w->setMouseTracking(true);
-	}
-
-	dtbChatDockTitle = new DockTitleBar();
-	qdwChat->setTitleBarWidget(dtbChatDockTitle);
-	qdwChat->installEventFilter(dtbChatDockTitle);
-	qteChat->setDefaultText(tr("<center>Not connected</center>"), true);
-	qteChat->setEnabled(false);
-
-	setShowDockTitleBars((g.s.wlWindowLayout == Settings::LayoutCustom) && !g.s.bLockLayout);
-
-#ifdef Q_OS_MAC
-	// Workaround for QTBUG-3116 -- using a unified toolbar on Mac OS X
-	// and using restoreGeometry before the window has updated its frameStrut
-	// causes the MainWindow to jump around on screen on launch.  Workaround
-	// is to call show() to update the frameStrut and set the windowOpacity to
-	// 0 to hide any graphical glitches that occur when we add stuff to the
-	// window.
-	setWindowOpacity(0.0f);
-	show();
-#endif
-
-	connect(qtvUsers->selectionModel(),
-	        SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)),
-	        SLOT(qtvUserCurrentChanged(const QModelIndex &, const QModelIndex &)));
-
-	// QtCreator and uic.exe do not allow adding arbitrary widgets
-	// such as a MUComboBox to a QToolbar, even though they are supported.
-	qcbTransmitMode = new MUComboBox(qtIconToolbar);
-	qcbTransmitMode->setObjectName(QLatin1String("qcbTransmitMode"));
-	qcbTransmitMode->addItem(tr("Continuous"));
-	qcbTransmitMode->addItem(tr("Voice Activity"));
-	qcbTransmitMode->addItem(tr("Push-to-Talk"));
-
-	qaTransmitModeSeparator = qtIconToolbar->insertSeparator(qaConfigDialog);
-	qaTransmitMode = qtIconToolbar->insertWidget(qaTransmitModeSeparator, qcbTransmitMode);
-
-	connect(qcbTransmitMode, SIGNAL(activated(int)),
-	        this, SLOT(qcbTransmitMode_activated(int)));
-
-	updateTransmitModeComboBox();
-
-// For Qt >= 5, enable this call (only) for Windows.
-// For Qt < 5, enable for anything but macOS.
-#if (QT_VERSION >= 0x050000 && defined(Q_OS_WIN)) || (QT_VERSION < 0x050000 && !defined(Q_OS_MAC))
-	setupView(false);
-#endif
-
-	if (g.s.bMinimalView && ! g.s.qbaMinimalViewGeometry.isNull())
-		restoreGeometry(g.s.qbaMinimalViewGeometry);
-	else if (! g.s.bMinimalView && ! g.s.qbaMainWindowGeometry.isNull())
-		restoreGeometry(g.s.qbaMainWindowGeometry);
-
-	if (g.s.bMinimalView && ! g.s.qbaMinimalViewState.isNull())
-		restoreState(g.s.qbaMinimalViewState);
-	else if (! g.s.bMinimalView && ! g.s.qbaMainWindowState.isNull())
-		restoreState(g.s.qbaMainWindowState);
-
-	setupView(false);
-
-	qmTray = new QMenu(this);
-	connect(qmTray, SIGNAL(aboutToShow()), this, SLOT(trayAboutToShow()));
-	trayAboutToShow();
-	qstiIcon->setContextMenu(qmTray);
-
-	updateTrayIcon();
-
-#ifdef Q_OS_MAC
-	setWindowOpacity(1.0f);
-#if QT_VERSION < 0x040700
-	// Process pending events.  This is done to force the unified
-	// toolbar to show up as soon as possible (and not wait until
-	// we are back into the Cocoa mainloop)
-	qApp->processEvents();
-#endif
-#endif
-}
-
 void MainWindow::updateWindowTitle() {
 	QString title;
 	if (g.s.bMinimalView) {
@@ -383,20 +224,6 @@ void MainWindow::updateWindowTitle() {
 	setWindowTitle(title.arg(QLatin1String(MUMBLE_RELEASE)));
 }
 
-void MainWindow::updateToolbar() {
-	bool layoutIsCustom = g.s.wlWindowLayout == Settings::LayoutCustom;
-	qtIconToolbar->setMovable(layoutIsCustom && !g.s.bLockLayout);
-
-	// Update the toolbar so the movable flag takes effect.
-	if (layoutIsCustom) {
-		// Update the toolbar, but keep it in place.
-		addToolBar(toolBarArea(qtIconToolbar), qtIconToolbar);
-	} else {
-		// Update the toolbar, and ensure it is at the top of the window.
-		addToolBar(Qt::TopToolBarArea, qtIconToolbar);
-	}
-}
-
 // Sets whether or not to show the title bars on the MainWindow's
 // dock widgets.
 void MainWindow::setShowDockTitleBars(bool doShow) {
@@ -405,10 +232,7 @@ void MainWindow::setShowDockTitleBars(bool doShow) {
 }
 
 MainWindow::~MainWindow() {
-	delete qwPTTButtonWidget;
-	delete qdwLog->titleBarWidget();
 	delete pmModel;
-	delete qtvUsers;
 	delete Channel::get(0);
 }
 
@@ -462,14 +286,8 @@ void MainWindow::closeEvent(QCloseEvent *e) {
 	} else {
 		g.s.qbaMainWindowGeometry = saveGeometry();
 		g.s.qbaMainWindowState = saveState();
-		g.s.qbaHeaderState = qtvUsers->header()->saveState();
 	}
 
-	if (qwPTTButtonWidget) {
-		qwPTTButtonWidget->close();
-		qwPTTButtonWidget->deleteLater();
-		qwPTTButtonWidget = NULL;
-	}
 	g.bQuit = true;
 
 	QMainWindow::closeEvent(e);
@@ -527,45 +345,9 @@ void MainWindow::keyPressEvent(QKeyEvent *e) {
 	// to navigate Mumble's MainWindow with only
 	// a keyboard.
 	if (e->key() == Qt::Key_F6) {
-		focusNextMainWidget();
 	} else {
 		QMainWindow::keyPressEvent(e);
 	}
-}
-
-/// focusNextMainWidget switches the focus to the next main
-/// widget of the MainWindow.
-///
-/// This is used to implement behavior where pressing F6
-/// switches between major elements of an application.
-/// This behavior is for example seen in Windows's (File) Explorer.
-///
-/// The main widgets are qteLog (the log view), qteChat (chat input bar)
-/// and qtvUsers (users tree view).
-void MainWindow::focusNextMainWidget() {
-	QWidget *mainFocusWidgets[] = {
-		qteLog,
-		qteChat,
-		qtvUsers,
-	};
-	const int numMainFocusWidgets = sizeof(mainFocusWidgets)/sizeof(mainFocusWidgets[0]);
-
-	int currentMainFocusWidgetIndex = -1;
-
-	QWidget *w = focusWidget();
-	for (int i = 0; i < numMainFocusWidgets; i++) {
-		QWidget *mainFocusWidget = mainFocusWidgets[i];
-		if (w == mainFocusWidget || w->isAncestorOf(mainFocusWidget)) {
-			currentMainFocusWidgetIndex = i;
-			break;
-		}
-	}
-
-	Q_ASSERT(currentMainFocusWidgetIndex != -1);
-
-	int nextMainFocusWidgetIndex = (currentMainFocusWidgetIndex + 1) % numMainFocusWidgets;
-	QWidget *nextMainFocusWidget = mainFocusWidgets[nextMainFocusWidgetIndex];
-	nextMainFocusWidget->setFocus();
 }
 
 void MainWindow::updateTrayIcon() {
@@ -602,12 +384,6 @@ void MainWindow::updateTrayIcon() {
 	} else {
 		qstiIcon->setIcon(qiIcon);
 	}
-}
-
-void MainWindow::updateUserModel()
-{
-	UserModel *um = static_cast<UserModel *>(qtvUsers->model());
-	um->toggleChannelFiltered(NULL); // Force a UI refresh
 }
 
 void MainWindow::updateTransmitModeComboBox() {
@@ -664,8 +440,6 @@ bool MainWindow::handleSpecialContextMenu(const QUrl &url, const QPoint &pos_, b
 		}
 		if (ok && cuContextUser) {
 			if (focus) {
-				qtvUsers->setCurrentIndex(pmModel->index(cuContextUser.data()));
-				qteChat->setFocus();
 			} else {
 				qpContextPosition = QPoint();
 				qmUser->exec(pos_, NULL);
@@ -680,8 +454,6 @@ bool MainWindow::handleSpecialContextMenu(const QUrl &url, const QPoint &pos_, b
 		ok = ok && sh && (qbaServerDigest == sh->qbaDigest);
 		if (ok) {
 			if (focus) {
-				qtvUsers->setCurrentIndex(pmModel->index(cContextChannel.data()));
-				qteChat->setFocus();
 			} else {
 				qpContextPosition = QPoint();
 				qmChannel->exec(pos_, NULL);
@@ -692,92 +464,6 @@ bool MainWindow::handleSpecialContextMenu(const QUrl &url, const QPoint &pos_, b
 		return false;
 	}
 	return true;
-}
-
-void MainWindow::on_qtvUsers_customContextMenuRequested(const QPoint &mpos) {
-	QModelIndex idx = qtvUsers->indexAt(mpos);
-	if (! idx.isValid())
-		idx = qtvUsers->currentIndex();
-	else
-		qtvUsers->setCurrentIndex(idx);
-	ClientUser *p = pmModel->getUser(idx);
-
-	qpContextPosition = mpos;
-	if (p) {
-		cuContextUser.clear();
-		qmUser->exec(qtvUsers->mapToGlobal(mpos), qaUserMute);
-		cuContextUser.clear();
-	} else {
-		cContextChannel.clear();
-		qmChannel->exec(qtvUsers->mapToGlobal(mpos), NULL);
-		cContextChannel.clear();
-	}
-	qpContextPosition = QPoint();
-}
-
-void MainWindow::on_qteLog_customContextMenuRequested(const QPoint &mpos) {
-	QString link = qteLog->anchorAt(mpos);
-	if (! link.isEmpty()) {
-		QUrl l(link);
-
-		if (handleSpecialContextMenu(l, qteLog->mapToGlobal(mpos)))
-			return;
-	}
-
-	QPoint contentPosition = QPoint(QApplication::isRightToLeft() ? (qteLog->horizontalScrollBar()->maximum() - qteLog->horizontalScrollBar()->value()) : qteLog->horizontalScrollBar()->value(), qteLog->verticalScrollBar()->value());
-	QMenu *menu = qteLog->createStandardContextMenu(mpos + contentPosition);
-
-	QTextCursor cursor = qteLog->cursorForPosition(mpos);
-	QTextCharFormat fmt = cursor.charFormat();
-
-	// Work around imprecise cursor image identification
-	// Apparently, the cursor is shifted half the characters width to the right on the image
-	// element. This is in contrast to hyperlinks for example, which have correct edge detection.
-	// For the image, we get the right half (plus the left half of the next character) for the
-	// image, and have to move the cursor forward to also detect on the left half of the image
-	// (plus the right half of the previous character).
-	// It is unclear why we have to use NextCharacter instead of PreviousCharacter.
-	if (fmt.objectType() == QTextFormat::NoObject) {
-		cursor.movePosition(QTextCursor::NextCharacter);
-		fmt = cursor.charFormat();
-	}
-	if (cursor.charFormat().isImageFormat()) {
-		menu->addSeparator();
-		menu->addAction(tr("Save Image As..."), this, SLOT(saveImageAs(void)));
-
-		qtcSaveImageCursor = cursor;
-	}
-
-	menu->addSeparator();
-	menu->addAction(tr("Clear"), qteLog, SLOT(clear(void)));
-	menu->exec(qteLog->mapToGlobal(mpos));
-	delete menu;
-}
-
-void MainWindow::saveImageAs() {
-	QDateTime now = QDateTime::currentDateTime();
-    QString defaultFname = QString::fromLatin1("Bubbles-%1.jpg").arg(now.toString(QString::fromLatin1("yyyy-MM-dd-HHmmss")));
-
-	QString fname = QFileDialog::getSaveFileName(this, tr("Save Image File"), getImagePath(defaultFname), tr("Images (*.png *.jpg *.jpeg)"));
-	if (fname.isNull()) {
-		return;
-	}
-
-	QString resName = qtcSaveImageCursor.charFormat().toImageFormat().name();
-	QVariant res = qteLog->document()->resource(QTextDocument::ImageResource, resName);
-	QImage img = res.value<QImage>();
-	bool ok = img.save(fname);
-	if (!ok) {
-		// In case fname did not contain a file extension, try saving with an
-		// explicit format.
-		ok = img.save(fname, "PNG");
-	}
-
-	updateImagePath(fname);
-
-	if (!ok) {
-		g.l->log(Log::Warning, tr("Could not save image: %1").arg(Qt::escape(fname)));
-	}
 }
 
 QString MainWindow::getImagePath(QString filename) const {
@@ -922,7 +608,6 @@ void MainWindow::openUrl(const QUrl &url) {
 	g.s.qsLastServer = name;
 	rtLast = MumbleProto::Reject_RejectType_None;
 	bRetryServer = true;
-	qaServerDisconnect->setEnabled(true);
 	g.l->log(Log::Information, tr("Connecting to server %1.").arg(Log::msgColor(Qt::escape(host), Log::Server)));
 	g.sh->setConnectionInfo(host, port, user, pw);
 	g.sh->start(QThread::TimeCriticalPriority);
@@ -959,11 +644,7 @@ void MainWindow::findDesiredChannel() {
 		if (chan != ClientUser::get(g.uiSession)->cChannel) {
 			g.sh->joinChannel(g.uiSession, chan->iId);
 		}
-		qtvUsers->setCurrentIndex(pmModel->index(chan));
-	} else if (g.uiSession) {
-		qtvUsers->setCurrentIndex(pmModel->index(ClientUser::get(g.uiSession)->cChannel));
 	}
-	updateMenuPermissions();
 }
 
 void MainWindow::setOnTop(bool top) {
@@ -975,159 +656,6 @@ void MainWindow::setOnTop(bool top) {
 			wf &= ~Qt::WindowStaysOnTopHint;
 		setWindowFlags(wf);
 		show();
-	}
-}
-
-void MainWindow::setupView(bool toggle_minimize) {
-	bool showit = ! g.s.bMinimalView;
-
-	switch (g.s.wlWindowLayout) {
-		case Settings::LayoutClassic:
-			removeDockWidget(qdwLog);
-			addDockWidget(Qt::LeftDockWidgetArea, qdwLog);
-			qdwLog->show();
-			splitDockWidget(qdwLog, qdwChat, Qt::Vertical);
-			qdwChat->show();
-			break;
-		case Settings::LayoutStacked:
-			removeDockWidget(qdwLog);
-			addDockWidget(Qt::BottomDockWidgetArea, qdwLog);
-			qdwLog->show();
-			splitDockWidget(qdwLog, qdwChat, Qt::Vertical);
-			qdwChat->show();
-			break;
-		case Settings::LayoutHybrid:
-			removeDockWidget(qdwLog);
-			removeDockWidget(qdwChat);
-			addDockWidget(Qt::LeftDockWidgetArea, qdwLog);
-			qdwLog->show();
-			addDockWidget(Qt::BottomDockWidgetArea, qdwChat);
-			qdwChat->show();
-			break;
-		default:
-			break;
-	}
-
-	updateToolbar();
-
-	qteChat->updateGeometry();
-
-	QRect geom = frameGeometry();
-
-	if (toggle_minimize) {
-		if (! showit) {
-			g.s.qbaMainWindowGeometry = saveGeometry();
-			g.s.qbaMainWindowState = saveState();
-			g.s.qbaHeaderState = qtvUsers->header()->saveState();
-		} else {
-			g.s.qbaMinimalViewGeometry = saveGeometry();
-			g.s.qbaMinimalViewState = saveState();
-		}
-	}
-
-	Qt::WindowFlags f = Qt::Window;
-	if (!showit) {
-		if (g.s.bHideFrame) {
-			f |= Qt::FramelessWindowHint;
-		}
-	}
-	
-	if (g.s.aotbAlwaysOnTop == Settings::OnTopAlways ||
-	        (g.s.bMinimalView && g.s.aotbAlwaysOnTop == Settings::OnTopInMinimal) ||
-	        (!g.s.bMinimalView && g.s.aotbAlwaysOnTop == Settings::OnTopInNormal)) {
-		f |= Qt::WindowStaysOnTopHint;
-	}
-
-	if (! graphicsProxyWidget())
-		setWindowFlags(f);
-
-	if (g.s.bShowContextMenuInMenuBar) {
-		bool found = false;
-		foreach(QAction *a, menuBar()->actions()) {
-			if (a == qmUser->menuAction()) {
-				found = true;
-				break;
-			}
-		}
-
-		if (!found) {
-			menuBar()->insertMenu(qmConfig->menuAction(), qmUser);
-			menuBar()->insertMenu(qmConfig->menuAction(), qmChannel);
-		}
-	} else {
-		menuBar()->removeAction(qmUser->menuAction());
-		menuBar()->removeAction(qmChannel->menuAction());
-	}
-
-	if (g.s.bEnableDeveloperMenu) {
-		bool found = false;
-		foreach(QAction *a, menuBar()->actions()) {
-			if (a == qmDeveloper->menuAction()) {
-				found = true;
-				break;
-			}
-		}
-
-		if (!found) {
-			menuBar()->insertMenu(qmHelp->menuAction(), qmDeveloper);
-		}
-	} else {
-		menuBar()->removeAction(qmDeveloper->menuAction());
-	}
-
-	if (! showit) {
-		qdwLog->setVisible(showit);
-		qdwChat->setVisible(showit);
-		qtIconToolbar->setVisible(showit);
-	}
-	menuBar()->setVisible(showit);
-
-	if (toggle_minimize) {
-		if (! showit) {
-			if (! g.s.qbaMinimalViewGeometry.isNull())
-				restoreGeometry(g.s.qbaMinimalViewGeometry);
-			if (! g.s.qbaMinimalViewState.isNull())
-				restoreState(g.s.qbaMinimalViewState);
-		} else {
-			if (! g.s.qbaMainWindowGeometry.isNull())
-				restoreGeometry(g.s.qbaMainWindowGeometry);
-			if (! g.s.qbaMainWindowState.isNull())
-				restoreState(g.s.qbaMainWindowState);
-		}
-	} else {
-		QRect newgeom = frameGeometry();
-		resize(geometry().width()-newgeom.width()+geom.width(),
-		       geometry().height()-newgeom.height()+geom.height());
-		move(geom.x(), geom.y());
-	}
-
-	// Display the Transmit Mode Dropdown, if configured to do so, otherwise
-	// hide it.
-	if (g.s.bShowTransmitModeComboBox) {
-		qaTransmitMode->setVisible(true);
-		qaTransmitModeSeparator->setVisible(true);
-	} else {
-		qaTransmitMode->setVisible(false);
-		qaTransmitModeSeparator->setVisible(false);
-	}
-
-	show();
-	activateWindow();
-
-	// If activated show the PTT window
-	if (g.s.bShowPTTButtonWindow && g.s.atTransmit == Settings::PushToTalk) {
-		if (qwPTTButtonWidget) {
-			qwPTTButtonWidget->show();
-		} else {
-			qwPTTButtonWidget = new PTTButtonWidget();
-			qwPTTButtonWidget->show();
-			connect(qwPTTButtonWidget, SIGNAL(triggered(bool,QVariant)), SLOT(on_PushToTalk_triggered(bool,QVariant)));
-		}
-	} else {
-		if (qwPTTButtonWidget) {
-			qwPTTButtonWidget->deleteLater();
-			qwPTTButtonWidget = NULL;
-		}
 	}
 }
 
@@ -1143,7 +671,6 @@ void MainWindow::on_qaServerConnect_triggered(bool autoconnect) {
 		qsDesiredChannel = QString();
 		rtLast = MumbleProto::Reject_RejectType_None;
 		bRetryServer = true;
-		qaServerDisconnect->setEnabled(true);
 		g.l->log(Log::Information, tr("Connecting to server %1.").arg(Log::msgColor(Qt::escape(cd->qsServer), Log::Server)));
 		g.sh->setConnectionInfo(cd->qsServer, cd->usPort, cd->qsUsername, cd->qsPassword);
 		g.sh->start(QThread::TimeCriticalPriority);
@@ -1156,24 +683,6 @@ void MainWindow::on_Reconnect_timeout() {
 		return;
 	g.l->log(Log::Information, tr("Reconnecting."));
 	g.sh->start(QThread::TimeCriticalPriority);
-}
-
-void MainWindow::on_qmSelf_aboutToShow() {
-	ClientUser *user = ClientUser::get(g.uiSession);
-
-	qaServerTexture->setEnabled(user != NULL);
-	qaSelfComment->setEnabled(user != NULL);
-
-	qaServerTextureRemove->setEnabled(user && ! user->qbaTextureHash.isEmpty());
-
-	qaSelfRegister->setEnabled(user && (user->iId < 0) && ! user->qsHash.isEmpty() && (g.pPermissions & (ChanACL::SelfRegister | ChanACL::Write)));
-	if (g.sh && g.sh->uiVersion >= 0x010203) {
-		qaSelfPrioritySpeaker->setEnabled(user && g.pPermissions & (ChanACL::Write | ChanACL::MuteDeafen));
-		qaSelfPrioritySpeaker->setChecked(user && user->bPrioritySpeaker);
-	} else {
-		qaSelfPrioritySpeaker->setEnabled(false);
-		qaSelfPrioritySpeaker->setChecked(false);
-	}
 }
 
 void MainWindow::on_qaSelfComment_triggered() {
@@ -1196,7 +705,6 @@ void MainWindow::on_qaSelfComment_triggered() {
 
 	::TextMessage *texm = new ::TextMessage(this, tr("Change your comment"));
 
-	texm->rteMessage->setText(p->qsComment);
 	int res = texm->exec();
 
 	p = ClientUser::get(session);
@@ -1245,64 +753,12 @@ void MainWindow::qcbTransmitMode_activated(int index) {
 	}
 }
 
-void MainWindow::on_qmServer_aboutToShow() {
-	qmServer->clear();
-	qmServer->addAction(qaServerConnect);
-	qmServer->addSeparator();
-	qmServer->addAction(qaServerDisconnect);
-	qmServer->addAction(qaServerInformation);
-	qmServer->addAction(qaServerTokens);
-	qmServer->addAction(qaServerUserList);
-	qmServer->addAction(qaServerBanList);
-	qmServer->addSeparator();
-#if !defined(Q_OS_MAC)
-	// Don't add qaHide on macOS.
-	// There is no way to bring the window back (no 'tray' for Mumble on macOS),
-	// and the system has built-in hide functionality via Cmd-H.
-	if (qstiIcon->isSystemTrayAvailable())
-		qmServer->addAction(qaHide);
-#endif
-	qmServer->addAction(qaQuit);
-
-	qaServerBanList->setEnabled(g.pPermissions & (ChanACL::Ban | ChanACL::Write));
-	qaServerUserList->setEnabled(g.pPermissions & (ChanACL::Register | ChanACL::Write));
-	qaServerInformation->setEnabled(g.uiSession != 0);
-	qaServerTokens->setEnabled(g.uiSession != 0);
-
-	if (! qlServerActions.isEmpty()) {
-		qmServer->addSeparator();
-		foreach(QAction *a, qlServerActions)
-			qmServer->addAction(a);
-	}
-}
-
 void MainWindow::on_qaServerDisconnect_triggered() {
 	if (qtReconnect->isActive()) {
 		qtReconnect->stop();
-		qaServerDisconnect->setEnabled(false);
 	}
 	if (g.sh && g.sh->isRunning())
 		g.sh->disconnect();
-}
-
-void MainWindow::on_qaServerBanList_triggered() {
-	g.sh->requestBanList();
-
-	if (banEdit) {
-		banEdit->reject();
-		delete banEdit;
-		banEdit = NULL;
-	}
-}
-
-void MainWindow::on_qaServerUserList_triggered() {
-	g.sh->requestUserList();
-
-	if (userEdit) {
-		userEdit->reject();
-		delete userEdit;
-		userEdit = NULL;
-	}
 }
 
 static const QString currentCodec() {
@@ -1397,20 +853,6 @@ void MainWindow::on_qaServerInformation_triggered() {
 
 	QString qsVoice, qsCrypt, qsAudio;
 
-	if (NetworkConfig::TcpModeEnabled()) {
-		qsVoice = tr("Voice channel is sent over control channel");
-	} else {
-		qsVoice = tr("<h2>Voice channel</h2><p>Encrypted with 128 bit OCB-AES128<br />%1 ms average latency (%4 deviation)</p>").arg(boost::accumulators::mean(g.sh->accUDP), 0, 'f', 2).arg(sqrt(boost::accumulators::variance(g.sh->accUDP)),0,'f',2);
-		qsCrypt = QString::fromLatin1("<h2>%1</h2><table><tr><th></th><th>%2</th><th>%3</th></tr>"
-		                              "<tr><th>%4</th><td>%8</td><td>%12</td></tr>"
-		                              "<tr><th>%5</th><td>%9</td><td>%13</td></tr>"
-		                              "<tr><th>%6</th><td>%10</td><td>%14</td></tr>"
-		                              "<tr><th>%7</th><td>%11</td><td>%15</td></tr>"
-		                              "</table>")
-		          .arg(tr("UDP Statistics")).arg(tr("To Server")).arg(tr("From Server")).arg(tr("Good")).arg(tr("Late")).arg(tr("Lost")).arg(tr("Resync"))
-		          .arg(cs.uiRemoteGood).arg(cs.uiRemoteLate).arg(cs.uiRemoteLost).arg(cs.uiRemoteResync)
-		          .arg(cs.uiGood).arg(cs.uiLate).arg(cs.uiLost).arg(cs.uiResync);
-	}
 	qsAudio=tr("<h2>Audio bandwidth</h2><p>Maximum %1 kbit/s<br />Current %2 kbit/s<br />Codec: %3</p>").arg(g.iMaxBandwidth / 1000.0,0,'f',1).arg(g.iAudioBandwidth / 1000.0,0,'f',1).arg(currentCodec());
 
     QMessageBox qmb(QMessageBox::Information, tr("Bubbles Server Information"), qsVersion + qsControl + qsVoice + qsCrypt + qsAudio, QMessageBox::Ok, this);
@@ -1440,135 +882,9 @@ void MainWindow::on_qaServerTextureRemove_triggered() {
 	g.sh->setUserTexture(g.uiSession, QByteArray());
 }
 
-void MainWindow::on_qaServerTokens_triggered() {
-	if (tokenEdit) {
-		tokenEdit->reject();
-		delete tokenEdit;
-		tokenEdit = NULL;
-	}
-
-	tokenEdit = new Tokens(this);
-	tokenEdit->show();
-}
-
 void MainWindow::voiceRecorderDialog_finished(int) {
 	voiceRecorderDialog->deleteLater();
 	voiceRecorderDialog = NULL;
-}
-
-void MainWindow::qmUser_aboutToShow() {
-	ClientUser *p = NULL;
-	if (g.uiSession != 0) {
-		QModelIndex idx;
-		if (! qpContextPosition.isNull())
-			idx = qtvUsers->indexAt(qpContextPosition);
-
-		if (! idx.isValid())
-			idx = qtvUsers->currentIndex();
-
-		p = pmModel->getUser(idx);
-
-		if (cuContextUser)
-			p = cuContextUser.data();
-	}
-
-	cuContextUser = p;
-	qpContextPosition = QPoint();
-
-	bool self = p && (p->uiSession == g.uiSession);
-
-	qmUser->clear();
-
-	if (g.pPermissions & (ChanACL::Kick | ChanACL::Ban | ChanACL::Write))
-		qmUser->addAction(qaUserKick);
-	if (g.pPermissions & (ChanACL::Ban | ChanACL::Write))
-		qmUser->addAction(qaUserBan);
-	qmUser->addAction(qaUserMute);
-	qmUser->addAction(qaUserDeaf);
-	if (g.sh && g.sh->uiVersion >= 0x010203)
-		qmUser->addAction(qaUserPrioritySpeaker);
-	qmUser->addAction(qaUserLocalMute);
-	qmUser->addAction(qaUserLocalIgnore);
-	qmUser->addAction(qaUserLocalVolume);
-
-	if (self)
-		qmUser->addAction(qaSelfComment);
-	else {
-		qmUser->addAction(qaUserCommentView);
-		qmUser->addAction(qaUserCommentReset);
-		qmUser->addAction(qaUserTextureReset);
-	}
-
-	qmUser->addAction(qaUserTextMessage);
-	if (g.sh && g.sh->uiVersion >= 0x010202)
-		qmUser->addAction(qaUserInformation);
-
-	if (p && (p->iId < 0) && ! p->qsHash.isEmpty() && (g.pPermissions & ((self ? ChanACL::SelfRegister : ChanACL::Register) | ChanACL::Write))) {
-		qmUser->addSeparator();
-		qmUser->addAction(qaUserRegister);
-	}
-
-	if (p && ! p->qsHash.isEmpty() && (!p->qsFriendName.isEmpty() || (p->uiSession != g.uiSession))) {
-		qmUser->addSeparator();
-		if (p->qsFriendName.isEmpty())
-			qmUser->addAction(qaUserFriendAdd);
-		else {
-			if (p->qsFriendName != p->qsName)
-				qmUser->addAction(qaUserFriendUpdate);
-			qmUser->addAction(qaUserFriendRemove);
-		}
-	}
-
-	if (self) {
-		qmUser->addSeparator();
-		qmUser->addAction(qaAudioMute);
-		qmUser->addAction(qaAudioDeaf);
-	}
-
-#ifndef Q_OS_MAC
-	if (g.s.bMinimalView) {
-		qmUser->addSeparator();
-		qmUser->addMenu(qmServer);
-		qmUser->addMenu(qmSelf);
-		qmUser->addMenu(qmConfig);
-		qmUser->addMenu(qmHelp);
-	}
-#endif
-
-	if (! qlUserActions.isEmpty()) {
-		qmUser->addSeparator();
-		foreach(QAction *a, qlUserActions)
-			qmUser->addAction(a);
-	}
-
-	if (! p) {
-		qaUserKick->setEnabled(false);
-		qaUserBan->setEnabled(false);
-		qaUserTextMessage->setEnabled(false);
-		qaUserLocalMute->setEnabled(false);
-		qaUserLocalVolume->setEnabled(false);
-		qaUserLocalIgnore->setEnabled(false);
-		qaUserCommentReset->setEnabled(false);
-		qaUserTextureReset->setEnabled(false);
-		qaUserCommentView->setEnabled(false);
-	} else {
-		qaUserKick->setEnabled(! self);
-		qaUserBan->setEnabled(! self);
-		qaUserTextMessage->setEnabled(true);
-		qaUserLocalMute->setEnabled(! self);
-		qaUserLocalVolume->setEnabled(! self);
-		qaUserLocalIgnore->setEnabled(! self);
-		qaUserCommentReset->setEnabled(! p->qbaCommentHash.isEmpty() && (g.pPermissions & (ChanACL::Move | ChanACL::Write)));
-		qaUserTextureReset->setEnabled(! p->qbaTextureHash.isEmpty() && (g.pPermissions & (ChanACL::Move | ChanACL::Write)));
-		qaUserCommentView->setEnabled(! p->qbaCommentHash.isEmpty());
-
-		qaUserMute->setChecked(p->bMute || p->bSuppress);
-		qaUserDeaf->setChecked(p->bDeaf);
-		qaUserPrioritySpeaker->setChecked(p->bPrioritySpeaker);
-		qaUserLocalMute->setChecked(p->bLocalMute);
-		qaUserLocalIgnore->setChecked(p->bLocalIgnore);
-	}
-	updateMenuPermissions();
 }
 
 void MainWindow::on_qaUserMute_triggered() {
@@ -1587,43 +903,6 @@ void MainWindow::on_qaUserMute_triggered() {
 		mpus.set_mute(true);
 	}
 	g.sh->sendMessage(mpus);
-}
-
-void MainWindow::on_qaUserLocalMute_triggered() {
-	ClientUser *p = getContextMenuUser();
-	if (!p)
-		return;
-
-	bool muted = qaUserLocalMute->isChecked();
-
-	p->setLocalMute(muted);
-	if (! p->qsHash.isEmpty())
-		g.db->setLocalMuted(p->qsHash, muted);
-}
-
-void MainWindow::on_qaUserLocalIgnore_triggered() {
-	ClientUser *p = getContextMenuUser();
-	if (!p)
-		return;
-
-	bool ignored = qaUserLocalIgnore->isChecked();
-
-	p->setLocalIgnore(ignored);
-	if (! p->qsHash.isEmpty())
-		g.db->setLocalIgnored(p->qsHash, ignored);
-}
-
-void MainWindow::on_qaUserLocalVolume_triggered() {
-	ClientUser *p = getContextMenuUser();
-	if (!p) {
-		return;
-	}
-	openUserLocalVolumeDialog(p);
-}
-
-void MainWindow::openUserLocalVolumeDialog(ClientUser *p) {
-	unsigned int session = p->uiSession;
-	UserLocalVolumeDialog::present(session, &qmUserVolTracker);
 }
 
 void MainWindow::on_qaUserDeaf_triggered() {
@@ -1793,7 +1072,6 @@ void MainWindow::on_qaUserCommentView_triggered() {
 
 	::TextMessage *texm = new ::TextMessage(this, tr("View comment on user %1").arg(p->qsName));
 
-	texm->rteMessage->setText(p->qsComment, true);
 	texm->setAttribute(Qt::WA_DeleteOnClose, true);
 	texm->show();
 }
@@ -1848,169 +1126,11 @@ void MainWindow::on_qaQuit_triggered() {
 	this->close();
 }
 
-void MainWindow::sendChatbarMessage(QString qsText) {
-	if (g.uiSession == 0) return; // Check if text & connection is available
-
-	ClientUser *p = pmModel->getUser(qtvUsers->currentIndex());
-	Channel *c = pmModel->getChannel(qtvUsers->currentIndex());
-
-#if QT_VERSION >= 0x050000
-	qsText = qsText.toHtmlEscaped();
-#else
-	qsText = Qt::escape(qsText);
-#endif
-	qsText = TextMessage::autoFormat(qsText);
-
-	if (!g.s.bChatBarUseSelection || p == NULL || p->uiSession == g.uiSession) {
-		// Channel message
-		if (!g.s.bChatBarUseSelection || c == NULL) // If no channel selected fallback to current one
-			c = ClientUser::get(g.uiSession)->cChannel;
-
-		g.sh->sendChannelTextMessage(c->iId, qsText, false);
-		g.l->log(Log::TextMessage, tr("To %1: %2").arg(Log::formatChannel(c), qsText), tr("Message to channel %1").arg(c->qsName), true);
-	} else {
-		// User message
-		g.sh->sendUserTextMessage(p->uiSession, qsText);
-		g.l->log(Log::TextMessage, tr("To %1: %2").arg(Log::formatClientUser(p, Log::Target), qsText), tr("Message to %1").arg(p->qsName), true);
-	}
-
-	qteChat->clear();
-}
-
-/**
- * Controlls tab username completion for the chatbar.
- * @see ChatbarLineEdit::completeAtCursor()
- */
-void MainWindow::on_qteChat_tabPressed() {
-	qteChat->completeAtCursor();
-}
-
 /// Handles Backtab/Shift-Tab for qteChat, which allows
 /// users to move focus to the previous widget in
 /// MainWindow.
 void MainWindow::on_qteChat_backtabPressed() {
 	focusPreviousChild();
-}
-
-/**
- * Controlls ctrl space username completion and selection for the chatbar.
- * @see ChatbarLineEdit::completeAtCursor()
- */
-void MainWindow::on_qteChat_ctrlSpacePressed() {
-	unsigned int res = qteChat->completeAtCursor();
-	if (res == 0) return;
-	qtvUsers->setCurrentIndex(pmModel->index(ClientUser::get(res)));
-}
-
-void MainWindow::on_qmConfig_aboutToShow() {
-	// Don't remove the config, as that messes up OSX.
-	foreach(QAction *a, qmConfig->actions())
-		if (a != qaConfigDialog)
-			qmConfig->removeAction(a);
-	qmConfig->addAction(qaAudioWizard);
-	qmConfig->addAction(qaConfigCert);
-	qmConfig->addSeparator();
-	qmConfig->addAction(qaAudioTTS);
-	qmConfig->addSeparator();
-	qmConfig->addAction(qaConfigMinimal);
-	if (g.s.bMinimalView)
-		qmConfig->addAction(qaConfigHideFrame);
-}
-
-void MainWindow::qmChannel_aboutToShow() {
-	qmChannel->clear();
-
-	Channel *c = NULL;
-	if (g.uiSession != 0) {
-		QModelIndex idx;
-		if (! qpContextPosition.isNull())
-			idx = qtvUsers->indexAt(qpContextPosition);
-
-		if (! idx.isValid())
-			idx = qtvUsers->currentIndex();
-
-		c = pmModel->getChannel(idx);
-
-		if (cContextChannel)
-			c = cContextChannel.data();
-	}
-
-	cContextChannel = c;
-	qpContextPosition = QPoint();
-
-	if (c && c->iId != ClientUser::get(g.uiSession)->cChannel->iId) {
-		qmChannel->addAction(qaChannelJoin);
-		qmChannel->addSeparator();
-	}
-
-	qmChannel->addAction(qaChannelAdd);
-	qmChannel->addAction(qaChannelACL);
-	qmChannel->addAction(qaChannelRemove);
-	qmChannel->addSeparator();
-	qmChannel->addAction(qaChannelLink);
-	qmChannel->addAction(qaChannelUnlink);
-	qmChannel->addAction(qaChannelUnlinkAll);
-	qmChannel->addSeparator();
-	qmChannel->addAction(qaChannelCopyURL);
-	qmChannel->addAction(qaChannelSendMessage);
-
-	// hiding the root is nonsense
-	if(c && c->cParent) {
-		qmChannel->addSeparator();
-		qmChannel->addAction(qaChannelFilter);
-	}
-
-#ifndef Q_OS_MAC
-	if (g.s.bMinimalView) {
-		qmChannel->addSeparator();
-		qmChannel->addMenu(qmServer);
-		qmChannel->addMenu(qmSelf);
-		qmChannel->addMenu(qmConfig);
-		qmChannel->addMenu(qmHelp);
-	}
-#endif
-
-	if (! qlChannelActions.isEmpty()) {
-		qmChannel->addSeparator();
-		foreach(QAction *a, qlChannelActions)
-			qmChannel->addAction(a);
-	}
-
-	bool add, remove, acl, link, unlink, unlinkall, msg;
-	add = remove = acl = link = unlink = unlinkall = msg = false;
-
-	if (g.uiSession != 0) {
-		add = true;
-		acl = true;
-		msg = true;
-
-		Channel *home = ClientUser::get(g.uiSession)->cChannel;
-
-		if (c && c->iId != 0) {
-			remove = true;
-		}
-		if (! c)
-			c = Channel::get(0);
-		unlinkall = (home->qhLinks.count() > 0);
-		if (home != c) {
-			if (c->allLinks().contains(home))
-				unlink = true;
-			else
-				link = true;
-		}
-	}
-
-	if(c)
-		qaChannelFilter->setChecked(c->bFiltered);
-
-	qaChannelAdd->setEnabled(add);
-	qaChannelRemove->setEnabled(remove);
-	qaChannelACL->setEnabled(acl);
-	qaChannelLink->setEnabled(link);
-	qaChannelUnlink->setEnabled(unlink);
-	qaChannelUnlinkAll->setEnabled(unlinkall);
-	qaChannelSendMessage->setEnabled(msg);
-	updateMenuPermissions();
 }
 
 void MainWindow::on_qaChannelJoin_triggered() {
@@ -2019,32 +1139,6 @@ void MainWindow::on_qaChannelJoin_triggered() {
 	if (c) {
 		g.sh->joinChannel(g.uiSession, c->iId);
 	}
-}
-
-void MainWindow::on_qaChannelFilter_triggered() {
-	Channel *c = getContextMenuChannel();
-	
-	if (c) {
-		UserModel *um = static_cast<UserModel *>(qtvUsers->model());
-		um->toggleChannelFiltered(c);
-	}
-}
-
-void MainWindow::on_qaChannelAdd_triggered() {
-	Channel *c = getContextMenuChannel();
-	if (aclEdit) {
-		aclEdit->reject();
-		delete aclEdit;
-		aclEdit = NULL;
-	}
-
-	aclEdit = new ACLEditor(c ? c->iId : 0, this);
-	if (c && (c->uiPermissions & ChanACL::Cached) && !(c->uiPermissions & (ChanACL::Write | ChanACL::MakeChannel))) {
-		aclEdit->qcbChannelTemporary->setEnabled(false);
-		aclEdit->qcbChannelTemporary->setChecked(true);
-	}
-
-	aclEdit->show();
 }
 
 void MainWindow::on_qaChannelRemove_triggered() {
@@ -2082,12 +1176,6 @@ void MainWindow::on_qaChannelACL_triggered() {
 	}
 
 	g.sh->requestACL(id);
-
-	if (aclEdit) {
-		aclEdit->reject();
-		delete aclEdit;
-		aclEdit = NULL;
-	}
 }
 
 void MainWindow::on_qaChannelLink_triggered() {
@@ -2161,94 +1249,6 @@ void MainWindow::on_qaChannelCopyURL_triggered() {
 	QApplication::clipboard()->setMimeData(ServerItem::toMimeData(c->qsName, host, port, channel), QClipboard::Clipboard);
 }
 
-/**
- * This function updates the UI according to the permission of the user in the current channel.
- * If possible the permissions are fetched from a cache. Otherwise they are requested by the server
- * via a PermissionQuery call (whose reply updates the cache and calls this function again).
- * @see MainWindow::msgPermissionQuery(const MumbleProto::PermissionQuery &msg)
- */
-void MainWindow::updateMenuPermissions() {
-	ClientUser *cu = NULL;
-	Channel *c = NULL;
-
-	if (g.uiSession) {
-		cu = getContextMenuUser();
-		if (!cu)
-			cu = pmModel->getUser(qtvUsers->currentIndex());
-
-		c = cu ? cu->cChannel : getContextMenuChannel();
-		if (!c)
-			c = pmModel->getChannel(qtvUsers->currentIndex());
-	}
-
-	ChanACL::Permissions p = c ? static_cast<ChanACL::Permissions>(c->uiPermissions) : ChanACL::None;
-
-	if (c && ! p) {
-		g.sh->requestChannelPermissions(c->iId);
-		if (c->iId == 0)
-			p = g.pPermissions;
-		else
-			p = ChanACL::All;
-
-		c->uiPermissions = p;
-	}
-
-	Channel *cparent = c ? c->cParent : NULL;
-	ChanACL::Permissions pparent = cparent ? static_cast<ChanACL::Permissions>(cparent->uiPermissions) : ChanACL::None;
-
-	if (cparent && ! pparent) {
-		g.sh->requestChannelPermissions(cparent->iId);
-		if (cparent->iId == 0)
-			pparent = g.pPermissions;
-		else
-			pparent = ChanACL::All;
-
-		cparent->uiPermissions = pparent;
-	}
-
-	ClientUser *user = g.uiSession ? ClientUser::get(g.uiSession) : NULL;
-	Channel *homec = user ? user->cChannel : NULL;
-	ChanACL::Permissions homep = homec ? static_cast<ChanACL::Permissions>(homec->uiPermissions) : ChanACL::None;
-
-	if (homec && ! homep) {
-		g.sh->requestChannelPermissions(homec->iId);
-		if (homec->iId == 0)
-			homep = g.pPermissions;
-		else
-			homep = ChanACL::All;
-
-		homec->uiPermissions = homep;
-	}
-
-	if (cu) {
-		qaUserMute->setEnabled(p & (ChanACL::Write | ChanACL::MuteDeafen) && ((cu != user) || cu->bMute || cu->bSuppress));
-		qaUserDeaf->setEnabled(p & (ChanACL::Write | ChanACL::MuteDeafen) && ((cu != user) || cu->bDeaf));
-		qaUserPrioritySpeaker->setEnabled(p & (ChanACL::Write | ChanACL::MuteDeafen));
-		qaUserTextMessage->setEnabled(p & (ChanACL::Write | ChanACL::TextMessage));
-		qaUserInformation->setEnabled((g.pPermissions & (ChanACL::Write | ChanACL::Register)) || (p & (ChanACL::Write | ChanACL::Enter)) || (cu == user));
-	} else {
-		qaUserMute->setEnabled(false);
-		qaUserDeaf->setEnabled(false);
-		qaUserPrioritySpeaker->setEnabled(false);
-		qaUserTextMessage->setEnabled(false);
-		qaUserInformation->setEnabled(false);
-	}
-
-    qaChannelJoin->setEnabled(p & (ChanACL::Write | ChanACL::Enter));
-	qaChannelAdd->setEnabled(p & (ChanACL::Write | ChanACL::MakeChannel | ChanACL::MakeTempChannel));
-	qaChannelRemove->setEnabled(p & ChanACL::Write);
-	qaChannelACL->setEnabled((p & ChanACL::Write) || (pparent & ChanACL::Write));
-
-	qaChannelLink->setEnabled((p & (ChanACL::Write | ChanACL::LinkChannel)) && (homep & (ChanACL::Write | ChanACL::LinkChannel)));
-	qaChannelUnlink->setEnabled((p & (ChanACL::Write | ChanACL::LinkChannel)) || (homep & (ChanACL::Write | ChanACL::LinkChannel)));
-	qaChannelUnlinkAll->setEnabled(p & (ChanACL::Write | ChanACL::LinkChannel));
-
-	qaChannelCopyURL->setEnabled(c);
-	qaChannelSendMessage->setEnabled(p & (ChanACL::Write | ChanACL::TextMessage));
-	qaChannelFilter->setEnabled(true);
-	qteChat->setEnabled(p & (ChanACL::Write | ChanACL::TextMessage));
-}
-
 void MainWindow::userStateChanged() {
 	if (g.s.bStateInTray) {
 		updateTrayIcon();
@@ -2287,76 +1287,6 @@ void MainWindow::on_qaAudioReset_triggered() {
 		ai->bResetProcessor = true;
 }
 
-void MainWindow::on_qaFilterToggle_triggered() {	
-	g.s.bFilterActive = qaFilterToggle->isChecked();
-	updateUserModel();
-}
-
-void MainWindow::on_qaAudioMute_triggered() {
-	if (g.bInAudioWizard) {
-		qaAudioMute->setChecked(!qaAudioMute->isChecked());
-		return;
-	}
-
-	AudioInputPtr ai = g.ai;
-	if (ai)
-		ai->tIdle.restart();
-
-	g.s.bMute = qaAudioMute->isChecked();
-
-	if (! g.s.bMute && g.s.bDeaf) {
-		g.s.bDeaf = false;
-		qaAudioDeaf->setChecked(false);
-		g.l->log(Log::SelfUndeaf, tr("Unmuted and undeafened."));
-	} else if (! g.s.bMute) {
-		g.l->log(Log::SelfUnmute, tr("Unmuted."));
-	} else {
-		g.l->log(Log::SelfMute, tr("Muted."));
-	}
-
-	if (g.sh) {
-		g.sh->setSelfMuteDeafState(g.s.bMute, g.s.bDeaf);
-	}
-
-	updateTrayIcon();
-}
-
-void MainWindow::on_qaAudioDeaf_triggered() {
-	if (g.bInAudioWizard) {
-		qaAudioDeaf->setChecked(!qaAudioDeaf->isChecked());
-		return;
-	}
-
-	if (! qaAudioDeaf->isChecked() && bAutoUnmute) {
-		qaAudioDeaf->setChecked(true);
-		qaAudioMute->setChecked(false);
-		on_qaAudioMute_triggered();
-		return;
-	}
-	AudioInputPtr ai = g.ai;
-	if (ai)
-		ai->tIdle.restart();
-
-	g.s.bDeaf = qaAudioDeaf->isChecked();
-	if (g.s.bDeaf && ! g.s.bMute) {
-		bAutoUnmute = true;
-		g.s.bMute = true;
-		qaAudioMute->setChecked(true);
-		g.l->log(Log::SelfDeaf, tr("Muted and deafened."));
-	} else if (g.s.bDeaf) {
-		g.l->log(Log::SelfDeaf, tr("Deafened."));
-		bAutoUnmute = false;
-	} else {
-		g.l->log(Log::SelfUndeaf, tr("Undeafened."));
-	}
-
-	if (g.sh) {
-		g.sh->setSelfMuteDeafState(g.s.bMute, g.s.bDeaf);
-	}
-
-	updateTrayIcon();
-}
-
 void MainWindow::on_qaRecording_triggered() {
 	if (voiceRecorderDialog) {
 		voiceRecorderDialog->show();
@@ -2369,27 +1299,12 @@ void MainWindow::on_qaRecording_triggered() {
 	}
 }
 
-void MainWindow::on_qaAudioTTS_triggered() {
-	g.s.bTTS = qaAudioTTS->isChecked();
-}
-
-void MainWindow::on_qaAudioStats_triggered() {
-	AudioStats *as=new AudioStats(this);
-	as->show();
-}
-
-void MainWindow::on_qaAudioUnlink_triggered() {
-    //g.p->bUnlink = true;
-}
-
 void MainWindow::on_qaConfigDialog_triggered() {
 	QDialog *dlg = new ConfigDialog(this);
 
 	if (dlg->exec() == QDialog::Accepted) {
-		setupView(false);
 		updateTransmitModeComboBox();
 		updateTrayIcon();
-		updateUserModel();
 		
 		if (g.s.requireRestartToApply) {
 			if (g.s.requireRestartToApply && QMessageBox::question(
@@ -2407,29 +1322,6 @@ void MainWindow::on_qaConfigDialog_triggered() {
 	}
 
 	delete dlg;
-}
-
-void MainWindow::on_qaConfigMinimal_triggered() {
-	g.s.bMinimalView = qaConfigMinimal->isChecked();
-	updateWindowTitle();
-	setupView();
-}
-
-void MainWindow::on_qaConfigHideFrame_triggered() {
-	g.s.bHideFrame = qaConfigHideFrame->isChecked();
-	setupView(false);
-}
-
-void MainWindow::on_qaConfigCert_triggered() {
-	CertWizard *cw = new CertWizard(this);
-	cw->exec();
-	delete cw;
-}
-
-void MainWindow::on_qaAudioWizard_triggered() {
-	AudioWizard *aw = new AudioWizard(this);
-	aw->exec();
-	delete aw;
 }
 
 void MainWindow::on_qaDeveloperConsole_triggered() {
@@ -2453,30 +1345,6 @@ void MainWindow::on_qaHelpVersionCheck_triggered() {
 	new VersionCheck(false, this);
 }
 
-void MainWindow::on_gsMuteSelf_down(QVariant v) {
-	int val = v.toInt();
-	if (
-	    ((val > 0) && ! g.s.bMute) ||
-	    ((val < 0) && g.s.bMute) ||
-	    (val == 0)
-	) {
-		qaAudioMute->setChecked(! qaAudioMute->isChecked());
-		on_qaAudioMute_triggered();
-	}
-}
-
-void MainWindow::on_gsDeafSelf_down(QVariant v) {
-	int val = v.toInt();
-	if (
-	    ((val > 0) && ! g.s.bDeaf) ||
-	    ((val < 0) && g.s.bDeaf) ||
-	    (val == 0)
-	) {
-		qaAudioDeaf->setChecked(! qaAudioDeaf->isChecked());
-		on_qaAudioDeaf_triggered();
-	}
-}
-
 void MainWindow::on_PushToTalk_triggered(bool down, QVariant) {
 	g.iPrevTarget = 0;
 	if (down) {
@@ -2496,7 +1364,6 @@ void MainWindow::pttReleased() {
 void MainWindow::on_PushToMute_triggered(bool down, QVariant) {
 	g.bPushToMute = down;
 	updateTrayIcon();
-	updateUserModel();
 }
 
 void MainWindow::on_VolumeUp_triggered(bool down, QVariant) {
@@ -2780,16 +1647,6 @@ void MainWindow::on_gsSendTextMessage_triggered(bool down, QVariant scdata) {
 	g.l->log(Log::TextMessage, tr("To %1: %2").arg(Log::formatChannel(c), qsText), tr("Message to channel %1").arg(c->qsName), true);
 }
 
-void MainWindow::on_gsSendClipboardTextMessage_triggered(bool down, QVariant) {
-	if (!down || (QApplication::clipboard()->text().isEmpty())) {
-		return;
-	}
-
-	// call sendChatbarMessage() instead of on_gsSendTextMessage_triggered() to handle
-	// formatting of the content in the clipboard, i.e., href.  
-	sendChatbarMessage(QApplication::clipboard()->text());
-}
-
 void MainWindow::whisperReleased(QVariant scdata) {
 	if (g.iPushToTalk <= 0)
 		return;
@@ -2843,16 +1700,11 @@ void MainWindow::serverConnected() {
 	unsigned short port;
 	g.sh->getConnectionInfo(host, port, uname, pw);
 	g.l->log(Log::ServerConnected, tr("Connected."));
-	qaServerDisconnect->setEnabled(true);
-	qaServerInformation->setEnabled(true);
-	qaServerBanList->setEnabled(true);
 
 	Channel *root = Channel::get(0);
 	pmModel->renameChannel(root, tr("Root"));
 	pmModel->setCommentHash(root, QByteArray());
 	root->uiPermissions = 0;
-
-	qtvUsers->setRowHidden(0, QModelIndex(), false);
 
 	g.bAllowHTML = true;
 	g.uiMessageLength = 5000;
@@ -2862,13 +1714,6 @@ void MainWindow::serverConnected() {
 	if (g.s.bMute || g.s.bDeaf) {
 		g.sh->setSelfMuteDeafState(g.s.bMute, g.s.bDeaf);
 	}
-
-	// Update QActions and menues
-	on_qmServer_aboutToShow();
-	on_qmSelf_aboutToShow();
-	qmChannel_aboutToShow();
-	qmUser_aboutToShow();
-	on_qmConfig_aboutToShow();
 
 #ifdef Q_OS_WIN
 	TaskList::addToRecentList(g.s.qsLastServer, uname, host, port);
@@ -2881,11 +1726,6 @@ void MainWindow::serverDisconnected(QAbstractSocket::SocketError err, QString re
     g.uiSession = 0;
 	g.pPermissions = ChanACL::None;
 	g.bAttenuateOthers = false;
-	qaServerDisconnect->setEnabled(false);
-	qaServerInformation->setEnabled(false);
-	qaServerBanList->setEnabled(false);
-	qtvUsers->setCurrentIndex(QModelIndex());
-	qteChat->setEnabled(false);
 	updateTrayIcon();
 
 #ifdef Q_OS_MAC
@@ -2904,24 +1744,6 @@ void MainWindow::serverDisconnected(QAbstractSocket::SocketError err, QString re
 		if (g.db->setShortcuts(g.sh->qbaDigest, g.s.qlShortcuts)) {
 			GlobalShortcutEngine::engine->bNeedRemap = true;
 		}
-	}
-
-	if (aclEdit) {
-		aclEdit->reject();
-		delete aclEdit;
-		aclEdit = NULL;
-	}
-
-	if (banEdit) {
-		banEdit->reject();
-		delete banEdit;
-		banEdit = NULL;
-	}
-
-	if (userEdit) {
-		userEdit->reject();
-		delete userEdit;
-		userEdit = NULL;
 	}
 
 	if (tokenEdit) {
@@ -2943,14 +1765,6 @@ void MainWindow::serverDisconnected(QAbstractSocket::SocketError err, QString re
 	qlUserActions.clear();
 
 	pmModel->removeAll();
-	qtvUsers->setRowHidden(0, QModelIndex(), true);
-
-	// Update QActions and menues
-	on_qmServer_aboutToShow();
-	on_qmSelf_aboutToShow();
-	qmChannel_aboutToShow();
-	qmUser_aboutToShow();
-	on_qmConfig_aboutToShow();
 
 	if (! g.sh->qlErrors.isEmpty()) {
 		foreach(QSslError e, g.sh->qlErrors)
@@ -2989,7 +1803,6 @@ void MainWindow::serverDisconnected(QAbstractSocket::SocketError err, QString re
 					continue;
 				} else if (res == QMessageBox::Yes) {
 					g.db->setDigest(host, port, QString::fromLatin1(c.digest(QCryptographicHash::Sha1).toHex()));
-					qaServerDisconnect->setEnabled(true);
 					on_Reconnect_timeout();
 				}
 				break;
@@ -3013,48 +1826,6 @@ void MainWindow::serverDisconnected(QAbstractSocket::SocketError err, QString re
 #endif
 
         emit serverDisconnectedEvent(rtLast, reason);
-        /*bool matched = true;
-		switch (rtLast) {
-			case MumbleProto::Reject_RejectType_InvalidUsername:
-				uname = QInputDialog::getText(this, tr("Invalid username"),
-				                              tr("You connected with an invalid username, please try another one."),
-				                              QLineEdit::Normal, uname, &ok, wf);
-				break;
-			case MumbleProto::Reject_RejectType_UsernameInUse:
-				uname = QInputDialog::getText(this, tr("Username in use"),
-				                              tr("That username is already in use, please try another username."),
-				                              QLineEdit::Normal, uname, &ok, wf);
-				break;
-			case MumbleProto::Reject_RejectType_WrongUserPW:
-				pw = QInputDialog::getText(this,
-				                           tr("Wrong certificate or password"),
-				                           tr("Wrong certificate or password for registered user. If you are\n"
-				                              "certain this user is protected by a password please retry.\n"
-				                              "Otherwise abort and check your certificate and username."),
-				                           QLineEdit::Password, pw, &ok, wf);
-				break;
-			case MumbleProto::Reject_RejectType_WrongServerPW:
-				pw = QInputDialog::getText(this,
-				                           tr("Wrong password"),
-				                           tr("Wrong server password for unregistered user account, please try again."),
-				                           QLineEdit::Password, pw, &ok, wf);
-				break;
-			default:
-				matched = false;
-				break;
-		}
-		if (ok && matched) {
-			if (! g.s.bSuppressIdentity)
-				g.db->setPassword(host, port, uname, pw);
-			qaServerDisconnect->setEnabled(true);
-			g.sh->setConnectionInfo(host, port, uname, pw);
-			on_Reconnect_timeout();
-		} else if (!matched && g.s.bReconnect && ! reason.isEmpty()) {
-			qaServerDisconnect->setEnabled(true);
-			if (bRetryServer) {
-				qtReconnect->start();
-			}
-        }*/
 	}
     qstiIcon->setToolTip(tr("Bubbles -- %1").arg(QLatin1String(MUMBLE_RELEASE)));
 	AudioInput::setMaxBandwidth(-1);
@@ -3068,7 +1839,6 @@ void MainWindow::resolverError(QAbstractSocket::SocketError, QString reason) {
 	}
 
 	if (g.s.bReconnect) {
-		qaServerDisconnect->setEnabled(true);
 		if (bRetryServer) {
 			qtReconnect->start();
 		}
@@ -3092,72 +1862,7 @@ void MainWindow::trayAboutToShow() {
 			top = true;
 
 		qmTray->clear();
-		if (top) {
-			qmTray->addAction(qaQuit);
-			qmTray->addAction(qaShow);
-			qmTray->addSeparator();
-			qmTray->addAction(qaAudioDeaf);
-			qmTray->addAction(qaAudioMute);
-		} else {
-			qmTray->addAction(qaAudioMute);
-			qmTray->addAction(qaAudioDeaf);
-			qmTray->addSeparator();
-			qmTray->addAction(qaShow);
-			qmTray->addAction(qaQuit);
-		}
 	}
-}
-
-void MainWindow::showRaiseWindow() {
-    /*if (isMinimized()) {
-		setWindowState((windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
-	}
-
-	show();
-	raise();
-    activateWindow();*/
-}
-
-void MainWindow::on_Icon_activated(QSystemTrayIcon::ActivationReason reason) {
-    /*switch (reason) {
-		case QSystemTrayIcon::Trigger:
-		case QSystemTrayIcon::DoubleClick:
-		case QSystemTrayIcon::MiddleClick:
-		if (isMinimized()) {
-			showRaiseWindow();
-		} else {
-			showMinimized();
-		}
-		default: break;
-    }*/
-}
-
-/**
- * This function updates the qteChat bar default text according to
- * the selected user/channel in the users treeview.
- */
-void MainWindow::qtvUserCurrentChanged(const QModelIndex &, const QModelIndex &) {
-	updateChatBar();
-}
-
-void MainWindow::updateChatBar() {
-	User *p = pmModel->getUser(qtvUsers->currentIndex());
-	Channel *c = pmModel->getChannel(qtvUsers->currentIndex());
-
-	if (g.uiSession == 0) {
-		qteChat->setDefaultText(tr("<center>Not connected</center>"), true);
-	} else if (!g.s.bChatBarUseSelection || p == NULL || p->uiSession == g.uiSession) {
-		// Channel tree target
-		if (!g.s.bChatBarUseSelection || c == NULL) // If no channel selected fallback to current one
-			c = ClientUser::get(g.uiSession)->cChannel;
-
-		qteChat->setDefaultText(tr("<center>Type message to channel '%1' here</center>").arg(Qt::escape(c->qsName)));
-	} else {
-		// User target
-		qteChat->setDefaultText(tr("<center>Type message to user '%1' here</center>").arg(Qt::escape(p->qsName)));
-	}
-
-	updateMenuPermissions();
 }
 
 void MainWindow::customEvent(QEvent *evt) {
@@ -3220,34 +1925,6 @@ void MainWindow::on_qteLog_anchorClicked(const QUrl &url) {
 	}
 }
 
-void MainWindow::on_qteLog_highlighted(const QUrl &url) {
-	if (url.scheme() == QString::fromLatin1("clientid") || url.scheme() == QString::fromLatin1("channelid"))
-		return;
-
-	if (! url.isValid())
-		QToolTip::hideText();
-	else {
-		if (isActiveWindow()) {
-			QToolTip::showText(QCursor::pos(), url.toString(), qteLog, QRect());
-		}
-	}
-}
-
-void MainWindow::context_triggered() {
-	QAction *a = qobject_cast<QAction *>(sender());
-
-	Channel *c = pmModel->getChannel(qtvUsers->currentIndex());
-	ClientUser *p = pmModel->getUser(qtvUsers->currentIndex());
-
-	MumbleProto::ContextAction mpca;
-	mpca.set_action(u8(a->data().toString()));
-	if (p && p->uiSession)
-		mpca.set_session(p->uiSession);
-	if (c)
-		mpca.set_channel_id(c->iId);
-	g.sh->sendMessage(mpca);
-}
-
 /**
  * Presents a file open dialog, opens the selected picture and returns it.
  * @return Pair consisting of the raw file contents and the image. Unitialized on error or cancel.
@@ -3276,14 +1953,6 @@ QPair<QByteArray, QImage> MainWindow::openImageFile() {
 
 	QImageReader qir;
 	qir.setAutoDetectImageFormat(false);
-
-	QByteArray fmt;
-	if (!RichTextImage::isValidImage(qba, fmt)) {
-		QMessageBox::warning(this, tr("Failed to load image"), tr("Image format not recognized."));
-		return retval;
-	}
-
-	qir.setFormat(fmt);
 	qir.setDevice(&qb);
 
 	QImage img = qir.read();

@@ -4,7 +4,6 @@
 #include "AudioDeviceModel.h"
 #include "AudioInput.h"
 #include "AudioOutput.h"
-#include "NetworkConfig.h"
 #include <QDebug>
 
 AudioDeviceModel::AudioDeviceModel(QObject *parent) : QObject(parent)
@@ -167,9 +166,7 @@ void AudioDeviceModel::updateBitrate()
     // 50 packets, in bits, IP + UDP + Crypt + type + seq + frameheader
     int overhead = 100 * 8 * (20 + 8 + 4 + 1 + 2 + _frames);
     // TCP is 12 more bytes than UDP
-    if (NetworkConfig::TcpModeEnabled()) {
-        overhead += 100 * 8 * 12;
-    }
+    overhead += 100 * 8 * 12;
 
     int posrate = g.s.bTransmitPosition ? 12 : 0;
     posrate = posrate * 100 * 8;

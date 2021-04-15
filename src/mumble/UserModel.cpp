@@ -9,7 +9,6 @@
 #include "Channel.h"
 #include "ClientUser.h"
 #include "Database.h"
-#include "LCD.h"
 #include "Log.h"
 #include "MainWindow.h"
 #include "Message.h"
@@ -715,23 +714,6 @@ ModelItem *UserModel::moveItem(ModelItem *oldparent, ModelItem *newparent, Model
 
 	// Shallow clone
 	ModelItem *t = new ModelItem(item);
-
-	// Store the index if it's "active".
-	// The selection is stored as "from"-"to" pairs, so if we move up in the same channel,
-	// we'd move only "from" and select half the channel.
-
-	QTreeView *v=g.mw->qtvUsers;
-	QItemSelectionModel *sel=v->selectionModel();
-	QPersistentModelIndex active;
-	QModelIndex oindex = createIndex(oldrow, 0, item);
-	if (sel->isSelected(oindex) || (oindex == v->currentIndex())) {
-		active = index(item);
-		v->clearSelection();
-		v->setCurrentIndex(QModelIndex());
-	}
-
-	bool expanded = v->isExpanded(index(item));
-
 	if (newparent == oldparent) {
 		// Mangle rows. newrow needs to be pre-remove. oldrow needs to be postremove.
 		if (oldrow >= newrow) {
@@ -771,13 +753,6 @@ ModelItem *UserModel::moveItem(ModelItem *oldparent, ModelItem *newparent, Model
 
 	item->wipe();
 	delete item;
-
-	if (active.isValid()) {
-		sel->select(active, QItemSelectionModel::SelectCurrent);
-		v->setCurrentIndex(active);
-	}
-	if (expanded)
-		v->expand(index(t));
 	return t;
 }
 
@@ -790,16 +765,13 @@ void UserModel::expandAll(Channel *c) {
 	}
 	while (! chans.isEmpty()) {
 		c = chans.pop();
-		g.mw->qtvUsers->setExpanded(index(c), true);
 	}
 }
 
 void UserModel::collapseEmpty(Channel *c) {
 	while (c) {
 		ModelItem *mi = ModelItem::c_qhChannels.value(c);
-		if (mi->iUsers == 0)
-			g.mw->qtvUsers->setExpanded(index(c), false);
-		else
+        if (mi->iUsers != 0)
 			break;
 		c = c->cParent;
 	}
@@ -808,8 +780,6 @@ void UserModel::collapseEmpty(Channel *c) {
 void UserModel::ensureSelfVisible() {
 	if (! g.uiSession)
 		return;
-
-	g.mw->qtvUsers->scrollTo(index(ClientUser::get(g.uiSession)));
 }
 
 void UserModel::recheckLinks() {
@@ -988,12 +958,6 @@ void UserModel::setComment(ClientUser *cu, const QString &comment) {
 			if (cu->uiSession == uiSessionComment) {
 				uiSessionComment = 0;
 				item->bCommentSeen = false;
-				if (bClicked) {
-					QRect r = g.mw->qtvUsers->visualRect(index(cu));
-					QWhatsThis::showText(g.mw->qtvUsers->viewport()->mapToGlobal(r.bottomRight()), data(index(cu, 0), Qt::ToolTipRole).toString(), g.mw->qtvUsers);
-				} else {
-					QToolTip::showText(QCursor::pos(), data(index(cu, 0), Qt::ToolTipRole).toString(), g.mw->qtvUsers);
-				}
 			} else if (cu->uiSession == ~uiSessionComment) {
 				uiSessionComment = 0;
 				if (cu->uiSession == g.uiSession) {
@@ -1052,12 +1016,6 @@ void UserModel::setComment(Channel *c, const QString &comment) {
 			if (c->iId == iChannelDescription) {
 				iChannelDescription = -1;
 				item->bCommentSeen = false;
-				if (bClicked) {
-					QRect r = g.mw->qtvUsers->visualRect(index(c));
-					QWhatsThis::showText(g.mw->qtvUsers->viewport()->mapToGlobal(r.bottomRight()), data(index(c, 0), Qt::ToolTipRole).toString(), g.mw->qtvUsers);
-				} else {
-					QToolTip::showText(QCursor::pos(), data(index(c, 0), Qt::ToolTipRole).toString(), g.mw->qtvUsers);
-				}
 			} else {
 				item->bCommentSeen = g.db->seenComment(item->hash(), c->qbaDescHash);
 				newstate = item->bCommentSeen ? 2 : 1;
@@ -1156,9 +1114,6 @@ Channel *UserModel::addChannel(int id, Channel *p, const QString &name) {
 	p->addChannel(c);
 	citem->qlChildren.insert(row, item);
 	endInsertRows();
-
-	if (g.s.ceExpand == Settings::AllChannels)
-		g.mw->qtvUsers->setExpanded(index(item), true);
 
 	return c;
 }
@@ -1544,5 +1499,4 @@ bool UserModel::dropMimeData(const QMimeData *md, Qt::DropAction, int row, int c
 
 void UserModel::updateOverlay() const {
 	g.o->updateOverlay();
-	g.lcd->updateUserView();
 }

@@ -23,26 +23,18 @@
 #include "Message.h"
 #include "Mumble.pb.h"
 #include "Usage.h"
-#include "UserLocalVolumeDialog.h"
 #include "MUComboBox.h"
 #include "Channel.h"
-
-#include "ui_MainWindow.h"
 
 #define MB_QEVENT (QEvent::User + 939)
 #define OU_QEVENT (QEvent::User + 940)
 
-class ACLEditor;
-class BanEditor;
-class UserEdit;
 class ServerHandler;
 class GlobalShortcut;
 class TextToSpeech;
 class UserModel;
-class Tokens;
 class UserInformation;
 class VoiceRecorderDialog;
-class PTTButtonWidget;
 
 struct ShortcutTarget;
 
@@ -58,7 +50,7 @@ class OpenURLEvent : public QEvent {
 		OpenURLEvent(QUrl url);
 };
 
-class MainWindow : public QMainWindow, public MessageHandler, public Ui::MainWindow {
+class MainWindow : public QMainWindow, public MessageHandler {
 		friend class UserModel;
         friend class ServerTableModel;
 	private:
@@ -73,7 +65,6 @@ class MainWindow : public QMainWindow, public MessageHandler, public Ui::MainWin
 		QMenu *qmTray;
 		QIcon qiIcon, qiIconMutePushToMute, qiIconMuteSelf, qiIconMuteServer, qiIconDeafSelf, qiIconDeafServer, qiIconMuteSuppressed;
 		QIcon qiTalkingOn, qiTalkingWhisper, qiTalkingShout, qiTalkingOff;
-		QMap<unsigned int, UserLocalVolumeDialog *> qmUserVolTracker;
 
 		GlobalShortcut *gsPushTalk, *gsResetAudio, *gsMuteSelf, *gsDeafSelf;
 		GlobalShortcut *gsUnlink, *gsPushMute, *gsJoinChannel, *gsToggleOverlay;
@@ -81,11 +72,6 @@ class MainWindow : public QMainWindow, public MessageHandler, public Ui::MainWin
 		GlobalShortcut *gsCycleTransmitMode, *gsTransmitModePushToTalk, *gsTransmitModeContinuous, *gsTransmitModeVAD;
 		GlobalShortcut *gsSendTextMessage, *gsSendClipboardTextMessage;
 		DockTitleBar *dtbLogDockTitle, *dtbChatDockTitle;
-
-		ACLEditor *aclEdit;
-		BanEditor *banEdit;
-		UserEdit *userEdit;
-		Tokens *tokenEdit;
 
 		VoiceRecorderDialog *voiceRecorderDialog;
 
@@ -117,14 +103,10 @@ class MainWindow : public QMainWindow, public MessageHandler, public Ui::MainWin
 		void setOnTop(bool top);
 		void setShowDockTitleBars(bool doShow);
 		void updateTrayIcon();
-		void updateUserModel();
-		void focusNextMainWidget();
 		void updateTransmitModeComboBox();
 		QPair<QByteArray, QImage> openImageFile();
 		
-		void updateChatBar();
 		void openTextMessageDialog(ClientUser *p);
-		void openUserLocalVolumeDialog(ClientUser *p);
 
 #ifdef Q_OS_WIN
 #if QT_VERSION >= 0x050000
@@ -149,24 +131,14 @@ class MainWindow : public QMainWindow, public MessageHandler, public Ui::MainWin
 		int iTargetCounter;
 		QMap<unsigned int, UserInformation *> qmUserInformations;
 
-		PTTButtonWidget *qwPTTButtonWidget;
-
 		MUComboBox *qcbTransmitMode;
 		QAction *qaTransmitMode;
 		QAction *qaTransmitModeSeparator;
 
 		void createActions();
-		void setupGui();
 		void updateWindowTitle();
-		/// updateToolbar updates the state of the toolbar depending on the current
-		/// window layout setting.
-		/// If the window layout setting is 'custom', the toolbar is made movable. If the
-		/// window layout is not 'custom', the toolbar is locked in place at the top of
-		/// the MainWindow.
-		void updateToolbar();
 		void customEvent(QEvent *evt) Q_DECL_OVERRIDE;
 		void findDesiredChannel();
-		void setupView(bool toggle_minimize = true);
 		void closeEvent(QCloseEvent *e) Q_DECL_OVERRIDE;
 		void hideEvent(QHideEvent *e) Q_DECL_OVERRIDE;
 		void showEvent(QShowEvent *e) Q_DECL_OVERRIDE;
@@ -180,20 +152,14 @@ class MainWindow : public QMainWindow, public MessageHandler, public Ui::MainWin
 		ClientUser* getContextMenuUser();
 
 	public slots:
-		void on_qmServer_aboutToShow();
 		void on_qaServerConnect_triggered(bool autoconnect = false);
 		void on_qaServerDisconnect_triggered();
-		void on_qaServerBanList_triggered();
-		void on_qaServerUserList_triggered();
 		void on_qaServerInformation_triggered();
 		void on_qaServerTexture_triggered();
 		void on_qaServerTextureRemove_triggered();
-		void on_qaServerTokens_triggered();
-		void on_qmSelf_aboutToShow();
 		void on_qaSelfComment_triggered();
 		void on_qaSelfRegister_triggered();
 		void qcbTransmitMode_activated(int index);
-		void qmUser_aboutToShow();
 		void on_qaUserCommentReset_triggered();
 		void on_qaUserTextureReset_triggered();
 		void on_qaUserCommentView_triggered();
@@ -203,39 +169,23 @@ class MainWindow : public QMainWindow, public MessageHandler, public Ui::MainWin
 		void on_qaUserDeaf_triggered();
 		void on_qaSelfPrioritySpeaker_triggered();
 		void on_qaUserPrioritySpeaker_triggered();
-		void on_qaUserLocalIgnore_triggered();
-		void on_qaUserLocalMute_triggered();
-		void on_qaUserLocalVolume_triggered();
 		void on_qaUserTextMessage_triggered();
 		void on_qaUserRegister_triggered();
 		void on_qaUserInformation_triggered();
 		void on_qaUserFriendAdd_triggered();
 		void on_qaUserFriendRemove_triggered();
 		void on_qaUserFriendUpdate_triggered();
-		void qmChannel_aboutToShow();
 		void on_qaChannelJoin_triggered();
-		void on_qaChannelAdd_triggered();
 		void on_qaChannelRemove_triggered();
 		void on_qaChannelACL_triggered();
 		void on_qaChannelLink_triggered();
 		void on_qaChannelUnlink_triggered();
 		void on_qaChannelUnlinkAll_triggered();
 		void on_qaChannelSendMessage_triggered();
-		void on_qaChannelFilter_triggered();
 		void on_qaChannelCopyURL_triggered();
 		void on_qaAudioReset_triggered();
-		void on_qaAudioMute_triggered();
-		void on_qaAudioDeaf_triggered();
 		void on_qaRecording_triggered();
-		void on_qaAudioTTS_triggered();
-		void on_qaAudioUnlink_triggered();
-		void on_qaAudioStats_triggered();
 		void on_qaConfigDialog_triggered();
-		void on_qaConfigHideFrame_triggered();
-		void on_qmConfig_aboutToShow();
-		void on_qaConfigMinimal_triggered();
-		void on_qaConfigCert_triggered();
-		void on_qaAudioWizard_triggered();
 		void on_qaDeveloperConsole_triggered();
 		void on_qaHelpWhatsThis_triggered();
 		void on_qaHelpAbout_triggered();
@@ -243,19 +193,12 @@ class MainWindow : public QMainWindow, public MessageHandler, public Ui::MainWin
 		void on_qaHelpVersionCheck_triggered();
 		void on_qaQuit_triggered();
 		void on_qaHide_triggered();
-		void on_qteChat_tabPressed();
 		void on_qteChat_backtabPressed();
-		void on_qteChat_ctrlSpacePressed();
-		void on_qtvUsers_customContextMenuRequested(const QPoint &mpos);
-		void on_qteLog_customContextMenuRequested(const QPoint &pos);
 		void on_qteLog_anchorClicked(const QUrl &);
-		void on_qteLog_highlighted(const QUrl & link);
 		void on_PushToTalk_triggered(bool, QVariant);
 		void on_PushToMute_triggered(bool, QVariant);
 		void on_VolumeUp_triggered(bool, QVariant);
 		void on_VolumeDown_triggered(bool, QVariant);
-		void on_gsMuteSelf_down(QVariant);
-		void on_gsDeafSelf_down(QVariant);
 		void on_gsWhisper_triggered(bool, QVariant);
 		void addTarget(ShortcutTarget *);
 		void removeTarget(ShortcutTarget *);
@@ -264,32 +207,22 @@ class MainWindow : public QMainWindow, public MessageHandler, public Ui::MainWin
 		void on_gsTransmitModeContinuous_triggered(bool, QVariant);
 		void on_gsTransmitModeVAD_triggered(bool, QVariant);
 		void on_gsSendTextMessage_triggered(bool, QVariant);
-		void on_gsSendClipboardTextMessage_triggered(bool, QVariant);
 		void on_Reconnect_timeout();
-		void on_Icon_activated(QSystemTrayIcon::ActivationReason);
 		void voiceRecorderDialog_finished(int);
-		void qtvUserCurrentChanged(const QModelIndex &, const QModelIndex &);
 		void serverConnected();
 		void serverDisconnected(QAbstractSocket::SocketError, QString reason);
 		void resolverError(QAbstractSocket::SocketError, QString reason);
 		void viewCertificate(bool);
 		void openUrl(const QUrl &url);
-		void context_triggered();
 		void updateTarget();
-		void updateMenuPermissions();
 		/// Handles state changes like talking mode changes and mute/unmute
 		/// or priority speaker flag changes for the gui user
 		void userStateChanged();
 		void destroyUserInformation();
 		void trayAboutToShow();
-		void sendChatbarMessage(QString msg);
 		void pttReleased();
 		void whisperReleased(QVariant scdata);
 		void onResetAudio();
-		void showRaiseWindow();
-		void on_qaFilterToggle_triggered();
-		/// Opens a save dialog for the image referenced by qtcSaveImageCursor.
-		void saveImageAs();
 		/// Returns the path to the user's image directory, optionally with a
 		/// filename included.
 		QString getImagePath(QString filename = QString()) const;

@@ -25,7 +25,6 @@ class Log;
 class Plugins;
 class QSettings;
 class Overlay;
-class LCD;
 class BonjourClient;
 class OverlayClient;
 class CELTCodec;
@@ -53,7 +52,6 @@ public:
 	Plugins *p;
 	QSettings *qs;
 	Overlay *o;
-	LCD *lcd;
 	BonjourClient *bc;
 	QNetworkAccessManager *nam;
 	QSharedPointer<LogEmitter> le;

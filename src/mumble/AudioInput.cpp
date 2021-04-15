@@ -17,7 +17,6 @@
 #include "Plugins.h"
 #include "Message.h"
 #include "Global.h"
-#include "NetworkConfig.h"
 #include "VoiceRecorder.h"
 
 #ifdef USE_RNNOISE
@@ -614,7 +613,7 @@ void AudioInput::setMaxBandwidth(int bitspersec) {
 }
 
 int AudioInput::getNetworkBandwidth(int bitrate, int frames) {
-	int overhead = 20 + 8 + 4 + 1 + 2 + (g.s.bTransmitPosition ? 12 : 0) + (NetworkConfig::TcpModeEnabled() ? 12 : 0) + frames;
+    int overhead = 20 + 8 + 4 + 1 + 2 + (g.s.bTransmitPosition ? 12 : 0) + 12 + frames;
 	overhead *= (800 / frames);
 	int bw = overhead + bitrate;
 

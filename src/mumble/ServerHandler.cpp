@@ -14,10 +14,8 @@
 #include "Database.h"
 #include "MainWindow.h"
 #include "Message.h"
-#include "NetworkConfig.h"
 #include "OSInfo.h"
 #include "PacketDataStream.h"
-#include "RichTextEditor.h"
 #include "SSL.h"
 #include "User.h"
 #include "Net.h"
@@ -585,23 +583,8 @@ void ServerHandler::message(unsigned int msgType, const QByteArray &qbaMsg) {
 
 			if (((cs.uiRemoteGood == 0) || (cs.uiGood == 0)) && bUdp && (tTimestamp.elapsed() > 20000000ULL)) {
 				bUdp = false;
-				if (! NetworkConfig::TcpModeEnabled()) {
-					if ((cs.uiRemoteGood == 0) && (cs.uiGood == 0))
-						g.mw->msgBox(tr("UDP packets cannot be sent to or received from the server. Switching to TCP mode."));
-					else if (cs.uiRemoteGood == 0)
-						g.mw->msgBox(tr("UDP packets cannot be sent to the server. Switching to TCP mode."));
-					else
-						g.mw->msgBox(tr("UDP packets cannot be received from the server. Switching to TCP mode."));
-
-					database->setUdp(qbaDigest, false);
-				}
 			} else if (!bUdp && (cs.uiRemoteGood > 3) && (cs.uiGood > 3)) {
 				bUdp = true;
-				if (! NetworkConfig::TcpModeEnabled()) {
-					g.mw->msgBox(tr("UDP packets can be sent to and received from the server. Switching back to UDP mode."));
-
-					database->setUdp(qbaDigest, true);
-				}
 			}
 		}
 	} else {

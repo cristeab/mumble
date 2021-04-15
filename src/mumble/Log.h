@@ -11,35 +11,13 @@
 #include <QtGui/QTextDocument>
 
 #include "ConfigDialog.h"
-#include "ui_Log.h"
 
 class TextToSpeech;
-
-class LogConfig : public ConfigWidget, public Ui::LogConfig {
-	private:
-		Q_OBJECT
-		Q_DISABLE_COPY(LogConfig)
-	public:
-		enum Column { ColMessage, ColConsole, ColNotification, ColHighlight, ColTTS, ColStaticSound, ColStaticSoundPath };
-		LogConfig(Settings &st);
-		QString title() const Q_DECL_OVERRIDE;
-		QIcon icon() const Q_DECL_OVERRIDE;
-	public slots:
-		void accept() const Q_DECL_OVERRIDE;
-		void save() const Q_DECL_OVERRIDE;
-		void load(const Settings &) Q_DECL_OVERRIDE;
-
-		void on_qtwMessages_itemChanged(QTreeWidgetItem*, int);
-		void on_qtwMessages_itemClicked(QTreeWidgetItem*, int);
-		void on_qtwMessages_itemDoubleClicked(QTreeWidgetItem*, int);
-		void browseForAudioFile();
-};
 
 class ClientUser;
 class Channel;
 
 class Log : public QObject {
-		friend class LogConfig;
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(Log)

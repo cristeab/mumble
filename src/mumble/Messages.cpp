@@ -6,11 +6,7 @@
 #include "mumble_pch.hpp"
 
 #include "About.h"
-#include "ACLEditor.h"
 #include "AudioInput.h"
-#include "AudioStats.h"
-#include "AudioWizard.h"
-#include "BanEditor.h"
 #include "Channel.h"
 #include "Connection.h"
 #include "ConnectDialog.h"
@@ -22,7 +18,6 @@
 #include "Plugins.h"
 #include "ServerHandler.h"
 #include "User.h"
-#include "UserEdit.h"
 #include "UserInformation.h"
 #include "UserModel.h"
 #include "VersionCheck.h"
@@ -56,13 +51,7 @@ void MainWindow::msgAuthenticate(const MumbleProto::Authenticate &) {
 }
 
 void MainWindow::msgBanList(const MumbleProto::BanList &msg) {
-	if (banEdit) {
-		banEdit->reject();
-		delete banEdit;
-		banEdit = NULL;
-	}
-	banEdit = new BanEditor(msg, this);
-	banEdit->show();
+    qDebug() << "msgBanList";
 }
 
 void MainWindow::msgReject(const MumbleProto::Reject &msg) {
@@ -145,13 +134,6 @@ void MainWindow::msgServerSync(const MumbleProto::ServerSync &msg) {
 	connect(user, SIGNAL(recordingStateChanged()), this, SLOT(userStateChanged()));
 	
     qstiIcon->setToolTip(tr("Bubbles: %1").arg(Qt::escape(Channel::get(0)->qsName)));
-
-	// Update QActions and menues
-	on_qmServer_aboutToShow();
-	on_qmSelf_aboutToShow();
-	qmChannel_aboutToShow();
-	qmUser_aboutToShow();
-	on_qmConfig_aboutToShow();
 
 	updateTrayIcon();
 
@@ -350,7 +332,6 @@ void MainWindow::msgUserState(const MumbleProto::UserState &msg) {
 
 			if (pSelf) {
 				if (pDst == pSelf) {
-					g.mw->updateChatBar();
 					qsDesiredChannel = channel->getPath();
 				}
 
@@ -796,8 +777,7 @@ void MainWindow::msgACL(const MumbleProto::ACL &msg) {
 		aclEdit = NULL;
 	}
 	if (Channel::get(msg.channel_id())) {
-		aclEdit = new ACLEditor(msg.channel_id(), msg, this);
-		aclEdit->show();
+        qInfo() << "ACL editor";
 	}
 }
 
@@ -846,7 +826,6 @@ void MainWindow::msgContextActionModify(const MumbleProto::ContextActionModify &
 
 	QAction *a = new QAction(u8(msg.text()), g.mw);
 	a->setData(u8(msg.action()));
-	connect(a, SIGNAL(triggered()), this, SLOT(context_triggered()));
 	unsigned int ctx = msg.context();
 	if (ctx & MumbleProto::ContextActionModify_Context_Server)
 		qlServerActions.append(a);
@@ -888,40 +867,22 @@ void MainWindow::msgVersion(const MumbleProto::Version &msg) {
 }
 
 void MainWindow::msgUserList(const MumbleProto::UserList &msg) {
-	if (userEdit) {
-		userEdit->reject();
-		delete userEdit;
-		userEdit = NULL;
-	}
-	userEdit = new UserEdit(msg, this);
-	userEdit->show();
+    qInfo() << "msgUserList";
 }
 
 void MainWindow::msgVoiceTarget(const MumbleProto::VoiceTarget &) {
 }
 
 void MainWindow::msgPermissionQuery(const MumbleProto::PermissionQuery &msg) {
-	Channel *current = pmModel->getChannel(qtvUsers->currentIndex());
-
 	if (msg.flush()) {
 		foreach(Channel *c, Channel::c_qhChannels)
 			c->uiPermissions = 0;
-
-		// We always need the permissions of the current focus channel
-		if (current && current->iId != static_cast<int>(msg.channel_id())) {
-			g.sh->requestChannelPermissions(current->iId);
-
-			current->uiPermissions = ChanACL::All;
-		}
 	}
 	Channel *c = Channel::get(msg.channel_id());
 	if (c) {
 		c->uiPermissions = msg.permissions();
 		if (c->iId == 0)
 			g.pPermissions = static_cast<ChanACL::Permissions>(c->uiPermissions);
-		if (c == current) {
-			updateMenuPermissions();
-		}
 
         const bool allowed = c->uiPermissions & (ChanACL::Write | ChanACL::Enter);
         emit channelAllowedChanged(c->iId, allowed);

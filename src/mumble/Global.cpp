@@ -104,7 +104,6 @@ Global::Global() {
 
 	ocIntercept = NULL;
 	bc = NULL;
-	lcd = NULL;
 	o = NULL;
 	l = NULL;
 

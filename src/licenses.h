@@ -1214,13 +1214,6 @@ static const char *licenseSmallFT =
 
 
 static const char *licenseOldStyleLicenseHeaders = 
-	"Mumble's AudioConfigDialog\n"
-	"\n"
-	"	src/mumble/AudioConfigDialog.cpp\n"
-	"\n"
-	"	Copyright (C) 2005-2011, Thorvald Natvig <thorvald@natvig.com>\n"
-	"	Copyright (C) 2008, Andreas Messer <andi@bupfen.de>\n"
-	"\n"
 	"Mumble's PortAudio support\n"
 	"\n"
 	"	src/mumble/PAAudio.cpp, src/mumble/PAAudio.h\n"

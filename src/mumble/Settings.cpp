@@ -783,10 +783,6 @@ void Settings::load(QSettings* settings_ptr) {
 	SAVELOAD(bOverlayWinHelperX86Enable, "overlay_win/helper/x86/enable");
 	SAVELOAD(bOverlayWinHelperX64Enable, "overlay_win/helper/x64/enable");
 
-	// LCD
-	SAVELOAD(iLCDUserViewMinColWidth, "lcd/userview/mincolwidth");
-	SAVELOAD(iLCDUserViewSplitterWidth, "lcd/userview/splitterwidth");
-
 	QByteArray qba = qvariant_cast<QByteArray> (settings_ptr->value(QLatin1String("net/certificate")));
 	if (! qba.isEmpty())
 		kpCertificate = CertWizard::importCert(qba);

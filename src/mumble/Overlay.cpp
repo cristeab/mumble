@@ -15,7 +15,6 @@
 #include "MainWindow.h"
 #include "Message.h"
 #include "OverlayText.h"
-#include "RichTextEditor.h"
 #include "ServerHandler.h"
 #include "User.h"
 #include "WebFetch.h"

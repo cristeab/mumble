@@ -52,7 +52,6 @@ class AudioInputRegistrar {
 class AudioInput : public QThread {
 		friend class AudioNoiseWidget;
 		friend class AudioEchoWidget;
-		friend class AudioStats;
 		friend class AudioInputDialog;
 	private:
 		Q_OBJECT

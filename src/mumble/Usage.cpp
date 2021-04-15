@@ -8,9 +8,7 @@
 #include "Usage.h"
 
 #include "ClientUser.h"
-#include "LCD.h"
 #include "Global.h"
-#include "NetworkConfig.h"
 #include "OSInfo.h"
 #include "Version.h"
 

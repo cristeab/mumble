@@ -10,7 +10,6 @@
 #include "ServerHandler.h"
 #include "AudioInput.h"
 #include "AudioOutput.h"
-#include "AudioWizard.h"
 #include "Cert.h"
 #include "Database.h"
 #include "Log.h"
@@ -18,7 +17,6 @@
 #include "LogEmitter.h"
 #include "DeveloperConsole.h"
 #include "Global.h"
-#include "LCD.h"
 #ifdef USE_BONJOUR
 #include "BonjourClient.h"
 #endif
@@ -29,7 +27,6 @@
 #include "vld.h"
 #endif
 #include "VersionCheck.h"
-#include "NetworkConfig.h"
 #include "CrashReporter.h"
 #include "SocketRPC.h"
 #include "SSL.h"
@@ -420,9 +417,6 @@ int main(int argc, char **argv) {
 	} else if (qttranslator.load(QLatin1String(":qtbase_") + locale)) {
 		a.installTranslator(&qttranslator);
 	}
-	
-	// Initialize proxy settings
-	NetworkConfig::SetupProxy();
 
 	g.nam = new QNetworkAccessManager();
 
@@ -445,8 +439,6 @@ int main(int argc, char **argv) {
 
 	g.o = new Overlay();
 	g.o->setActive(g.s.os.bEnable);
-
-	g.lcd = new LCD();
 
 	// Process any waiting events before initializing our MainWindow.
 	// The mumble:// URL support for Mac OS X happens through AppleEvents,
@@ -532,9 +524,6 @@ int main(int argc, char **argv) {
 	if (runaudiowizard) {
         certModel->showDialog(QObject::tr("Warning"), QObject::tr("Please make sure the audio devices are correctly setup"));
         qInfo() << "Must run audio wizard";
-        /*AudioWizard *aw = new AudioWizard(g.mw);
-		aw->exec();
-        delete aw;*/
 	}
 
 	g.s.uiUpdateCounter = 2;

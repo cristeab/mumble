@@ -92,12 +92,8 @@ isEqual(QT_MAJOR_VERSION, 5) {
   }
 }
 
-HEADERS *= BanEditor.h \
-    ACLEditor.h \
-    ConfigWidget.h \
+HEADERS *= ConfigWidget.h \
     Log.h \
-    AudioConfigDialog.h \
-    AudioStats.h \
     AudioInput.h \
     AudioOutput.h \
     AudioOutputSample.h \
@@ -119,25 +115,16 @@ HEADERS *= BanEditor.h \
     UserModel.h \
     Audio.h \
     ConfigDialog.h \
-    PTTButtonWidget.h \
-    LookConfig.h \
     Overlay.h \
     OverlayText.h \
     SharedMemory.h \
-    AudioWizard.h \
     ViewCert.h \
     TextMessage.h \
-    NetworkConfig.h \
-    LCD.h \
     Usage.h \
     Cert.h \
     ClientUser.h \
-    UserEdit.h \
     UserListModel.h \
-    UserLocalVolumeDialog.h \
-    Tokens.h \
     UserView.h \
-    RichTextEditor.h \
     UserInformation.h \
     SocketRPC.h \
     VoiceRecorder.h \
@@ -164,12 +151,8 @@ HEADERS *= BanEditor.h \
     ServerTableModel.h \
     TokensModel.h
 
-SOURCES *= BanEditor.cpp \
-    ACLEditor.cpp \
-    ConfigWidget.cpp \
+SOURCES *= ConfigWidget.cpp \
     Log.cpp \
-    AudioConfigDialog.cpp \
-    AudioStats.cpp \
     AudioInput.cpp \
     AudioOutput.cpp \
     AudioOutputSample.cpp \
@@ -190,8 +173,6 @@ SOURCES *= BanEditor.cpp \
     UserModel.cpp \
     Audio.cpp \
     ConfigDialog.cpp \
-    PTTButtonWidget.cpp \
-    LookConfig.cpp \
     OverlayClient.cpp \
     OverlayConfig.cpp \
     OverlayEditor.cpp \
@@ -201,22 +182,15 @@ SOURCES *= BanEditor.cpp \
     Overlay.cpp \
     OverlayText.cpp \
     SharedMemory.cpp \
-    AudioWizard.cpp \
     ViewCert.cpp \
     Messages.cpp \
     TextMessage.cpp \
     GlobalShortcut.cpp \
-    NetworkConfig.cpp \
-    LCD.cpp \
     Usage.cpp \
     Cert.cpp \
     ClientUser.cpp \
-    UserEdit.cpp \
     UserListModel.cpp \
-    UserLocalVolumeDialog.cpp \
-    Tokens.cpp \
     UserView.cpp \
-    RichTextEditor.cpp \
     UserInformation.cpp \
     SocketRPC.cpp \
     VoiceRecorder.cpp \
@@ -244,39 +218,6 @@ RESOURCES *= mumble.qrc
 
 # Add the various mumble_flags_XX.qrc files to RESOURCES...
 include(flags/mumble_flags.pri)
-
-FORMS *= ConfigDialog.ui \
-    MainWindow.ui \
-    ConnectDialog.ui \
-    ConnectDialogEdit.ui \
-    BanEditor.ui \
-    ACLEditor.ui \
-    Plugins.ui \
-    PTTButtonWidget.ui \
-    Overlay.ui \
-    OverlayEditor.ui \
-    LookConfig.ui \
-    AudioInput.ui \
-    AudioOutput.ui \
-    Log.ui \
-    TextMessage.ui \
-    AudioStats.ui \
-    NetworkConfig.ui \
-    LCD.ui \
-    GlobalShortcut.ui \
-    GlobalShortcutTarget.ui \
-    Cert.ui \
-    UserEdit.ui \
-    UserLocalVolumeDialog.ui \
-    AudioWizard.ui \
-    Tokens.ui \
-    RichTextEditor.ui \
-    RichTextEditorLink.ui \
-    UserInformation.ui \
-    VoiceRecorderDialog.ui
-
-# Include TRANSLATIONS variable
-#include(translations.pri)
 
 PRECOMPILED_HEADER = mumble_pch.hpp
 INCLUDEPATH *= ../../3rdparty/qqbonjour-src
@@ -359,9 +300,6 @@ CONFIG(sbcelt) {
 
 !win32:!macx:!CONFIG(no-dbus) {
   CONFIG  *= dbus
-}
-!contains(UNAME, FreeBSD):!CONFIG(no-g15) {
-  CONFIG *= g15
 }
 
 !CONFIG(no-bonjour) {
@@ -617,7 +555,6 @@ asio {
   DEFINES *= USE_ASIO
   HEADERS *= ASIOInput.h
   SOURCES *= ASIOInput.cpp
-  FORMS *= ASIOInput.ui
 
   # If 3rdparty/asio exists, use that...
   exists(../../3rdparty/asio) {
@@ -688,19 +625,6 @@ wasapi {
   HEADERS *= WASAPI.h WASAPINotificationClient.h
   SOURCES *= WASAPI.cpp WASAPINotificationClient.cpp
   LIBS *= -lavrt -delayload:avrt.DLL
-}
-
-g15 {
-  DEFINES *= USE_G15
-  win32|macx {
-    SOURCES *= G15LCDEngine_helper.cpp
-    HEADERS *= G15LCDEngine_helper.h ../../g15helper/g15helper.h
-  }
-  unix:!macx:!contains(UNAME, FreeBSD) {
-    SOURCES *= G15LCDEngine_unix.cpp
-    HEADERS *= G15LCDEngine_unix.h
-    LIBS *= -lg15daemon_client
-  }
 }
 
 CONFIG(no-update) {
