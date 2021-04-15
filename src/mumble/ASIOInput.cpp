@@ -41,15 +41,10 @@ bool ASIOAudioInputRegistrar::canEcho(const QString &) const {
 void ASIOAudioInputRegistrar::setDeviceChoice(const QVariant &, Settings &) {
 }
 
-static ConfigWidget *ASIOConfigDialogNew(Settings &st) {
-	return new ASIOConfig(st);
-}
-
 class ASIOInit : public DeferInit {
 		ASIOAudioInputRegistrar *airASIO;
-		ConfigRegistrar *crASIO;
 	public:
-		ASIOInit() : airASIO(NULL), crASIO(NULL) {}
+        ASIOInit() : airASIO(NULL) {}
 		void initialize();
 		void destroy();
 };
@@ -60,7 +55,6 @@ void ASIOInit::initialize() {
 	FILETIME ft;
 
 	airASIO = NULL;
-	crASIO = NULL;
 
 	bool bFound = false;
 

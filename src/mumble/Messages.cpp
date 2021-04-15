@@ -11,14 +11,12 @@
 #include "Connection.h"
 #include "ConnectDialog.h"
 #include "Database.h"
-#include "GlobalShortcut.h"
 #include "Log.h"
 #include "MainWindow.h"
 #include "Overlay.h"
 #include "Plugins.h"
 #include "ServerHandler.h"
 #include "User.h"
-#include "UserInformation.h"
 #include "UserModel.h"
 #include "VersionCheck.h"
 #include "ViewCert.h"
@@ -771,19 +769,11 @@ void MainWindow::msgTextMessage(const MumbleProto::TextMessage &msg) {
 }
 
 void MainWindow::msgACL(const MumbleProto::ACL &msg) {
-	if (aclEdit) {
-		aclEdit->reject();
-		delete aclEdit;
-		aclEdit = NULL;
-	}
-	if (Channel::get(msg.channel_id())) {
-        qInfo() << "ACL editor";
-	}
+    qInfo() << "msgACL";
 }
 
 void MainWindow::msgQueryUsers(const MumbleProto::QueryUsers &msg) {
-	if (aclEdit)
-		aclEdit->returnQuery(msg);
+    qInfo() << "msgQueryUsers";
 }
 
 void MainWindow::msgPing(const MumbleProto::Ping &) {
@@ -939,17 +929,7 @@ void MainWindow::msgCodecVersion(const MumbleProto::CodecVersion &msg) {
 }
 
 void MainWindow::msgUserStats(const MumbleProto::UserStats &msg) {
-	UserInformation *ui = qmUserInformations.value(msg.session());
-	if (ui) {
-		ui->update(msg);
-	} else {
-		ui = new UserInformation(msg, g.ocIntercept ? g.mw : NULL);
-		ui->setAttribute(Qt::WA_DeleteOnClose, true);
-		connect(ui, SIGNAL(destroyed()), this, SLOT(destroyUserInformation()));
-
-		qmUserInformations.insert(msg.session(), ui);
-		ui->show();
-	}
+    qInfo() << "msgUserStats";
 }
 
 void MainWindow::msgRequestBlob(const MumbleProto::RequestBlob &) {

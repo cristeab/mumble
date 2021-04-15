@@ -92,8 +92,7 @@ isEqual(QT_MAJOR_VERSION, 5) {
   }
 }
 
-HEADERS *= ConfigWidget.h \
-    Log.h \
+HEADERS *= Log.h \
     AudioInput.h \
     AudioOutput.h \
     AudioOutputSample.h \
@@ -106,7 +105,6 @@ HEADERS *= ConfigWidget.h \
     ServerHandler.h \
     About.h \
     ConnectDialog.h \
-    GlobalShortcut.h \
     TextToSpeech.h \
     Settings.h \
     Database.h \
@@ -114,29 +112,18 @@ HEADERS *= ConfigWidget.h \
     Global.h \
     UserModel.h \
     Audio.h \
-    ConfigDialog.h \
     Overlay.h \
     OverlayText.h \
     SharedMemory.h \
     ViewCert.h \
-    TextMessage.h \
     Usage.h \
     Cert.h \
     ClientUser.h \
     UserListModel.h \
     UserView.h \
-    UserInformation.h \
-    SocketRPC.h \
-    VoiceRecorder.h \
-    VoiceRecorderDialog.h \
     WebFetch.h \
     ../SignalCurry.h \
     OverlayClient.h \
-    OverlayUser.h \
-    OverlayUserGroup.h \
-    OverlayConfig.h \
-    OverlayEditor.h \
-    OverlayEditorScene.h \
     MumbleApplication.h \
     ApplicationPalette.h \
     OverlayPositionableItem.h \
@@ -151,8 +138,7 @@ HEADERS *= ConfigWidget.h \
     ServerTableModel.h \
     TokensModel.h
 
-SOURCES *= ConfigWidget.cpp \
-    Log.cpp \
+SOURCES *= Log.cpp \
     AudioInput.cpp \
     AudioOutput.cpp \
     AudioOutputSample.cpp \
@@ -172,29 +158,17 @@ SOURCES *= ConfigWidget.cpp \
     Global.cpp \
     UserModel.cpp \
     Audio.cpp \
-    ConfigDialog.cpp \
     OverlayClient.cpp \
-    OverlayConfig.cpp \
-    OverlayEditor.cpp \
-    OverlayEditorScene.cpp \
-    OverlayUser.cpp \
-    OverlayUserGroup.cpp \
     Overlay.cpp \
     OverlayText.cpp \
     SharedMemory.cpp \
     ViewCert.cpp \
     Messages.cpp \
-    TextMessage.cpp \
-    GlobalShortcut.cpp \
     Usage.cpp \
     Cert.cpp \
     ClientUser.cpp \
     UserListModel.cpp \
     UserView.cpp \
-    UserInformation.cpp \
-    SocketRPC.cpp \
-    VoiceRecorder.cpp \
-    VoiceRecorderDialog.cpp \
     WebFetch.cpp \
     MumbleApplication.cpp \
     ../../3rdparty/smallft-src/smallft.cpp \

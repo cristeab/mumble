@@ -8,7 +8,6 @@
 #include "MumbleApplication.h"
 
 #include "MainWindow.h"
-#include "GlobalShortcut.h"
 #include "Global.h"
 #include "EnvUtils.h"
 

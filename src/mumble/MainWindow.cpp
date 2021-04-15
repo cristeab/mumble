@@ -18,19 +18,15 @@
 #include "ConnectDialog.h"
 #include "Database.h"
 #include "DeveloperConsole.h"
-#include "GlobalShortcut.h"
 #include "Log.h"
 #include "Net.h"
 #include "OverlayClient.h"
 #include "Plugins.h"
 #include "ServerHandler.h"
-#include "TextMessage.h"
 #include "User.h"
-#include "UserInformation.h"
 #include "UserModel.h"
 #include "VersionCheck.h"
 #include "ViewCert.h"
-#include "VoiceRecorderDialog.h"
 #include "../SignalCurry.h"
 #include "Settings.h"
 #include "SSLCipherInfo.h"
@@ -97,10 +93,6 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p) {
 
 	Channel::add(0, tr("Root"));
 
-	tokenEdit = NULL;
-
-	voiceRecorderDialog = NULL;
-
 #if QT_VERSION < 0x050000
 	cuContextUser = QWeakPointer<ClientUser>();
 	cContextChannel = QWeakPointer<Channel>();
@@ -116,8 +108,6 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p) {
 
 	qmDeveloper = new QMenu(tr("&Developer"), this);
 
-	createActions();
-
 	// Explicitely add actions to mainwindow so their shortcuts are available
 	// if only the main window is visible (e.g. minimal mode)
     /*addActions(findChildren<QAction*>());
@@ -130,87 +120,6 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p) {
 
 #ifdef NO_UPDATE_CHECK
 	delete qaHelpVersionCheck;
-#endif
-}
-
-void MainWindow::createActions() {
-	int idx = 1;
-	gsPushTalk=new GlobalShortcut(this, idx++, tr("Push-to-Talk", "Global Shortcut"));
-	gsPushTalk->setObjectName(QLatin1String("PushToTalk"));
-	gsPushTalk->qsToolTip = tr("Push and hold this button to send voice.", "Global Shortcut");
-	gsPushTalk->qsWhatsThis = tr("This configures the push-to-talk button, and as long as you hold this button down, you will transmit voice.", "Global Shortcut");
-
-
-	gsResetAudio=new GlobalShortcut(this, idx++, tr("Reset Audio Processor", "Global Shortcut"));
-	gsResetAudio->setObjectName(QLatin1String("ResetAudio"));
-
-	gsMuteSelf=new GlobalShortcut(this, idx++, tr("Mute Self", "Global Shortcut"), 0);
-	gsMuteSelf->setObjectName(QLatin1String("gsMuteSelf"));
-	gsMuteSelf->qsToolTip = tr("Set self-mute status.", "Global Shortcut");
-	gsMuteSelf->qsWhatsThis = tr("This will set or toggle your muted status. If you turn this off, you will also disable self-deafen.", "Global Shortcut");
-
-	gsDeafSelf=new GlobalShortcut(this, idx++, tr("Deafen Self", "Global Shortcut"), 0);
-	gsDeafSelf->setObjectName(QLatin1String("gsDeafSelf"));
-	gsDeafSelf->qsToolTip = tr("Set self-deafen status.", "Global Shortcut");
-	gsDeafSelf->qsWhatsThis = tr("This will set or toggle your deafened status. If you turn this on, you will also enable self-mute.", "Global Shortcut");
-
-	gsUnlink=new GlobalShortcut(this, idx++, tr("Unlink Plugin", "Global Shortcut"));
-	gsUnlink->setObjectName(QLatin1String("UnlinkPlugin"));
-
-	gsPushMute=new GlobalShortcut(this, idx++, tr("Push-to-Mute", "Global Shortcut"));
-	gsPushMute->setObjectName(QLatin1String("PushToMute"));
-
-	gsJoinChannel=new GlobalShortcut(this, idx++, tr("Join Channel", "Global Shortcut"));
-	gsJoinChannel->setObjectName(QLatin1String("MetaChannel"));
-	gsJoinChannel->qsToolTip = tr("Use in conjunction with Whisper to.", "Global Shortcut");
-
-	gsToggleOverlay=new GlobalShortcut(this, idx++, tr("Toggle Overlay", "Global Shortcut"));
-	gsToggleOverlay->setObjectName(QLatin1String("ToggleOverlay"));
-	gsToggleOverlay->qsToolTip = tr("Toggle state of in-game overlay.", "Global Shortcut");
-	gsToggleOverlay->qsWhatsThis = tr("This will switch the states of the in-game overlay.", "Global Shortcut");
-	connect(gsToggleOverlay, SIGNAL(down(QVariant)), g.o, SLOT(toggleShow()));
-
-	gsMinimal=new GlobalShortcut(this, idx++, tr("Toggle Minimal", "Global Shortcut"));
-	gsMinimal->setObjectName(QLatin1String("ToggleMinimal"));
-
-	gsVolumeUp=new GlobalShortcut(this, idx++, tr("Volume Up (+10%)", "Global Shortcut"));
-	gsVolumeUp->setObjectName(QLatin1String("VolumeUp"));
-
-	gsVolumeDown=new GlobalShortcut(this, idx++, tr("Volume Down (-10%)", "Global Shortcut"));
-	gsVolumeDown->setObjectName(QLatin1String("VolumeDown"));
-
-	qstiIcon = new QSystemTrayIcon(qiIcon, this);
-    qstiIcon->setToolTip(tr("Bubbles -- %1").arg(QLatin1String(MUMBLE_RELEASE)));
-	qstiIcon->setObjectName(QLatin1String("Icon"));
-
-	gsWhisper = new GlobalShortcut(this, idx++, tr("Whisper/Shout"), QVariant::fromValue(ShortcutTarget()));
-	gsWhisper->setObjectName(QLatin1String("gsWhisper"));
-
-	gsLinkChannel=new GlobalShortcut(this, idx++, tr("Link Channel", "Global Shortcut"));
-	gsLinkChannel->setObjectName(QLatin1String("MetaLink"));
-	gsLinkChannel->qsToolTip = tr("Use in conjunction with Whisper to.", "Global Shortcut");
-
-	gsCycleTransmitMode=new GlobalShortcut(this, idx++, tr("Cycle Transmit Mode", "Global Shortcut"));
-	gsCycleTransmitMode->setObjectName(QLatin1String("gsCycleTransmitMode"));
-
-	gsTransmitModePushToTalk=new GlobalShortcut(this, idx++, tr("Set Transmit Mode to Push-To-Talk", "Global Shortcut"));
-	gsTransmitModePushToTalk->setObjectName(QLatin1String("gsTransmitModePushToTalk"));
-
-	gsTransmitModeContinuous=new GlobalShortcut(this, idx++, tr("Set Transmit Mode to Continuous", "Global Shortcut"));
-	gsTransmitModeContinuous->setObjectName(QLatin1String("gsTransmitModeContinuous"));
-
-	gsTransmitModeVAD=new GlobalShortcut(this, idx++, tr("Set Transmit Mode to VAD", "Global Shortcut"));
-	gsTransmitModeVAD->setObjectName(QLatin1String("gsTransmitModeVAD"));
-
-	gsSendTextMessage=new GlobalShortcut(this, idx++, tr("Send Text Message", "Global Shortcut"), QVariant(QString()));
-	gsSendTextMessage->setObjectName(QLatin1String("gsSendTextMessage"));
-
-	gsSendClipboardTextMessage=new GlobalShortcut(this, idx++, tr("Send Clipboard Text Message", "Global Shortcut"));
-	gsSendClipboardTextMessage->setObjectName(QLatin1String("gsSendClipboardTextMessage"));
-	gsSendClipboardTextMessage->qsWhatsThis = tr("This will send your Clipboard content to the channel you are currently in.", "Global Shortcut");
-
-#ifndef Q_OS_MAC
-	qstiIcon->show();
 #endif
 }
 
@@ -685,43 +594,6 @@ void MainWindow::on_Reconnect_timeout() {
 	g.sh->start(QThread::TimeCriticalPriority);
 }
 
-void MainWindow::on_qaSelfComment_triggered() {
-	ClientUser *p = ClientUser::get(g.uiSession);
-	if (!p)
-		return;
-
-	if (! p->qbaCommentHash.isEmpty() && p->qsComment.isEmpty()) {
-		p->qsComment = QString::fromUtf8(g.db->blob(p->qbaCommentHash));
-		if (p->qsComment.isEmpty()) {
-			pmModel->uiSessionComment = ~(p->uiSession);
-			MumbleProto::RequestBlob mprb;
-			mprb.add_session_comment(p->uiSession);
-			g.sh->sendMessage(mprb);
-			return;
-		}
-	}
-
-	unsigned int session = p->uiSession;
-
-	::TextMessage *texm = new ::TextMessage(this, tr("Change your comment"));
-
-	int res = texm->exec();
-
-	p = ClientUser::get(session);
-
-	if (p && (res == QDialog::Accepted)) {
-		const QString &msg = texm->message();
-		MumbleProto::UserState mpus;
-		mpus.set_session(session);
-		mpus.set_comment(u8(msg));
-		g.sh->sendMessage(mpus);
-
-		if (! msg.isEmpty())
-			g.db->setBlob(sha1(msg), msg.toUtf8());
-	}
-	delete texm;
-}
-
 void MainWindow::on_qaSelfRegister_triggered() {
 	ClientUser *p = ClientUser::get(g.uiSession);
 	if (!p)
@@ -882,11 +754,6 @@ void MainWindow::on_qaServerTextureRemove_triggered() {
 	g.sh->setUserTexture(g.uiSession, QByteArray());
 }
 
-void MainWindow::voiceRecorderDialog_finished(int) {
-	voiceRecorderDialog->deleteLater();
-	voiceRecorderDialog = NULL;
-}
-
 void MainWindow::on_qaUserMute_triggered() {
 	ClientUser *p = getContextMenuUser();
 	if (!p)
@@ -1019,63 +886,6 @@ void MainWindow::on_qaUserBan_triggered() {
 	}
 }
 
-void MainWindow::on_qaUserTextMessage_triggered() {
-	ClientUser *p = getContextMenuUser();
-
-	if (!p)
-		return;
-
-	openTextMessageDialog(p);
-}
-
-void MainWindow::openTextMessageDialog(ClientUser *p) {
-	unsigned int session = p->uiSession;
-
-	::TextMessage *texm = new ::TextMessage(this, tr("Sending message to %1").arg(p->qsName));
-	int res = texm->exec();
-
-	// Try to get find the user using the session id.
-	// This will return NULL if the user disconnected while typing the message.
-	p = ClientUser::get(session);
-
-	if (p && (res == QDialog::Accepted)) {
-		QString msg = texm->message();
-
-		if (! msg.isEmpty()) {
-			g.sh->sendUserTextMessage(p->uiSession, msg);
-			g.l->log(Log::TextMessage, tr("To %1: %2").arg(Log::formatClientUser(p, Log::Target), texm->message()), tr("Message to %1").arg(p->qsName), true);
-		}
-	}
-	delete texm;
-}
-
-void MainWindow::on_qaUserCommentView_triggered() {
-	ClientUser *p = getContextMenuUser();
-	// This has to be done here because UserModel could've set it.
-	cuContextUser.clear();
-
-	if (!p)
-		return;
-
-	if (! p->qbaCommentHash.isEmpty() && p->qsComment.isEmpty()) {
-		p->qsComment = QString::fromUtf8(g.db->blob(p->qbaCommentHash));
-		if (p->qsComment.isEmpty()) {
-			pmModel->uiSessionComment = ~(p->uiSession);
-			MumbleProto::RequestBlob mprb;
-			mprb.add_session_comment(p->uiSession);
-			g.sh->sendMessage(mprb);
-			return;
-		}
-	}
-
-	pmModel->seenComment(pmModel->index(p));
-
-	::TextMessage *texm = new ::TextMessage(this, tr("View comment on user %1").arg(p->qsName));
-
-	texm->setAttribute(Qt::WA_DeleteOnClose, true);
-	texm->show();
-}
-
 void MainWindow::on_qaUserCommentReset_triggered() {
 	ClientUser *p = getContextMenuUser();
 
@@ -1206,30 +1016,6 @@ void MainWindow::on_qaChannelUnlinkAll_triggered() {
 	g.sh->sendMessage(mpcs);
 }
 
-void MainWindow::on_qaChannelSendMessage_triggered() {
-	Channel *c = getContextMenuChannel();
-
-	if (!c)
-		return;
-
-	int id = c->iId;
-
-	::TextMessage *texm = new ::TextMessage(this, tr("Sending message to channel %1").arg(c->qsName), true);
-	int res = texm->exec();
-
-	c = Channel::get(id);
-
-	if (c && (res==QDialog::Accepted)) {
-		g.sh->sendChannelTextMessage(id, texm->message(), texm->bTreeMessage);
-
-		if (texm->bTreeMessage)
-			g.l->log(Log::TextMessage, tr("To %1 (Tree): %2").arg(Log::formatChannel(c), texm->message()), tr("Message to tree %1").arg(c->qsName), true);
-		else
-			g.l->log(Log::TextMessage, tr("To %1: %2").arg(Log::formatChannel(c), texm->message()), tr("Message to channel %1").arg(c->qsName), true);
-	}
-	delete texm;
-}
-
 void MainWindow::on_qaChannelCopyURL_triggered() {
 	Channel *c = getContextMenuChannel();
 	QString host, uname, pw, channel;
@@ -1285,43 +1071,6 @@ void MainWindow::on_qaAudioReset_triggered() {
 	AudioInputPtr ai = g.ai;
 	if (ai)
 		ai->bResetProcessor = true;
-}
-
-void MainWindow::on_qaRecording_triggered() {
-	if (voiceRecorderDialog) {
-		voiceRecorderDialog->show();
-		voiceRecorderDialog->raise();
-		voiceRecorderDialog->activateWindow();
-	} else {
-		voiceRecorderDialog = new VoiceRecorderDialog(this);
-		connect(voiceRecorderDialog, SIGNAL(finished(int)), this, SLOT(voiceRecorderDialog_finished(int)));
-		voiceRecorderDialog->show();
-	}
-}
-
-void MainWindow::on_qaConfigDialog_triggered() {
-	QDialog *dlg = new ConfigDialog(this);
-
-	if (dlg->exec() == QDialog::Accepted) {
-		updateTransmitModeComboBox();
-		updateTrayIcon();
-		
-		if (g.s.requireRestartToApply) {
-			if (g.s.requireRestartToApply && QMessageBox::question(
-				        this,
-                        tr("Restart Bubbles?"),
-                        tr("Some settings will only apply after a restart of Bubbles. Restart Bubbles now?"),
-				        QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes) {
-		
-				bSuppressAskOnQuit = true;
-				restartOnQuit = true;
-				
-				close();
-			}
-		}
-	}
-
-	delete dlg;
 }
 
 void MainWindow::on_qaDeveloperConsole_triggered() {
@@ -1746,12 +1495,6 @@ void MainWindow::serverDisconnected(QAbstractSocket::SocketError err, QString re
 		}
 	}
 
-	if (tokenEdit) {
-		tokenEdit->reject();
-		delete tokenEdit;
-		tokenEdit = NULL;
-	}
-
 	QSet<QAction *> qs;
 	qs += qlServerActions.toSet();
 	qs += qlChannelActions.toSet();
@@ -1966,15 +1709,3 @@ QPair<QByteArray, QImage> MainWindow::openImageFile() {
 
 	return retval;
 }
-
-void MainWindow::destroyUserInformation() {
-	UserInformation *ui = static_cast<UserInformation *>(sender());
-	QMap<unsigned int, UserInformation *>::iterator i;
-	for (i=qmUserInformations.begin(); i != qmUserInformations.end(); ++i) {
-		if (i.value() == ui) {
-			qmUserInformations.erase(i);
-			return;
-		}
-	}
-}
-

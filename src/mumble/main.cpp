@@ -28,7 +28,6 @@
 #endif
 #include "VersionCheck.h"
 #include "CrashReporter.h"
-#include "SocketRPC.h"
 #include "SSL.h"
 #include "MumbleApplication.h"
 #include "ApplicationPalette.h"
@@ -290,7 +289,6 @@ int main(int argc, char **argv) {
 		bool sent = false;
 		QMap<QString, QVariant> param;
 		param.insert(rpcCommand, rpcCommand);
-		sent = SocketRPC::send(QLatin1String("Mumble"), QLatin1String("self"), param);
 		if (sent) {
 			return 0;
 		} else {
@@ -305,26 +303,10 @@ int main(int argc, char **argv) {
 			param.insert(QLatin1String("href"), url);
 #endif
 			bool sent = false;
-#ifdef USE_DBUS
-			QDBusInterface qdbi(QLatin1String("net.sourceforge.mumble.mumble"), QLatin1String("/"), QLatin1String("net.sourceforge.mumble.Mumble"));
-
-			QDBusMessage reply=qdbi.call(QLatin1String("openUrl"), QLatin1String(url.toEncoded()));
-			sent = (reply.type() == QDBusMessage::ReplyMessage);
-#else
-			sent = SocketRPC::send(QLatin1String("Mumble"), QLatin1String("url"), param);
-#endif
 			if (sent)
 				return 0;
 		} else {
 			bool sent = false;
-#ifdef USE_DBUS
-			QDBusInterface qdbi(QLatin1String("net.sourceforge.mumble.mumble"), QLatin1String("/"), QLatin1String("net.sourceforge.mumble.Mumble"));
-
-			QDBusMessage reply=qdbi.call(QLatin1String("focus"));
-			sent = (reply.type() == QDBusMessage::ReplyMessage);
-#else
-			sent = SocketRPC::send(QLatin1String("Mumble"), QLatin1String("focus"));
-#endif
 			if (sent)
 				return 0;
 
@@ -492,13 +474,7 @@ int main(int argc, char **argv) {
 	QDBusConnection::sessionBus().registerService(QLatin1String("net.sourceforge.mumble.mumble"));
 #endif
 
-    //SocketRPC *srpc = new SocketRPC(QLatin1String("Mumble"));
-
     g.l->log(Log::Information, MainWindow::tr("Welcome to Bubbles."));
-
-	// Plugins
-    //g.p = new Plugins(NULL);
-    //g.p->rescanPlugins();
 
 	Audio::start();
 
@@ -626,7 +602,6 @@ int main(int argc, char **argv) {
 	delete g.mw;
 
 	delete g.nam;
-	delete g.lcd;
 
 	delete g.db;
     //delete g.p;

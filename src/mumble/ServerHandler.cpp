@@ -850,10 +850,7 @@ void ServerHandler::kickBanUser(unsigned int uiSession, const QString &reason, b
 }
 
 void ServerHandler::sendUserTextMessage(unsigned int uiSession, const QString &message_) {
-	MumbleProto::TextMessage mptm;
-	mptm.add_session(uiSession);
-	mptm.set_message(u8(message_));
-	sendMessage(mptm);
+    qInfo() << "sendUserTextMessage";
 }
 
 void ServerHandler::sendChannelTextMessage(unsigned int channel, const QString &message_, bool tree) {

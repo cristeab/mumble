@@ -14,31 +14,7 @@
 #include <windows.h>
 #endif
 
-#include "ConfigDialog.h"
-
-#include "ui_Plugins.h"
-
 struct PluginInfo;
-
-class PluginConfig : public ConfigWidget, public Ui::PluginConfig {
-	private:
-		Q_OBJECT
-		Q_DISABLE_COPY(PluginConfig)
-	protected:
-		void refillPluginList();
-		PluginInfo *pluginForItem(QTreeWidgetItem *) const;
-	public:
-		PluginConfig(Settings &st);
-		virtual QString title() const Q_DECL_OVERRIDE;
-		virtual QIcon icon() const Q_DECL_OVERRIDE;
-	public slots:
-		void save() const Q_DECL_OVERRIDE;
-		void load(const Settings &r) Q_DECL_OVERRIDE;
-		void on_qpbConfig_clicked();
-		void on_qpbAbout_clicked();
-		void on_qpbReload_clicked();
-		void on_qtwPlugins_currentItemChanged(QTreeWidgetItem *, QTreeWidgetItem *);
-};
 
 struct PluginFetchMeta;
 

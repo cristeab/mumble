@@ -84,9 +84,6 @@ void WebFetch::finished() {
 		// This of course only makes sense, if prefixedServiceHost() and serviceHost() are in fact
 		// different hosts.
 		url.setHost(serviceHost());
-
-		qnr = Network::get(url);
-		connect(qnr, SIGNAL(finished()), this, SLOT(finished()));
 	} else {
 		emit fetched(QByteArray(), url, QMap<QString,QString>());
 		deleteLater();

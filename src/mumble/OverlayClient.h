@@ -12,7 +12,6 @@
 #include "Timer.h"
 #include "../../overlay/overlay.h"
 #include "SharedMemory.h"
-#include "OverlayUserGroup.h"
 
 class ClientUser;
 class Overlay;
@@ -45,7 +44,6 @@ class OverlayClient : public QObject {
 		QString qsExecutablePath;
 
 		QGraphicsScene qgs;
-		OverlayUserGroup ougUsers;
 
 #ifdef Q_OS_MAC
 		QMap<Qt::CursorShape, QPixmap> qmCursors;
@@ -82,7 +80,6 @@ class OverlayClient : public QObject {
 		void updateFPS();
 		void updateTime();
 		bool update();
-		void openEditor();
 };
 
 #endif

@@ -10,8 +10,6 @@
 #include <QtGui/QTextCursor>
 #include <QtGui/QTextDocument>
 
-#include "ConfigDialog.h"
-
 class TextToSpeech;
 
 class ClientUser;

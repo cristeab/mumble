@@ -15,7 +15,6 @@
 # include <QtGui/QGraphicsItem>
 #endif
 
-#include "ConfigDialog.h"
 #include "OverlayText.h"
 #include "../../overlay/overlay.h"
 
@@ -72,7 +71,6 @@ class OverlayPrivate : public QObject {
 class Overlay : public QObject {
 		friend class OverlayConfig;
 		friend class OverlayClient;
-		friend class OverlayUser;
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(Overlay)

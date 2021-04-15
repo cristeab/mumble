@@ -7,7 +7,6 @@
 
 #include "OverlayClient.h"
 #include "OverlayPositionableItem.h"
-#include "OverlayEditor.h"
 #include "OverlayText.h"
 #include "User.h"
 #include "Channel.h"
@@ -15,7 +14,6 @@
 #include "Database.h"
 #include "ServerHandler.h"
 #include "MainWindow.h"
-#include "GlobalShortcut.h"
 
 // We define a global macro called 'g'. This can lead to issues when included code uses 'g' as a type or parameter name (like protobuf 3.7 does). As such, for now, we have to make this our last include.
 #include "Global.h"
@@ -23,7 +21,6 @@
 OverlayClient::OverlayClient(QLocalSocket *socket, QObject *p)
 	: QObject(p)
 	, framesPerSecond(0)
-	, ougUsers(&g.s.os)
 	, iMouseX(0)
 	, iMouseY(0) {
 	
@@ -46,14 +43,6 @@ OverlayClient::OverlayClient(QLocalSocket *socket, QObject *p)
 
 	// Make sure it has a native window id
 	qgv.winId();
-
-	qgpiCursor = new OverlayMouse();
-	qgpiCursor->hide();
-	qgpiCursor->setZValue(10.0f);
-
-	ougUsers.setZValue(-1.0f);
-	qgs.addItem(&ougUsers);
-	ougUsers.show();
 
 	qgpiFPS = new OverlayPositionableItem(&g.s.os.qrfFps);
 	qgs.addItem(qgpiFPS);
@@ -682,11 +671,4 @@ void OverlayClient::render() {
 	}
 
 	qlsSocket->flush();
-}
-
-void OverlayClient::openEditor() {
-	OverlayEditor oe(g.mw, &ougUsers);
-	connect(&oe, SIGNAL(applySettings()), this, SLOT(updateLayout()));
-
-	oe.exec();
 }

@@ -11,7 +11,6 @@
 #include "Channel.h"
 #include "ClientUser.h"
 #include "Database.h"
-#include "GlobalShortcut.h"
 #include "MainWindow.h"
 #include "Message.h"
 #include "OverlayText.h"

@@ -9,7 +9,6 @@
 
 #include "User.h"
 #include "Channel.h"
-#include "OverlayConfig.h"
 #include "MainWindow.h"
 #include "Global.h"
 #include "MumbleApplication.h"
@@ -325,24 +324,4 @@ void Overlay::setActiveInternal(bool act) {
 		// Only act if the private instance has been created already
 		static_cast<OverlayPrivateWin *>(d)->setActive(act);
 	}
-}
-
-bool OverlayConfig::supportsInstallableOverlay() {
-	return false;
-}
-
-bool OverlayConfig::isInstalled() {
-	return true;
-}
-
-bool OverlayConfig::needsUpgrade() {
-	return false;
-}
-
-bool OverlayConfig::installFiles() {
-	return false;
-}
-
-bool OverlayConfig::uninstallFiles() {
-	return false;
 }

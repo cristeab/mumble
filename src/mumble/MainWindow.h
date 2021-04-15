@@ -30,11 +30,8 @@
 #define OU_QEVENT (QEvent::User + 940)
 
 class ServerHandler;
-class GlobalShortcut;
 class TextToSpeech;
 class UserModel;
-class UserInformation;
-class VoiceRecorderDialog;
 
 struct ShortcutTarget;
 
@@ -66,14 +63,7 @@ class MainWindow : public QMainWindow, public MessageHandler {
 		QIcon qiIcon, qiIconMutePushToMute, qiIconMuteSelf, qiIconMuteServer, qiIconDeafSelf, qiIconDeafServer, qiIconMuteSuppressed;
 		QIcon qiTalkingOn, qiTalkingWhisper, qiTalkingShout, qiTalkingOff;
 
-		GlobalShortcut *gsPushTalk, *gsResetAudio, *gsMuteSelf, *gsDeafSelf;
-		GlobalShortcut *gsUnlink, *gsPushMute, *gsJoinChannel, *gsToggleOverlay;
-		GlobalShortcut *gsMinimal, *gsVolumeUp, *gsVolumeDown, *gsWhisper, *gsLinkChannel;
-		GlobalShortcut *gsCycleTransmitMode, *gsTransmitModePushToTalk, *gsTransmitModeContinuous, *gsTransmitModeVAD;
-		GlobalShortcut *gsSendTextMessage, *gsSendClipboardTextMessage;
 		DockTitleBar *dtbLogDockTitle, *dtbChatDockTitle;
-
-		VoiceRecorderDialog *voiceRecorderDialog;
 
 		MumbleProto::Reject_RejectType rtLast;
 		bool bRetryServer;
@@ -105,8 +95,6 @@ class MainWindow : public QMainWindow, public MessageHandler {
 		void updateTrayIcon();
 		void updateTransmitModeComboBox();
 		QPair<QByteArray, QImage> openImageFile();
-		
-		void openTextMessageDialog(ClientUser *p);
 
 #ifdef Q_OS_WIN
 #if QT_VERSION >= 0x050000
@@ -129,13 +117,11 @@ class MainWindow : public QMainWindow, public MessageHandler {
 		QMap<int, int> qmTargetUse;
 		Channel *mapChannel(int idx) const;
 		int iTargetCounter;
-		QMap<unsigned int, UserInformation *> qmUserInformations;
 
 		MUComboBox *qcbTransmitMode;
 		QAction *qaTransmitMode;
 		QAction *qaTransmitModeSeparator;
 
-		void createActions();
 		void updateWindowTitle();
 		void customEvent(QEvent *evt) Q_DECL_OVERRIDE;
 		void findDesiredChannel();
@@ -157,19 +143,16 @@ class MainWindow : public QMainWindow, public MessageHandler {
 		void on_qaServerInformation_triggered();
 		void on_qaServerTexture_triggered();
 		void on_qaServerTextureRemove_triggered();
-		void on_qaSelfComment_triggered();
 		void on_qaSelfRegister_triggered();
 		void qcbTransmitMode_activated(int index);
 		void on_qaUserCommentReset_triggered();
 		void on_qaUserTextureReset_triggered();
-		void on_qaUserCommentView_triggered();
 		void on_qaUserKick_triggered();
 		void on_qaUserBan_triggered();
 		void on_qaUserMute_triggered();
 		void on_qaUserDeaf_triggered();
 		void on_qaSelfPrioritySpeaker_triggered();
 		void on_qaUserPrioritySpeaker_triggered();
-		void on_qaUserTextMessage_triggered();
 		void on_qaUserRegister_triggered();
 		void on_qaUserInformation_triggered();
 		void on_qaUserFriendAdd_triggered();
@@ -181,11 +164,8 @@ class MainWindow : public QMainWindow, public MessageHandler {
 		void on_qaChannelLink_triggered();
 		void on_qaChannelUnlink_triggered();
 		void on_qaChannelUnlinkAll_triggered();
-		void on_qaChannelSendMessage_triggered();
 		void on_qaChannelCopyURL_triggered();
 		void on_qaAudioReset_triggered();
-		void on_qaRecording_triggered();
-		void on_qaConfigDialog_triggered();
 		void on_qaDeveloperConsole_triggered();
 		void on_qaHelpWhatsThis_triggered();
 		void on_qaHelpAbout_triggered();
@@ -208,7 +188,6 @@ class MainWindow : public QMainWindow, public MessageHandler {
 		void on_gsTransmitModeVAD_triggered(bool, QVariant);
 		void on_gsSendTextMessage_triggered(bool, QVariant);
 		void on_Reconnect_timeout();
-		void voiceRecorderDialog_finished(int);
 		void serverConnected();
 		void serverDisconnected(QAbstractSocket::SocketError, QString reason);
 		void resolverError(QAbstractSocket::SocketError, QString reason);
@@ -218,7 +197,6 @@ class MainWindow : public QMainWindow, public MessageHandler {
 		/// Handles state changes like talking mode changes and mute/unmute
 		/// or priority speaker flag changes for the gui user
 		void userStateChanged();
-		void destroyUserInformation();
 		void trayAboutToShow();
 		void pttReleased();
 		void whisperReleased(QVariant scdata);

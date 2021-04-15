@@ -17,7 +17,6 @@
 #include "Plugins.h"
 #include "Message.h"
 #include "Global.h"
-#include "VoiceRecorder.h"
 
 #ifdef USE_RNNOISE
 extern "C" {
@@ -150,9 +149,6 @@ AudioInput::AudioInput() : opusBuffer(g.s.iFramesPerPacket * (SAMPLE_RATE / 100)
 	}
 
 	bRunning = true;
-
-	connect(this, SIGNAL(doDeaf()), g.mw->qaAudioDeaf, SLOT(trigger()), Qt::QueuedConnection);
-	connect(this, SIGNAL(doMute()), g.mw->qaAudioMute, SLOT(trigger()), Qt::QueuedConnection);
 }
 
 AudioInput::~AudioInput() {
@@ -1026,11 +1022,6 @@ void AudioInput::encodeAudioFrame() {
 
 static void sendAudioFrame(const char *data, PacketDataStream &pds) {
 	ServerHandlerPtr sh = g.sh;
-	if (sh) {
-		VoiceRecorderPtr recorder(sh->recorder);
-		if (recorder)
-			recorder->getRecordUser().addFrame(QByteArray(data, pds.size() + 1));
-	}
 
 	if (g.s.lmLoopMode == Settings::Local)
 		LoopUser::lpLoopy.addFrame(QByteArray(data, pds.size() + 1));

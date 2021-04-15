@@ -111,10 +111,7 @@ class ServerView : public QTreeWidget {
 		bool dropMimeData(QTreeWidgetItem *, int, const QMimeData *, Qt::DropAction) Q_DECL_OVERRIDE;
 };
 
-#include "ui_ConnectDialog.h"
-#include "ui_ConnectDialogEdit.h"
-
-class ServerItem : public QTreeWidgetItem, public PingStats {
+class ServerItem : public PingStats {
 		Q_DISABLE_COPY(ServerItem)
 	protected:
 		void init();
