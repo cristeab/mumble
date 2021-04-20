@@ -148,9 +148,7 @@ Page {
             rightMargin: 2 * Theme.windowMargin
             bottom: infoLabel.top
         }
-        background: Rectangle {
-            color: Theme.backgroundColor
-        }
+        background: Item {}
         enabled: 0 <= servers.connectedServerIndex
         display: AbstractButton.IconOnly
         icon {

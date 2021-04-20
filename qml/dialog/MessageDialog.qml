@@ -18,9 +18,7 @@ Dialog {
         }
     }
 
-    background: Rectangle {
-        color: Theme.backgroundColor
-    }
+    background: CustomDialogBackground {}
     implicitWidth: 400
     implicitHeight: 200
     x: (appWin.width-width)/2

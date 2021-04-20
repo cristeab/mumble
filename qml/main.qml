@@ -21,7 +21,11 @@ ApplicationWindow {
         appWin.raise()
     }
 
-    background: CustomBackground {}
+    background: Image {
+        source: "qrc:/img/background.svg"
+        smooth: true
+        fillMode: Image.PreserveAspectFit
+    }
 
     CustomTabButton {
         id: backBtn
@@ -46,7 +50,7 @@ ApplicationWindow {
 
         property int currentButtonIndex: 0
         readonly property var names: [qsTr("Servers"), qsTr("Audio Input"), qsTr("Audio Output"), qsTr("Password Manager"), qsTr("Certificate Manager")]
-        readonly property var icons: ["qrc:/img/server.svg", "qrc:/img/microphone.svg", "qrc:/img/volume.svg", "qrc:/img/key.svg", "qrc:/img/certificate.svg"]
+        readonly property var icons: ["qrc:/img/server.svg", "qrc:/img/soundinput.svg", "qrc:/img/soundoutput.svg", "qrc:/img/tokensystem.svg", "qrc:/img/certificate.svg"]
         readonly property var pages: ["qrc:/qml/Servers.qml", "qrc:/qml/AudioInput.qml", "qrc:/qml/AudioOutput.qml", "qrc:/qml/PasswordManager.qml", "qrc:/qml/CertificateManager.qml"]
 
         readonly property var serversPages: ["qrc:/qml/Servers.qml", "qrc:/qml/Schools.qml", "qrc:/qml/Classes.qml", "qrc:/qml/Rooms.qml"]
@@ -73,7 +77,7 @@ ApplicationWindow {
                 icon {
                     source: bar.icons[index]
                     color: tabButton.textColor
-                    width: ((1 === index) ? 0.8 : 1.0) * Theme.tabIconWidth
+                    width: Theme.tabIconWidth
                     height: Theme.tabIconWidth
                 }
                 onClicked: {

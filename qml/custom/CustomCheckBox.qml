@@ -10,7 +10,7 @@ CheckBox {
     checkable: true
     Material.accent: Theme.backgroundColor2
     background: Rectangle {
-        color: Theme.backgroundColor
+        color: "transparent"
     }
     contentItem: Text {
         text: control.text

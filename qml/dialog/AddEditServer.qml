@@ -27,9 +27,7 @@ Dialog {
         return true
     }
 
-    background: Rectangle {
-        color: Theme.backgroundColor
-    }
+    background: CustomDialogBackground {}
     implicitWidth: 500
     implicitHeight: dlgColumn.height + 150
     x: (appWin.width-width)/2

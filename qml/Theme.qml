@@ -20,8 +20,9 @@ QtObject {
 
     readonly property real sliderWidth: 26
 
-    readonly property color backgroundColor: "#C2CCDA"
+    readonly property color backgroundColor: "transparent"
     readonly property color backgroundColor2: "#0F80FE"
+    readonly property color dlgBackgroundColor: "#cdd6e1"
     readonly property color separatorColor: "white"
     readonly property color tabButtonColor: "#19004a"
     readonly property color tabButtonColorSel: "#0F80FE"

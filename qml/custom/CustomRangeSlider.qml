@@ -13,7 +13,7 @@ RangeSlider {
         width: control.availableWidth
         height: control.height
         radius: 2
-        color: "#bdbebf"
+        color: Theme.backgroundColor
 
         Rectangle {
             anchors {

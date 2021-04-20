@@ -20,13 +20,7 @@ Dialog {
     x: (appWin.width-width)/2
     y: (appWin.height-height)/2
 
-    background: Rectangle {
-        color: Theme.backgroundColor
-        border {
-            width: 1
-            color: Theme.tabButtonColor
-        }
-    }
+    background: CustomDialogBackground {}
     onAccepted: {
         servers.onLineEditDlgAccepted()
         control.cleanup()
