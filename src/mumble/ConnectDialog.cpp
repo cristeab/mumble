@@ -468,7 +468,7 @@ ServerItem *ServerItem::fromUrl(QUrl url, QWidget *p) {
 }
 
 QVariant ServerItem::data(int column, int role) const {
-	if (bParent) {
+    /*if (bParent) {
 		if (column == 0) {
 			switch (role) {
 				case Qt::DisplayRole:
@@ -548,7 +548,7 @@ QVariant ServerItem::data(int column, int role) const {
 				return qc;
 			}
 		}
-	}
+    }*/
 	return QTreeWidgetItem::data(column, role);
 }
 

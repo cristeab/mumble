@@ -185,7 +185,7 @@ LCD::LCD() : QObject() {
 		bool enabled = g.s.qmLCDDevices.contains(d->name()) ? g.s.qmLCDDevices.value(d->name()) : true;
 		d->setEnabled(enabled);
 	}
-	qiLogo = QIcon(QLatin1String("skin:mumble.svg")).pixmap(48,48).toImage().convertToFormat(QImage::Format_MonoLSB);
+    //qiLogo = QIcon(QLatin1String("skin:mumble.svg")).pixmap(48,48).toImage().convertToFormat(QImage::Format_MonoLSB);
 
 #if QT_VERSION >= 0x050600 && QT_VERSION <= 0x050601
 	// Don't invert the logo image when using Qt 5.6.

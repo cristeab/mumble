@@ -511,7 +511,7 @@ void OverlayClient::reset() {
 }
 
 void OverlayClient::setupScene(bool show) {
-	if (show) {
+    /*if (show) {
 		qgs.setBackgroundBrush(QColor(0,0,0,64));
 
 		if (! qgpiLogo) {
@@ -554,7 +554,7 @@ void OverlayClient::setupScene(bool show) {
 	}
 	ougUsers.updateUsers();
 	updateFPS();
-	updateTime();
+    updateTime();*/
 }
 
 void OverlayClient::setupRender() {

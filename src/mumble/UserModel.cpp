@@ -190,7 +190,7 @@ QString ModelItem::hash() const {
 }
 
 UserModel::UserModel(QObject *p) : QAbstractItemModel(p) {
-	qiTalkingOff=QIcon(QLatin1String("skin:talking_off.svg"));
+    /*qiTalkingOff=QIcon(QLatin1String("skin:talking_off.svg"));
 	qiTalkingOn=QIcon(QLatin1String("skin:talking_on.svg"));
 	qiTalkingShout=QIcon(QLatin1String("skin:talking_alt.svg"));
 	qiTalkingWhisper=QIcon(QLatin1String("skin:talking_whisper.svg"));
@@ -211,7 +211,7 @@ UserModel::UserModel(QObject *p) : QAbstractItemModel(p) {
 	qiFriend=QIcon(QLatin1String("skin:emblems/emblem-favorite.svg"));
 	qiComment=QIcon(QLatin1String("skin:comment.svg"));
 	qiCommentSeen=QIcon(QLatin1String("skin:comment_seen.svg"));
-	qiFilter=QIcon(QLatin1String("skin:filter.svg"));
+    qiFilter=QIcon(QLatin1String("skin:filter.svg"));*/
 
 	ModelItem::bUsersTop = g.s.bUserTop;
 
