@@ -9,10 +9,11 @@ Item {
     property alias source: controlImage.source
     Image {
         id: controlImage
+        anchors.fill: parent
         mipmap: true
         fillMode: Image.PreserveAspectFit
         visible: false
-        anchors.fill: parent
+        sourceSize: Qt.size(parent.width, parent.height)
     }
     ColorOverlay {
         id: controlOverlay
