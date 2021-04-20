@@ -25,7 +25,7 @@ Page {
             padding: Theme.windowMargin
             verticalAlignment: Text.AlignVCenter
             background: Rectangle {
-                radius: Theme.rectRadius
+                radius: 0
                 color: Theme.tableBackgroundColor
             }
         }
@@ -57,7 +57,7 @@ Page {
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             background: Rectangle {
-                radius: Theme.rectRadius
+                radius: 0
                 color: (index !== classList.currentIndex) ? Theme.tableBackgroundColor : Theme.tableSelectedBackgroundColor
             }
             MouseArea {

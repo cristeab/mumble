@@ -63,23 +63,21 @@ ApplicationWindow {
 
         anchors {
             left: parent.left
+            leftMargin: Theme.windowMargin
             verticalCenter: parent.verticalCenter
         }
-        width: 0.075 * appWin.width
-        spacing: Theme.windowMargin
+        width: childrenRect.width
+        spacing: 2 * Theme.windowMargin
 
         Repeater {
             model: bar.names.length
-            CustomTabButton {
+            CustomImageButton {
                 id: tabButton
                 property bool isSelected: bar.currentButtonIndex === index
-                property color textColor: isSelected ? Theme.tabButtonColorSel : Theme.tabButtonColor
-                icon {
-                    source: bar.icons[index]
-                    color: tabButton.textColor
-                    width: Theme.tabIconWidth
-                    height: Theme.tabIconWidth
-                }
+                color: isSelected ? Theme.tabButtonColorSel : Theme.tabButtonColor
+                source: bar.icons[index]
+                width: Theme.tabIconWidth
+                height: Theme.tabIconWidth
                 onClicked: {
                     bar.currentButtonIndex = index
                     if ((0 === index) && (1 < tabView.depth)) {

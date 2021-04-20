@@ -26,7 +26,7 @@ TableView {
                 padding: Theme.windowMargin
                 verticalAlignment: Text.AlignVCenter
                 background: Rectangle {
-                    radius: Theme.rectRadius
+                    radius: 0
                     color: Theme.tableBackgroundColor
                 }
             }
@@ -57,7 +57,7 @@ TableView {
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         background: Rectangle {
-            radius: Theme.rectRadius
+            radius: 0
             color: (controlDelegate.row !== servers.currentIndex) ? Theme.tableBackgroundColor : Theme.tableSelectedBackgroundColor
         }
         MouseArea {
