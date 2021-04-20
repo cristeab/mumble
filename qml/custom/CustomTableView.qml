@@ -25,7 +25,10 @@ TableView {
                 font.pointSize: appWin.isBig ? Theme.bigHeaderFontSize : Theme.headerFontSize
                 padding: Theme.windowMargin
                 verticalAlignment: Text.AlignVCenter
-                background: Rectangle { color: Theme.tableBackgroundColor }
+                background: Rectangle {
+                    radius: Theme.rectRadius
+                    color: Theme.tableBackgroundColor
+                }
             }
         }
     }
@@ -54,6 +57,7 @@ TableView {
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         background: Rectangle {
+            radius: Theme.rectRadius
             color: (controlDelegate.row !== servers.currentIndex) ? Theme.tableBackgroundColor : Theme.tableSelectedBackgroundColor
         }
         MouseArea {

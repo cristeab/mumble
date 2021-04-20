@@ -118,6 +118,7 @@ Page {
                     width: 1
                     color: Theme.tableBackgroundColor
                 }
+                radius: Theme.rectRadius
             }
             ListView {
                 id: usersList
@@ -141,7 +142,10 @@ Page {
                     text: name
                     padding: Theme.windowMargin / 2
                     verticalAlignment: Text.AlignVCenter
-                    background: Rectangle { color: Theme.tableBackgroundColor }
+                    background: Rectangle {
+                        radius: Theme.rectRadius
+                        color: Theme.tableBackgroundColor
+                    }
                     color: Theme.textColor2
                     font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
                 }

@@ -19,6 +19,7 @@ QtObject {
     readonly property real bigHeaderFontSize: 19
 
     readonly property real sliderWidth: 26
+    readonly property real rectRadius: 5
 
     readonly property color backgroundColor: "transparent"
     readonly property color backgroundColor2: "#0F80FE"

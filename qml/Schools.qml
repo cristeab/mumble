@@ -35,7 +35,10 @@ Page {
             font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
             padding: Theme.windowMargin
             verticalAlignment: Text.AlignVCenter
-            background: Rectangle { color: Theme.tableBackgroundColor }
+            background: Rectangle {
+                radius: Theme.rectRadius
+                color: Theme.tableBackgroundColor
+            }
         }
         topMargin: schoolListHeader.implicitHeight + 3
 
@@ -65,6 +68,7 @@ Page {
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             background: Rectangle {
+                radius: Theme.rectRadius
                 color: (index !== schoolList.currentIndex) ? Theme.tableBackgroundColor : Theme.tableSelectedBackgroundColor
             }
             MouseArea {
