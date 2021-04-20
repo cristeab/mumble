@@ -6,9 +6,7 @@ import ".."
 Page {
     id: control
 
-    background: Rectangle {
-        color: Theme.backgroundColor
-    }
+    background: CustomBackground {}
 
     Label {
         id: pageTitle

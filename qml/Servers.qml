@@ -7,9 +7,7 @@ Page {
 
     Component.onCompleted: srvTbl.forceLayout()
 
-    background: Rectangle {
-        color: Theme.backgroundColor
-    }
+    background: CustomBackground {}
 
     CustomTabButton {
         anchors {

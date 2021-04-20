@@ -56,7 +56,7 @@
     <message>
         <location filename="qml/dialog/AddEditServer.qml" line="125"/>
         <source>OK</source>
-        <translation>Slet</translation>
+        <translation>Tilføj</translation>
     </message>
     <message>
         <location filename="qml/dialog/AddEditServer.qml" line="129"/>
@@ -527,7 +527,7 @@ If the file is password protected, you will need the password to import the cert
     <message>
         <location filename="qml/page/ImportCertificate.qml" line="113"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Adgangskode</translation>
     </message>
     <message>
         <location filename="qml/page/ImportCertificate.qml" line="123"/>
@@ -581,12 +581,12 @@ If the file is password protected, you will need the password to import the cert
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="src/mumble/main.cpp" line="508"/>
+        <location filename="src/mumble/main.cpp" line="505"/>
         <source>Welcome to Bubbles.</source>
         <translation>Velkommen til Bubbles.</translation>
     </message>
     <message>
-        <location filename="src/mumble/main.cpp" line="597"/>
+        <location filename="src/mumble/main.cpp" line="594"/>
         <source>Skipping version check in debug mode.</source>
         <translation>Spring over versionskontrol i fejlretningstilstand.</translation>
     </message>
@@ -1054,12 +1054,12 @@ If the file is password protected, you will need the password to import the cert
 <context>
     <name>MessageDialog</name>
     <message>
-        <location filename="qml/dialog/MessageDialog.qml" line="61"/>
+        <location filename="qml/dialog/MessageDialog.qml" line="68"/>
         <source>OK</source>
         <translation>Slet</translation>
     </message>
     <message>
-        <location filename="qml/dialog/MessageDialog.qml" line="66"/>
+        <location filename="qml/dialog/MessageDialog.qml" line="73"/>
         <source>Cancel</source>
         <translation>Fortryd</translation>
     </message>
@@ -1124,12 +1124,12 @@ If you wish, you may provide some additional information to be stored in the cer
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="src/mumble/main.cpp" line="724"/>
+        <location filename="src/mumble/main.cpp" line="721"/>
         <source>Failed to restart Bubbles</source>
         <translation>Kunne ikke genstarte Bubbles</translation>
     </message>
     <message>
-        <location filename="src/mumble/main.cpp" line="725"/>
+        <location filename="src/mumble/main.cpp" line="722"/>
         <source>Bubbles failed to restart itself. Please restart it manually.</source>
         <translation>Bubbles kunne ikke genstarte sig selv. Genstart det manuelt.</translation>
     </message>
@@ -1137,18 +1137,18 @@ If you wish, you may provide some additional information to be stored in the cer
 <context>
     <name>QObject</name>
     <message>
-        <location filename="src/mumble/main.cpp" line="536"/>
-        <location filename="src/mumble/main.cpp" line="584"/>
+        <location filename="src/mumble/main.cpp" line="533"/>
+        <location filename="src/mumble/main.cpp" line="581"/>
         <source>Warning</source>
         <translation>Advarsel</translation>
     </message>
     <message>
-        <location filename="src/mumble/main.cpp" line="536"/>
+        <location filename="src/mumble/main.cpp" line="533"/>
         <source>Please make sure the audio devices are correctly setup</source>
         <translation>Sørg for, at lydenhederne er korrekt konfigureret</translation>
     </message>
     <message>
-        <location filename="src/mumble/main.cpp" line="582"/>
+        <location filename="src/mumble/main.cpp" line="579"/>
         <source>Your certificate is about to expire. You need to renew it, or you will no longer be able to connect to servers you are registered on.</source>
         <translation>Dit certifikat udløber. Du skal forny den, ellers kan du ikke længere oprette forbindelse til servere, du er registreret på.</translation>
     </message>
@@ -1256,32 +1256,32 @@ Are you sure you wish to replace your certificate?</source>
         <translation>Brugere</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="471"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="476"/>
         <source>Invalid username</source>
         <translation>Ugyldigt brugernavn</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="472"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="477"/>
         <source>You connected with an invalid username, please try another one.</source>
         <translation>Du har forbindelse til et ugyldigt brugernavn. Prøv et andet.</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="477"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="482"/>
         <source>Username in use</source>
         <translation>Brugernavn i brug</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="478"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="483"/>
         <source>That username is already in use, please try another username.</source>
         <translation>Dette brugernavn er allerede i brug, prøv et andet brugernavn.</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="483"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="488"/>
         <source>Wrong certificate or password</source>
         <translation>Forkert certifikat eller adgangskode</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="484"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="489"/>
         <source>Wrong certificate or password for registered user. If you are
 certain this user is protected by a password please retry.
 Otherwise abort and check your certificate and username.</source>
@@ -1290,32 +1290,32 @@ visse denne bruger er beskyttet af en adgangskode, prøv igen.
 Ellers afbryder og tjek dit certifikat og brugernavn.</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="491"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="496"/>
         <source>Wrong password</source>
         <translation>Forkert kodeord</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="492"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="497"/>
         <source>Wrong server password for unregistered user account, please try again.</source>
         <translation>Forkert serveradgangskode til uregistreret brugerkonto, prøv igen.</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="758"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="764"/>
         <source>Warning</source>
         <translation>Advarsel</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="758"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="764"/>
         <source>Connection lost</source>
         <translation>Forbindelse afbrudt</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="763"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="770"/>
         <source>Information</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="763"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="770"/>
         <source>Connection restored</source>
         <translation>Forbindelsen gendannet</translation>
     </message>

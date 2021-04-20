@@ -14,6 +14,7 @@
         <file alias="img/edit-solid.svg">../../img/edit-solid.svg</file>
         <file alias="img/microphone-off.svg">../../img/microphone-off.svg</file>
         <file alias="img/volume-off.svg">../../img/volume-off.svg</file>
+        <file alias="img/background.svg">../../img/background.svg</file>
         <file alias="qml/main.qml">../../qml/main.qml</file>
         <file alias="qml/Servers.qml">../../qml/Servers.qml</file>
         <file alias="qml/Schools.qml">../../qml/Schools.qml</file>
@@ -36,6 +37,7 @@
         <file alias="qml/custom/LabelToolTip.qml">../../qml/custom/LabelToolTip.qml</file>
         <file alias="qml/custom/CustomRadioButton.qml">../../qml/custom/CustomRadioButton.qml</file>
         <file alias="qml/custom/CustomTabButton.qml">../../qml/custom/CustomTabButton.qml</file>
+        <file alias="qml/custom/CustomBackground.qml">../../qml/custom/CustomBackground.qml</file>
         <file alias="qml/dialog/AddEditServer.qml">../../qml/dialog/AddEditServer.qml</file>
         <file alias="qml/dialog/LineEditDialog.qml">../../qml/dialog/LineEditDialog.qml</file>
         <file alias="qml/dialog/AddEditToken.qml">../../qml/dialog/AddEditToken.qml</file>

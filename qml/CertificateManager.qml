@@ -7,9 +7,7 @@ import CertificateModel 1.0
 Page {
     id: control
 
-    background: Rectangle {
-        color: Theme.backgroundColor
-    }
+    background: CustomBackground {}
 
     Component.onCompleted: view.currentIndex = 0
 

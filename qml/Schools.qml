@@ -7,9 +7,7 @@ Page {
 
     Component.onCompleted: schoolList.currentIndex = 0
 
-    background: Rectangle {
-        color: Theme.backgroundColor
-    }
+    background: CustomBackground {}
 
     CustomTabButton {
         anchors {

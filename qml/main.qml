@@ -21,9 +21,7 @@ ApplicationWindow {
         appWin.raise()
     }
 
-    background: Rectangle {
-        color: Theme.backgroundColor
-    }
+    background: CustomBackground {}
 
     CustomTabButton {
         id: backBtn

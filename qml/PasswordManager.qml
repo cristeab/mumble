@@ -5,9 +5,7 @@ import "custom"
 Page {
     id: control
 
-    background: Rectangle {
-        color: Theme.backgroundColor
-    }
+    background: CustomBackground {}
     Component.onCompleted: tokensModel.currentInde = 0
 
     Label {

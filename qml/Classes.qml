@@ -11,9 +11,7 @@ Page {
     }
     Component.onDestruction: servers.currentClassIndex = -1
 
-    background: Rectangle {
-        color: Theme.backgroundColor
-    }
+    background: CustomBackground {}
 
     ListView {
         id: classList
