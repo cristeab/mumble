@@ -125,7 +125,7 @@ signals:
 
 private:
     enum { NAME = 0, DELAY, USERS, COLUMN_COUNT };
-    enum { TICK_PERIOD_MS = 500, TICK_THRESHOLD_US = 1000000ULL, GRACE_PINGS = 4,
+    enum { TICK_PERIOD_MS = 1000, TICK_THRESHOLD_US = 1000000ULL, GRACE_PINGS = 4,
            INVALID_INDEX = -1 };
     bool isValidIndex(int index) const {
         return ((index >= 0) && (index < _servers.count()));
