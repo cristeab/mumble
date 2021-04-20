@@ -5,20 +5,14 @@ import QtGraphicalEffects 1.12
 Item {
     id: control
     signal clicked()
-    property alias color: controlOverlay.color
     property alias source: controlImage.source
     Image {
         id: controlImage
         anchors.fill: parent
         mipmap: true
         fillMode: Image.PreserveAspectFit
-        visible: false
+        visible: true
         sourceSize: Qt.size(parent.width, parent.height)
-    }
-    ColorOverlay {
-        id: controlOverlay
-        anchors.fill: controlImage
-        source: controlImage
     }
     MouseArea {
         anchors.fill: parent

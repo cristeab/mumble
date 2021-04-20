@@ -2,8 +2,10 @@
     <qresource prefix="/">
         <file alias="bubbles.svg">../../icons/bubbles.svg</file>
         <file alias="img/certificate.svg">../../img/certificate.svg</file>
+        <file alias="img/certificate-sel.svg">../../img/certificate-sel.svg</file>
         <file alias="img/microphone.svg">../../img/microphone.svg</file>
         <file alias="img/server.svg">../../img/server.svg</file>
+        <file alias="img/server-sel.svg">../../img/server-sel.svg</file>
         <file alias="img/volume.svg">../../img/volume.svg</file>
         <file alias="img/chevron-circle-left.svg">../../img/chevron-circle-left.svg</file>
         <file alias="img/chevron-circle-right.svg">../../img/chevron-circle-right.svg</file>
@@ -15,8 +17,11 @@
         <file alias="img/volume-off.svg">../../img/volume-off.svg</file>
         <file alias="img/background.svg">../../img/background.svg</file>
         <file alias="img/tokensystem.svg">../../img/tokensystem.svg</file>
+        <file alias="img/tokensystem-sel.svg">../../img/tokensystem-sel.svg</file>
         <file alias="img/soundinput.svg">../../img/soundinput.svg</file>
+        <file alias="img/soundinput-sel.svg">../../img/soundinput-sel.svg</file>
         <file alias="img/soundoutput.svg">../../img/soundoutput.svg</file>
+        <file alias="img/soundoutput-sel.svg">../../img/soundoutput-sel.svg</file>
         <file alias="qml/main.qml">../../qml/main.qml</file>
         <file alias="qml/Servers.qml">../../qml/Servers.qml</file>
         <file alias="qml/Schools.qml">../../qml/Schools.qml</file>

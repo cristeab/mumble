@@ -25,8 +25,10 @@ QtObject {
     readonly property color backgroundColor2: "#0F80FE"
     readonly property color dlgBackgroundColor: "#cdd6e1"
     readonly property color separatorColor: "white"
+
     readonly property color tabButtonColor: "#19004a"
     readonly property color tabButtonColorSel: "#0F80FE"
+
     readonly property color buttonBlueColor: "#0F80FE"
     readonly property color tableBackgroundColor: "#19004a"
     readonly property color tableSelectedBackgroundColor: "#0F80FE"
