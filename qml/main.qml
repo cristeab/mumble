@@ -24,7 +24,7 @@ ApplicationWindow {
     background: Image {
         source: "qrc:/img/background.svg"
         smooth: true
-        fillMode: Image.PreserveAspectFit
+        fillMode: Image.PreserveAspectCrop
     }
 
     CustomTabButton {
