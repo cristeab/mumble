@@ -123,7 +123,6 @@ class UserModel : public QAbstractItemModel {
 
 		void moveUser(ClientUser *p, Channel *c);
 		void moveChannel(Channel *c, Channel *p);
-		void setComment(Channel *c, const QString &comment);
 		void setCommentHash(Channel *c, const QByteArray &hash);
 
 		void removeUser(ClientUser *p);

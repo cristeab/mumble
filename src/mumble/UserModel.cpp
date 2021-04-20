@@ -943,41 +943,6 @@ void UserModel::setFriendName(ClientUser *p, const QString &name) {
 	emit dataChanged(idx, idx);
 }
 
-void UserModel::setComment(ClientUser *cu, const QString &comment) {
-	cu->qbaCommentHash = comment.isEmpty() ? QByteArray() : sha1(comment);
-
-	if (comment != cu->qsComment) {
-		ModelItem *item = ModelItem::c_qhUsers.value(cu);
-		int oldstate = (cu->qsComment.isEmpty() && cu->qbaCommentHash.isEmpty()) ? 0 : (item->bCommentSeen ? 2 : 1);
-		int newstate = 0;
-
-		cu->qsComment = comment;
-
-		if (! comment.isEmpty()) {
-			g.db->setBlob(cu->qbaCommentHash, cu->qsComment.toUtf8());
-			if (cu->uiSession == uiSessionComment) {
-				uiSessionComment = 0;
-				item->bCommentSeen = false;
-			} else if (cu->uiSession == ~uiSessionComment) {
-				uiSessionComment = 0;
-				} else {
-					g.mw->cuContextUser = cu;
-				}
-			} else {
-				item->bCommentSeen = g.db->seenComment(item->hash(), cu->qbaCommentHash);
-				newstate = item->bCommentSeen ? 2 : 1;
-			}
-		} else {
-			item->bCommentSeen = true;
-		}
-
-		if (oldstate != newstate) {
-			QModelIndex idx = index(cu, 0);
-			emit dataChanged(idx, idx);
-		}
-	}
-}
-
 void UserModel::setCommentHash(ClientUser *cu, const QByteArray &hash) {
 	if (hash != cu->qbaCommentHash) {
 		ModelItem *item = ModelItem::c_qhUsers.value(cu);

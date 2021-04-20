@@ -115,7 +115,6 @@ class MainWindow : public QMainWindow, public MessageHandler {
 		QHash<ShortcutTarget, int> qmCurrentTargets;
 		QHash<QList<ShortcutTarget>, int> qmTargets;
 		QMap<int, int> qmTargetUse;
-		Channel *mapChannel(int idx) const;
 		int iTargetCounter;
 
 		MUComboBox *qcbTransmitMode;
@@ -138,7 +137,6 @@ class MainWindow : public QMainWindow, public MessageHandler {
 		ClientUser* getContextMenuUser();
 
 	public slots:
-		void on_qaServerConnect_triggered(bool autoconnect = false);
 		void on_qaServerDisconnect_triggered();
 		void on_qaServerInformation_triggered();
 		void on_qaServerTexture_triggered();
@@ -179,7 +177,6 @@ class MainWindow : public QMainWindow, public MessageHandler {
 		void on_PushToMute_triggered(bool, QVariant);
 		void on_VolumeUp_triggered(bool, QVariant);
 		void on_VolumeDown_triggered(bool, QVariant);
-		void on_gsWhisper_triggered(bool, QVariant);
 		void addTarget(ShortcutTarget *);
 		void removeTarget(ShortcutTarget *);
 		void on_gsCycleTransmitMode_triggered(bool, QVariant);

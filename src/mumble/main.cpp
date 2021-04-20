@@ -558,21 +558,6 @@ int main(int argc, char **argv) {
 #else
 	g.mw->msgBox(MainWindow::tr("Skipping version check in debug mode."));
 #endif
-    /*if (g.s.bPluginCheck) {
-		g.p->checkUpdates();
-	}
-
-    if (url.isValid()) {
-		OpenURLEvent *oue = new OpenURLEvent(url);
-		qApp->postEvent(g.mw, oue);
-#ifdef Q_OS_MAC
-	} else if (! a.quLaunchURL.isEmpty()) {
-		OpenURLEvent *oue = new OpenURLEvent(a.quLaunchURL);
-		qApp->postEvent(g.mw, oue);
-#endif
-	} else {
-		g.mw->on_qaServerConnect_triggered(true);
-    }*/
 
 	if (! g.bQuit)
 		res=a.exec();

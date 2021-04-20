@@ -15,7 +15,6 @@
 #include "Cert.h"
 #include "Channel.h"
 #include "Connection.h"
-#include "ConnectDialog.h"
 #include "Database.h"
 #include "DeveloperConsole.h"
 #include "Log.h"
@@ -568,25 +567,6 @@ void MainWindow::setOnTop(bool top) {
 	}
 }
 
-void MainWindow::on_qaServerConnect_triggered(bool autoconnect) {
-	ConnectDialog *cd = new ConnectDialog(this, autoconnect);
-	int res = cd->exec();
-
-	if (cd->qsServer.isEmpty() || (cd->usPort==0) || cd->qsUsername.isEmpty())
-		res = QDialog::Rejected;
-
-	if (res == QDialog::Accepted) {
-		recreateServerHandler();
-		qsDesiredChannel = QString();
-		rtLast = MumbleProto::Reject_RejectType_None;
-		bRetryServer = true;
-		g.l->log(Log::Information, tr("Connecting to server %1.").arg(Log::msgColor(Qt::escape(cd->qsServer), Log::Server)));
-		g.sh->setConnectionInfo(cd->qsServer, cd->usPort, cd->qsUsername, cd->qsPassword);
-		g.sh->start(QThread::TimeCriticalPriority);
-	}
-	delete cd;
-}
-
 void MainWindow::on_Reconnect_timeout() {
 	if (g.sh->isRunning())
 		return;
@@ -1135,36 +1115,6 @@ void MainWindow::on_VolumeDown_triggered(bool down, QVariant) {
 	}
 }
 
-Channel *MainWindow::mapChannel(int idx) const {
-	if (! g.uiSession)
-		return NULL;
-
-	Channel *c = NULL;
-
-	if (idx < 0) {
-		switch (idx) {
-			case SHORTCUT_TARGET_ROOT:
-				c = Channel::get(0);
-				break;
-			case SHORTCUT_TARGET_PARENT:
-			case SHORTCUT_TARGET_CURRENT:
-				c = ClientUser::get(g.uiSession)->cChannel;
-				if (idx == SHORTCUT_TARGET_PARENT)
-					c = c->cParent;
-				break;
-			default:
-				if(idx <= SHORTCUT_TARGET_PARENT_SUBCHANNEL)
-					c = pmModel->getSubChannel(ClientUser::get(g.uiSession)->cChannel->cParent, SHORTCUT_TARGET_PARENT_SUBCHANNEL - idx);
-				else
-					c = pmModel->getSubChannel(ClientUser::get(g.uiSession)->cChannel, SHORTCUT_TARGET_SUBCHANNEL - idx);
-				break;
-		}
-	} else {
-		c = Channel::get(idx);
-	}
-	return c;
-}
-
 void MainWindow::updateTarget() {
 	g.iPrevTarget = g.iTarget;
 
@@ -1186,15 +1136,6 @@ void MainWindow::updateTarget() {
 				}
 				if (! nt.qlSessions.isEmpty())
 					ql << nt;
-			} else {
-				Channel *c = mapChannel(st.iChannel);
-				if (c) {
-					nt.bLinks = st.bLinks;
-					nt.bChildren = st.bChildren;
-					nt.iChannel = c->iId;
-					nt.qsGroup = st.qsGroup;
-					ql << nt;
-				}
 			}
 		}
 		if (ql.isEmpty()) {
@@ -1259,46 +1200,6 @@ void MainWindow::updateTarget() {
 			g.bCenterPosition = center;
 			g.iTarget = idx;
 		}
-	}
-}
-
-void MainWindow::on_gsWhisper_triggered(bool down, QVariant scdata) {
-	ShortcutTarget st = scdata.value<ShortcutTarget>();
-
-	if (down) {
-		if (gsJoinChannel->active()) {
-			if (! st.bUsers) {
-				Channel *c = mapChannel(st.iChannel);
-				if (c) {
-					g.sh->joinChannel(g.uiSession, c->iId);
-				}
-				return;
-			}
-		}
-
-		if (gsLinkChannel->active()) {
-			if (! st.bUsers) {
-				Channel *c = ClientUser::get(g.uiSession)->cChannel;
-				Channel *l = mapChannel(st.iChannel);
-				if (l) {
-					if (c->qsPermLinks.contains(l)) {
-						g.sh->removeChannelLink(c->iId, l->iId);
-					} else {
-						g.sh->addChannelLink(c->iId, l->iId);
-					}
-				}
-				return;
-			}
-		}
-
-		addTarget(&st);
-		updateTarget();
-
-		g.iPushToTalk++;
-	} else if (g.iPushToTalk > 0) {
-		SignalCurry *fwd = new SignalCurry(scdata, true, this);
-		connect(fwd, SIGNAL(called(QVariant)), SLOT(whisperReleased(QVariant)));
-		QTimer::singleShot(static_cast<int>(g.s.pttHold), fwd, SLOT(call()));
 	}
 }
 
@@ -1485,15 +1386,6 @@ void MainWindow::serverDisconnected(QAbstractSocket::SocketError err, QString re
 	QString uname, pw, host;
 	unsigned short port;
 	g.sh->getConnectionInfo(host, port, uname, pw);
-
-	if (g.sh->hasSynchronized()) {
-		// Only save server-specific shortcuts if the client and server have been synchronized before as only then
-		// did the client actually load them from the DB. If we store them without having loaded them, we will effectively
-		// clear the server-specific shortcuts for this server.
-		if (g.db->setShortcuts(g.sh->qbaDigest, g.s.qlShortcuts)) {
-			GlobalShortcutEngine::engine->bNeedRemap = true;
-		}
-	}
 
 	QSet<QAction *> qs;
 	qs += qlServerActions.toSet();

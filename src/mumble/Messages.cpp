@@ -9,7 +9,6 @@
 #include "AudioInput.h"
 #include "Channel.h"
 #include "Connection.h"
-#include "ConnectDialog.h"
 #include "Database.h"
 #include "Log.h"
 #include "MainWindow.h"
@@ -114,16 +113,6 @@ void MainWindow::msgServerSync(const MumbleProto::ServerSync &msg) {
 	unsigned short port;
 
 	g.sh->getConnectionInfo(host, port, uname, pw);
-
-	QList<Shortcut> sc = g.db->getShortcuts(g.sh->qbaDigest);
-	if (! sc.isEmpty()) {
-		for (int i=0;i<sc.count(); ++i) {
-			Shortcut &s = sc[i];
-			s.iIndex = g.mw->gsWhisper->idx;
-		}
-		g.s.qlShortcuts << sc;
-		GlobalShortcutEngine::engine->bNeedRemap = true;
-	}
 
 	const ClientUser *user = ClientUser::get(g.uiSession);
 	connect(user, SIGNAL(talkingStateChanged()), this, SLOT(userStateChanged()));
@@ -584,8 +573,6 @@ void MainWindow::msgUserState(const MumbleProto::UserState &msg) {
 	}
 	if (msg.has_comment_hash())
 		pmModel->setCommentHash(pDst, blob(msg.comment_hash()));
-	if (msg.has_comment())
-		pmModel->setComment(pDst, u8(msg.comment()));
 }
 
 void MainWindow::msgUserRemove(const MumbleProto::UserRemove &msg) {
@@ -678,8 +665,6 @@ void MainWindow::msgChannelState(const MumbleProto::ChannelState &msg) {
 
 	if (msg.has_description_hash())
 		pmModel->setCommentHash(c, blob(msg.description_hash()));
-	if (msg.has_description())
-		pmModel->setComment(c, u8(msg.description()));
 
 	if (msg.has_position()) {
 		pmModel->repositionChannel(c, msg.position());

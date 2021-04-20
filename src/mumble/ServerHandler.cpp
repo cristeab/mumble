@@ -240,7 +240,7 @@ void ServerHandler::sendMessage(const char *data, int len, bool force) {
 	if (!connection || !connection->csCrypt.isValid())
 		return;
 
-	if (!force && (NetworkConfig::TcpModeEnabled() || !bUdp)) {
+    if (!force && !bUdp) {
 		QByteArray qba;
 
 		qba.resize(len + 6);
@@ -886,11 +886,6 @@ void ServerHandler::setUserTexture(unsigned int uiSession, const QByteArray &qba
 
 		QImageReader qir;
 		qir.setDecideFormatFromContent(false);
-
-		QByteArray fmt;
-		if (!RichTextImage::isValidImage(qba, fmt)) {
-			return;
-		}
 
 		qir.setFormat(fmt);
 		qir.setDevice(&qb);

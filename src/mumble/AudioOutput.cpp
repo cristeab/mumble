@@ -363,10 +363,6 @@ bool AudioOutput::mix(void *outbuff, unsigned int nsamp) {
 	const float mul = g.s.fVolume;
 	const unsigned int nchan = iChannels;
 	ServerHandlerPtr sh = g.sh;
-	VoiceRecorderPtr recorder;
-	if (sh) {
-		recorder = g.sh->recorder;
-	}
 
 	qrwlOutputs.lockForRead();
 	
@@ -401,13 +397,6 @@ bool AudioOutput::mix(void *outbuff, unsigned int nsamp) {
 		bool validListener = false;
 
 		memset(output, 0, sizeof(float) * nsamp * iChannels);
-
-		boost::shared_array<float> recbuff;
-		if (recorder) {
-			recbuff = boost::shared_array<float>(new float[nsamp]);
-			memset(recbuff.get(), 0, sizeof(float) * nsamp);
-			recorder->prepareBufferAdds();
-		}
 
 		for (unsigned int i=0;i<iChannels;++i)
 			svol[i] = mul * fSpeakerVolume[i];
@@ -495,27 +484,6 @@ bool AudioOutput::mix(void *outbuff, unsigned int nsamp) {
 				}
 			}
 
-			if (recorder) {
-				AudioOutputSpeech *aos = qobject_cast<AudioOutputSpeech *>(aop);
-
-				if (aos) {
-					for (unsigned int i = 0; i < nsamp; ++i) {
-						recbuff[i] += pfBuffer[i] * volumeAdjustment;
-					}
-
-					if (!recorder->isInMixDownMode()) {
-						recorder->addBuffer(aos->p, recbuff, nsamp);
-						recbuff = boost::shared_array<float>(new float[nsamp]);
-						memset(recbuff.get(), 0, sizeof(float) * nsamp);
-					}
-
-					// Don't add the local audio to the real output
-					if (qobject_cast<RecordUser *>(aos->p)) {
-						continue;
-					}
-				}
-			}
-
 			if (validListener && ((aop->fPos[0] != 0.0f) || (aop->fPos[1] != 0.0f) || (aop->fPos[2] != 0.0f))) {
 				float dir[3] = { aop->fPos[0] - g.p->fCameraPosition[0], aop->fPos[1] - g.p->fCameraPosition[1], aop->fPos[2] - g.p->fCameraPosition[2] };
 				float len = sqrtf(dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2]);
@@ -555,10 +523,6 @@ bool AudioOutput::mix(void *outbuff, unsigned int nsamp) {
 						o[i*nchan] += pfBuffer[i] * str;
 				}
 			}
-		}
-
-		if (recorder && recorder->isInMixDownMode()) {
-			recorder->addBuffer(NULL, recbuff, nsamp);
 		}
 
 		// Clip

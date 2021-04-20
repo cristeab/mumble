@@ -11,10 +11,6 @@
 #include "Global.h"
 #include "EnvUtils.h"
 
-#if defined(Q_OS_WIN)
-# include "GlobalShortcut_win.h"
-#endif
-
 MumbleApplication *MumbleApplication::instance() {
 	return static_cast<MumbleApplication *>(QCoreApplication::instance());
 }
