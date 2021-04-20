@@ -108,6 +108,7 @@ ApplicationWindow {
             right: parent.right
         }
         initialItem: "qrc:/qml/Servers.qml"
+        clip: true
     }
     Connections {
         target: servers

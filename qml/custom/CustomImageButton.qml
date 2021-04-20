@@ -9,7 +9,7 @@ Item {
     Image {
         id: controlImage
         anchors.fill: parent
-        mipmap: true
+        smooth: true
         fillMode: Image.PreserveAspectFit
         visible: true
         sourceSize: Qt.size(parent.width, parent.height)
