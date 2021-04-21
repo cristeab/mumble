@@ -11,19 +11,24 @@
 #include <QUdpSocket>
 #include <QtEndian>
 #include <QThread>
+#include <QDnsLookup>
 
-ServerTableModel::ServerTableModel(QObject *parent) : QAbstractTableModel(parent)
+ServerTableModel::ServerTableModel(QObject *parent) : QAbstractTableModel(parent),
+    _dns(new QDnsLookup(QDnsLookup::A, QString::fromUtf8("dns"),
+                        QHostAddress(QString::fromUtf8("8.8.8.8")), this))
 {
     setObjectName(QString::fromUtf8("servers"));
+
+    connect(_dns, &QDnsLookup::finished, this, &ServerTableModel::onCustomDnsLookUpFinished);
 
     _socket4 = new QUdpSocket(this);
     _socket6 = new QUdpSocket(this);
     _IPv4      = _socket4->bind(QHostAddress(QHostAddress::Any), 0);
     _IPv6      = _socket6->bind(QHostAddress(QHostAddress::AnyIPv6), 0);
-    QObject::connect(_socket4, &QUdpSocket::readyRead, this, &ServerTableModel::udpReply);
-    QObject::connect(_socket6, &QUdpSocket::readyRead, this, &ServerTableModel::udpReply);
+    connect(_socket4, &QUdpSocket::readyRead, this, &ServerTableModel::udpReply);
+    connect(_socket6, &QUdpSocket::readyRead, this, &ServerTableModel::udpReply);
 
-    QObject::connect(&_pingTick, &QTimer::timeout, this, &ServerTableModel::timeTick);
+    connect(&_pingTick, &QTimer::timeout, this, &ServerTableModel::timeTick);
     _pingTick.setInterval(TICK_PERIOD_MS);
 
     load();
@@ -136,7 +141,7 @@ void ServerTableModel::changeServer()
         server.name = _label;
         _servers.append(server);
     }
-    lookUp();
+    customDnsLookUp();
     emit layoutChanged();
     save();
 }
@@ -185,7 +190,7 @@ void ServerTableModel::load()
         _servers << srvItem;
     }
     emit layoutChanged();
-    lookUp();
+    customDnsLookUp();
 }
 
 void ServerTableModel::save()
@@ -292,42 +297,6 @@ void ServerTableModel::udpReply()
                     setStats(si, static_cast< double >(elapsedUs), users, maxusers);
                 }
             }
-        }
-    }
-}
-
-void ServerTableModel::lookUp()
-{
-    for (int i = 0; i < _servers.size(); ++i) {
-        const auto &srv = _servers[i];
-        qDebug() << "lookup" << srv.hostname << srv.address;
-        if (!srv.hostname.isEmpty()) {
-            const QHostAddress addr(srv.hostname);
-            if (!addr.isNull()) {
-                qInfo() << "Server hostname is an IP address";
-                _servers[i].address = srv.hostname;
-                pingServer(&_servers[i]);
-            } else {
-                QHostInfo::lookupHost(srv.hostname, this, [this, i](const QHostInfo &hi) {
-                    if (!isValidIndex(i)) {
-                        return;
-                    }
-                    const auto addrList = hi.addresses();
-                    for (const auto &it: addrList) {
-                        if (!it.isNull()) {
-                            const auto &addr = it.toString();
-                            if (!addr.isEmpty()) {
-                                qDebug() << "Got address for host" << hi.hostName() << addr;
-                                _servers[i].address = addr;
-                                pingServer(&_servers[i]);
-                                break;
-                            }
-                        }
-                    }
-                });
-            }
-        } else {
-            qCritical() << "Found server with empty hostname" << i;
         }
     }
 }
@@ -769,4 +738,100 @@ void ServerTableModel::testConnectivity()
         connectServer();
         emit showDialog(tr("Information"), tr("Connection restored"), false);
     }
+}
+
+void ServerTableModel::defaultDnsLookUp()
+{
+    for (int i = 0; i < _servers.size(); ++i) {
+        const auto &srv = _servers[i];
+        qDebug() << "Default DNS lookup" << srv.hostname << srv.address;
+        if (!srv.hostname.isEmpty()) {
+            if (updateServerAddress(i, QHostAddress(srv.hostname))) {
+                qInfo() << "Server hostname is an IP address";
+            } else {
+                QHostInfo::lookupHost(srv.hostname, this, [this, i](const QHostInfo &hi) {
+                    if (!isValidIndex(i)) {
+                        return;
+                    }
+                    const auto addrList = hi.addresses();
+                    for (const auto &it: addrList) {
+                        if (updateServerAddress(i, it)) {
+                            qInfo() << "Got address" << _servers.at(i).hostname << it;
+                            break;
+                        }
+                    }
+                });
+            }
+        } else {
+            qCritical() << "Found server with empty hostname" << i;
+        }
+    }
+}
+
+void ServerTableModel::customDnsLookUp()
+{
+    for (int i = 0; i < _servers.size(); ++i) {
+        const auto &srv = _servers[i];
+        qDebug() << "Custom DNS lookup" << srv.hostname << srv.address;
+        if (!srv.hostname.isEmpty()) {
+            if (updateServerAddress(i, QHostAddress(srv.hostname))) {
+                qInfo() << "Server hostname is an IP address";
+            } else {
+                _dns->setName(srv.hostname);
+                _dns->lookup();
+            }
+        } else {
+            qCritical() << "Found server with empty hostname" << i;
+        }
+    }
+}
+
+void ServerTableModel::onCustomDnsLookUpFinished()
+{
+    if (QDnsLookup::NoError == _dns->error()) {
+        const auto recs = _dns->hostAddressRecords();
+        for (const auto &rec: recs) {
+            const auto &name = rec.name();
+            const auto &host = rec.value();
+            if (updateServerAddress(name, host)) {
+                qInfo() << "Got address" << name << host;
+                break;
+            }
+        }
+    } else {
+        qWarning() << "Custom DNS error" << _dns->errorString();
+        defaultDnsLookUp();
+    }
+}
+
+bool ServerTableModel::updateServerAddress(int index, const QHostAddress &host)
+{
+    bool rc = false;
+    if (isValidIndex(index) && !host.isNull()) {
+        const auto &addr = host.toString();
+        if (!addr.isEmpty()) {
+            _servers[index].address = addr;
+            pingServer(&_servers[index]);
+            rc = true;
+        }
+    }
+    return rc;
+}
+
+bool ServerTableModel::updateServerAddress(const QString &name, const QHostAddress &host)
+{
+    if (name.isEmpty() || host.isNull()) {
+        return false;
+    }
+    bool rc = false;
+    for (int i = 0; i < _servers.size(); ++i) {
+        const auto &addr = host.toString();
+        if ((name == _servers.at(i).hostname) && !addr.isEmpty()) {
+            _servers[i].address = addr;
+            pingServer(&_servers[i]);
+            rc = true;
+            break;
+        }
+    }
+    return rc;
 }

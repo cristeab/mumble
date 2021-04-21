@@ -19,7 +19,7 @@
 #endif
 
 class ModelItem;
-
+class QDnsLookup;
 class QUdpSocket;
 
 class ServerTableModel : public QAbstractTableModel
@@ -135,12 +135,16 @@ private:
     void timeTick();
     void sendPing(const QHostAddress &host, unsigned short port);
     void udpReply();
-    void lookUp();
     void setStats(ServerItem *si, double delayUs, int users, int totalUsers);
     static void recreateServerHandler();
     void isAllowed(Channel *ch);
     void pingServer(ServerItem *srv);
     void testConnectivity();
+    void defaultDnsLookUp();
+    void customDnsLookUp();
+    void onCustomDnsLookUpFinished();
+    bool updateServerAddress(int index, const QHostAddress &host);
+    bool updateServerAddress(const QString &name, const QHostAddress &host);
 
     QList<ServerItem> _servers;
     QTimer _pingTick;
@@ -159,6 +163,7 @@ private:
     int _channelActionIndex =INVALID_INDEX;
     int _currentChannelId = INVALID_INDEX;
     int _reconnectServerIndex = INVALID_INDEX;
+    QDnsLookup *_dns = nullptr;
 
 #ifdef USE_ZEROCONF
 protected:
