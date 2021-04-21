@@ -33,6 +33,7 @@ Dialog {
 
     Column {
         id: dlgColumn
+        anchors.topMargin: 2 * Theme.windowMargin
         width: parent.width
         spacing: Theme.windowMargin
         Label {
