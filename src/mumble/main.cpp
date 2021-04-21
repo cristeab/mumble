@@ -27,7 +27,6 @@
 #include "vld.h"
 #endif
 #include "VersionCheck.h"
-#include "CrashReporter.h"
 #include "SSL.h"
 #include "MumbleApplication.h"
 #include "ApplicationPalette.h"
@@ -401,12 +400,6 @@ int main(int argc, char **argv) {
 	}
 
 	g.nam = new QNetworkAccessManager();
-
-/*#ifndef NO_CRASH_REPORT
-	CrashReporter *cr = new CrashReporter();
-	cr->run();
-	delete cr;
-#endif*/
 
 	// Initialize logger
 	g.l = new Log();

@@ -115,7 +115,6 @@ HEADERS *= Log.h \
     OverlayText.h \
     SharedMemory.h \
     ViewCert.h \
-    Usage.h \
     Cert.h \
     ClientUser.h \
     UserListModel.h \
@@ -162,7 +161,6 @@ SOURCES *= Log.cpp \
     SharedMemory.cpp \
     ViewCert.cpp \
     Messages.cpp \
-    Usage.cpp \
     Cert.cpp \
     ClientUser.cpp \
     UserListModel.cpp \
@@ -221,14 +219,7 @@ unix:!CONFIG(bundled-speex):system($$PKG_CONFIG --atleast-version=1.2 speexdsp):
   CONFIG *= no-bundled-speex
 }
 
-CONFIG(no-crash-report) {
-  DEFINES *= NO_CRASH_REPORT
-} else:unix:!macx {
-  DEFINES *= NO_CRASH_REPORT
-} else {
-  HEADERS *= CrashReporter.h
-  SOURCES *= CrashReporter.cpp
-}
+DEFINES *= NO_CRASH_REPORT
 
 CONFIG(no-xinput2) {
   DEFINES *= NO_XINPUT2

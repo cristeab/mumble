@@ -887,7 +887,6 @@ void ServerHandler::setUserTexture(unsigned int uiSession, const QByteArray &qba
 		QImageReader qir;
 		qir.setDecideFormatFromContent(false);
 
-		qir.setFormat(fmt);
 		qir.setDevice(&qb);
 
 		QSize sz = qir.size();

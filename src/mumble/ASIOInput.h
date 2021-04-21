@@ -19,26 +19,16 @@ typedef QPair<QString, QString> ASIODev;
 
 class ASIOConfig {
 	private:
-		Q_OBJECT
 		Q_DISABLE_COPY(ASIOConfig)
 	protected:
 		QList<ASIODev> qlDevs;
 		bool bOk;
 	public:
 		ASIOConfig(Settings &st);
-		virtual QString title() const Q_DECL_OVERRIDE;
-		virtual QIcon icon() const Q_DECL_OVERRIDE;
-	public slots:
-		void save() const Q_DECL_OVERRIDE;
-		void load(const Settings &r) Q_DECL_OVERRIDE;
-		void clearQuery();
-		void on_qcbDevice_activated(int index);
-		void on_qpbQuery_clicked();
-		void on_qpbConfig_clicked();
-		void on_qpbAddMic_clicked();
-		void on_qpbRemMic_clicked();
-		void on_qpbAddSpeaker_clicked();
-		void on_qpbRemSpeaker_clicked();
+        virtual QString title() const;
+        virtual QIcon icon() const;
+        void save() const;
+        void load(const Settings &r);
 };
 
 #define IEEE754_64FLOAT 1

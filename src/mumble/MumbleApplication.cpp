@@ -61,27 +61,8 @@ bool MumbleApplication::event(QEvent *e) {
 /// @return  Returns true if the forwarded event was suppressed
 ///          by GlobalShortcutWin. Otherwise, returns false.
 static bool gswForward(MSG *msg) {
-	GlobalShortcutWin *gsw = static_cast<GlobalShortcutWin *>(GlobalShortcutEngine::engine);
-	if (gsw == NULL) {
-		return false;
-	}
-	switch (msg->message) {
-		case WM_LBUTTONDOWN:
-		case WM_LBUTTONUP:
-		case WM_RBUTTONDOWN:
-		case WM_RBUTTONUP:
-		case WM_MBUTTONDOWN:
-		case WM_MBUTTONUP:
-		case WM_XBUTTONDOWN:
-		case WM_XBUTTONUP:
-			return gsw->injectMouseMessage(msg);
-		case WM_KEYDOWN:
-		case WM_KEYUP:
-		case WM_SYSKEYDOWN:
-		case WM_SYSKEYUP:
-			return gsw->injectKeyboardMessage(msg);
-	}
-	return false;
+    qInfo() << "gswForward";
+    return true;
 }
 
 # if QT_VERSION >= 0x050000

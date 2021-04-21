@@ -39,7 +39,7 @@ private:
 	Q_DISABLE_COPY(Global)
 public:
 	static Global *g_global_struct;
-	MainWindow *mw;
+    MainWindow *mw = nullptr;
 	Settings s;
 	boost::shared_ptr<ServerHandler> sh;
 	boost::shared_ptr<AudioInput> ai;
@@ -47,15 +47,15 @@ public:
 	/**
 	 * @remark Must only be accessed from the main event loop
 	 */
-	Database *db;
-	Log *l;
-	Plugins *p;
-	QSettings *qs;
-	Overlay *o;
-	BonjourClient *bc;
-	QNetworkAccessManager *nam;
+    Database *db = nullptr;
+    Log *l = nullptr;
+    Plugins *p = nullptr;
+    QSettings *qs = nullptr;
+    Overlay *o = nullptr;
+    BonjourClient *bc = nullptr;
+    QNetworkAccessManager *nam = nullptr;
 	QSharedPointer<LogEmitter> le;
-	DeveloperConsole *c;
+    DeveloperConsole *c = nullptr;
 	int iPushToTalk;
 	Timer tDoublePush;
 	quint64 uiDoublePush;
@@ -77,7 +77,7 @@ public:
 	int iAudioBandwidth;
 	QDir qdBasePath;
 	QMap<int, CELTCodec *> qmCodecs;
-	OpusCodec *oCodec;
+    OpusCodec *oCodec = nullptr;
 	int iCodecAlpha, iCodecBeta;
 	bool bPreferAlpha;
 	bool bOpus;

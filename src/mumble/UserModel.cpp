@@ -14,7 +14,6 @@
 #include "Message.h"
 #include "Overlay.h"
 #include "ServerHandler.h"
-#include "Usage.h"
 #include "User.h"
 
 // We define a global macro called 'g'. This can lead to issues when included code uses 'g' as a type or parameter name (like protobuf 3.7 does). As such, for now, we have to make this our last include.
@@ -957,37 +956,6 @@ void UserModel::setCommentHash(ClientUser *cu, const QByteArray &hash) {
 
 		if (oldstate != newstate) {
 			QModelIndex idx = index(cu, 0);
-			emit dataChanged(idx, idx);
-		}
-	}
-}
-
-void UserModel::setComment(Channel *c, const QString &comment) {
-	c->qbaDescHash = comment.isEmpty() ? QByteArray() : sha1(comment);
-
-	if (comment != c->qsDesc) {
-		ModelItem *item = ModelItem::c_qhChannels.value(c);
-		int oldstate = c->qsDesc.isEmpty() ? 0 : (item->bCommentSeen ? 2 : 1);
-		int newstate = 0;
-
-		c->qsDesc = comment;
-
-		if (! comment.isEmpty()) {
-			g.db->setBlob(c->qbaDescHash, c->qsDesc.toUtf8());
-
-			if (c->iId == iChannelDescription) {
-				iChannelDescription = -1;
-				item->bCommentSeen = false;
-			} else {
-				item->bCommentSeen = g.db->seenComment(item->hash(), c->qbaDescHash);
-				newstate = item->bCommentSeen ? 2 : 1;
-			}
-		} else {
-			item->bCommentSeen = true;
-		}
-
-		if (oldstate != newstate) {
-			QModelIndex idx = index(c, 0);
 			emit dataChanged(idx, idx);
 		}
 	}

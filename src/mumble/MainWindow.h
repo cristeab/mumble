@@ -22,7 +22,6 @@
 #include "CustomElements.h"
 #include "Message.h"
 #include "Mumble.pb.h"
-#include "Usage.h"
 #include "MUComboBox.h"
 #include "Channel.h"
 
@@ -105,7 +104,6 @@ class MainWindow : public QMainWindow, public MessageHandler {
 		unsigned int uiNewHardware;
 #endif
 	protected:
-		Usage uUsage;
 		QTimer *qtReconnect;
 
 		QList<QAction *> qlServerActions;

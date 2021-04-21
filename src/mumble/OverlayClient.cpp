@@ -75,8 +75,6 @@ OverlayClient::~OverlayClient() {
 	}
 	
 	qlsSocket->deleteLater();
-
-	ougUsers.reset();
 }
 
 bool OverlayClient::eventFilter(QObject *o, QEvent *e) {
@@ -218,8 +216,7 @@ void OverlayClient::showGui() {
 		} else {
 			g.s.qbaMainWindowGeometry = g.mw->saveGeometry();
 			g.s.qbaMainWindowState = g.mw->saveState();
-			g.s.qbaHeaderState = g.mw->qtvUsers->header()->saveState();
-		}
+        }
 	}
 
 	{
@@ -258,16 +255,10 @@ outer:
 	qgpiCursor->setPos(iMouseX, iMouseY);
 
 	qgs.setFocus();
-#ifndef Q_OS_MAC
-	g.mw->qteChat->activateWindow();
-#endif
-	g.mw->qteChat->setFocus();
 
 	qgv.setAttribute(Qt::WA_WState_Hidden, false);
 	qApp->setActiveWindow(&qgv);
 	qgv.setFocus();
-
-	ougUsers.bShowExamples = true;
 
 #ifdef Q_OS_MAC
 	qApp->setAttribute(Qt::AA_DontUseNativeMenuBar);
@@ -288,8 +279,6 @@ outer:
 	om.omh.iLength = sizeof(struct OverlayMsgInteractive);
 	om.omin.state = true;
 	qlsSocket->write(om.headerbuffer, sizeof(OverlayMsgHeader) + om.omh.iLength);
-
-	g.o->updateOverlay();
 }
 
 void OverlayClient::hideGui() {
@@ -300,8 +289,6 @@ void OverlayClient::hideGui() {
 		return;
 	}
 #endif
-
-	ougUsers.bShowExamples = false;
 
 	QList<QWidget *> widgetlist;
 
@@ -361,8 +348,6 @@ void OverlayClient::hideGui() {
 	om.omin.state = false;
 	qlsSocket->write(om.headerbuffer, sizeof(OverlayMsgHeader) + om.omh.iLength);
 
-	g.o->updateOverlay();
-
 	if (bDelete)
 		deleteLater();
 }
@@ -404,9 +389,6 @@ void OverlayClient::readyReadMsgInit(unsigned int length) {
 	qlsSocket->write(om.headerbuffer, sizeof(OverlayMsgHeader) + om.omh.iLength);
 
 	setupRender();
-
-	Overlay *o = static_cast<Overlay *>(parent());
-	QTimer::singleShot(0, o, SLOT(updateOverlay()));
 }
 
 void OverlayClient::readyRead() {
@@ -471,9 +453,6 @@ void OverlayClient::readyRead() {
 						OverlayMsgFps *omf = & omMsg.omf;
 						framesPerSecond = omf->fps;
 						//qWarning() << "FPS: " << omf->fps;
-
-						Overlay *o = static_cast<Overlay *>(parent());
-						QTimer::singleShot(0, o, SLOT(updateOverlay()));
 					}
 					break;
 				default:
@@ -493,56 +472,11 @@ void OverlayClient::reset() {
 	delete qgpiLogo;
 	qgpiLogo = NULL;
 
-	ougUsers.reset();
-
 	setupScene(g.ocIntercept == this);
 }
 
 void OverlayClient::setupScene(bool show) {
-	if (show) {
-		qgs.setBackgroundBrush(QColor(0,0,0,64));
-
-		if (! qgpiLogo) {
-			qgpiLogo = new OverlayMouse();
-			qgpiLogo->hide();
-			qgpiLogo->setOpacity(0.8f);
-			qgpiLogo->setZValue(-5.0f);
-
-
-			QImageReader qir(QLatin1String("skin:mumble.svg"));
-			QSize sz = qir.size();
-			sz.scale(uiWidth, uiHeight, Qt::KeepAspectRatio);
-			qir.setScaledSize(sz);
-
-			qgpiLogo->setPixmap(QPixmap::fromImage(qir.read()));
-
-			QRectF qrf = qgpiLogo->boundingRect();
-			qgpiLogo->setPos(iroundf((uiWidth - qrf.width()) / 2.0f + 0.5f), iroundf((uiHeight - qrf.height()) / 2.0f + 0.5f));
-
-		}
-
-		qgpiCursor->show();
-		qgs.addItem(qgpiCursor);
-
-		qgpiLogo->show();
-		qgs.addItem(qgpiLogo);
-	} else {
-		qgs.setBackgroundBrush(Qt::NoBrush);
-
-		if (qgpiCursor->scene())
-			qgs.removeItem(qgpiCursor);
-		qgpiCursor->hide();
-
-		if (qgpiLogo) {
-			if (qgpiLogo->scene())
-				qgs.removeItem(qgpiLogo);
-			qgpiLogo->hide();
-		}
-
-	}
-	ougUsers.updateUsers();
-	updateFPS();
-	updateTime();
+    qInfo() << "setupScene" << show;
 }
 
 void OverlayClient::setupRender() {
@@ -571,7 +505,6 @@ bool OverlayClient::update() {
 	if (! uiWidth || ! uiHeight || ! smMem)
 		return true;
 
-	ougUsers.updateUsers();
 	updateFPS();
 	updateTime();
 

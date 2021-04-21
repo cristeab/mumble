@@ -1011,8 +1011,6 @@ void MainWindow::on_qaChannelCopyURL_triggered() {
 		channel.prepend(QLatin1String("/"));
 		c = c->cParent;
 	}
-
-	QApplication::clipboard()->setMimeData(ServerItem::toMimeData(c->qsName, host, port, channel), QClipboard::Clipboard);
 }
 
 void MainWindow::userStateChanged() {

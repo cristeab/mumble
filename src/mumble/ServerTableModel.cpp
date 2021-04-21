@@ -5,6 +5,7 @@
 #include "ServerResolver.h"
 #include "ServerHandler.h"
 #include "UserModel.h"
+#include "ClientUser.h"
 #include "Channel.h"
 
 #include <QRandomGenerator>
@@ -502,7 +503,6 @@ void ServerTableModel::onServerDisconnectedEvent(MumbleProto::Reject_RejectType 
         ;
     }
     if (g.s.bReconnect && !reason.isEmpty()) {
-        g.mw->qaServerDisconnect->setEnabled(true);
         if (g.mw->bRetryServer) {
             g.mw->qtReconnect->start();
         }
