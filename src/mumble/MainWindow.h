@@ -53,25 +53,26 @@ class MainWindow : public QMainWindow, public MessageHandler {
 		Q_OBJECT
 		Q_DISABLE_COPY(MainWindow)
 	public:
-		UserModel *pmModel;
-		QSystemTrayIcon *qstiIcon;
-		QMenu *qmUser;
-		QMenu *qmChannel;
-		QMenu *qmDeveloper;
-		QMenu *qmTray;
+        UserModel *pmModel = nullptr;
+        QSystemTrayIcon *qstiIcon = nullptr;
+        QMenu *qmUser = nullptr;
+        QMenu *qmChannel = nullptr;
+        QMenu *qmDeveloper = nullptr;
+        QMenu *qmTray = nullptr;
 		QIcon qiIcon, qiIconMutePushToMute, qiIconMuteSelf, qiIconMuteServer, qiIconDeafSelf, qiIconDeafServer, qiIconMuteSuppressed;
 		QIcon qiTalkingOn, qiTalkingWhisper, qiTalkingShout, qiTalkingOff;
 
-		DockTitleBar *dtbLogDockTitle, *dtbChatDockTitle;
+        DockTitleBar *dtbLogDockTitle = nullptr;
+        DockTitleBar *dtbChatDockTitle = nullptr;
 
 		MumbleProto::Reject_RejectType rtLast;
-		bool bRetryServer;
+        bool bRetryServer = false;
 		QString qsDesiredChannel;
 
-		bool bSuppressAskOnQuit;
+        bool bSuppressAskOnQuit = false;
 		/// Restart the client after shutdown
-		bool restartOnQuit;
-		bool bAutoUnmute;
+        bool restartOnQuit = false;
+        bool bAutoUnmute = false;
 
 		/// Contains the cursor whose position is immediately before the image to
 		/// save when activating the "Save Image As..." context menu item.
@@ -101,10 +102,10 @@ class MainWindow : public QMainWindow, public MessageHandler {
 #else
 		bool winEvent(MSG *, long *) Q_DECL_OVERRIDE;
 #endif
-		unsigned int uiNewHardware;
+        unsigned int uiNewHardware = 0;
 #endif
 	protected:
-		QTimer *qtReconnect;
+        QTimer *qtReconnect = nullptr;
 
 		QList<QAction *> qlServerActions;
 		QList<QAction *> qlChannelActions;
@@ -113,11 +114,11 @@ class MainWindow : public QMainWindow, public MessageHandler {
 		QHash<ShortcutTarget, int> qmCurrentTargets;
 		QHash<QList<ShortcutTarget>, int> qmTargets;
 		QMap<int, int> qmTargetUse;
-		int iTargetCounter;
+        int iTargetCounter = 0;
 
-		MUComboBox *qcbTransmitMode;
-		QAction *qaTransmitMode;
-		QAction *qaTransmitModeSeparator;
+        MUComboBox *qcbTransmitMode = nullptr;
+        QAction *qaTransmitMode = nullptr;
+        QAction *qaTransmitModeSeparator = nullptr;
 
 		void updateWindowTitle();
 		void customEvent(QEvent *evt) Q_DECL_OVERRIDE;

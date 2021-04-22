@@ -111,13 +111,9 @@ int main(int argc, char **argv) {
 	a.setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
 
-#if QT_VERSION >= 0x050000 && defined(Q_OS_WIN)
-	a.installNativeEventFilter(&a);
-#endif
-
 	MumbleSSL::initialize();
 
-	#ifdef USE_SBCELT
+#ifdef USE_SBCELT
 	{
 		QDir d(a.applicationVersionRootPath());
 		QString helper = d.absoluteFilePath(QString::fromLatin1("sbcelt-helper"));
@@ -140,149 +136,6 @@ int main(int argc, char **argv) {
 	bool bRpcMode = false;
 	QString rpcCommand;
 	QUrl url;
-    /*if (a.arguments().count() > 1) {
-		QStringList args = a.arguments();
-		for (int i = 1; i < args.count(); ++i) {
-			if (args.at(i) == QLatin1String("-h") || args.at(i) == QLatin1String("--help")
-#if defined(Q_OS_WIN)
-				|| args.at(i) == QLatin1String("/?")
-#endif
-			) {
-				QString helpMessage = MainWindow::tr(
-					"Usage: mumble [options] [<url>]\n"
-					"\n"
-					"<url> specifies a URL to connect to after startup instead of showing\n"
-					"the connection window, and has the following form:\n"
-					"mumble://[<username>[:<password>]@]<host>[:<port>][/<channel>[/<subchannel>...]][?version=<x.y.z>]\n"
-					"\n"
-					"The version query parameter has to be set in order to invoke the\n"
-					"correct client version. It currently defaults to 1.2.0.\n"
-					"\n"
-					"Valid options are:\n"
-					"  -h, --help    Show this help text and exit.\n"
-					"  -m, --multiple\n"
-					"                Allow multiple instances of the client to be started.\n"
-					"  -n, --noidentity\n"
-					"                Suppress loading of identity files (i.e., certificates.)\n"
-					"  -jn, --jackname\n"
-					"                Set custom Jack client name.\n"
-					"  --license\n"
-					"                Show the Mumble license.\n"
-					"  --authors\n"
-					"                Show the Mumble authors.\n"
-					"  --third-party-licenses\n"
-					"                Show licenses for third-party software used by Mumble.\n"
-					"\n"
-				);
-				QString rpcHelpBanner = MainWindow::tr(
-					"Remote controlling Mumble:\n"
-					"\n"
-				);
-				QString rpcHelpMessage = MainWindow::tr(
-					"Usage: mumble rpc <action> [options]\n"
-					"\n"
-					"It is possible to remote control a running instance of Mumble by using\n"
-					"the 'mumble rpc' command.\n"
-					"\n"
-					"Valid actions are:\n"
-					"  mute\n"
-					"                Mute self\n"
-					"  unmute\n"
-					"                Unmute self\n"
-					"  togglemute\n"
-					"                Toggle self-mute status\n"
-					"  deaf\n"
-					"                Deafen self\n"
-					"  undeaf\n"
-					"                Undeafen self\n"
-					"  toggledeaf\n"
-					"                Toggle self-deafen status\n"
-					"\n"
-				);
-
-				QString helpOutput = helpMessage + rpcHelpBanner + rpcHelpMessage;
-				if (bRpcMode) {
-					helpOutput = rpcHelpMessage;
-				}
-
-#if defined(Q_OS_WIN)
-				QMessageBox::information(NULL, MainWindow::tr("Invocation"), helpOutput);
-#else
-				printf("%s", qPrintable(helpOutput));
-#endif
-				return 1;
-			} else if (args.at(i) == QLatin1String("-m") || args.at(i) == QLatin1String("--multiple")) {
-				bAllowMultiple = true;
-			} else if (args.at(i) == QLatin1String("-n") || args.at(i) == QLatin1String("--noidentity")) {
-				suppressIdentity = true;
-				g.s.bSuppressIdentity = true;
-			} else if (args.at(i) == QLatin1String("-jn") || args.at(i) == QLatin1String("--jackname")) {
-				g.s.qsJackClientName = QString(args.at(i+1));
-				customJackClientName = true;
-			} else if (args.at(i) == QLatin1String("-license") || args.at(i) == QLatin1String("--license")) {
-				printf("%s\n", qPrintable(License::license()));
-				return 0;
-			} else if (args.at(i) == QLatin1String("-authors") || args.at(i) == QLatin1String("--authors")) {
-				printf("%s\n", qPrintable(License::authors()));
-				return 0;
-			} else if (args.at(i) == QLatin1String("-third-party-licenses") || args.at(i) == QLatin1String("--third-party-licenses")) {
-				printf("%s", qPrintable(License::printableThirdPartyLicenseInfo()));
-				return 0;
-			} else if (args.at(i) == QLatin1String("rpc")) {
-				bRpcMode = true;
-				if (args.count() - 1 > i) {
-					rpcCommand = QString(args.at(i + 1));
-				}
-				else {
-					QString rpcError = MainWindow::tr("Error: No RPC command specified");
-#if defined(Q_OS_WIN)
-					QMessageBox::information(NULL, MainWindow::tr("RPC"), rpcError);
-#else
-					printf("%s\n", qPrintable(rpcError));
-#endif
-					return 1;
-				}
-			} else {
-				if (!bRpcMode) {
-					QUrl u = QUrl::fromEncoded(args.at(i).toUtf8());
-					if (u.isValid() && (u.scheme() == QLatin1String("mumble"))) {
-						url = u;
-					} else {
-						QFile f(args.at(i));
-						if (f.exists()) {
-							url = QUrl::fromLocalFile(f.fileName());
-						}
-					}
-				}
-			}
-		}
-    }*/
-
-#ifdef USE_DBUS
-#ifdef Q_OS_WIN
-	// By default, windbus expects the path to dbus-daemon to be in PATH, and the path
-	// should contain bin\\, and the path to the config is hardcoded as ..\etc
-
-	{
-		size_t reqSize;
-		if (_wgetenv_s(&reqSize, NULL, 0, L"PATH") != 0)) {
-			qWarning() << "Failed to get PATH. Not adding application directory to PATH. DBus bindings may not work.";
-		} else if (reqSize > 0) {
-			STACKVAR(wchar_t, buff, reqSize+1);
-			if (_wgetenv_s(&reqSize, buff, reqSize, L"PATH") != 0) {
-				qWarning() << "Failed to get PATH. Not adding application directory to PATH. DBus bindings may not work.";
-			} else {
-				QString path = QString::fromLatin1("%1;%2").arg(QDir::toNativeSeparators(MumbleApplication::instance()->applicationVersionRootPath())).arg(QString::fromWCharArray(buff));
-				STACKVAR(wchar_t, buffout, path.length() + 1);
-				path.toWCharArray(buffout);
-				if (_wputenv_s(L"PATH", buffout) != 0) {
-					qWarning() << "Failed to set PATH. DBus bindings may not work.";
-				}
-			}
-		}
-	}
-#endif
-#endif
 
 	if (bRpcMode) {
 		bool sent = false;
@@ -322,7 +175,7 @@ int main(int argc, char **argv) {
 	// modes enabled. This gives us exclusive access to the file.
 	// If another Mumble instance attempts to open the file, it will fail,
 	// and that instance will know to terminate itself.
-	UserLockFile userLockFile(g.qdBasePath.filePath(QLatin1String("mumble.lock")));
+    UserLockFile userLockFile(g.qdBasePath.filePath(QLatin1String("bubbles.lock")));
 	if (! bAllowMultiple) {
 		if (!userLockFile.acquire()) {
 			qWarning("Another process has already acquired the lock file at '%s'. Terminating...", qPrintable(userLockFile.path()));
@@ -438,6 +291,7 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
     engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
+    qInfo() << "Finished loading QML file";
     g.mw=new MainWindow(NULL);
     g.mw->hide();
 
@@ -459,12 +313,6 @@ int main(int argc, char **argv) {
 	// Set mumble_mw_hwnd in os_win.cpp.
 	// Used by APIs in ASIOInput, DirectSound and GlobalShortcut_win that require a HWND.
 	mumble_mw_hwnd = GetForegroundWindow();
-#endif
-
-#ifdef USE_DBUS
-	new MumbleDBus(g.mw);
-	QDBusConnection::sessionBus().registerObject(QLatin1String("/"), g.mw);
-	QDBusConnection::sessionBus().registerService(QLatin1String("net.sourceforge.mumble.mumble"));
 #endif
 
     g.l->log(Log::Information, MainWindow::tr("Welcome to Bubbles."));
@@ -504,26 +352,6 @@ int main(int argc, char **argv) {
 		QDir qd(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation));
 #endif
 
-        /*QFile qf(qd.absoluteFilePath(QLatin1String("MumbleAutomaticCertificateBackup.p12")));
-		if (qf.open(QIODevice::ReadOnly | QIODevice::Unbuffered)) {
-			Settings::KeyPair kp = CertWizard::importCert(qf.readAll());
-			qf.close();
-			if (CertWizard::validateCert(kp))
-				g.s.kpCertificate = kp;
-		}
-		if (! CertWizard::validateCert(g.s.kpCertificate)) {
-			CertWizard *cw = new CertWizard(g.mw);
-			cw->exec();
-			delete cw;
-
-			if (! CertWizard::validateCert(g.s.kpCertificate)) {
-				g.s.kpCertificate = CertWizard::generateNewCert();
-				if (qf.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Unbuffered)) {
-					qf.write(CertWizard::exportCert(g.s.kpCertificate));
-					qf.close();
-				}
-			}
-        }*/
         qWarning() << "Generate automatically new certificate";
         QFile qf(qd.absoluteFilePath(QLatin1String("MumbleAutomaticCertificateBackup.p12")));
         g.s.kpCertificate = CertWizard::generateNewCert();
