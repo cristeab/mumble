@@ -57,15 +57,15 @@ class ServerHandler : public QThread {
 		Q_OBJECT
 		Q_DISABLE_COPY(ServerHandler)
 
-		Database *database;
+        Database *database = nullptr;
 	protected:
 		QString qsHostName;
 		QString qsUserName;
 		QString qsPassword;
-		unsigned short usPort;
-		unsigned short usResolvedPort;
-		bool bUdp;
-		bool bStrong;
+        unsigned short usPort = 0;
+        unsigned short usResolvedPort = 0;
+        bool bUdp = false;
+        bool bStrong = false;
 
 		/// Flag indicating whether the server we are currently connected to has
 		/// finsihed synchronizing already.
@@ -78,25 +78,25 @@ class ServerHandler : public QThread {
 
 		QHostAddress qhaRemote;
 		QHostAddress qhaLocal;
-		QUdpSocket *qusUdp;
+        QUdpSocket *qusUdp = nullptr;
 		QMutex qmUdp;
 
 		void handleVoicePacket(unsigned int msgFlags, PacketDataStream &pds, MessageHandler::UDPMessageType type);
 	public:
 		Timer tTimestamp;
-		int iInFlightTCPPings;
-		QTimer *tConnectionTimeoutTimer;
+        int iInFlightTCPPings = 0;
+        QTimer *tConnectionTimeoutTimer = nullptr;
 		QList<QSslError> qlErrors;
 		QList<QSslCertificate> qscCert;
 		QSslCipher qscCipher;
 		ConnectionPtr cConnection;
 		QByteArray qbaDigest;
 		boost::shared_ptr<VoiceRecorder> recorder;
-		QSslSocket *qtsSock;
+        QSslSocket *qtsSock = nullptr;
 		QList<ServerAddress> qlAddresses;
 		ServerAddress saTargetServer;
 
-		unsigned int uiVersion;
+        unsigned int uiVersion = 0;
 		QString qsRelease;
 		QString qsOS;
 		QString qsOSVersion;

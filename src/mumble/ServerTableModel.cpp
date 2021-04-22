@@ -421,7 +421,7 @@ bool ServerTableModel::disconnectServer()
     } else {
         qWarning() << "Cannot disconnect: nothing to do";
     }
-    qDebug() << "Connected server index" << _connectedServerIndex;
+    qDebug() << "Disconnected server index" << _connectedServerIndex;
 
     //don't clear models when reconnecting
     setConnectedServerIndex(INVALID_INDEX);
