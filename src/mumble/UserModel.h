@@ -57,9 +57,8 @@ public:
 	void wipe();
 };
 
-class UserModel : public QAbstractItemModel {
+class UserModel : public QObject {
 		friend struct ModelItem;
-		friend class UserView;
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(UserModel)
@@ -78,29 +77,10 @@ class UserModel : public QAbstractItemModel {
 
 		bool bClicked;
 
-		void recursiveClone(const ModelItem *old, ModelItem *item, QModelIndexList &from, QModelIndexList &to);
-		ModelItem *moveItem(ModelItem *oldparent, ModelItem *newparent, ModelItem *item);
-
 		QString stringIndex(const QModelIndex &index) const;
 	public:
 		UserModel(QObject *parent = 0);
-		~UserModel() Q_DECL_OVERRIDE;
-
-		QModelIndex index(ClientUser *, int column = 0) const;
-		QModelIndex index(Channel *, int column = 0) const;
-		QModelIndex index(ModelItem *) const;
-
-		QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE;
-		Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
-		QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
-		QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
-		QModelIndex parent(const QModelIndex &index) const Q_DECL_OVERRIDE;
-		int rowCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
-		int columnCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
-		Qt::DropActions supportedDropActions() const Q_DECL_OVERRIDE;
-		QStringList mimeTypes() const Q_DECL_OVERRIDE;
-		QMimeData *mimeData(const QModelIndexList &idx) const Q_DECL_OVERRIDE;
-		bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex & parent) Q_DECL_OVERRIDE;
+        ~UserModel();
 
 		ClientUser *addUser(unsigned int id, const QString &name);
 		ClientUser *getUser(const QModelIndex &idx) const;
@@ -134,21 +114,11 @@ class UserModel : public QAbstractItemModel {
 
 		void removeAll();
 
-		void expandAll(Channel *c);
-		void collapseEmpty(Channel *c);
-
 		QVariant otherRoles(const QModelIndex &idx, int role) const;
 
 		unsigned int uiSessionComment;
 		int iChannelDescription;
         ModelItem* rootItem() const { return miRoot; }
-	public slots:
-		/// Invalidates the model data of the ClientUser triggering this slot.
-		void userStateChanged();
-		void ensureSelfVisible();
-		void recheckLinks();
-		void updateOverlay() const;
-		void toggleChannelFiltered(Channel *c);
 };
 
 #endif

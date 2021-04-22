@@ -23,7 +23,8 @@ pb.variable_out = SOURCES
 
 TEMPLATE = lib
 CONFIG -= qt
-CONFIG += debug_and_release
+#CONFIG += debug_and_release
+CONFIG += debug
 CONFIG += staticlib
 
 # Add protobuf dependency

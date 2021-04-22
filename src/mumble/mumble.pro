@@ -118,7 +118,6 @@ HEADERS *= Log.h \
     Cert.h \
     ClientUser.h \
     UserListModel.h \
-    UserView.h \
     WebFetch.h \
     ../SignalCurry.h \
     OverlayClient.h \
@@ -164,7 +163,6 @@ SOURCES *= Log.cpp \
     Cert.cpp \
     ClientUser.cpp \
     UserListModel.cpp \
-    UserView.cpp \
     WebFetch.cpp \
     MumbleApplication.cpp \
     ../../3rdparty/smallft-src/smallft.cpp \

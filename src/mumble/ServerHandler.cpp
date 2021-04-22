@@ -525,7 +525,6 @@ void ServerHandler::sendPingInternal() {
 	mpp.set_lost(cs.uiLost);
 	mpp.set_resync(cs.uiResync);
 
-
 	if (boost::accumulators::count(accUDP)) {
 		mpp.set_udp_ping_avg(static_cast<float>(boost::accumulators::mean(accUDP)));
 		mpp.set_udp_ping_var(static_cast<float>(boost::accumulators::variance(accUDP)));

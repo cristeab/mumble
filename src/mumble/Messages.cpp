@@ -95,8 +95,6 @@ void MainWindow::msgServerSync(const MumbleProto::ServerSync &msg) {
             //g.l->log(Log::Information, tr("Welcome message: %1").arg(str));
 		}
 	}
-	pmModel->ensureSelfVisible();
-	pmModel->recheckLinks();
 
 	qmTargetUse.clear();
 	qmTargets.clear();
