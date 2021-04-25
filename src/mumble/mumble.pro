@@ -250,18 +250,7 @@ FORMS *= ConfigDialog.ui \
     ConnectDialog.ui \
     ConnectDialogEdit.ui \
     ACLEditor.ui \
-    LookConfig.ui \
-    AudioInput.ui \
-    AudioOutput.ui \
-    Log.ui \
-    TextMessage.ui \
-    NetworkConfig.ui \
-    Cert.ui \
-    UserEdit.ui \
-    UserLocalVolumeDialog.ui \
-    AudioWizard.ui \
-    Tokens.ui \
-    UserInformation.ui \
+    NetworkConfig.ui
 
 # Include TRANSLATIONS variable
 #include(translations.pri)
