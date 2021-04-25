@@ -143,27 +143,9 @@ void RichTextHtmlEdit::insertFromMimeData(const QMimeData *source) {
 }
 
 RichTextEditorLink::RichTextEditorLink(const QString &txt, QWidget *p) : QDialog(p) {
-	setupUi(this);
-
-	if (! txt.isEmpty()) {
-		qleText->setText(txt);
-	}
 }
 
 QString RichTextEditorLink::text() const {
-	QUrl url(qleUrl->text(), QUrl::StrictMode);
-	QString txt = qleText->text();
-
-#if QT_VERSION >= 0x050000
-	txt = txt.toHtmlEscaped();
-#else
-	txt = Qt::escape(txt);
-#endif
-
-	if (url.isValid() && ! url.isRelative() && ! txt.isEmpty()) {
-		return QString::fromLatin1("<a href=\"%1\">%2</a>").arg(url.toString(), txt);
-	}
-
 	return QString();
 }
 
@@ -171,57 +153,10 @@ RichTextEditor::RichTextEditor(QWidget *p) : QTabWidget(p) {
 	bChanged = false;
 	bModified = false;
 	bReadOnly = false;
-
-	setupUi(this);
-
-	qtbToolBar->addAction(qaBold);
-	qtbToolBar->addAction(qaItalic);
-	qtbToolBar->addAction(qaUnderline);
-	qtbToolBar->addAction(qaColor);
-	qtbToolBar->addSeparator();
-	qtbToolBar->addAction(qaLink);
-	qtbToolBar->addAction(qaImage);
-
-	connect(this, SIGNAL(currentChanged(int)), this, SLOT(onCurrentChanged(int)));
-	updateActions();
-
-	qteRichText->setFocus();
-
-	qteRichText->installEventFilter(this);
-	qptePlainText->installEventFilter(this);
 }
 
 bool RichTextEditor::isModified() const {
 	return bModified;
-}
-
-void RichTextEditor::on_qaBold_triggered(bool on) {
-	qteRichText->setFontWeight(on ? QFont::Bold : QFont::Normal);
-}
-
-void RichTextEditor::on_qaItalic_triggered(bool on) {
-	qteRichText->setFontItalic(on);
-}
-
-void RichTextEditor::on_qaUnderline_triggered(bool on) {
-	qteRichText->setFontUnderline(on);
-}
-
-void RichTextEditor::on_qaColor_triggered() {
-	QColor c = QColorDialog::getColor();
-	if (c.isValid())
-		qteRichText->setTextColor(c);
-}
-
-void RichTextEditor::on_qaLink_triggered() {
-	QTextCursor qtc = qteRichText->textCursor();
-	RichTextEditorLink *rtel = new RichTextEditorLink(qtc.selectedText(), this);
-	if (rtel->exec() == QDialog::Accepted) {
-		QString html = rtel->text();
-		if (! html.isEmpty())
-			qteRichText->insertHtml(html);
-	}
-	delete rtel;
 }
 
 void RichTextEditor::on_qaImage_triggered() {
@@ -242,18 +177,11 @@ void RichTextEditor::on_qaImage_triggered() {
 
 	QByteArray format = QImageReader::imageFormat(&qb);
 	qb.close();
-
-	qteRichText->insertHtml(Log::imageToImg(format, qba));
 }
 
 void RichTextEditor::onCurrentChanged(int index) {
 	if (! bChanged)
 		return;
-
-	if (index == 1)
-		richToPlain();
-	else
-		qteRichText->setHtml(qptePlainText->toPlainText());
 
 	bChanged = false;
 }
@@ -261,79 +189,6 @@ void RichTextEditor::onCurrentChanged(int index) {
 void RichTextEditor::on_qptePlainText_textChanged() {
 	bModified = true;
 	bChanged = true;
-}
-
-void RichTextEditor::on_qteRichText_textChanged() {
-	bModified = true;
-	bChanged = true;
-	updateActions();
-
-	if (! g.uiMessageLength)
-		return;
-
-	richToPlain();
-
-	const QString &plainText = qptePlainText->toPlainText();
-
-	bool over = true;
-
-	unsigned int imagelength = plainText.length();
-
-
-	if (g.uiMessageLength && imagelength <= g.uiMessageLength) {
-		over = false;
-	} else if (g.uiImageLength && imagelength > g.uiImageLength) {
-		over = true;
-	} else {
-		QString qsOut;
-		QXmlStreamReader qxsr(QString::fromLatin1("<document>%1</document>").arg(plainText));
-		QXmlStreamWriter qxsw(&qsOut);
-		while (! qxsr.atEnd()) {
-			switch (qxsr.readNext()) {
-				case QXmlStreamReader::Invalid:
-					return;
-				case QXmlStreamReader::StartElement: {
-						if (qxsr.name() == QLatin1String("img")) {
-							QXmlStreamAttributes attr = qxsr.attributes();
-
-							qxsw.writeStartElement(qxsr.namespaceUri().toString(), qxsr.name().toString());
-							foreach(const QXmlStreamAttribute &a, qxsr.attributes())
-								if (a.name() != QLatin1String("src"))
-									qxsw.writeAttribute(a);
-						} else {
-							qxsw.writeCurrentToken(qxsr);
-						}
-					}
-					break;
-				default:
-					qxsw.writeCurrentToken(qxsr);
-					break;
-			}
-		}
-		over = (static_cast<unsigned int>(qsOut.length()) > g.uiMessageLength);
-	}
-
-
-	QString tooltip = tr("Message is too long.");
-
-	if (!over) {
-		if (QToolTip::text() == tooltip)
-			QToolTip::hideText();
-	} else {
-		QPoint p = QCursor::pos();
-		const QRect &r = qteRichText->rect();
-		if (! r.contains(qteRichText->mapFromGlobal(p)))
-			p = qteRichText->mapToGlobal(r.center());
-		QToolTip::showText(p, tooltip, qteRichText);
-	}
-}
-
-void RichTextEditor::on_qteRichText_cursorPositionChanged() {
-	updateActions();
-}
-
-void RichTextEditor::on_qteRichText_currentCharFormatChanged() {
-	updateActions();
 }
 
 void RichTextEditor::updateColor(const QColor &col) {
@@ -348,91 +203,15 @@ void RichTextEditor::updateColor(const QColor &col) {
 	qp.fillRect(r, col);
 	qp.setPen(col.darker());
 	qp.drawRect(r.adjusted(0, 0, -1, -1));
-
-	qaColor->setIcon(qpm);
-}
-
-void RichTextEditor::updateActions() {
-	qaBold->setChecked(qteRichText->fontWeight() == QFont::Bold);
-	qaItalic->setChecked(qteRichText->fontItalic());
-	qaUnderline->setChecked(qteRichText->fontUnderline());
-	updateColor(qteRichText->textColor());
-}
-
-void RichTextEditor::richToPlain() {
-	QXmlStreamReader reader(qteRichText->toHtml());
-
-	QString qsOutput;
-	QXmlStreamWriter writer(&qsOutput);
-
-	int paragraphs = 0;
-
-	QMap<QString, QString> def;
-
-	def.insert(QLatin1String("margin-top"), QLatin1String("0px"));
-	def.insert(QLatin1String("margin-bottom"), QLatin1String("0px"));
-	def.insert(QLatin1String("margin-left"), QLatin1String("0px"));
-	def.insert(QLatin1String("margin-right"), QLatin1String("0px"));
-	def.insert(QLatin1String("-qt-block-indent"), QLatin1String("0"));
-	def.insert(QLatin1String("text-indent"), QLatin1String("0px"));
-
-	XMLTools::recurseParse(reader, writer, paragraphs, def);
-
-	qsOutput = qsOutput.trimmed();
-
-	bool changed;
-	do {
-		// Make sure the XML has a root element (would be invalid XML otherwise)
-		// The "unduplicate" element will be dropped by XMLTools::unduplciateTags
-		qsOutput = QString::fromLatin1("<unduplicate>%1</unduplicate>").arg(qsOutput);
-
-		QXmlStreamReader r(qsOutput);
-		qsOutput = QString();
-		QXmlStreamWriter w(&qsOutput);
-		changed = XMLTools::unduplicateTags(r, w);
-		qsOutput = qsOutput.trimmed();
-	} while (changed);
-
-	qptePlainText->setPlainText(qsOutput);
 }
 
 void RichTextEditor::setText(const QString &txt, bool readonly) {
-	qtbToolBar->setEnabled(! readonly && g.bAllowHTML);
-	qtbToolBar->setVisible(! readonly && g.bAllowHTML);
-	qptePlainText->setReadOnly(readonly || ! g.bAllowHTML);
-	qteRichText->setReadOnly(readonly);
-
-	qteRichText->setHtml(txt);
-	qptePlainText->setPlainText(txt);
-
 	bChanged = false;
 	bModified = false;
 	bReadOnly = readonly;
 }
 
-QString RichTextEditor::text() {
-	if (bChanged) {
-		if (currentIndex() == 0)
-			richToPlain();
-		else
-			qteRichText->setHtml(qptePlainText->toPlainText());
-	}
-
-	bChanged = false;
-	return qptePlainText->toPlainText();
-}
-
 bool RichTextEditor::eventFilter(QObject *obj, QEvent *evt) {
-	if (obj != qptePlainText && obj != qteRichText)
-		return false;
-	if (evt->type() == QEvent::KeyPress) {
-		QKeyEvent *keyEvent = static_cast<QKeyEvent *>(evt);
-		if (((keyEvent->key() == Qt::Key_Enter) || (keyEvent->key() == Qt::Key_Return)) &&
-		        (keyEvent->modifiers() == Qt::ControlModifier)) {
-			emit accept();
-			return true;
-		}
-	}
 	return false;
 }
 

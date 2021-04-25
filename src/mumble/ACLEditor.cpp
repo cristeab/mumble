@@ -27,31 +27,6 @@ ACLEditor::ACLEditor(int channelparentid, QWidget *p) : QDialog(p) {
 	bAddChannelMode = true;
 	iChannel = channelparentid;
 
-	setupUi(this);
-
-	qsbChannelPosition->setRange(INT_MIN, INT_MAX);
-
-	setWindowTitle(tr("Mumble - Add channel"));
-	qtwTab->removeTab(2);
-	qtwTab->removeTab(1);
-
-	// Until I come around implementing it hide the password fields
-	qleChannelPassword->hide();
-	qlChannelPassword->hide();
-
-	if (g.sh->uiVersion >= 0x010300) {
-		qsbChannelMaxUsers->setRange(0, INT_MAX);
-		qsbChannelMaxUsers->setValue(0);
-		qsbChannelMaxUsers->setSpecialValueText(tr("Default server value"));
-	} else {
-		qlChannelMaxUsers->hide();
-		qsbChannelMaxUsers->hide();
-	}
-
-	qlChannelID->hide();
-
-	qleChannelName->setFocus();
-
 	pcaPassword = NULL;
 	adjustSize();
 }
@@ -71,75 +46,7 @@ ACLEditor::ACLEditor(int channelid, const MumbleProto::ACL &mea, QWidget *p) : Q
 
 	msg = mea;
 
-	setupUi(this);
-
-	qcbChannelTemporary->hide();
-
-	iId = mea.channel_id();
-	setWindowTitle(tr("Mumble - Edit %1").arg(Channel::get(iId)->qsName));
-
-	qlChannelID->setText(tr("ID: %1").arg(iId));
-
-	qleChannelName->setText(pChannel->qsName);
-	if (channelid == 0)
-		qleChannelName->setEnabled(false);
-
-	rteChannelDescription->setText(pChannel->qsDesc);
-
-	qsbChannelPosition->setRange(INT_MIN, INT_MAX);
-	qsbChannelPosition->setValue(pChannel->iPosition);
-
-	if (g.sh->uiVersion >= 0x010300) {
-		qsbChannelMaxUsers->setRange(0, INT_MAX);
-		qsbChannelMaxUsers->setValue(pChannel->uiMaxUsers);
-		qsbChannelMaxUsers->setSpecialValueText(tr("Default server value"));
-	} else {
-		qlChannelMaxUsers->hide();
-		qsbChannelMaxUsers->hide();
-	}
-
-	QGridLayout *grid = new QGridLayout(qgbACLpermissions);
-
-	l = new QLabel(tr("Deny"), qgbACLpermissions);
-	grid->addWidget(l, 0, 1);
-	l = new QLabel(tr("Allow"), qgbACLpermissions);
-	grid->addWidget(l, 0, 2);
-
-	int idx = 1;
-	for (int i = 0; i < ((iId == 0) ? 30 : 16); ++i) {
-		ChanACL::Perm perm = static_cast<ChanACL::Perm>(1 << i);
-		QString name = ChanACL::permName(perm);
-
-		if (! name.isEmpty()) {
-			QCheckBox *qcb;
-			l = new QLabel(name, qgbACLpermissions);
-			grid->addWidget(l, idx, 0);
-			qcb = new QCheckBox(qgbACLpermissions);
-			qcb->setToolTip(tr("Deny %1").arg(name));
-			qcb->setWhatsThis(tr("This revokes the %1 privilege. If a privilege is both allowed and denied, it is denied.<br />%2").arg(name).arg(ChanACL::whatsThis(perm)));
-			connect(qcb, SIGNAL(clicked(bool)), this, SLOT(ACLPermissions_clicked()));
-			grid->addWidget(qcb, idx, 1);
-
-			qlACLDeny << qcb;
-
-			qcb = new QCheckBox(qgbACLpermissions);
-			qcb->setToolTip(tr("Allow %1").arg(name));
-			qcb->setWhatsThis(tr("This grants the %1 privilege. If a privilege is both allowed and denied, it is denied.<br />%2").arg(name).arg(ChanACL::whatsThis(perm)));
-			connect(qcb, SIGNAL(clicked(bool)), this, SLOT(ACLPermissions_clicked()));
-			grid->addWidget(qcb, idx, 2);
-
-			qlACLAllow << qcb;
-
-			qlPerms << perm;
-
-			++idx;
-		}
-	}
 	QSpacerItem *si = new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-	grid->addItem(si, idx, 0);
-
-	connect(qcbGroupAdd->lineEdit(), SIGNAL(returnPressed()), qpbGroupAddAdd, SLOT(animateClick()));
-	connect(qcbGroupRemove->lineEdit(), SIGNAL(returnPressed()), qpbGroupRemoveAdd, SLOT(animateClick()));
 
 	foreach(User *u, ClientUser::c_qmUsers) {
 		if (u->iId >= 0) {
@@ -200,7 +107,6 @@ ACLEditor::ACLEditor(int channelid, const MumbleProto::ACL &mea, QWidget *p) : Q
 	numInheritACL = -1;
 
 	bInheritACL = mea.inherit_acls();
-	qcbACLInherit->setChecked(bInheritACL);
 
 	foreach(ChanACL *acl, qlACLs) {
 		if (acl->bInherited)
@@ -218,7 +124,6 @@ ACLEditor::ACLEditor(int channelid, const MumbleProto::ACL &mea, QWidget *p) : Q
 
 	updatePasswordField();
 
-	qleChannelName->setFocus();
 	adjustSize();
 }
 
@@ -245,43 +150,12 @@ void ACLEditor::accept() {
 		return;
 	}
 
-	if (qleChannelName->text().isEmpty()) {
-		// Empty channel name
-		QMessageBox::warning(this, QLatin1String("Mumble"), tr("Channel must have a name"), QMessageBox::Ok);
-		qleChannelName->setFocus();
-		return;
-	}
-
 	// Update channel state
 	if (bAddChannelMode) {
-		g.sh->createChannel(iChannel, qleChannelName->text(), rteChannelDescription->text(), qsbChannelPosition->value(), qcbChannelTemporary->isChecked(), qsbChannelMaxUsers->value());
 	} else {
 		bool needs_update = false;
 
 		updatePasswordACL();
-
-		MumbleProto::ChannelState mpcs;
-		mpcs.set_channel_id(pChannel->iId);
-		if (pChannel->qsName != qleChannelName->text()) {
-			mpcs.set_name(u8(qleChannelName->text()));
-			needs_update = true;
-		}
-		if (rteChannelDescription->isModified() && (pChannel->qsDesc != rteChannelDescription->text())) {
-			const QString &descriptionText = rteChannelDescription->text();
-			mpcs.set_description(u8(descriptionText));
-			needs_update = true;
-			g.db->setBlob(sha1(descriptionText), descriptionText.toUtf8());
-		}
-		if (pChannel->iPosition != qsbChannelPosition->value()) {
-			mpcs.set_position(qsbChannelPosition->value());
-			needs_update = true;
-		}
-		if (pChannel->uiMaxUsers != static_cast<unsigned int>(qsbChannelMaxUsers->value())) {
-			mpcs.set_max_users(qsbChannelMaxUsers->value());
-			needs_update = true;
-		}
-		if (needs_update)
-			g.sh->sendMessage(mpcs);
 
 		// Update ACL
 		msg.set_inherit_acls(bInheritACL);
@@ -398,98 +272,22 @@ void ACLEditor::refill(WaitID wid) {
 }
 
 void ACLEditor::refillComboBoxes() {
-	QList<QComboBox *> ql;
-	ql << qcbGroupAdd;
-	ql << qcbGroupRemove;
-	ql << qcbACLUser;
-
 	QStringList names = qhNameCache.values();
 	names.sort();
-
-	foreach(QComboBox *qcb, ql) {
-		qcb->clear();
-		qcb->addItems(names);
-		qcb->clearEditText();
-	}
 }
 
 void ACLEditor::refillACL() {
-	int idx = qlwACLs->currentRow();
-	bool previousinherit = bInheritACL;
-	bInheritACL = qcbACLInherit->isChecked();
-
-	qlwACLs->clear();
-
-	bool first = true;
-
-	foreach(ChanACL *acl, qlACLs) {
-		if (first)
-			first = false;
-		else if (! bInheritACL && acl->bInherited)
-			continue;
-		QString text;
-		if (acl->iUserId == -1)
-			text = QString::fromLatin1("@%1").arg(acl->qsGroup);
-		else
-			text = userName(acl->iUserId);
-		QListWidgetItem *item = new QListWidgetItem(text, qlwACLs);
-		if (acl->bInherited) {
-			QFont f = item->font();
-			f.setItalic(true);
-			item->setFont(f);
-		}
-	}
-	if (bInheritACL && ! previousinherit && (idx != 0))
-		idx += numInheritACL;
-	if (! bInheritACL && previousinherit)
-		idx -= numInheritACL;
-
-	qlwACLs->setCurrentRow(idx);
 }
 
 void ACLEditor::refillGroupNames() {
-	QString text = qcbGroupList->currentText().toLower();
-	QStringList qsl;
-
-	foreach(ACLGroup *gp, qlGroups) {
-		qsl << gp->qsName;
-	}
-	qsl.sort();
-
-	qcbGroupList->clear();
-
-	foreach(QString name, qsl) {
-		qcbGroupList->addItem(name);
-	}
-
-	int wantindex = qcbGroupList->findText(text, Qt::MatchFixedString);
-	qcbGroupList->setCurrentIndex(wantindex);
 }
 
 ACLGroup *ACLEditor::currentGroup() {
-	QString group = qcbGroupList->currentText();
-
-	foreach(ACLGroup *gp, qlGroups)
-		if (gp->qsName == group)
-			return gp;
-
-	group = group.toLower();
-
-	foreach(ACLGroup *gp, qlGroups)
-		if (gp->qsName == group)
-			return gp;
-
 	return NULL;
 }
 
 ChanACL *ACLEditor::currentACL() {
-	int idx = qlwACLs->currentRow();
-	if (idx < 0)
-		return NULL;
-
-	if (idx && ! bInheritACL)
-		idx += numInheritACL;
-	return qlACLs[idx];
+    return NULL;
 }
 
 void ACLEditor::fillWidgetFromSet(QListWidget *qlw, const QSet<int> &qs) {
@@ -516,16 +314,12 @@ void ACLEditor::refillGroupAdd() {
 
 	if (! gp)
 		return;
-
-	fillWidgetFromSet(qlwGroupAdd, gp->qsAdd);
 }
 
 void ACLEditor::refillGroupRemove() {
 	ACLGroup *gp = currentGroup();
 	if (! gp)
 		return;
-
-	fillWidgetFromSet(qlwGroupRemove, gp->qsRemove);
 }
 
 void ACLEditor::refillGroupInherit() {
@@ -533,8 +327,6 @@ void ACLEditor::refillGroupInherit() {
 
 	if (! gp)
 		return;
-
-	fillWidgetFromSet(qlwGroupInherit, gp->qsTemporary);
 }
 
 void ACLEditor::groupEnableCheck() {
@@ -546,26 +338,7 @@ void ACLEditor::groupEnableCheck() {
 	else
 		enabled = gp->bInherit;
 
-	qlwGroupRemove->setEnabled(enabled);
-	qlwGroupInherit->setEnabled(enabled);
-	qcbGroupRemove->setEnabled(enabled);
-	qpbGroupRemoveAdd->setEnabled(enabled);
-	qpbGroupRemoveRemove->setEnabled(enabled);
-	qpbGroupInheritRemove->setEnabled(enabled);
-
 	enabled = (gp != NULL);
-	qlwGroupAdd->setEnabled(enabled);
-	qcbGroupAdd->setEnabled(enabled);
-	qpbGroupAddAdd->setEnabled(enabled);
-	qpbGroupAddRemove->setEnabled(enabled);
-	qcbGroupInherit->setEnabled(enabled);
-	qcbGroupInheritable->setEnabled(enabled);
-
-	if (gp) {
-		qcbGroupInherit->setChecked(gp->bInherit);
-		qcbGroupInheritable->setChecked(gp->bInheritable);
-		qcbGroupInherited->setChecked(gp->bInherited);
-	}
 }
 
 void ACLEditor::ACLEnableCheck() {
@@ -577,14 +350,6 @@ void ACLEditor::ACLEnableCheck() {
 	else
 		enabled = ! as->bInherited;
 
-	qpbACLRemove->setEnabled(enabled);
-	qpbACLUp->setEnabled(enabled);
-	qpbACLDown->setEnabled(enabled);
-	qcbACLApplyHere->setEnabled(enabled);
-	qcbACLApplySubs->setEnabled(enabled);
-	qcbACLGroup->setEnabled(enabled);
-	qcbACLUser->setEnabled(enabled);
-
 	for (int idx = 0; idx < qlACLAllow.count(); idx++) {
 		// Only enable other checkboxes if writeacl isn't set
 		bool enablethis = enabled && (qlPerms[idx] == ChanACL::Write || !(as && (as->pAllow & ChanACL::Write)) || qlPerms[idx] == ChanACL::Speak);
@@ -593,42 +358,10 @@ void ACLEditor::ACLEnableCheck() {
 	}
 
 	if (as) {
-		qcbACLApplyHere->setChecked(as->bApplyHere);
-		qcbACLApplySubs->setChecked(as->bApplySubs);
-
 		for (int idx = 0; idx < qlACLAllow.count(); idx++) {
 			ChanACL::Perm p = qlPerms[idx];
 			qlACLAllow[idx]->setChecked(as->pAllow & p);
 			qlACLDeny[idx]->setChecked(as->pDeny & p);
-		}
-
-		qcbACLGroup->clear();
-		qcbACLGroup->addItem(QString());
-		qcbACLGroup->addItem(QLatin1String("all"));
-		qcbACLGroup->addItem(QLatin1String("auth"));
-		qcbACLGroup->addItem(QLatin1String("in"));
-		qcbACLGroup->addItem(QLatin1String("sub"));
-		qcbACLGroup->addItem(QLatin1String("out"));
-		qcbACLGroup->addItem(QLatin1String("~in"));
-		qcbACLGroup->addItem(QLatin1String("~sub"));
-		qcbACLGroup->addItem(QLatin1String("~out"));
-
-		foreach(ACLGroup *gs, qlGroups)
-			qcbACLGroup->addItem(gs->qsName);
-
-		if (as->iUserId == -1) {
-			qcbACLUser->clearEditText();
-			qcbACLGroup->addItem(as->qsGroup);
-			qcbACLGroup->setCurrentIndex(qcbACLGroup->findText(as->qsGroup, Qt::MatchExactly));
-		} else {
-			qcbACLUser->setEditText(userName(as->iUserId));
-		}
-	}
-	foreach(QAbstractButton *b, qdbbButtons->buttons()) {
-		QPushButton *qpb = qobject_cast<QPushButton *>(b);
-		if (qpb) {
-			qpb->setAutoDefault(false);
-			qpb->setDefault(false);
 		}
 	}
 }
@@ -659,60 +392,9 @@ void ACLEditor::updatePasswordField() {
 			pcaPassword = acl;
 		}
 	}
-	if (pcaPassword)
-		qleChannelPassword->setText(pcaPassword->qsGroup.mid(1));
-	else
-		qleChannelPassword->clear();
-
 }
 
 void ACLEditor::updatePasswordACL() {
-	if (qleChannelPassword->text().isEmpty()) {
-		// Remove the password if we had one to begin with
-		if (pcaPassword && qlACLs.removeOne(pcaPassword)) {
-			delete pcaPassword;
-
-			// Search and remove the @all deny ACL
-			ChanACL *denyall = NULL;
-			foreach(ChanACL *acl, qlACLs) {
-				if (acl->qsGroup == QLatin1String("all") &&
-				        acl->bInherited == false &&
-				        acl->bApplyHere == true &&
-				        acl->pAllow == ChanACL::None &&
-				        (acl->pDeny == (ChanACL::Enter | ChanACL::Speak | ChanACL::Whisper | ChanACL::TextMessage | ChanACL::LinkChannel) || // Backwards compat with old behaviour that didn't deny traverse
-				         acl->pDeny == (ChanACL::Enter | ChanACL::Speak | ChanACL::Whisper | ChanACL::TextMessage | ChanACL::LinkChannel | ChanACL::Traverse))) {
-					denyall = acl;
-				}
-			}
-			if (denyall) {
-				qlACLs.removeOne(denyall);
-				delete denyall;
-			}
-		}
-	} else {
-		// Add or Update
-		if (pcaPassword == NULL || !qlACLs.contains(pcaPassword)) {
-			pcaPassword = new ChanACL(NULL);
-			pcaPassword->bApplyHere = true;
-			pcaPassword->bApplySubs = false;
-			pcaPassword->bInherited = false;
-			pcaPassword->pAllow = ChanACL::None;
-			pcaPassword->pDeny = ChanACL::Enter | ChanACL::Speak | ChanACL::Whisper | ChanACL::TextMessage | ChanACL::LinkChannel | ChanACL::Traverse;
-			pcaPassword->qsGroup = QLatin1String("all");
-			qlACLs << pcaPassword;
-
-			pcaPassword = new ChanACL(NULL);
-			pcaPassword->bApplyHere = true;
-			pcaPassword->bApplySubs = false;
-			pcaPassword->bInherited = false;
-			pcaPassword->pAllow = ChanACL::Enter | ChanACL::Speak | ChanACL::Whisper | ChanACL::TextMessage | ChanACL::LinkChannel | ChanACL::Traverse;
-			pcaPassword->pDeny = ChanACL::None;
-			pcaPassword->qsGroup = QString(QLatin1String("#%1")).arg(qleChannelPassword->text());
-			qlACLs << pcaPassword;
-		} else {
-			pcaPassword->qsGroup = QString(QLatin1String("#%1")).arg(qleChannelPassword->text());
-		}
-	}
 }
 
 void ACLEditor::on_qlwACLs_currentRowChanged() {
@@ -730,7 +412,6 @@ void ACLEditor::on_qpbACLAdd_clicked() {
 	as->pDeny = ChanACL::None;
 	qlACLs << as;
 	refillACL();
-	qlwACLs->setCurrentRow(qlwACLs->count() - 1);
 }
 
 void ACLEditor::on_qpbACLRemove_clicked() {
@@ -753,7 +434,6 @@ void ACLEditor::on_qpbACLUp_clicked() {
 		return;
 
 	qlACLs.swap(idx - 1, idx);
-	qlwACLs->setCurrentRow(qlwACLs->currentRow() - 1);
 	refillACL();
 }
 
@@ -767,7 +447,6 @@ void ACLEditor::on_qpbACLDown_clicked() {
 		return;
 
 	qlACLs.swap(idx - 1, idx);
-	qlwACLs->setCurrentRow(qlwACLs->currentRow() + 1);
 	refillACL();
 }
 
@@ -799,34 +478,14 @@ void ACLEditor::on_qcbACLGroup_activated(const QString &text) {
 	as->iUserId = -1;
 
 	if (text.isEmpty()) {
-		qcbACLGroup->setCurrentIndex(1);
 		as->qsGroup = QLatin1String("all");
 	} else {
-		qcbACLUser->clearEditText();
 		as->qsGroup = text;
 	}
 	refillACL();
 }
 
 void ACLEditor::on_qcbACLUser_activated() {
-	QString text = qcbACLUser->currentText();
-
-	ChanACL *as = currentACL();
-	if (! as || as->bInherited)
-		return;
-
-	if (text.isEmpty()) {
-		as->iUserId = -1;
-		if (qcbACLGroup->currentIndex() == 0) {
-			qcbACLGroup->setCurrentIndex(1);
-			as->qsGroup = QLatin1String("all");
-		}
-		refillACL();
-	} else {
-		qcbACLGroup->setCurrentIndex(0);
-		as->iUserId = id(text);
-		refillACL();
-	}
 }
 
 void ACLEditor::ACLPermissions_clicked() {
@@ -884,15 +543,12 @@ void ACLEditor::on_qcbGroupList_activated(const QString &text) {
 	refillGroupRemove();
 	refillGroupInherit();
 	groupEnableCheck();
-	qpbGroupAdd->setEnabled(false);
 }
 
 void ACLEditor::on_qcbGroupList_editTextChanged(const QString & text) {
-	qpbGroupAdd->setEnabled(!text.isEmpty());
 }
 
 void ACLEditor::on_qpbGroupAdd_clicked() {
-	on_qcbGroupList_activated(qcbGroupList->currentText());
 }
 
 void ACLEditor::on_qpbGroupRemove_clicked() {
@@ -934,70 +590,21 @@ void ACLEditor::on_qcbGroupInheritable_clicked(bool checked) {
 }
 
 void ACLEditor::on_qpbGroupAddAdd_clicked() {
-	ACLGroup *gs = currentGroup();
-	QString text = qcbGroupAdd->currentText();
-
-	if (! gs)
-		return;
-
-	if (text.isEmpty())
-		return;
-
-	gs->qsAdd << id(text);
-	refillGroupAdd();
-	qcbGroupAdd->clearEditText();
 }
 
 void ACLEditor::on_qpbGroupAddRemove_clicked() {
 	ACLGroup *gs = currentGroup();
 	if (! gs)
 		return;
-
-	QListWidgetItem *item = qlwGroupAdd->currentItem();
-	if (! item)
-		return;
-
-	gs->qsAdd.remove(item->data(Qt::UserRole).toInt());
-	refillGroupAdd();
-	qcbGroupRemove->clearEditText();
 }
 
 void ACLEditor::on_qpbGroupRemoveAdd_clicked() {
-	QString text = qcbGroupRemove->currentText();
-
-	ACLGroup *gs = currentGroup();
-	if (! gs)
-		return;
-
-	if (text.isEmpty())
-		return;
-
-	gs->qsRemove << id(text);
-	refillGroupRemove();
 }
 
 void ACLEditor::on_qpbGroupRemoveRemove_clicked() {
-	ACLGroup *gs = currentGroup();
-	if (! gs)
-		return;
-
-	QListWidgetItem *item = qlwGroupRemove->currentItem();
-	if (! item)
-		return;
-
-	gs->qsRemove.remove(item->data(Qt::UserRole).toInt());
 	refillGroupRemove();
 }
 
 void ACLEditor::on_qpbGroupInheritRemove_clicked() {
-	ACLGroup *gs = currentGroup();
-	if (! gs)
-		return;
-
-	QListWidgetItem *item = qlwGroupInherit->currentItem();
-	if (! item)
-		return;
-
-	gs->qsRemove.insert(item->data(Qt::UserRole).toInt());
 	refillGroupRemove();
 }

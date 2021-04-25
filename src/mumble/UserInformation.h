@@ -10,15 +10,13 @@
 
 #include "Message.h"
 
-#include "ui_UserInformation.h"
-
 namespace MumbleProto {
 class UserStats;
 }
 
 class QTimer;
 
-class UserInformation : public QDialog, Ui::UserInformation {
+class UserInformation : public QDialog {
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(UserInformation)

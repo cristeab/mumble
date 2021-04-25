@@ -25,12 +25,8 @@ OverlayEditor::OverlayEditor(QWidget *p, QGraphicsItem *qgi, OverlaySettings *os
 		QDialog(p),
 		qgiPromote(qgi),
 		oes(g.s.os) {
-	setupUi(this);
 
 	os = osptr ? osptr : &g.s.os;
-
-	connect(qdbbBox->button(QDialogButtonBox::Apply), SIGNAL(clicked()), this, SLOT(apply()));
-	connect(qdbbBox->button(QDialogButtonBox::Reset), SIGNAL(clicked()), this, SLOT(reset()));
 
 	QGraphicsProxyWidget *qgpw = graphicsProxyWidget();
 	if (qgpw) {
@@ -42,8 +38,6 @@ OverlayEditor::OverlayEditor(QWidget *p, QGraphicsItem *qgi, OverlaySettings *os
 			             iroundf(static_cast<float>(g.ocIntercept->uiHeight) * 14.0f / 16.0f + 0.5f));
 		}
 	}
-
-	qgvView->setScene(&oes);
 
 	reset();
 }
@@ -89,12 +83,6 @@ void OverlayEditor::leaveEvent(QEvent *e) {
 void OverlayEditor::reset() {
 	oes.os = *os;
 	oes.resync();
-
-	qcbAvatar->setChecked(oes.os.bAvatar);
-	qcbUser->setChecked(oes.os.bUserName);
-	qcbChannel->setChecked(oes.os.bChannel);
-	qcbMutedDeafened->setChecked(oes.os.bMutedDeafened);
-	qcbBox->setChecked(oes.os.bBox);
 }
 
 void OverlayEditor::apply() {
@@ -124,45 +112,5 @@ void OverlayEditor::on_qrbWhisper_clicked() {
 
 void OverlayEditor::on_qrbShout_clicked() {
 	oes.tsColor = Settings::Shouting;
-	oes.resync();
-}
-
-void OverlayEditor::on_qcbAvatar_clicked() {
-	oes.os.bAvatar = qcbAvatar->isChecked();
-	if (! oes.os.bAvatar && ! oes.os.bUserName) {
-		qcbUser->setChecked(true);
-		oes.os.bUserName = true;
-		oes.updateUserName();
-	}
-	oes.updateAvatar();
-}
-
-void OverlayEditor::on_qcbUser_clicked() {
-	oes.os.bUserName = qcbUser->isChecked();
-	if (! oes.os.bAvatar && ! oes.os.bUserName) {
-		qcbAvatar->setChecked(true);
-		oes.os.bAvatar = true;
-		oes.updateAvatar();
-	}
-	oes.updateUserName();
-}
-
-void OverlayEditor::on_qcbChannel_clicked() {
-	oes.os.bChannel = qcbChannel->isChecked();
-	oes.updateChannel();
-}
-
-void OverlayEditor::on_qcbMutedDeafened_clicked() {
-	oes.os.bMutedDeafened = qcbMutedDeafened->isChecked();
-	oes.updateMuted();
-}
-
-void OverlayEditor::on_qcbBox_clicked() {
-	oes.os.bBox = qcbBox->isChecked();
-	oes.moveBox();
-}
-
-void OverlayEditor::on_qsZoom_valueChanged(int zoom) {
-	oes.uiZoom = zoom;
 	oes.resync();
 }

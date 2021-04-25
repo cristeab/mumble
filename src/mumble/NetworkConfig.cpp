@@ -20,7 +20,6 @@ static ConfigWidget *NetworkConfigNew(Settings &st) {
 static ConfigRegistrar registrar(1300, NetworkConfigNew);
 
 NetworkConfig::NetworkConfig(Settings &st) : ConfigWidget(st) {
-	setupUi(this);
 #ifdef NO_UPDATE_CHECK
 	qcbAutoUpdate->hide();
 	qcbPluginUpdate->hide();
@@ -36,32 +35,6 @@ QIcon NetworkConfig::icon() const {
 }
 
 void NetworkConfig::load(const Settings &r) {
-
-	loadCheckBox(qcbTcpMode, s.bTCPCompat);
-	loadCheckBox(qcbQoS, s.bQoS);
-	loadCheckBox(qcbAutoReconnect, s.bReconnect);
-	loadCheckBox(qcbAutoConnect, s.bAutoConnect);
-	loadCheckBox(qcbSuppressIdentity, s.bSuppressIdentity);
-	loadComboBox(qcbType, s.ptProxyType);
-
-	qleHostname->setText(r.qsProxyHost);
-
-	if (r.usProxyPort > 0) {
-		QString port;
-		port.setNum(r.usProxyPort);
-		qlePort->setText(port);
-	} else
-		qlePort->setText(QString());
-
-	qleUsername->setText(r.qsProxyUsername);
-	qlePassword->setText(r.qsProxyPassword);
-
-	loadCheckBox(qcbHideOS, s.bHideOS);
-
-	loadCheckBox(qcbAutoUpdate, r.bUpdateCheck);
-	loadCheckBox(qcbPluginUpdate, r.bPluginCheck);
-	loadCheckBox(qcbUsage, r.bUsage);
-
 #if defined(SNAPSHOT_BUILD) && defined(QT_NO_DEBUG)
 	qcbAutoUpdate->setEnabled(false);
 	qcbAutoUpdate->setToolTip(tr("Updates are mandatory when using snapshot releases."));
@@ -69,22 +42,6 @@ void NetworkConfig::load(const Settings &r) {
 }
 
 void NetworkConfig::save() const {
-	s.bTCPCompat = qcbTcpMode->isChecked();
-	s.bQoS = qcbQoS->isChecked();
-	s.bReconnect = qcbAutoReconnect->isChecked();
-	s.bAutoConnect = qcbAutoConnect->isChecked();
-	s.bSuppressIdentity = qcbSuppressIdentity->isChecked();
-	s.bHideOS = qcbHideOS->isChecked();
-
-	s.ptProxyType = static_cast<Settings::ProxyType>(qcbType->currentIndex());
-	s.qsProxyHost = qleHostname->text();
-	s.usProxyPort = qlePort->text().toUShort();
-	s.qsProxyUsername = qleUsername->text();
-	s.qsProxyPassword = qlePassword->text();
-
-	s.bUpdateCheck=qcbAutoUpdate->isChecked();
-	s.bPluginCheck=qcbPluginUpdate->isChecked();
-	s.bUsage=qcbUsage->isChecked();
 }
 
 static QNetworkProxy::ProxyType local_to_qt_proxy(Settings::ProxyType pt) {
@@ -135,13 +92,6 @@ void NetworkConfig::accept() const {
 
 void NetworkConfig::on_qcbType_currentIndexChanged(int v) {
 	Settings::ProxyType pt = static_cast<Settings::ProxyType>(v);
-
-	qleHostname->setEnabled(pt != Settings::NoProxy);
-	qlePort->setEnabled(pt != Settings::NoProxy);
-	qleUsername->setEnabled(pt != Settings::NoProxy);
-	qlePassword->setEnabled(pt != Settings::NoProxy);
-	qcbTcpMode->setEnabled(pt == Settings::NoProxy);
-
 	s.ptProxyType = pt;
 }
 

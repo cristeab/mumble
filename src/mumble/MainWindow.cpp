@@ -1196,21 +1196,9 @@ void MainWindow::on_qaSelfComment_triggered() {
 
 	::TextMessage *texm = new ::TextMessage(this, tr("Change your comment"));
 
-	texm->rteMessage->setText(p->qsComment);
 	int res = texm->exec();
 
 	p = ClientUser::get(session);
-
-	if (p && (res == QDialog::Accepted)) {
-		const QString &msg = texm->message();
-		MumbleProto::UserState mpus;
-		mpus.set_session(session);
-		mpus.set_comment(u8(msg));
-		g.sh->sendMessage(mpus);
-
-		if (! msg.isEmpty())
-			g.db->setBlob(sha1(msg), msg.toUtf8());
-	}
 	delete texm;
 }
 
@@ -1758,15 +1746,6 @@ void MainWindow::openTextMessageDialog(ClientUser *p) {
 	// Try to get find the user using the session id.
 	// This will return NULL if the user disconnected while typing the message.
 	p = ClientUser::get(session);
-
-	if (p && (res == QDialog::Accepted)) {
-		QString msg = texm->message();
-
-		if (! msg.isEmpty()) {
-			g.sh->sendUserTextMessage(p->uiSession, msg);
-			g.l->log(Log::TextMessage, tr("To %1: %2").arg(Log::formatClientUser(p, Log::Target), texm->message()), tr("Message to %1").arg(p->qsName), true);
-		}
-	}
 	delete texm;
 }
 
@@ -1793,7 +1772,6 @@ void MainWindow::on_qaUserCommentView_triggered() {
 
 	::TextMessage *texm = new ::TextMessage(this, tr("View comment on user %1").arg(p->qsName));
 
-	texm->rteMessage->setText(p->qsComment, true);
 	texm->setAttribute(Qt::WA_DeleteOnClose, true);
 	texm->show();
 }
@@ -2039,10 +2017,6 @@ void MainWindow::on_qaChannelAdd_triggered() {
 	}
 
 	aclEdit = new ACLEditor(c ? c->iId : 0, this);
-	if (c && (c->uiPermissions & ChanACL::Cached) && !(c->uiPermissions & (ChanACL::Write | ChanACL::MakeChannel))) {
-		aclEdit->qcbChannelTemporary->setEnabled(false);
-		aclEdit->qcbChannelTemporary->setChecked(true);
-	}
 
 	aclEdit->show();
 }
@@ -2130,15 +2104,6 @@ void MainWindow::on_qaChannelSendMessage_triggered() {
 	int res = texm->exec();
 
 	c = Channel::get(id);
-
-	if (c && (res==QDialog::Accepted)) {
-		g.sh->sendChannelTextMessage(id, texm->message(), texm->bTreeMessage);
-
-		if (texm->bTreeMessage)
-			g.l->log(Log::TextMessage, tr("To %1 (Tree): %2").arg(Log::formatChannel(c), texm->message()), tr("Message to tree %1").arg(c->qsName), true);
-		else
-			g.l->log(Log::TextMessage, tr("To %1: %2").arg(Log::formatChannel(c), texm->message()), tr("Message to channel %1").arg(c->qsName), true);
-	}
 	delete texm;
 }
 

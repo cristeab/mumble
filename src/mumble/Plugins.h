@@ -16,11 +16,9 @@
 
 #include "ConfigDialog.h"
 
-#include "ui_Plugins.h"
-
 struct PluginInfo;
 
-class PluginConfig : public ConfigWidget, public Ui::PluginConfig {
+class PluginConfig : public ConfigWidget {
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(PluginConfig)

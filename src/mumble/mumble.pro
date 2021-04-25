@@ -245,35 +245,7 @@ RESOURCES *= mumble.qrc
 # Add the various mumble_flags_XX.qrc files to RESOURCES...
 include(flags/mumble_flags.pri)
 
-FORMS *= ConfigDialog.ui \
-    MainWindow.ui \
-    ConnectDialog.ui \
-    ConnectDialogEdit.ui \
-    BanEditor.ui \
-    ACLEditor.ui \
-    Plugins.ui \
-    PTTButtonWidget.ui \
-    Overlay.ui \
-    OverlayEditor.ui \
-    LookConfig.ui \
-    AudioInput.ui \
-    AudioOutput.ui \
-    Log.ui \
-    TextMessage.ui \
-    AudioStats.ui \
-    NetworkConfig.ui \
-    LCD.ui \
-    GlobalShortcut.ui \
-    GlobalShortcutTarget.ui \
-    Cert.ui \
-    UserEdit.ui \
-    UserLocalVolumeDialog.ui \
-    AudioWizard.ui \
-    Tokens.ui \
-    RichTextEditor.ui \
-    RichTextEditorLink.ui \
-    UserInformation.ui \
-    VoiceRecorderDialog.ui
+FORMS *= MainWindow.ui
 
 # Include TRANSLATIONS variable
 #include(translations.pri)
@@ -617,7 +589,6 @@ asio {
   DEFINES *= USE_ASIO
   HEADERS *= ASIOInput.h
   SOURCES *= ASIOInput.cpp
-  FORMS *= ASIOInput.ui
 
   # If 3rdparty/asio exists, use that...
   exists(../../3rdparty/asio) {

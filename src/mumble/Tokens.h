@@ -6,9 +6,9 @@
 #ifndef MUMBLE_MUMBLE_TOKENS_H_
 #define MUMBLE_MUMBLE_TOKENS_H_
 
-#include "ui_Tokens.h"
+#include <QDialog>
 
-class Tokens : public QDialog, public Ui::Tokens {
+class Tokens : public QDialog {
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(Tokens)

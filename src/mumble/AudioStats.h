@@ -52,9 +52,7 @@ class AudioNoiseWidget : public QWidget {
 		void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 };
 
-#include "ui_AudioStats.h"
-
-class AudioStats : public QDialog, public Ui::AudioStats {
+class AudioStats : public QDialog {
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(AudioStats)

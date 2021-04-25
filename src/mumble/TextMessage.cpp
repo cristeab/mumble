@@ -8,13 +8,6 @@
 #include "TextMessage.h"
 
 TextMessage::TextMessage(QWidget *p, QString title, bool bChannel) : QDialog(p) {
-	setupUi(this);
-	if (!bChannel)
-		qcbTreeMessage->setHidden(true);
-	setWindowTitle(title);
-	bTreeMessage = false;
-
-	QObject::connect(rteMessage, SIGNAL(accept()), this, SLOT(accept()));
 }
 
 void TextMessage::on_qcbTreeMessage_stateChanged(int s) {
@@ -56,8 +49,4 @@ QString TextMessage::autoFormat(QString qsPlain) {
 		}
 	} while (idx >= 0);
 	return qsPlain;
-}
-
-QString TextMessage::message() {
-	return rteMessage->text();
 }

@@ -46,14 +46,11 @@ UserLocalVolumeDialog::UserLocalVolumeDialog(unsigned int sessionId,
 	: QDialog(NULL)
 	, m_clientSession(sessionId)
 	, m_qmUserVolTracker(qmUserVolTracker) {
-	setupUi(this);
 
 	ClientUser *user = ClientUser::get(sessionId);
 	if (user) {
 		QString title = tr("Adjusting local volume for %1").arg(user->qsName);
 		setWindowTitle(title);
-		qsUserLocalVolume->setValue(qRound(log2(user->fLocalVolume) * 6.0));
-		m_originalVolumeAdjustmentDecibel = qsUserLocalVolume->value();
 	}
 }
 
@@ -74,33 +71,12 @@ void UserLocalVolumeDialog::present(unsigned int sessionId,
 }
 
 void UserLocalVolumeDialog::on_qsUserLocalVolume_valueChanged(int value) {
-	qsbUserLocalVolume->setValue(value);
-	ClientUser *user = ClientUser::get(m_clientSession);
-	if (user) {
-		// Decibel formula: +6db = *2
-		user->fLocalVolume = static_cast<float>(pow(2.0, qsUserLocalVolume->value() / 6.0));
-	}
 }
 
 void UserLocalVolumeDialog::on_qsbUserLocalVolume_valueChanged(int value) {
-	qsUserLocalVolume->setValue(value);
 }
 
 void UserLocalVolumeDialog::on_qbbUserLocalVolume_clicked(QAbstractButton *button) {
-	if (button == qbbUserLocalVolume->button(QDialogButtonBox::Reset)) {
-		qsUserLocalVolume->setValue(0);
-	}
-	if (button == qbbUserLocalVolume->button(QDialogButtonBox::Ok)) {
-		ClientUser *user = ClientUser::get(m_clientSession);
-		if (user && !user->qsHash.isEmpty()) {
-			g.db->setUserLocalVolume(user->qsHash, user->fLocalVolume);
-		}
-		UserLocalVolumeDialog::close();
-	}
-	if (button == qbbUserLocalVolume->button(QDialogButtonBox::Cancel)) {
-		qsUserLocalVolume->setValue(m_originalVolumeAdjustmentDecibel);
-		UserLocalVolumeDialog::close();
-	}
 }
 
 void UserLocalVolumeDialog::reject() {

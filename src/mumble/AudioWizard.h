@@ -30,9 +30,7 @@ class CompletablePage : public QWizardPage {
 		bool isComplete() const Q_DECL_OVERRIDE;
 };
 
-#include "ui_AudioWizard.h"
-
-class AudioWizard: public QWizard, public Ui::AudioWizard {
+class AudioWizard: public QWizard {
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(AudioWizard)

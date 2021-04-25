@@ -10,8 +10,6 @@
 #include "Group.h"
 #include "Mumble.pb.h"
 
-#include "ui_ACLEditor.h"
-
 class ACLGroup : public Group {
 	private:
 		Q_DISABLE_COPY(ACLGroup)
@@ -20,7 +18,7 @@ class ACLGroup : public Group {
 		ACLGroup(const QString &name);
 };
 
-class ACLEditor : public QDialog, public Ui::ACLEditor {
+class ACLEditor : public QDialog {
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(ACLEditor)

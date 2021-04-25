@@ -8,9 +8,9 @@
 
 #pragma once
 
-#include "ui_VoiceRecorderDialog.h"
+#include <QDialog>
 
-class VoiceRecorderDialog : public QDialog, private Ui::VoiceRecorderDialog {
+class VoiceRecorderDialog : public QDialog {
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(VoiceRecorderDialog)
@@ -25,10 +25,8 @@ class VoiceRecorderDialog : public QDialog, private Ui::VoiceRecorderDialog {
 		void on_qpbStart_clicked();
 		void on_qpbStop_clicked();
 		void on_qtTimer_timeout();
-		void on_qpbTargetDirectoryBrowse_clicked();
 
 		void onRecorderStopped();
-		void onRecorderStarted();
 		void onRecorderError(int err, QString strerr);
 
 		void reset(bool resettimer=true);

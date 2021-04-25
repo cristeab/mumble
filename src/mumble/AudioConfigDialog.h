@@ -8,10 +8,7 @@
 
 #include "ConfigDialog.h"
 
-#include "ui_AudioInput.h"
-#include "ui_AudioOutput.h"
-
-class AudioInputDialog : public ConfigWidget, public Ui::AudioInput {
+class AudioInputDialog : public ConfigWidget {
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(AudioInputDialog)
@@ -50,7 +47,7 @@ class AudioInputDialog : public ConfigWidget, public Ui::AudioInput {
 		void on_qcbIdleAction_currentIndexChanged(int v);
 };
 
-class AudioOutputDialog : public ConfigWidget, public Ui::AudioOutput {
+class AudioOutputDialog : public ConfigWidget {
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(AudioOutputDialog)

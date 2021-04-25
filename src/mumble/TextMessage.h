@@ -6,9 +6,9 @@
 #ifndef MUMBLE_MUMBLE_TEXTMESSAGE_H_
 #define MUMBLE_MUMBLE_TEXTMESSAGE_H_
 
-#include "ui_TextMessage.h"
+#include <QDialog>
 
-class TextMessage : public QDialog, public Ui::TextMessage {
+class TextMessage : public QDialog {
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(TextMessage)
@@ -18,7 +18,6 @@ class TextMessage : public QDialog, public Ui::TextMessage {
 		void on_qcbTreeMessage_stateChanged(int);
 	public:
 		TextMessage(QWidget *parent = NULL, QString title = tr("Enter text"), bool bChannel = false);
-		QString message();
 		static QString autoFormat(QString qsPlain);
 		bool bTreeMessage;
 };

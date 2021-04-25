@@ -9,9 +9,7 @@
 #include "ConfigWidget.h"
 #include "Settings.h"
 
-#include "ui_ConfigDialog.h"
-
-class ConfigDialog : public QDialog, public Ui::ConfigDialog {
+class ConfigDialog : public QDialog {
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(ConfigDialog)

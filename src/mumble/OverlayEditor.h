@@ -7,11 +7,10 @@
 #define MUMBLE_MUMBLE_OVERLAYEDITOR_H_
 
 #include "OverlayEditorScene.h"
-#include "ui_OverlayEditor.h"
 
 struct OverlaySettings;
 
-class OverlayEditor : public QDialog, public Ui::OverlayEditor {
+class OverlayEditor : public QDialog {
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(OverlayEditor)
@@ -36,14 +35,6 @@ class OverlayEditor : public QDialog, public Ui::OverlayEditor {
 		void on_qrbTalking_clicked();
 		void on_qrbWhisper_clicked();
 		void on_qrbShout_clicked();
-
-		void on_qcbAvatar_clicked();
-		void on_qcbUser_clicked();
-		void on_qcbChannel_clicked();
-		void on_qcbMutedDeafened_clicked();
-		void on_qcbBox_clicked();
-
-		void on_qsZoom_valueChanged(int);
 };
 
 #endif

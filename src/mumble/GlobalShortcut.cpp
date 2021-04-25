@@ -172,33 +172,6 @@ void iterateChannelChildren(QTreeWidgetItem *root, Channel *chan, QMap<int, QTre
 
 ShortcutTargetDialog::ShortcutTargetDialog(const ShortcutTarget &st, QWidget *pw) : QDialog(pw) {
 	stTarget = st;
-	setupUi(this);
-
-	// Load current shortcut configuration
-	qcbForceCenter->setChecked(st.bForceCenter);
-	qgbModifiers->setVisible(true);
-
-	if (st.bUsers) {
-		qrbUsers->setChecked(true);
-		qswStack->setCurrentWidget(qwUserPage);
-	} else {
-		qrbChannel->setChecked(true);
-		qswStack->setCurrentWidget(qwChannelPage);
-	}
-
-	qcbLinks->setChecked(st.bLinks);
-	qcbChildren->setChecked(st.bChildren);
-
-	// Insert all known friends into the possible targets list
-	const QMap<QString, QString> &friends = g.db->getFriends();
-	if (! friends.isEmpty()) {
-		QMap<QString, QString>::const_iterator i;
-		for (i = friends.constBegin(); i != friends.constEnd(); ++i) {
-			qcbUser->addItem(i.key(), i.value());
-			qmHashNames.insert(i.value(), i.key());
-		}
-		qcbUser->insertSeparator(qcbUser->count());
-	}
 
 	// If we are connected to a server also add all connected players with certificates to the list
 	if (g.uiSession) {
@@ -211,10 +184,6 @@ ShortcutTargetDialog::ShortcutTargetDialog(const ShortcutTarget &st, QWidget *pw
 				others.insert(p->qsName, p->qsHash);
 				qmHashNames.insert(p->qsHash, p->qsName);
 			}
-		}
-
-		for (i = others.constBegin(); i != others.constEnd(); ++i) {
-			qcbUser->addItem(i.key(), i.value());
 		}
 	}
 
@@ -232,63 +201,8 @@ ShortcutTargetDialog::ShortcutTargetDialog(const ShortcutTarget &st, QWidget *pw
 		for (i=users.constBegin(); i != users.constEnd(); ++i) {
 			QListWidgetItem *itm = new QListWidgetItem(i.key());
 			itm->setData(Qt::UserRole, i.value());
-			qlwUsers->addItem(itm);
 		}
 	}
-
-	// Now generate the tree of possible channel targets, first add the default ones
-	QMap<int, QTreeWidgetItem *> qmTree;
-
-	QTreeWidgetItem *root = new QTreeWidgetItem(qtwChannels, QStringList(tr("Root")));
-	root->setData(0, Qt::UserRole, SHORTCUT_TARGET_ROOT);
-	root->setExpanded(true);
-	qmTree.insert(-1, root);
-
-	QTreeWidgetItem *parent_item = new QTreeWidgetItem(root, QStringList(tr("Parent")));
-	parent_item->setData(0, Qt::UserRole, SHORTCUT_TARGET_PARENT);
-	parent_item->setExpanded(true);
-	qmTree.insert(-2, parent_item);
-
-	QTreeWidgetItem *current = new QTreeWidgetItem(parent_item, QStringList(tr("Current")));
-	current->setData(0, Qt::UserRole, SHORTCUT_TARGET_CURRENT);
-	qmTree.insert(-3, current);
-
-	for (int i = 0; i < 8; ++i) {
-		QTreeWidgetItem *sub = new QTreeWidgetItem(current, QStringList(tr("Subchannel #%1").arg(i+1)));
-		sub->setData(0, Qt::UserRole, SHORTCUT_TARGET_SUBCHANNEL - i);
-		qmTree.insert(SHORTCUT_TARGET_SUBCHANNEL - i, sub);
-	}
-
-	for (int i = 0; i < 8; ++i) {
-		QTreeWidgetItem *psub = new QTreeWidgetItem(parent_item, QStringList(UPARROW + tr("Subchannel #%1").arg(i+1)));
-		psub->setData(0, Qt::UserRole, SHORTCUT_TARGET_PARENT_SUBCHANNEL - i);
-		qmTree.insert(SHORTCUT_TARGET_PARENT_SUBCHANNEL - i, psub);
-	}
-
-	// And if we are connected add the channels on the current server
-	if (g.uiSession) {
-		Channel *c = Channel::get(0);
-		QTreeWidgetItem *sroot = new QTreeWidgetItem(qtwChannels, QStringList(c->qsName));
-		qmTree.insert(0, sroot);
-		iterateChannelChildren(sroot, c, qmTree);
-	}
-
-	qtwChannels->sortByColumn(0, Qt::AscendingOrder);
-
-	QTreeWidgetItem *qtwi;
-	if (g.uiSession) {
-		qtwi = qmTree.value(ClientUser::get(g.uiSession)->cChannel->iId);
-		if (qtwi)
-			qtwChannels->scrollToItem(qtwi);
-	}
-
-	qtwi = qmTree.value(st.iChannel);
-	if (qtwi) {
-		qtwChannels->scrollToItem(qtwi);
-		qtwChannels->setCurrentItem(qtwi);
-	}
-
-	qleGroup->setText(stTarget.qsGroup);
 }
 
 ShortcutTarget ShortcutTargetDialog::target() const {
@@ -296,48 +210,21 @@ ShortcutTarget ShortcutTargetDialog::target() const {
 }
 
 void ShortcutTargetDialog::accept() {
-	stTarget.bLinks = qcbLinks->isChecked();
-	stTarget.bChildren = qcbChildren->isChecked();
-
-	stTarget.bForceCenter = qcbForceCenter->isChecked();
-
-	stTarget.qlUsers.clear();
-	QList<QListWidgetItem *> ql = qlwUsers->findItems(QString(), Qt::MatchStartsWith);
-	foreach(QListWidgetItem *itm, ql) {
-		stTarget.qlUsers << itm->data(Qt::UserRole).toString();
-	}
-
-	QTreeWidgetItem *qtwi = qtwChannels->currentItem();
-	if (qtwi) {
-		stTarget.iChannel = qtwi->data(0, Qt::UserRole).toInt();
-		stTarget.qsGroup = qleGroup->text().trimmed();
-	}
-
 	QDialog::accept();
 }
 
 void ShortcutTargetDialog::on_qrbUsers_clicked() {
 	stTarget.bUsers = true;
-	qswStack->setCurrentWidget(qwUserPage);
 }
 
 void ShortcutTargetDialog::on_qrbChannel_clicked() {
 	stTarget.bUsers = false;
-	qswStack->setCurrentWidget(qwChannelPage);
 }
 
 void ShortcutTargetDialog::on_qpbAdd_clicked() {
-	if (qcbUser->currentIndex() < 0)
-		return;
-
-	QListWidgetItem *itm = new QListWidgetItem(qcbUser->currentText());
-	itm->setData(Qt::UserRole, qcbUser->itemData(qcbUser->currentIndex()));
-	qlwUsers->addItem(itm);
 }
 
 void ShortcutTargetDialog::on_qpbRemove_clicked() {
-	QListWidgetItem *itm = qlwUsers->currentItem();
-	delete itm;
 }
 
 ShortcutTargetWidget::ShortcutTargetWidget(QWidget *p) : QFrame(p) {
@@ -494,60 +381,10 @@ QString ShortcutDelegate::displayText(const QVariant &item, const QLocale &loc) 
 }
 
 GlobalShortcutConfig::GlobalShortcutConfig(Settings &st) : ConfigWidget(st) {
-	setupUi(this);
 	installEventFilter(this);
 
 	bool canSuppress = GlobalShortcutEngine::engine->canSuppress();
 	bool canDisable = GlobalShortcutEngine::engine->canDisable();
-
-	qwWarningContainer->setVisible(false);
-
-#ifdef Q_OS_WIN
-	qgbWindowsShortcutEngines->setVisible(true);
-#else
-	qgbWindowsShortcutEngines->setVisible(false);
-#endif
-
-	qtwShortcuts->setColumnCount(canSuppress ? 4 : 3);
-	qtwShortcuts->setItemDelegate(new ShortcutDelegate(qtwShortcuts));
-
-#if QT_VERSION >= 0x050000
-	qtwShortcuts->header()->setSectionResizeMode(0, QHeaderView::Fixed);
-	qtwShortcuts->header()->resizeSection(0, 150);
-	qtwShortcuts->header()->setSectionResizeMode(2, QHeaderView::Stretch);
-	if (canSuppress)
-		qtwShortcuts->header()->setSectionResizeMode(3, QHeaderView::ResizeToContents);
-#else
-	qtwShortcuts->header()->setResizeMode(0, QHeaderView::Fixed);
-	qtwShortcuts->header()->resizeSection(0, 150);
-	qtwShortcuts->header()->setResizeMode(2, QHeaderView::Stretch);
-	if (canSuppress)
-		qtwShortcuts->header()->setResizeMode(3, QHeaderView::ResizeToContents);
-#endif
-
-
-	qcbEnableGlobalShortcuts->setVisible(canDisable);
-
-#ifdef Q_OS_MAC
-	// Help Mac users enable accessibility access for Mumble...
-	if (QSysInfo::MacintoshVersion >= QSysInfo::MV_MAVERICKS) {
-		qpbOpenAccessibilityPrefs->setHidden(true);
-		label->setText(tr(
-			"<html><head/><body>"
-			"<p>"
-			"Mumble can currently only use mouse buttons and keyboard modifier keys (Alt, Ctrl, Cmd, etc.) for global shortcuts."
-			"</p>"
-			"<p>"
-			"If you want more flexibility, you can add Mumble as a trusted accessibility program in the Security & Privacy section "
-			"of your Mac's System Preferences."
-			"</p>"
-			"<p>"
-			"In the Security & Privacy preference pane, change to the Privacy tab. Then choose Accessibility (near the bottom) in "
-			"the list to the left. Finally, add Mumble to the list of trusted accessibility programs."
-			"</body></html>"
-		));
-	}
-#endif
 }
 
 bool GlobalShortcutConfig::eventFilter(QObject* /*object*/, QEvent *e) {
@@ -588,21 +425,13 @@ void GlobalShortcutConfig::on_qpbSkipWarning_clicked() {
 	// Store to both global and local settings.  The 'Skip' is live, as in
 	// we don't expect the user to click Apply for their choice to work.
 	g.s.bSuppressMacEventTapWarning = s.bSuppressMacEventTapWarning = true;
-	qwWarningContainer->setVisible(false);
 }
 
 void GlobalShortcutConfig::commit() {
-	qtwShortcuts->closePersistentEditor(qtwShortcuts->currentItem(), qtwShortcuts->currentColumn());
 }
 
 void GlobalShortcutConfig::on_qcbEnableGlobalShortcuts_stateChanged(int state) {
 	bool b = state == Qt::Checked;
-	qpbAdd->setEnabled(b);
-	if (!b)
-		qpbRemove->setEnabled(false);
-	else
-		qpbRemove->setEnabled(qtwShortcuts->currentItem() ? true : false);
-	qtwShortcuts->setEnabled(b);
 
 	// We have to enable this here. Otherwise, adding new shortcuts wouldn't work.
 	GlobalShortcutEngine::engine->setEnabled(b);
@@ -619,31 +448,12 @@ void GlobalShortcutConfig::on_qpbAdd_clicked(bool) {
 
 void GlobalShortcutConfig::on_qpbRemove_clicked(bool) {
 	commit();
-	QTreeWidgetItem *qtwi = qtwShortcuts->currentItem();
-	if (! qtwi)
-		return;
-	int idx = qtwShortcuts->indexOfTopLevelItem(qtwi);
-	delete qtwi;
-	qlShortcuts.removeAt(idx);
 }
 
 void GlobalShortcutConfig::on_qtwShortcuts_currentItemChanged(QTreeWidgetItem *item, QTreeWidgetItem *) {
-	qpbRemove->setEnabled(item ? true : false);
 }
 
 void GlobalShortcutConfig::on_qtwShortcuts_itemChanged(QTreeWidgetItem *item, int) {
-	int idx = qtwShortcuts->indexOfTopLevelItem(item);
-
-	Shortcut &sc = qlShortcuts[idx];
-	sc.iIndex = item->data(0, Qt::DisplayRole).toInt();
-	sc.qvData = item->data(1, Qt::DisplayRole);
-	sc.qlButtons = item->data(2, Qt::DisplayRole).toList();
-	sc.bSuppress = item->checkState(3) == Qt::Checked;
-
-	const ::GlobalShortcut *gs = GlobalShortcutEngine::engine->qmShortcuts.value(sc.iIndex);
-	if (gs && sc.qvData.type() != gs->qvDefault.type()) {
-		item->setData(1, Qt::DisplayRole, gs->qvDefault);
-	}
 }
 
 QString GlobalShortcutConfig::title() const {
@@ -663,39 +473,10 @@ void GlobalShortcutConfig::load(const Settings &r) {
 	// To make this work well, we set the setting on load. This is to make 'Reset' and 'Restore Defaults'
 	// work as expected.
 	g.s.bSuppressMacEventTapWarning = s.bSuppressMacEventTapWarning = r.bSuppressMacEventTapWarning;
-	if (! g.s.bSuppressMacEventTapWarning) {
-		qwWarningContainer->setVisible(showWarning());
-	}
-
-	qcbEnableUIAccess->setChecked(r.bEnableUIAccess);
-	qcbEnableWinHooks->setChecked(r.bEnableWinHooks);
-	qcbEnableGKey->setChecked(r.bEnableGKey);
-	qcbEnableXboxInput->setChecked(r.bEnableXboxInput);
-
-	qcbEnableGlobalShortcuts->setCheckState(r.bShortcutEnable ? Qt::Checked : Qt::Unchecked);
-	on_qcbEnableGlobalShortcuts_stateChanged(qcbEnableGlobalShortcuts->checkState());
 	reload();
 }
 
 void GlobalShortcutConfig::save() const {
-	s.qlShortcuts = qlShortcuts;
-	s.bShortcutEnable = qcbEnableGlobalShortcuts->checkState() == Qt::Checked;
-
-	bool oldUIAccess = s.bEnableUIAccess;
-	s.bEnableUIAccess = qcbEnableUIAccess->checkState() == Qt::Checked;
-
-	bool oldWinHooks = s.bEnableWinHooks;
-	s.bEnableWinHooks = qcbEnableWinHooks->checkState() == Qt::Checked;
-
-	bool oldGKey = s.bEnableGKey;
-	s.bEnableGKey = qcbEnableGKey->checkState() == Qt::Checked;
-
-	bool oldXboxInput = s.bEnableXboxInput;
-	s.bEnableXboxInput = qcbEnableXboxInput->checkState() == Qt::Checked;
-
-	if (s.bEnableUIAccess != oldUIAccess || s.bEnableWinHooks != oldWinHooks || s.bEnableGKey != oldGKey || s.bEnableXboxInput != oldXboxInput) {
-		s.requireRestartToApply = true;
-	}
 }
 
 QTreeWidgetItem *GlobalShortcutConfig::itemForShortcut(const Shortcut &sc) const {
@@ -733,19 +514,6 @@ QTreeWidgetItem *GlobalShortcutConfig::itemForShortcut(const Shortcut &sc) const
 }
 
 void GlobalShortcutConfig::reload() {
-	qStableSort(qlShortcuts);
-	qtwShortcuts->clear();
-	foreach(const Shortcut &sc, qlShortcuts) {
-		QTreeWidgetItem *item = itemForShortcut(sc);
-		qtwShortcuts->addTopLevelItem(item);
-	}
-#ifdef Q_OS_MAC
-	if (! g.s.bSuppressMacEventTapWarning) {
-		qwWarningContainer->setVisible(showWarning());
-	} else {
-		qwWarningContainer->setVisible(false);
-	}
-#endif
 }
 
 void GlobalShortcutConfig::accept() const {

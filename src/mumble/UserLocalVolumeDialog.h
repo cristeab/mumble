@@ -37,11 +37,9 @@
 #define MUMBLE_MUMBLE_USERVOLUME_H_
 
 #include <QMap>
-
-#include "ui_UserLocalVolumeDialog.h"
 #include "ClientUser.h"
 
-class UserLocalVolumeDialog : public QDialog, private Ui::UserLocalVolumeDialog {
+class UserLocalVolumeDialog : public QDialog {
 		Q_OBJECT
 		Q_DISABLE_COPY(UserLocalVolumeDialog);
 

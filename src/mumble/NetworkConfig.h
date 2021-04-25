@@ -11,9 +11,8 @@ class QNetworkRequest;
 class QUrl;
 
 #include "ConfigDialog.h"
-#include "ui_NetworkConfig.h"
 
-class NetworkConfig : public ConfigWidget, Ui::NetworkConfig {
+class NetworkConfig : public ConfigWidget {
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(NetworkConfig)

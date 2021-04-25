@@ -111,9 +111,6 @@ class ServerView : public QTreeWidget {
 		bool dropMimeData(QTreeWidgetItem *, int, const QMimeData *, Qt::DropAction) Q_DECL_OVERRIDE;
 };
 
-#include "ui_ConnectDialog.h"
-#include "ui_ConnectDialogEdit.h"
-
 class ServerItem : public QTreeWidgetItem, public PingStats {
 		Q_DISABLE_COPY(ServerItem)
 	protected:
@@ -194,7 +191,7 @@ class ServerItem : public QTreeWidgetItem, public PingStats {
 		void hideCheck();
 };
 
-class ConnectDialogEdit : public QDialog, protected Ui::ConnectDialogEdit {
+class ConnectDialogEdit : public QDialog {
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(ConnectDialogEdit)
@@ -231,7 +228,7 @@ class ConnectDialogEdit : public QDialog, protected Ui::ConnectDialogEdit {
 		virtual ~ConnectDialogEdit();
 };
 
-class ConnectDialog : public QDialog, public Ui::ConnectDialog {
+class ConnectDialog : public QDialog {
 		friend class ServerView;
 	private:
 		Q_OBJECT
