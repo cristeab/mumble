@@ -246,8 +246,7 @@ RESOURCES *= mumble.qrc
 include(flags/mumble_flags.pri)
 
 FORMS *= MainWindow.ui \
-    ACLEditor.ui \
-    NetworkConfig.ui
+    ACLEditor.ui
 
 # Include TRANSLATIONS variable
 #include(translations.pri)
