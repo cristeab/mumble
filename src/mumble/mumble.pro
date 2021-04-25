@@ -245,8 +245,7 @@ RESOURCES *= mumble.qrc
 # Add the various mumble_flags_XX.qrc files to RESOURCES...
 include(flags/mumble_flags.pri)
 
-FORMS *= MainWindow.ui \
-    ACLEditor.ui
+FORMS *= MainWindow.ui
 
 # Include TRANSLATIONS variable
 #include(translations.pri)
@@ -590,7 +589,6 @@ asio {
   DEFINES *= USE_ASIO
   HEADERS *= ASIOInput.h
   SOURCES *= ASIOInput.cpp
-  FORMS *= ASIOInput.ui
 
   # If 3rdparty/asio exists, use that...
   exists(../../3rdparty/asio) {
