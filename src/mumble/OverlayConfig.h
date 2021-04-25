@@ -9,13 +9,11 @@
 #include "OverlayText.h"
 #include "ConfigWidget.h"
 
-#include "ui_Overlay.h"
-
 class OverlayUserGroup;
 struct OverlayAppInfo;
 class OverlayPositionableItem;
 
-class OverlayConfig : public ConfigWidget, public Ui::OverlayConfig {
+class OverlayConfig : public ConfigWidget {
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(OverlayConfig)
@@ -26,7 +24,6 @@ class OverlayConfig : public ConfigWidget, public Ui::OverlayConfig {
 		void refreshFpsDemo();
 		void refreshFpsLive();
 		void refreshTimeLive();
-		void addWhitelistPath(const QString & path);
 	protected:
 		QPixmap qpScreen;
 		QGraphicsPixmapItem *qgpiScreen;
@@ -55,30 +52,13 @@ class OverlayConfig : public ConfigWidget, public Ui::OverlayConfig {
 
 		void updateOverlayExclusionModeState();
 	protected slots:
-		void on_qpbInstall_clicked();
-		void on_qpbUninstall_clicked();
-
 		void on_qcbOverlayExclusionMode_currentIndexChanged(int);
 
 		void on_qlwLaunchers_itemSelectionChanged();
 		void on_qpbLaunchersAdd_clicked();
-		void on_qpbLaunchersRemove_clicked();
 
-		void on_qlwWhitelist_itemSelectionChanged();
 		void on_qpbWhitelistAdd_clicked();
-		void on_qpbWhitelistRemove_clicked();
 
-		void on_qlwPaths_itemSelectionChanged();
-		void on_qpbPathsAdd_clicked();
-		void on_qpbPathsRemove_clicked();
-
-		void on_qlwBlacklist_itemSelectionChanged();
-		void on_qpbBlacklistAdd_clicked();
-		void on_qpbBlacklistRemove_clicked();
-
-		void on_qcbEnable_stateChanged(int);
-		void on_qcbShowFps_stateChanged(int);
-		void on_qcbShowTime_stateChanged(int);
 		void on_qpbFpsFont_clicked();
 		void on_qpbFpsColor_clicked();
 		void on_qpbLoadPreset_clicked();

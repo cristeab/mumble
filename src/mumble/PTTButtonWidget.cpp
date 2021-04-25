@@ -11,8 +11,6 @@
 
 PTTButtonWidget::PTTButtonWidget(QWidget *p) :
 		QWidget(p) {
-	setupUi(this);
-
 	setWindowFlags(Qt::Tool | Qt::WindowStaysOnTopHint);
 
 	if (!g.s.qbaPTTButtonWindowGeometry.isEmpty()) {

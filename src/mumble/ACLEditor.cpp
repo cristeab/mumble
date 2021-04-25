@@ -254,7 +254,6 @@ void ACLEditor::accept() {
 
 	// Update channel state
 	if (bAddChannelMode) {
-		g.sh->createChannel(iChannel, qleChannelName->text(), rteChannelDescription->text(), qsbChannelPosition->value(), qcbChannelTemporary->isChecked(), qsbChannelMaxUsers->value());
 	} else {
 		bool needs_update = false;
 
@@ -265,12 +264,6 @@ void ACLEditor::accept() {
 		if (pChannel->qsName != qleChannelName->text()) {
 			mpcs.set_name(u8(qleChannelName->text()));
 			needs_update = true;
-		}
-		if (rteChannelDescription->isModified() && (pChannel->qsDesc != rteChannelDescription->text())) {
-			const QString &descriptionText = rteChannelDescription->text();
-			mpcs.set_description(u8(descriptionText));
-			needs_update = true;
-			g.db->setBlob(sha1(descriptionText), descriptionText.toUtf8());
 		}
 		if (pChannel->iPosition != qsbChannelPosition->value()) {
 			mpcs.set_position(qsbChannelPosition->value());

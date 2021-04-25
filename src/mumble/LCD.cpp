@@ -78,25 +78,6 @@ static LCDDeviceManager devmgr;
 
 
 LCDConfig::LCDConfig(Settings &st) : ConfigWidget(st) {
-	setupUi(this);
-
-	QTreeWidgetItem *qtwi;
-	foreach(LCDDevice *d, devmgr.qlDevices) {
-		qtwi = new QTreeWidgetItem(qtwDevices);
-
-		qtwi->setFlags(Qt::ItemIsEnabled |Qt::ItemIsUserCheckable);
-
-		qtwi->setText(0, d->name());
-		qtwi->setToolTip(0, Qt::escape(d->name()));
-
-		QSize lcdsize = d->size();
-		QString qsSize = QString::fromLatin1("%1x%2").arg(lcdsize.width()).arg(lcdsize.height());
-		qtwi->setText(1, qsSize);
-		qtwi->setToolTip(1, qsSize);
-
-		qtwi->setCheckState(2, Qt::Unchecked);
-		qtwi->setToolTip(2, tr("Enable this device"));
-	}
 }
 
 QString LCDConfig::title() const {
@@ -108,27 +89,9 @@ QIcon LCDConfig::icon() const {
 }
 
 void LCDConfig::load(const Settings &r) {
-	QList<QTreeWidgetItem *> qlItems = qtwDevices->findItems(QString(), Qt::MatchContains);
-	foreach(QTreeWidgetItem *qtwi, qlItems) {
-		QString qsName = qtwi->text(0);
-		bool enabled = r.qmLCDDevices.contains(qsName) ? r.qmLCDDevices.value(qsName) : true;
-		qtwi->setCheckState(2, enabled ? Qt::Checked : Qt::Unchecked);
-	}
-
-	loadSlider(qsMinColWidth, r.iLCDUserViewMinColWidth);
-	loadSlider(qsSplitterWidth, r.iLCDUserViewSplitterWidth);
 }
 
 void LCDConfig::save() const {
-	QList<QTreeWidgetItem *> qlItems = qtwDevices->findItems(QString(), Qt::MatchContains);
-
-	foreach(QTreeWidgetItem *qtwi, qlItems) {
-		QString qsName = qtwi->text(0);
-		s.qmLCDDevices.insert(qsName, qtwi->checkState(2) == Qt::Checked);
-	}
-
-	s.iLCDUserViewMinColWidth = qsMinColWidth->value();
-	s.iLCDUserViewSplitterWidth = qsSplitterWidth->value();
 }
 
 void LCDConfig::accept() const {
@@ -140,11 +103,9 @@ void LCDConfig::accept() const {
 }
 
 void LCDConfig::on_qsMinColWidth_valueChanged(int v) {
-	qlMinColWidth->setText(QString::number(v));
 }
 
 void LCDConfig::on_qsSplitterWidth_valueChanged(int v) {
-	qlSplitterWidth->setText(QString::number(v));
 }
 
 /* --- */

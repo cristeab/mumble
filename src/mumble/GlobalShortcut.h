@@ -20,9 +20,6 @@
 #include "Timer.h"
 #include "MUComboBox.h"
 
-#include "ui_GlobalShortcut.h"
-#include "ui_GlobalShortcutTarget.h"
-
 class GlobalShortcut : public QObject {
 		friend class GlobalShortcutEngine;
 		friend class GlobalShortcutConfig;
@@ -107,7 +104,7 @@ class ShortcutToggleWidget : public MUComboBox {
 /**
  * Dialog which is used to select the targets of a targeted shortcut like Whisper.
  */
-class ShortcutTargetDialog : public QDialog, public Ui::GlobalShortcutTarget {
+class ShortcutTargetDialog : public QDialog {
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(ShortcutTargetDialog)
@@ -178,7 +175,7 @@ class ShortcutDelegate : public QStyledItemDelegate {
  * Contains the Shortcut tab from the settings. This ConfigWidget provides
  * the user with the interface to add/edit/delete global shortcuts in Mumble.
  */
-class GlobalShortcutConfig : public ConfigWidget, public Ui::GlobalShortcut {
+class GlobalShortcutConfig : public ConfigWidget {
 		friend class ShortcutActionWidget;
 	private:
 		Q_OBJECT

@@ -249,31 +249,19 @@ FORMS *= ConfigDialog.ui \
     MainWindow.ui \
     ConnectDialog.ui \
     ConnectDialogEdit.ui \
-    BanEditor.ui \
     ACLEditor.ui \
-    Plugins.ui \
-    PTTButtonWidget.ui \
-    Overlay.ui \
-    OverlayEditor.ui \
     LookConfig.ui \
     AudioInput.ui \
     AudioOutput.ui \
     Log.ui \
     TextMessage.ui \
-    AudioStats.ui \
     NetworkConfig.ui \
-    LCD.ui \
-    GlobalShortcut.ui \
-    GlobalShortcutTarget.ui \
     Cert.ui \
     UserEdit.ui \
     UserLocalVolumeDialog.ui \
     AudioWizard.ui \
     Tokens.ui \
-    RichTextEditor.ui \
-    RichTextEditorLink.ui \
     UserInformation.ui \
-    VoiceRecorderDialog.ui
 
 # Include TRANSLATIONS variable
 #include(translations.pri)

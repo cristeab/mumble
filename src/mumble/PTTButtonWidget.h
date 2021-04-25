@@ -6,9 +6,9 @@
 #ifndef MUMBLE_MUMBLE_PTTBUTTONWIDGET_H_
 #define MUMBLE_MUMBLE_PTTBUTTONWIDGET_H_
 
-#include "ui_PTTButtonWidget.h"
+#include <QWidget>
 
-class PTTButtonWidget : public QWidget, public Ui::qwPTTButtonWidget {
+class PTTButtonWidget : public QWidget {
 		Q_OBJECT
 		Q_DISABLE_COPY(PTTButtonWidget)
 	protected:

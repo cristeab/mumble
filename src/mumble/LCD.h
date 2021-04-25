@@ -9,12 +9,10 @@
 #include "ConfigDialog.h"
 #include "Timer.h"
 
-#include "ui_LCD.h"
-
 class User;
 class LCDDevice;
 
-class LCDConfig : public ConfigWidget, public Ui::LCDConfig {
+class LCDConfig : public ConfigWidget {
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(LCDConfig)

@@ -17,12 +17,6 @@
 VoiceRecorderDialog::VoiceRecorderDialog(QWidget *p) : QDialog(p), qtTimer(new QTimer(this)) {
 	qtTimer->setObjectName(QLatin1String("qtTimer"));
 	qtTimer->setInterval(200);
-	setupUi(this);
-
-	qleTargetDirectory->setText(g.s.qsRecordingPath);
-	qleFilename->setText(g.s.qsRecordingFile);
-	qrbDownmix->setChecked(g.s.rmRecordingMode == Settings::RecordingMixdown);
-	qrbMultichannel->setChecked(g.s.rmRecordingMode == Settings::RecordingMultichannel);
 
 	QString qsTooltip = QString::fromLatin1(
 	                        "%1"
@@ -50,19 +44,8 @@ VoiceRecorderDialog::VoiceRecorderDialog(QWidget *p) : QDialog(p), qtTimer(new Q
 	                    arg(tr("Inserts the current time")).
 	                    arg(tr("Inserts the hostname"));
 
-	qleTargetDirectory->setToolTip(qsTooltip);
-	qleFilename->setToolTip(qsTooltip);
-
-	// Populate available codecs
-	Q_ASSERT(VoiceRecorderFormat::kEnd != 0);
-	for (int fm = 0; fm < VoiceRecorderFormat::kEnd; fm++) {
-		qcbFormat->addItem(VoiceRecorderFormat::getFormatDescription(static_cast<VoiceRecorderFormat::Format>(fm)));
-	}
-
 	if (g.s.iRecordingFormat < 0 || g.s.iRecordingFormat > VoiceRecorderFormat::kEnd)
 		g.s.iRecordingFormat = 0;
-
-	qcbFormat->setCurrentIndex(g.s.iRecordingFormat);
 }
 
 VoiceRecorderDialog::~VoiceRecorderDialog() {
@@ -87,16 +70,6 @@ void VoiceRecorderDialog::closeEvent(QCloseEvent *evt) {
 			recorder->stop(true);
 		}
 	}
-
-	g.s.qsRecordingPath = qleTargetDirectory->text();
-	g.s.qsRecordingFile = qleFilename->text();
-	if (qrbDownmix->isChecked())
-		g.s.rmRecordingMode = Settings::RecordingMixdown;
-	else
-		g.s.rmRecordingMode = Settings::RecordingMultichannel;
-
-	int i = qcbFormat->currentIndex();
-	g.s.iRecordingFormat = (i == -1) ? 0 : i;
 
 	reset();
 	evt->accept();
@@ -130,64 +103,18 @@ void VoiceRecorderDialog::on_qpbStart_clicked() {
 		return;
 	}
 
-	// Check validity of input
-	int ifm = qcbFormat->currentIndex();
-	if (ifm == -1) {
-		QMessageBox::critical(this,
-		                      tr("Recorder"),
-		                      tr("Please select a recording format."));
-		return;
-	}
-
-	QString dstr = qleTargetDirectory->text();
-	if (dstr.isEmpty()) {
-		on_qpbTargetDirectoryBrowse_clicked();
-		dstr = qleTargetDirectory->text();
-		if (dstr.isEmpty())
-			return;
-	}
-	QDir dir(dstr);
-
-	QFileInfo fi(qleFilename->text());
-	QString basename(fi.baseName());
-	QString suffix(fi.completeSuffix());
-	if (suffix.isEmpty())
-		suffix = VoiceRecorderFormat::getFormatDefaultExtension(static_cast<VoiceRecorderFormat::Format>(ifm));
-
-
-	if (basename.isEmpty()) {
-		basename = QLatin1String("%user");
-	}
-
-	qleFilename->setText(basename);
-
 	AudioOutputPtr ao(g.ao);
 	if (!ao)
 		return;
 
 	g.sh->announceRecordingState(true);
-
-	// Create the recorder
-	VoiceRecorder::Config config;
-	config.sampleRate = ao->getMixerFreq();
-	config.fileName = dir.absoluteFilePath(basename + QLatin1Char('.') + suffix);
-	config.mixDownMode = qrbDownmix->isChecked();
-	config.recordingFormat = static_cast<VoiceRecorderFormat::Format>(ifm);
-
-	g.sh->recorder.reset(new VoiceRecorder(this, config));
 	VoiceRecorderPtr recorder(g.sh->recorder);
 
 	// Wire it up
-	connect(&*recorder, SIGNAL(recording_started()), this, SLOT(onRecorderStarted()));
 	connect(&*recorder, SIGNAL(recording_stopped()), this, SLOT(onRecorderStopped()));
 	connect(&*recorder, SIGNAL(error(int, QString)), this, SLOT(onRecorderError(int, QString)));
 
 	recorder->start();
-
-	qpbStart->setDisabled(true);
-	qpbStop->setEnabled(true);
-	qgbMode->setDisabled(true);
-	qgbOutput->setDisabled(true);
 }
 
 void VoiceRecorderDialog::on_qpbStop_clicked() {
@@ -205,10 +132,6 @@ void VoiceRecorderDialog::on_qpbStop_clicked() {
 	// Stop clock and recording
 	qtTimer->stop();
 	recorder->stop();
-	
-	// Disable stop botton to indicate we reacted
-	qpbStop->setDisabled(true);
-	qpbStop->setText(tr("Stopping"));
 }
 
 void VoiceRecorderDialog::on_qtTimer_timeout() {
@@ -227,18 +150,6 @@ void VoiceRecorderDialog::on_qtTimer_timeout() {
 		reset();
 		return;
 	}
-
-	const QTime elapsedTime = QTime(0,0).addMSecs(static_cast<int>(recorder->getElapsedTime() / 1000));
-	qlTime->setText(elapsedTime.toString());
-}
-
-void VoiceRecorderDialog::on_qpbTargetDirectoryBrowse_clicked() {
-	QString dir = QFileDialog::getExistingDirectory(this,
-	              tr("Select target directory"),
-	              QString(),
-	              QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-	if (!dir.isEmpty())
-		qleTargetDirectory->setText(dir);
 }
 
 void VoiceRecorderDialog::reset(bool resettimer) {
@@ -251,25 +162,10 @@ void VoiceRecorderDialog::reset(bool resettimer) {
 			g.sh->announceRecordingState(false);
 		}
 	}
-
-	qpbStart->setEnabled(true);
-	qpbStop->setDisabled(true);
-	qpbStop->setText(tr("S&top"));
-
-	qgbMode->setEnabled(true);
-	qgbOutput->setEnabled(true);
-
-	if (resettimer)
-		qlTime->setText(QLatin1String("00:00:00"));
 }
 
 void VoiceRecorderDialog::onRecorderStopped() {
 	reset(false);
-}
-
-void VoiceRecorderDialog::onRecorderStarted() {
-	qlTime->setText(QLatin1String("00:00:00"));
-	qtTimer->start();
 }
 
 void VoiceRecorderDialog::onRecorderError(int err, QString strerr) {

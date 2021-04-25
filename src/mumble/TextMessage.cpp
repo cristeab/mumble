@@ -57,7 +57,3 @@ QString TextMessage::autoFormat(QString qsPlain) {
 	} while (idx >= 0);
 	return qsPlain;
 }
-
-QString TextMessage::message() {
-	return rteMessage->text();
-}
