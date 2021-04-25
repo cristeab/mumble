@@ -11,11 +11,10 @@
 #include <QtGui/QTextDocument>
 
 #include "ConfigDialog.h"
-#include "ui_Log.h"
 
 class TextToSpeech;
 
-class LogConfig : public ConfigWidget, public Ui::LogConfig {
+class LogConfig : public ConfigWidget {
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(LogConfig)

@@ -34,9 +34,7 @@ class CertView : public QGroupBox {
 		void setCert(const QList<QSslCertificate> &cert);
 };
 
-#include "ui_Cert.h"
-
-class CertWizard : public QWizard, public Ui::Certificates {
+class CertWizard : public QWizard {
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(CertWizard)
@@ -51,14 +49,6 @@ class CertWizard : public QWizard, public Ui::Certificates {
 		static Settings::KeyPair generateNewCert(QString name = QString(), const QString &email = QString());
 		static QByteArray exportCert(const Settings::KeyPair &cert);
 		static Settings::KeyPair importCert(QByteArray, const QString & = QString());
-	public slots:
-		void on_qleEmail_textChanged(const QString &);
-		void on_qpbExportFile_clicked();
-		void on_qleExportFile_textChanged(const QString &);
-		void on_qpbImportFile_clicked();
-		void on_qleImportFile_textChanged(const QString &);
-		void on_qlePassword_textChanged(const QString &);
-		void on_qlIntroText_linkActivated(const QString &);
 };
 
 #endif

@@ -15,7 +15,6 @@
 
 #include <QPointer>
 #include "ManualPlugin.h"
-#include "ui_ManualPlugin.h"
 
 #include <float.h>
 

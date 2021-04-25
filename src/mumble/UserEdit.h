@@ -8,7 +8,6 @@
 
 #include "Message.h"
 #include "User.h"
-#include "ui_UserEdit.h"
 
 #include <QSortFilterProxyModel>
 
@@ -23,7 +22,7 @@ namespace MumbleProto {
 ///
 /// Dialog used for server-side registered user list editing.
 ///
-class UserEdit : public QDialog, public Ui::UserEdit {
+class UserEdit : public QDialog {
 		Q_OBJECT
 		Q_DISABLE_COPY(UserEdit)
 	public:

@@ -758,22 +758,14 @@ QIcon ServerItem::loadIcon(const QString &name) {
 }
 
 ConnectDialogEdit::ConnectDialogEdit(QWidget *p, const QString &name, const QString &host, const QString &user, unsigned short port, const QString &password) : QDialog(p) {
-	setupUi(this);
 	init();
 
 	bCustomLabel = ! name.simplified().isEmpty();
-
-	qleName->setText(name);
-	qleServer->setText(host);
-	qleUsername->setText(user);
-	qlePort->setText(QString::number(port));
-	qlePassword->setText(password);
 
 	validate();
 }
 
 ConnectDialogEdit::ConnectDialogEdit(QWidget *parent) : QDialog(parent) {
-	setupUi(this);
 	setWindowTitle(tr("Add Server"));
 	init();
 
@@ -793,7 +785,6 @@ ConnectDialogEdit::ConnectDialogEdit(QWidget *parent) : QDialog(parent) {
 			m_si = new ServerItem(name, host, port, user, pw);
 		}
 	}
-	qleUsername->setText(g.s.qsUsername);
 }
 
 void ConnectDialogEdit::init() {
@@ -801,18 +792,6 @@ void ConnectDialogEdit::init() {
 	usPort = 0;
 	bOk = true;
 	bCustomLabel = false;
-
-	qwInlineNotice->hide();
-
-	qlePort->setValidator(new QIntValidator(1, 65535, qlePort));
-	qlePort->setText(QString::number(DEFAULT_MUMBLE_PORT));
-	qlePassword->setEchoMode(QLineEdit::Password);
-
-	connect(qleName, SIGNAL(textChanged(const QString &)), this, SLOT(validate()));
-	connect(qleServer, SIGNAL(textChanged(const QString &)), this, SLOT(validate()));
-	connect(qlePort, SIGNAL(textChanged(const QString &)), this, SLOT(validate()));
-	connect(qleUsername, SIGNAL(textChanged(const QString &)), this, SLOT(validate()));
-	connect(qlePassword, SIGNAL(textChanged(const QString &)), this, SLOT(validate()));
 
 	validate();
 }
@@ -822,10 +801,6 @@ ConnectDialogEdit::~ConnectDialogEdit() {
 }
 
 void ConnectDialogEdit::showNotice(const QString &text) {
-	QLabel *label = qwInlineNotice->findChild<QLabel *>(QLatin1String("qlPasteNotice"));
-	Q_ASSERT(label);
-	label->setText(text);
-	qwInlineNotice->show();
 	adjustSize();
 }
 
@@ -837,30 +812,15 @@ bool ConnectDialogEdit::updateFromClipboard() {
 		showNotice(tr("You have an URL in your clipboard.\nDo you want to fill the dialog with this data?\nHost: %1 Port: %2").arg(m_si->qsHostname).arg(m_si->usPort));
 		return true;
 	} else {
-		qwInlineNotice->hide();
 		adjustSize();
 		return false;
 	}
 }
 
 void ConnectDialogEdit::on_qbFill_clicked() {
-	Q_ASSERT(m_si);
-
-	qwInlineNotice->hide();
-	adjustSize();
-
-	qleName->setText(m_si->qsName);
-	qleServer->setText(m_si->qsHostname);
-	qleUsername->setText(m_si->qsUsername);
-	qlePort->setText(QString::number(m_si->usPort));
-	qlePassword->setText(m_si->qsPassword);
-
-	delete m_si;
-	m_si = NULL;
 }
 
 void ConnectDialogEdit::on_qbDiscard_clicked() {
-	qwInlineNotice->hide();
 	adjustSize();
 }
 
@@ -881,230 +841,19 @@ void ConnectDialogEdit::on_qleName_textEdited(const QString& name) {
 }
 
 void ConnectDialogEdit::on_qleServer_textEdited(const QString& server) {
-	// If using automatic label, update it
-	if (!bCustomLabel) {
-		qleName->setText(server);
-	}
 }
 
 void ConnectDialogEdit::validate() {
-	qsName = qleName->text().simplified();
-	qsHostname = qleServer->text().simplified();
-	usPort = qlePort->text().toUShort();
-	qsUsername = qleUsername->text().simplified();
-	qsPassword = qlePassword->text();
-
-	// For bonjour hosts disable the port field as it's auto-detected
-	qlePort->setDisabled(!qsHostname.isEmpty() && qsHostname.startsWith(QLatin1Char('@')));
-
-	// For SuperUser show password edit
-	if (qsUsername.toLower() == QLatin1String("superuser")) {
-		qliPassword->setVisible(true);
-		qlePassword->setVisible(true);
-		qcbShowPassword->setVisible(true);
-		adjustSize();
-	} else if (qsPassword.isEmpty()) {
-		qliPassword->setVisible(false);
-		qlePassword->setVisible(false);
-		qcbShowPassword->setVisible(false);
-		adjustSize();
-	}
-
-	bOk = ! qsHostname.isEmpty() && ! qsUsername.isEmpty() && usPort;
-	qdbbButtonBox->button(QDialogButtonBox::Ok)->setEnabled(bOk);
 }
 
 void ConnectDialogEdit::accept() {
 	validate();
-	if (bOk) {
-		QString server = qleServer->text().simplified();
-
-		// If the user accidentally added a schema or path part, drop it now.
-		// We can't do so during editing as that is quite jarring.
-		const int schemaPos = server.indexOf(QLatin1String("://"));
-		if (schemaPos != -1) {
-			server.remove(0, schemaPos + 3);
-		}
-
-		const int pathPos = server.indexOf(QLatin1Char('/'));
-		if (pathPos != -1) {
-			server.resize(pathPos);
-		}
-
-		qleServer->setText(server);
-
-		if (qleName->text().simplified().isEmpty() || !bCustomLabel) {
-			qleName->setText(server);
-		}
-
-		QDialog::accept();
-	}
 }
 
 void ConnectDialogEdit::on_qcbShowPassword_toggled(bool checked) {
-	qlePassword->setEchoMode(checked ? QLineEdit::Normal : QLineEdit::Password);
 }
 
 ConnectDialog::ConnectDialog(QWidget *p, bool autoconnect) : QDialog(p), bAutoConnect(autoconnect) {
-	setupUi(this);
-#ifdef Q_OS_MAC
-	setWindowModality(Qt::WindowModal);
-#endif
-	bPublicInit = false;
-
-	siAutoConnect = NULL;
-
-	bAllowPing = g.s.ptProxyType == Settings::NoProxy;
-	bAllowHostLookup = g.s.ptProxyType == Settings::NoProxy;
-	bAllowBonjour = g.s.ptProxyType == Settings::NoProxy;
-	bAllowFilters = g.s.ptProxyType == Settings::NoProxy;
-
-	if (tPublicServers.elapsed() >= 60 * 24 * 1000000ULL) {
-		qlPublicServers.clear();
-	}
-
-	qdbbButtonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
-	qdbbButtonBox->button(QDialogButtonBox::Ok)->setText(tr("&Connect"));
-
-	QPushButton *qpbAdd = new QPushButton(tr("&Add New..."), this);
-	qpbAdd->setDefault(false);
-	qpbAdd->setAutoDefault(false);
-	connect(qpbAdd, SIGNAL(clicked()), qaFavoriteAddNew, SIGNAL(triggered()));
-	qdbbButtonBox->addButton(qpbAdd, QDialogButtonBox::ActionRole);
-
-	
-	qpbEdit = new QPushButton(tr("&Edit..."), this);
-	qpbEdit->setEnabled(false);
-	qpbEdit->setDefault(false);
-	qpbEdit->setAutoDefault(false);
-	connect(qpbEdit, SIGNAL(clicked()), qaFavoriteEdit, SIGNAL(triggered()));
-	qdbbButtonBox->addButton(qpbEdit, QDialogButtonBox::ActionRole);
-	
-	qpbAdd->setHidden(g.s.disableConnectDialogEditing);
-	qpbEdit->setHidden(g.s.disableConnectDialogEditing);
-
-	qtwServers->setItemDelegate(new ServerViewDelegate());
-
-	// Hide ping and user count if we are not allowed to ping.
-	if (!bAllowPing) {
-		qtwServers->setColumnCount(1);
-	}
-
-	qtwServers->sortItems(1, Qt::AscendingOrder);
-
-#if QT_VERSION >= 0x050000
-	qtwServers->header()->setSectionResizeMode(0, QHeaderView::Stretch);
-	if (qtwServers->columnCount() >= 2) {
-		qtwServers->header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
-	}
-	if (qtwServers->columnCount() >= 3) {
-		qtwServers->header()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
-	}
-#else
-	qtwServers->header()->setResizeMode(0, QHeaderView::Stretch);
-	if (qtwServers->columnCount() >= 2) {
-		qtwServers->header()->setResizeMode(1, QHeaderView::ResizeToContents);
-	}
-	if (qtwServers->columnCount() >= 3) {
-		qtwServers->header()->setResizeMode(2, QHeaderView::ResizeToContents);
-	}
-#endif
-
-	connect(qtwServers->header(), SIGNAL(sortIndicatorChanged(int, Qt::SortOrder)), this, SLOT(OnSortChanged(int, Qt::SortOrder)));
-
-	qaShowAll->setChecked(false);
-	qaShowReachable->setChecked(false);
-	qaShowPopulated->setChecked(false);
-
-	if (bAllowFilters) {
-		switch (g.s.ssFilter) {
-			case Settings::ShowPopulated:
-				qaShowPopulated->setChecked(true);
-				break;
-			case Settings::ShowReachable:
-				qaShowReachable->setChecked(true);
-				break;
-			default:
-				qaShowAll->setChecked(true);
-				break;
-		}
-	} else {
-		qaShowAll->setChecked(true);
-	}
-
-	qagFilters = new QActionGroup(this);
-	qagFilters->addAction(qaShowAll);
-	qagFilters->addAction(qaShowReachable);
-	qagFilters->addAction(qaShowPopulated);
-
-	connect(qagFilters, SIGNAL(triggered(QAction *)), this, SLOT(onFiltersTriggered(QAction *)));
-
-	qmPopup = new QMenu(this);
-	qmFilters = new QMenu(tr("&Filters"), this);
-	qmFilters->addAction(qaShowAll);
-	qmFilters->addAction(qaShowReachable);
-	qmFilters->addAction(qaShowPopulated);
-
-	if (!bAllowFilters) {
-		qmFilters->setEnabled(false);
-	}
-
-	QList<QTreeWidgetItem *> ql;
-	QList<FavoriteServer> favorites = g.db->getFavorites();
-
-	foreach(const FavoriteServer &fs, favorites) {
-		ServerItem *si = new ServerItem(fs);
-		qlItems << si;
-		startDns(si);
-		qtwServers->siFavorite->addServerItem(si);
-	}
-
-#ifdef USE_BONJOUR
-	// Make sure the we got the objects we need, then wire them up
-	if (bAllowBonjour && g.bc->bsbBrowser && g.bc->bsrResolver) {
-		connect(g.bc->bsbBrowser, SIGNAL(error(DNSServiceErrorType)),
-		        this, SLOT(onLanBrowseError(DNSServiceErrorType)));
-		connect(g.bc->bsbBrowser, SIGNAL(currentBonjourRecordsChanged(const QList<BonjourRecord> &)),
-		        this, SLOT(onUpdateLanList(const QList<BonjourRecord> &)));
-		connect(g.bc->bsrResolver, SIGNAL(error(BonjourRecord, DNSServiceErrorType)),
-		        this, SLOT(onLanResolveError(BonjourRecord, DNSServiceErrorType)));
-		connect(g.bc->bsrResolver, SIGNAL(bonjourRecordResolved(BonjourRecord, QString, int)),
-		        this, SLOT(onResolved(BonjourRecord, QString, int)));
-		onUpdateLanList(g.bc->bsbBrowser->currentRecords());
-	}
-#endif
-
-	qtPingTick = new QTimer(this);
-	connect(qtPingTick, SIGNAL(timeout()), this, SLOT(timeTick()));
-
-	qusSocket4 = new QUdpSocket(this);
-	qusSocket6 = new QUdpSocket(this);
-	bIPv4 = qusSocket4->bind(QHostAddress(QHostAddress::Any), 0);
-	bIPv6 = qusSocket6->bind(QHostAddress(QHostAddress::AnyIPv6), 0);
-	connect(qusSocket4, SIGNAL(readyRead()), this, SLOT(udpReply()));
-	connect(qusSocket6, SIGNAL(readyRead()), this, SLOT(udpReply()));
-
-	if (qtwServers->siFavorite->isHidden()
-	    && (!qtwServers->siLAN || qtwServers->siLAN->isHidden())
-	    && qtwServers->siPublic != NULL) {
-		qtwServers->siPublic->setExpanded(true);
-	}
-
-	iPingIndex = -1;
-	qtPingTick->start(50);
-
-	new QShortcut(QKeySequence(QKeySequence::Copy), this, SLOT(on_qaFavoriteCopy_triggered()));
-	new QShortcut(QKeySequence(QKeySequence::Paste), this, SLOT(on_qaFavoritePaste_triggered()));
-
-	qtwServers->setCurrentItem(NULL);
-	bLastFound = false;
-
-	qmPingCache = g.db->getPingCache();
-
-	if (! g.s.qbaConnectDialogGeometry.isEmpty())
-		restoreGeometry(g.s.qbaConnectDialogGeometry);
-	if (! g.s.qbaConnectDialogHeader.isEmpty())
-		qtwServers->header()->restoreState(g.s.qbaConnectDialogHeader);
 }
 
 ConnectDialog::~ConnectDialog() {
@@ -1124,33 +873,10 @@ ConnectDialog::~ConnectDialog() {
 	g.db->setFavorites(ql);
 	g.db->setPingCache(qmPingCache);
 
-	g.s.qbaConnectDialogHeader = qtwServers->header()->saveState();
 	g.s.qbaConnectDialogGeometry = saveGeometry();
 }
 
 void ConnectDialog::accept() {
-	ServerItem *si = static_cast<ServerItem *>(qtwServers->currentItem());
-	if (! si || (bAllowHostLookup && si->qlAddresses.isEmpty()) || si->qsHostname.isEmpty()) {
-		qWarning() << "Invalid server";
-		return;
-	}
-
-	qsPassword = si->qsPassword;
-	qsServer = si->qsHostname;
-	usPort = si->usPort;
-
-	if (si->qsUsername.isEmpty()) {
-		bool ok;
-		QString defUserName = QInputDialog::getText(this, tr("Connecting to %1").arg(si->qsName), tr("Enter username"), QLineEdit::Normal, g.s.qsUsername, &ok).trimmed();
-		if (! ok)
-			return;
-		g.s.qsUsername = si->qsUsername = defUserName;
-	}
-
-	qsUsername = si->qsUsername;
-
-	g.s.qsLastServer = si->qsName;
-
 	QDialog::accept();
 }
 
@@ -1168,202 +894,40 @@ void ConnectDialog::OnSortChanged(int logicalIndex, Qt::SortOrder) {
 }
 
 void ConnectDialog::on_qaFavoriteAdd_triggered() {
-	ServerItem *si = static_cast<ServerItem *>(qtwServers->currentItem());
-	if (! si || (si->itType == ServerItem::FavoriteType))
-		return;
-
-	si = new ServerItem(si);
-	qtwServers->fixupName(si);
-	qlItems << si;
-	qtwServers->siFavorite->addServerItem(si);
-	qtwServers->setCurrentItem(si);
-	startDns(si);
 }
 
 void ConnectDialog::on_qaFavoriteAddNew_triggered() {
-	ConnectDialogEdit *cde = new ConnectDialogEdit(this);
-
-	if (cde->exec() == QDialog::Accepted) {
-		ServerItem *si = new ServerItem(cde->qsName, cde->qsHostname, cde->usPort, cde->qsUsername, cde->qsPassword);
-		qlItems << si;
-		qtwServers->siFavorite->addServerItem(si);
-		qtwServers->setCurrentItem(si);
-		startDns(si);
-	}
-	delete cde;
 }
 
 void ConnectDialog::on_qaFavoriteEdit_triggered() {
-	ServerItem *si = static_cast<ServerItem *>(qtwServers->currentItem());
-	if (! si || (si->itType != ServerItem::FavoriteType))
-		return;
-
-	QString host;
-	if (! si->qsBonjourHost.isEmpty())
-		host = QLatin1Char('@') + si->qsBonjourHost;
-	else
-		host = si->qsHostname;
-
-	ConnectDialogEdit *cde = new ConnectDialogEdit(this, si->qsName, host, si->qsUsername, si->usPort, si->qsPassword);
-
-	if (cde->exec() == QDialog::Accepted) {
-
-		si->qsName = cde->qsName;
-		si->qsUsername = cde->qsUsername;
-		si->qsPassword = cde->qsPassword;
-		if ((cde->qsHostname != host) || (cde->usPort != si->usPort)) {
-			stopDns(si);
-
-			si->qlAddresses.clear();
-			si->reset();
-
-			si->usPort = cde->usPort;
-
-			if (cde->qsHostname.startsWith(QLatin1Char('@'))) {
-				si->qsHostname = QString();
-				si->qsBonjourHost = cde->qsHostname.mid(1);
-				si->brRecord = BonjourRecord(si->qsBonjourHost, QLatin1String("_mumble._tcp."), QLatin1String("local."));
-			} else {
-				si->qsHostname = cde->qsHostname;
-				si->qsBonjourHost = QString();
-				si->brRecord = BonjourRecord();
-			}
-			startDns(si);
-		}
-		si->setDatas();
-	}
-	delete cde;
 }
 
 void ConnectDialog::on_qaFavoriteRemove_triggered() {
-	ServerItem *si = static_cast<ServerItem *>(qtwServers->currentItem());
-	if (! si || (si->itType != ServerItem::FavoriteType))
-		return;
-
-	stopDns(si);
-	qlItems.removeAll(si);
-	delete si;
 }
 
 void ConnectDialog::on_qaFavoriteCopy_triggered() {
-	ServerItem *si = static_cast<ServerItem *>(qtwServers->currentItem());
-	if (! si)
-		return;
-
-	QApplication::clipboard()->setMimeData(si->toMimeData());
 }
 
 void ConnectDialog::on_qaFavoritePaste_triggered() {
-	ServerItem *si = ServerItem::fromMimeData(QApplication::clipboard()->mimeData());
-	if (! si)
-		return;
-
-	qlItems << si;
-	qtwServers->siFavorite->addServerItem(si);
-	qtwServers->setCurrentItem(si);
-	startDns(si);
 }
 
 void ConnectDialog::on_qaUrl_triggered() {
-	auto *si = static_cast< const ServerItem * >(qtwServers->currentItem());
-	if (!si || si->qsUrl.isEmpty()) {
-		return;
-	}
-
-	const QStringList allowedSchemes = { QLatin1String("http"), QLatin1String("https") };
-
-	const auto url = QUrl(si->qsUrl);
-	if (allowedSchemes.contains(url.scheme())) {
-		QDesktopServices::openUrl(url);
-	} else {
-		// Inform user that the requested URL has been blocked
-		QMessageBox msgBox;
-		msgBox.setText(QObject::tr("<b>Blocked URL scheme \"%1\"</b>").arg(url.scheme()));
-		msgBox.setInformativeText(QObject::tr("The URL uses a scheme that has been blocked for security reasons."));
-		msgBox.setDetailedText(QObject::tr("Blocked URL: \"%1\"").arg(url.toString()));
-		msgBox.setIcon(QMessageBox::Warning);
-		msgBox.exec();
-	}
 }
 
 void ConnectDialog::onFiltersTriggered(QAction *act) {
-	if (act == qaShowAll)
-		g.s.ssFilter = Settings::ShowAll;
-	else if (act == qaShowReachable)
-		g.s.ssFilter = Settings::ShowReachable;
-	else if (act == qaShowPopulated)
-		g.s.ssFilter = Settings::ShowPopulated;
-
-	foreach(ServerItem *si, qlItems)
-		si->hideCheck();
 }
 
 void ConnectDialog::on_qtwServers_customContextMenuRequested(const QPoint &mpos) {
-	ServerItem *si = static_cast<ServerItem *>(qtwServers->itemAt(mpos));
-	qmPopup->clear();
-
-	if (si != NULL && si->bParent) {
-		si = NULL;
-	}
-	
-	if (si != NULL) {
-
-		if (!g.s.disableConnectDialogEditing) {
-			if (si->itType == ServerItem::FavoriteType) {
-				qmPopup->addAction(qaFavoriteEdit);
-				qmPopup->addAction(qaFavoriteRemove);
-			} else {
-				qmPopup->addAction(qaFavoriteAdd);
-			}
-		}
-		
-		if (!si->qsUrl.isEmpty()) {
-			qmPopup->addAction(qaUrl);
-		}
-	}
-	
-	if (! qmPopup->isEmpty()) {
-		qmPopup->addSeparator();
-	}
-	
-	qmPopup->addMenu(qmFilters);
-
-	qmPopup->popup(qtwServers->viewport()->mapToGlobal(mpos), NULL);
 }
 
 void ConnectDialog::on_qtwServers_itemDoubleClicked(QTreeWidgetItem *item, int) {
-	qtwServers->setCurrentItem(item);
 	accept();
 }
 
 void ConnectDialog::on_qtwServers_currentItemChanged(QTreeWidgetItem *item, QTreeWidgetItem *) {
-	ServerItem *si = static_cast<ServerItem *>(item);
-
-	if (si->siParent == qtwServers->siFavorite) {
-		qpbEdit->setEnabled(true);
-	} else {
-		qpbEdit->setEnabled(false);
-	}
-	
-	bool bOk = !si->qlAddresses.isEmpty();
-	if (!bAllowHostLookup) {
-		bOk = true;
-	}
-	qdbbButtonBox->button(QDialogButtonBox::Ok)->setEnabled(bOk);
-
-	bLastFound = true;
 }
 
 void ConnectDialog::on_qtwServers_itemExpanded(QTreeWidgetItem *item) {
-	if (qtwServers->siPublic != NULL && item == qtwServers->siPublic) {
-		initList();
-		fillList();
-	}
-
-	ServerItem *p = static_cast<ServerItem *>(item);
-
-	foreach(ServerItem *si, p->qlChildren)
-		startDns(si);
 }
 
 void ConnectDialog::initList() {
@@ -1468,36 +1032,9 @@ void ConnectDialog::fillList() {
 		qlNew << si;
 		qlItems << si;
 	}
-
-	foreach(QTreeWidgetItem *qtwi, qlNew) {
-		ServerItem *si = static_cast<ServerItem *>(qtwi);
-		ServerItem *p = qtwServers->getParent(si->qsContinentCode, si->qsCountryCode, si->qsCountry, qsUserContinentCode, qsUserCountryCode);
-		p->addServerItem(si);
-
-		if (p->isExpanded() && p->parent()->isExpanded())
-			startDns(si);
-	}
 }
 
 void ConnectDialog::timeTick() {
-	if (! bLastFound && ! g.s.qsLastServer.isEmpty()) {
-		QList<QTreeWidgetItem *> items = qtwServers->findItems(g.s.qsLastServer, Qt::MatchExactly | Qt::MatchRecursive);
-		if (!items.isEmpty()) {
-			bLastFound = true;
-			qtwServers->setCurrentItem(items.at(0));
-			if (g.s.bAutoConnect && bAutoConnect) {
-				siAutoConnect = static_cast<ServerItem *>(items.at(0));
-				if (! siAutoConnect->qlAddresses.isEmpty()) {
-					accept();
-					return;
-				} else if (!bAllowHostLookup) {
-					accept();
-					return;
-				}
-			}
-		}
-	}
-
 	if (bAllowHostLookup) {
 		// Start DNS Lookup of first unknown hostname
 		foreach(const UnresolvedServerAddress &unresolved, qlDNSLookup) {
@@ -1516,16 +1053,7 @@ void ConnectDialog::timeTick() {
 		}
 	}
 
-	ServerItem *current = static_cast<ServerItem *>(qtwServers->currentItem());
-	ServerItem *hover = static_cast<ServerItem *>(qtwServers->itemAt(qtwServers->viewport()->mapFromGlobal(QCursor::pos())));
-
 	ServerItem *si = NULL;
-
-	if (tCurrent.elapsed() >= 1000000ULL)
-		si = current;
-	if (! si && (tHover.elapsed() >= 1000000ULL))
-		si = hover;
-
 	if (si) {
 		QString hostname = si->qsHostname.toLower();
 		unsigned short port = si->usPort;
@@ -1565,11 +1093,6 @@ void ConnectDialog::timeTick() {
 		} while (si->qlAddresses.isEmpty() || ! expanded);
 	}
 
-	if (si == current)
-		tCurrent.restart();
-	if (si == hover)
-		tHover.restart();
-
 	foreach(const ServerAddress &addr, si->qlAddresses) {
 		sendPing(addr.host.toAddress(), addr.port);
 	}
@@ -1597,9 +1120,6 @@ void ConnectDialog::startDns(ServerItem *si) {
 			si->qlAddresses = qhDNSCache.value(unresolved);
 		}
 	}
-
-	if (qtwServers->currentItem() == si)
-		qdbbButtonBox->button(QDialogButtonBox::Ok)->setEnabled(! si->qlAddresses.isEmpty());
 
 	if (! si->qlAddresses.isEmpty()) {
 		foreach(const ServerAddress &addr, si->qlAddresses) {
@@ -1689,14 +1209,6 @@ void ConnectDialog::lookedUp() {
 	qlDNSLookup.removeAll(unresolved);
 	qhDNSCache.insert(unresolved, qs.toList());
 	qhDNSWait.remove(unresolved);
-
-	foreach(ServerItem *si, waiting) {
-		if (si == qtwServers->currentItem()) {
-			on_qtwServers_currentItemChanged(si, si);
-			if (si == siAutoConnect)
-				accept();
-		}
-	}
 
 	if (bAllowPing) {
 		foreach(const ServerAddress &addr, qs) {

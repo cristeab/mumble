@@ -17,11 +17,9 @@
 # include <QGraphicsScene>
 #endif
 
-#include "ui_ManualPlugin.h"
-
 #include "../../plugins/mumble_plugin.h"
 
-class Manual : public QDialog, public Ui::Manual {
+class Manual : public QDialog {
 		Q_OBJECT
 	public:
 		Manual(QWidget *parent = 0);

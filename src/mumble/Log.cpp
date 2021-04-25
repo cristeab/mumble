@@ -26,58 +26,10 @@ static ConfigWidget *LogConfigDialogNew(Settings &st) {
 static ConfigRegistrar registrar(4000, LogConfigDialogNew);
 
 LogConfig::LogConfig(Settings &st) : ConfigWidget(st) {
-	setupUi(this);
 
 #ifdef USE_NO_TTS
 	qgbTTS->setDisabled(true);
 #endif
-
-#if QT_VERSION >= 0x050000
-	qtwMessages->header()->setSectionResizeMode(ColMessage, QHeaderView::Stretch);
-	qtwMessages->header()->setSectionResizeMode(ColConsole, QHeaderView::ResizeToContents);
-	qtwMessages->header()->setSectionResizeMode(ColNotification, QHeaderView::ResizeToContents);
-	qtwMessages->header()->setSectionResizeMode(ColHighlight, QHeaderView::ResizeToContents);
-	qtwMessages->header()->setSectionResizeMode(ColTTS, QHeaderView::ResizeToContents);
-	qtwMessages->header()->setSectionResizeMode(ColStaticSound, QHeaderView::ResizeToContents);
-#else
-	qtwMessages->header()->setResizeMode(ColMessage, QHeaderView::Stretch);
-	qtwMessages->header()->setResizeMode(ColConsole, QHeaderView::ResizeToContents);
-	qtwMessages->header()->setResizeMode(ColNotification, QHeaderView::ResizeToContents);
-	qtwMessages->header()->setResizeMode(ColHighlight, QHeaderView::ResizeToContents);
-	qtwMessages->header()->setResizeMode(ColTTS, QHeaderView::ResizeToContents);
-	qtwMessages->header()->setResizeMode(ColStaticSound, QHeaderView::ResizeToContents);
-#endif
-
-	QTreeWidgetItem *twi;
-	for (int i = Log::firstMsgType; i <= Log::lastMsgType; ++i) {
-		Log::MsgType t = Log::msgOrder[i];
-		const QString messageName = g.l->msgName(t);
-
-		twi = new QTreeWidgetItem(qtwMessages);
-		twi->setData(ColMessage, Qt::UserRole, static_cast<int>(t));
-		twi->setText(ColMessage, messageName);
-		twi->setCheckState(ColConsole, Qt::Unchecked);
-		twi->setCheckState(ColNotification, Qt::Unchecked);
-		twi->setCheckState(ColHighlight, Qt::Unchecked);
-		twi->setCheckState(ColStaticSound, Qt::Unchecked);
-
-		twi->setToolTip(ColConsole, tr("Toggle console for %1 events").arg(messageName));
-		twi->setToolTip(ColNotification, tr("Toggle pop-up notifications for %1 events").arg(messageName));
-		twi->setToolTip(ColHighlight, tr("Toggle window highlight (if not active) for %1 events").arg(messageName));
-		twi->setToolTip(ColStaticSound, tr("Click here to toggle sound notification for %1 events").arg(messageName));
-		twi->setToolTip(ColStaticSoundPath, tr("Path to sound file used for sound notifications in the case of %1 events<br />Single click to play<br />Double-click to change").arg(messageName));
-
-		twi->setWhatsThis(ColConsole, tr("Click here to toggle console output for %1 events.<br />If checked, this option makes Mumble output all %1 events in its message log.").arg(messageName));
-		twi->setWhatsThis(ColNotification, tr("Click here to toggle pop-up notifications for %1 events.<br />If checked, a notification pop-up will be created by Mumble for every %1 event.").arg(messageName));
-		twi->setWhatsThis(ColHighlight, tr("Click here to toggle window highlight for %1 events.<br />If checked, Mumble's window will be highlighted for every %1 event, if not active.").arg(messageName));
-		twi->setWhatsThis(ColStaticSound, tr("Click here to toggle sound notification for %1 events.<br />If checked, Mumble uses a sound file predefined by you to indicate %1 events. Sound files and Text-To-Speech cannot be used at the same time.").arg(messageName));
-		twi->setWhatsThis(ColStaticSoundPath, tr("Path to sound file used for sound notifications in the case of %1 events.<br />Single click to play<br />Double-click to change<br />Ensure that sound notifications for these events are enabled or this field will not have any effect.").arg(messageName));
-#ifndef USE_NO_TTS
-		twi->setCheckState(ColTTS, Qt::Unchecked);
-		twi->setToolTip(ColTTS, tr("Toggle Text-To-Speech for %1 events").arg(messageName));
-		twi->setWhatsThis(ColTTS, tr("Click here to toggle Text-To-Speech for %1 events.<br />If checked, Mumble uses Text-To-Speech to read %1 events out loud to you. Text-To-Speech is also able to read the contents of the event which is not true for sound files. Text-To-Speech and sound files cannot be used at the same time.").arg(messageName));
-#endif
-	}
 }
 
 QString LogConfig::title() const {
@@ -89,63 +41,9 @@ QIcon LogConfig::icon() const {
 }
 
 void LogConfig::load(const Settings &r) {
-	QList<QTreeWidgetItem *> qlItems = qtwMessages->findItems(QString(), Qt::MatchContains);
-
-	foreach(QTreeWidgetItem *i, qlItems) {
-		Log::MsgType mt = static_cast<Log::MsgType>(i->data(ColMessage, Qt::UserRole).toInt());
-		Settings::MessageLog ml = static_cast<Settings::MessageLog>(r.qmMessages.value(mt));
-
-		i->setCheckState(ColConsole, (ml & Settings::LogConsole) ? Qt::Checked : Qt::Unchecked);
-		i->setCheckState(ColNotification, (ml & Settings::LogBalloon) ? Qt::Checked : Qt::Unchecked);
-		i->setCheckState(ColHighlight, (ml & Settings::LogHighlight) ? Qt::Checked : Qt::Unchecked);
-#ifndef USE_NO_TTS
-		i->setCheckState(ColTTS, (ml & Settings::LogTTS) ? Qt::Checked : Qt::Unchecked);
-#endif
-		i->setCheckState(ColStaticSound, (ml & Settings::LogSoundfile) ? Qt::Checked : Qt::Unchecked);
-		i->setText(ColStaticSoundPath, r.qmMessageSounds.value(mt));
-	}
-
-	qsbMaxBlocks->setValue(r.iMaxLogBlocks);
-
-#ifdef USE_NO_TTS
-	qtwMessages->hideColumn(ColTTS);
-#else
-	loadSlider(qsVolume, r.iTTSVolume);
-	qsbThreshold->setValue(r.iTTSThreshold);
-	qcbReadBackOwn->setChecked(r.bTTSMessageReadBack);
-#endif
-	qcbWhisperFriends->setChecked(r.bWhisperFriends);
 }
 
 void LogConfig::save() const {
-	QList<QTreeWidgetItem *> qlItems = qtwMessages->findItems(QString(), Qt::MatchContains);
-	foreach(QTreeWidgetItem *i, qlItems) {
-		Log::MsgType mt = static_cast<Log::MsgType>(i->data(ColMessage, Qt::UserRole).toInt());
-
-		int v = 0;
-		if (i->checkState(ColConsole) == Qt::Checked)
-			v |= Settings::LogConsole;
-		if (i->checkState(ColNotification) == Qt::Checked)
-			v |= Settings::LogBalloon;
-		if (i->checkState(ColHighlight) == Qt::Checked)
-			v |= Settings::LogHighlight;
-#ifndef USE_NO_TTS
-		if (i->checkState(ColTTS) == Qt::Checked)
-			v |= Settings::LogTTS;
-#endif
-		if (i->checkState(ColStaticSound) == Qt::Checked)
-			v |= Settings::LogSoundfile;
-		s.qmMessages[mt] = v;
-		s.qmMessageSounds[mt] = i->text(ColStaticSoundPath);
-	}
-	s.iMaxLogBlocks = qsbMaxBlocks->value();
-
-#ifndef USE_NO_TTS
-	s.iTTSVolume=qsVolume->value();
-	s.iTTSThreshold=qsbThreshold->value();
-	s.bTTSMessageReadBack = qcbReadBackOwn->isChecked();
-#endif
-	s.bWhisperFriends = qcbWhisperFriends->isChecked();
 }
 
 void LogConfig::accept() const {
@@ -187,13 +85,6 @@ void LogConfig::on_qtwMessages_itemDoubleClicked(QTreeWidgetItem * item, int col
 }
 
 void LogConfig::browseForAudioFile() {
-	QTreeWidgetItem *i = qtwMessages->selectedItems()[0];
-	QString defaultpath(i->text(ColStaticSoundPath));
-	QString file = AudioOutputSample::browseForSndfile(defaultpath);
-	if (!file.isEmpty()) {
-		i->setText(ColStaticSoundPath, file);
-		i->setCheckState(ColStaticSound, Qt::Checked);
-	}
 }
 
 Log::Log(QObject *p) : QObject(p) {

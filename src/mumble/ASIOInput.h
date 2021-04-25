@@ -15,11 +15,10 @@
 #include <asiodrvr.h>
 #include "AudioInput.h"
 #include "ConfigDialog.h"
-#include "ui_ASIOInput.h"
 
 typedef QPair<QString, QString> ASIODev;
 
-class ASIOConfig : public ConfigWidget, public Ui::ASIOConfig {
+class ASIOConfig : public ConfigWidget {
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(ASIOConfig)

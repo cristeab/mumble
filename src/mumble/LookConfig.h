@@ -8,12 +8,10 @@
 
 #include "ConfigDialog.h"
 
-#include "ui_LookConfig.h"
-
 class QFileSystemWatcher;
 class QTimer;
 
-class LookConfig : public ConfigWidget, Ui::LookConfig {
+class LookConfig : public ConfigWidget {
 	private:
 		Q_OBJECT
 		Q_DISABLE_COPY(LookConfig)

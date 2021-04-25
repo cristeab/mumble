@@ -1196,7 +1196,6 @@ void MainWindow::on_qaSelfComment_triggered() {
 
 	::TextMessage *texm = new ::TextMessage(this, tr("Change your comment"));
 
-	texm->rteMessage->setText(p->qsComment);
 	int res = texm->exec();
 
 	p = ClientUser::get(session);
@@ -1773,7 +1772,6 @@ void MainWindow::on_qaUserCommentView_triggered() {
 
 	::TextMessage *texm = new ::TextMessage(this, tr("View comment on user %1").arg(p->qsName));
 
-	texm->rteMessage->setText(p->qsComment, true);
 	texm->setAttribute(Qt::WA_DeleteOnClose, true);
 	texm->show();
 }
@@ -2019,10 +2017,6 @@ void MainWindow::on_qaChannelAdd_triggered() {
 	}
 
 	aclEdit = new ACLEditor(c ? c->iId : 0, this);
-	if (c && (c->uiPermissions & ChanACL::Cached) && !(c->uiPermissions & (ChanACL::Write | ChanACL::MakeChannel))) {
-		aclEdit->qcbChannelTemporary->setEnabled(false);
-		aclEdit->qcbChannelTemporary->setChecked(true);
-	}
 
 	aclEdit->show();
 }
