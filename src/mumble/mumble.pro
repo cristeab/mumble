@@ -245,10 +245,7 @@ RESOURCES *= mumble.qrc
 # Add the various mumble_flags_XX.qrc files to RESOURCES...
 include(flags/mumble_flags.pri)
 
-FORMS *= ConfigDialog.ui \
-    MainWindow.ui \
-    ConnectDialog.ui \
-    ConnectDialogEdit.ui \
+FORMS *= MainWindow.ui \
     ACLEditor.ui \
     NetworkConfig.ui
 
