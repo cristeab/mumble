@@ -823,14 +823,18 @@ bool ServerTableModel::updateServerAddress(const QString &name, const QHostAddre
     if (name.isEmpty() || host.isNull()) {
         return false;
     }
+    const auto &addr = host.toString();
+    if (addr.isEmpty()) {
+        qWarning() << "Empty IP address" << name << host;
+        return false;
+    }
     bool rc = false;
     for (int i = 0; i < _servers.size(); ++i) {
-        const auto &addr = host.toString();
-        if ((name == _servers.at(i).hostname) && !addr.isEmpty()) {
+        if (name == _servers.at(i).hostname) {
             _servers[i].address = addr;
             pingServer(&_servers[i]);
             rc = true;
-            break;
+            //update all hosts with the same name
         }
     }
     return rc;

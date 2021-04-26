@@ -50,7 +50,11 @@ Dialog {
 
     Column {
         id: dlgColumn
-        anchors.topMargin: 2 * Theme.windowMargin
+        anchors {
+            top: parent.top
+            topMargin: 2 * Theme.windowMargin
+            left: parent.left
+        }
         width: parent.width
         spacing: Theme.windowMargin
 
