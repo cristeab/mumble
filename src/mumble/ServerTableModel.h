@@ -57,6 +57,7 @@ class ServerTableModel : public QAbstractTableModel
     QML_CONSTANT_PROPERTY(QString, superUserName, QString::fromUtf8("SuperUser"))
 
     Q_PROPERTY(bool enableRnnoise READ enableRnnoise WRITE setEnableRnnoise NOTIFY enableRnnoiseChanged)
+    Q_PROPERTY(bool enableTcpMode READ enableTcpMode WRITE setEnableTcpMode NOTIFY enableTcpModeChanged)
 
 public:
     struct ServerItem {
@@ -121,6 +122,9 @@ public:
     bool enableRnnoise() const;
     void setEnableRnnoise(bool enable);
 
+    bool enableTcpMode() const;
+    void setEnableTcpMode(bool enable);
+
 signals:
     void schoolsAvailable();
     void currentChannelAllowedChanged(bool allowed);
@@ -128,6 +132,7 @@ signals:
     void closeDialog();
     void resetServersView();
     void enableRnnoiseChanged();
+    void enableTcpModeChanged();
 
 private:
     enum { NAME = 0, DELAY, USERS, COLUMN_COUNT };

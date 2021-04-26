@@ -854,3 +854,16 @@ void ServerTableModel::setEnableRnnoise(bool enable)
         emit enableRnnoiseChanged();
     }
 }
+
+bool ServerTableModel::enableTcpMode() const
+{
+    return g.s.bTCPCompat;
+}
+
+void ServerTableModel::setEnableTcpMode(bool enable)
+{
+    if (g.s.bTCPCompat != enable) {
+        g.s.bTCPCompat = enable;
+        emit enableTcpModeChanged();
+    }
+}

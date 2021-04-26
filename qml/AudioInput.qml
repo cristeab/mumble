@@ -170,6 +170,7 @@ Page {
         font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
     }
     CustomCheckBox {
+        id: rnNoiseCheckBox
         anchors {
             top: compressionInfoLabel.bottom
             topMargin: 2 * Theme.windowMargin
@@ -180,6 +181,20 @@ Page {
         }
         text: qsTr("RNNoise")
         checked: servers.enableRnnoise
-        onCheckedChanged: servers.enableRnnoise = checked
+        onCheckedChanged: servers.enableRnnoise = rnNoiseCheckBox.checked
+    }
+    CustomCheckBox {
+        id: enableTcpModeCheckBox
+        anchors {
+            top: rnNoiseCheckBox.bottom
+            topMargin: 2 * Theme.windowMargin
+            left: parent.left
+            leftMargin: 2 * Theme.windowMargin
+            right: parent.right
+            rightMargin: 2 * Theme.windowMargin
+        }
+        text: qsTr("Enable TCP Mode")
+        checked: servers.enableTcpMode
+        onCheckedChanged: servers.enableTcpMode = enableTcpModeCheckBox.checked
     }
 }

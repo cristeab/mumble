@@ -158,9 +158,14 @@
         <translation>Hvor mange lydrammer der skal sendes pr. pakke</translation>
     </message>
     <message>
-        <location filename="qml/AudioInput.qml" line="181"/>
+        <location filename="qml/AudioInput.qml" line="182"/>
         <source>RNNoise</source>
         <translation>AI drevet støjreducering</translation>
+    </message>
+    <message>
+        <location filename="qml/AudioInput.qml" line="196"/>
+        <source>Enable TCP Mode</source>
+        <translation>Tillad TCP tilstand</translation>
     </message>
 </context>
 <context>
