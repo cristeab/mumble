@@ -8,6 +8,7 @@ CONFIG += no-server
 CONFIG += no-g15
 CONFIG += no-overlay
 CONFIG += no-plugins
+CONFIG += rnnoise
 # ------------------------------------------
 
 include(qmake/compiler.pri)

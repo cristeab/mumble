@@ -107,6 +107,11 @@ AudioInput::AudioInput() : opusBuffer(g.s.iFramesPerPacket * (SAMPLE_RATE / 100)
 
 #ifdef USE_RNNOISE
 	denoiseState = rnnoise_create();
+    if (nullptr != denoiseState) {
+        qInfo() << "RNnoise created" << g.s.bDenoise;
+    } else {
+        qWarning() << "Cannot create RNnoise";
+    }
 #endif
 
 	qWarning("AudioInput: %d bits/s, %d hz, %d sample", iAudioQuality, iSampleRate, iFrameSize);
