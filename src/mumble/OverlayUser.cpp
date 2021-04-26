@@ -75,22 +75,6 @@ void OverlayUser::updateLayout() {
 	qgpiAvatar->setPixmap(pm);
 	qgpiChannel->setPixmap(pm);
 
-	{
-		QImageReader qir(QLatin1String("skin:muted_self.svg"));
-		QSize sz = qir.size();
-		sz.scale(SCALESIZE(MutedDeafened), Qt::KeepAspectRatio);
-		qir.setScaledSize(sz);
-		qgpiMuted->setPixmap(QPixmap::fromImage(qir.read()));
-	}
-
-	{
-		QImageReader qir(QLatin1String("skin:deafened_self.svg"));
-		QSize sz = qir.size();
-		sz.scale(SCALESIZE(MutedDeafened), Qt::KeepAspectRatio);
-		qir.setScaledSize(sz);
-		qgpiDeafened->setPixmap(QPixmap::fromImage(qir.read()));
-	}
-
 	qgpiMuted->setPos(alignedPosition(scaledRect(os->qrfMutedDeafened, uiSize * os->fZoom), qgpiMuted->boundingRect(), os->qaMutedDeafened));
 	qgpiMuted->setZValue(1.0f);
 	qgpiMuted->setOpacity(os->fMutedDeafened);

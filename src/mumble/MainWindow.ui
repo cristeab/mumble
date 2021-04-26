@@ -214,7 +214,7 @@
   <action name="qaServerConnect">
    <property name="icon">
     <iconset>
-     <normaloff>skin:categories/applications-internet.svg</normaloff>skin:categories/applications-internet.svg</iconset>
+     <normaloff></normaloff></iconset>
    </property>
    <property name="text">
     <string>&amp;Connect...</string>
@@ -263,7 +263,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>skin:Information_icon.svg</normaloff>skin:Information_icon.svg</iconset>
+     <normaloff></normaloff></iconset>
    </property>
    <property name="text">
     <string>&amp;Information...</string>
@@ -461,9 +461,9 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>skin:actions/audio-input-microphone.svg</normaloff>
-     <normalon>skin:actions/audio-input-microphone-muted.svg</normalon>
-     <activeon>skin:actions/audio-input-microphone-muted.svg</activeon>skin:actions/audio-input-microphone.svg</iconset>
+     <normaloff></normaloff>
+     <normalon></normalon>
+     <activeon></activeon></iconset>
    </property>
    <property name="text">
     <string>&amp;Mute Self</string>
@@ -484,9 +484,9 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>skin:self_undeafened.svg</normaloff>
-     <normalon>skin:deafened_self.svg</normalon>
-     <activeon>skin:deafened_self.svg</activeon>skin:self_undeafened.svg</iconset>
+     <normaloff></normaloff>
+     <normalon></normalon>
+     <activeon></activeon></iconset>
    </property>
    <property name="text">
     <string>&amp;Deafen Self</string>
@@ -564,9 +564,9 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>skin:filter_off.svg</normaloff>
-     <normalon>skin:filter_on.svg</normalon>
-     <activeon>skin:filter_on.svg</activeon>skin:filter_off.svg</iconset>
+     <normaloff></normaloff>
+     <normalon></normalon>
+     <activeon></activeon></iconset>
    </property>
    <property name="text">
     <string>&amp;Filter on/off</string>
@@ -861,7 +861,7 @@ the channel's context menu.</string>
   <action name="qaSelfComment">
    <property name="icon">
     <iconset>
-     <normaloff>skin:self_comment.svg</normaloff>skin:self_comment.svg</iconset>
+     <normaloff></normaloff></iconset>
    </property>
    <property name="text">
     <string>&amp;Change Comment...</string>
@@ -900,7 +900,7 @@ the channel's context menu.</string>
   <action name="qaRecording">
    <property name="icon">
     <iconset>
-     <normaloff>skin:actions/media-record.svg</normaloff>skin:actions/media-record.svg</iconset>
+     <normaloff></normaloff></iconset>
    </property>
    <property name="text">
     <string>Recording</string>

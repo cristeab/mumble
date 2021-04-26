@@ -772,7 +772,7 @@ void ServerTableModel::customDnsLookUp()
 {
     for (int i = 0; i < _servers.size(); ++i) {
         const auto &srv = _servers[i];
-        qDebug() << "Custom DNS lookup" << srv.hostname << srv.address;
+        qDebug() << "Custom DNS lookup" << srv.hostname << srv.address << srv.port;
         if (!srv.hostname.isEmpty()) {
             if (updateServerAddress(i, QHostAddress(srv.hostname))) {
                 qInfo() << "Server hostname is an IP address";
