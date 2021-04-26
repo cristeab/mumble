@@ -4,62 +4,62 @@
 <context>
     <name>AddEditServer</name>
     <message>
-        <location filename="qml/dialog/AddEditServer.qml" line="37"/>
+        <location filename="qml/dialog/AddEditServer.qml" line="35"/>
         <source>Add Server</source>
         <translation>Tilføj server</translation>
     </message>
     <message>
-        <location filename="qml/dialog/AddEditServer.qml" line="37"/>
+        <location filename="qml/dialog/AddEditServer.qml" line="35"/>
         <source>Edit Server</source>
         <translation>Rediger server</translation>
     </message>
     <message>
-        <location filename="qml/dialog/AddEditServer.qml" line="60"/>
+        <location filename="qml/dialog/AddEditServer.qml" line="63"/>
         <source>Address</source>
         <translation>Adresse</translation>
     </message>
     <message>
-        <location filename="qml/dialog/AddEditServer.qml" line="70"/>
+        <location filename="qml/dialog/AddEditServer.qml" line="73"/>
         <source>Port</source>
         <translation>Navn</translation>
     </message>
     <message>
-        <location filename="qml/dialog/AddEditServer.qml" line="85"/>
+        <location filename="qml/dialog/AddEditServer.qml" line="88"/>
         <source>Username</source>
         <translation>Brugernavn</translation>
     </message>
     <message>
-        <location filename="qml/dialog/AddEditServer.qml" line="87"/>
+        <location filename="qml/dialog/AddEditServer.qml" line="90"/>
         <source>Your username</source>
         <translation>Dit brugernavn</translation>
     </message>
     <message>
-        <location filename="qml/dialog/AddEditServer.qml" line="93"/>
+        <location filename="qml/dialog/AddEditServer.qml" line="96"/>
         <source>Password</source>
         <translation>Adgangskode</translation>
     </message>
     <message>
-        <location filename="qml/dialog/AddEditServer.qml" line="95"/>
+        <location filename="qml/dialog/AddEditServer.qml" line="98"/>
         <source>Your password</source>
         <translation>Dit kodeord</translation>
     </message>
     <message>
-        <location filename="qml/dialog/AddEditServer.qml" line="101"/>
+        <location filename="qml/dialog/AddEditServer.qml" line="104"/>
         <source>Label</source>
         <translation>Etiket</translation>
     </message>
     <message>
-        <location filename="qml/dialog/AddEditServer.qml" line="103"/>
+        <location filename="qml/dialog/AddEditServer.qml" line="106"/>
         <source>Local server label</source>
         <translation>Lokal serveretiket</translation>
     </message>
     <message>
-        <location filename="qml/dialog/AddEditServer.qml" line="125"/>
+        <location filename="qml/dialog/AddEditServer.qml" line="128"/>
         <source>OK</source>
         <translation>Tilføj</translation>
     </message>
     <message>
-        <location filename="qml/dialog/AddEditServer.qml" line="129"/>
+        <location filename="qml/dialog/AddEditServer.qml" line="132"/>
         <source>Cancel</source>
         <translation>Fortryd</translation>
     </message>
@@ -77,17 +77,17 @@
         <translation>Tilføj token</translation>
     </message>
     <message>
-        <location filename="qml/dialog/AddEditToken.qml" line="39"/>
+        <location filename="qml/dialog/AddEditToken.qml" line="33"/>
         <source>Token</source>
         <translation>Polet</translation>
     </message>
     <message>
-        <location filename="qml/dialog/AddEditToken.qml" line="73"/>
+        <location filename="qml/dialog/AddEditToken.qml" line="67"/>
         <source>OK</source>
         <translation>Slet</translation>
     </message>
     <message>
-        <location filename="qml/dialog/AddEditToken.qml" line="77"/>
+        <location filename="qml/dialog/AddEditToken.qml" line="71"/>
         <source>Cancel</source>
         <translation>Fortryd</translation>
     </message>
@@ -103,135 +103,140 @@
 <context>
     <name>AudioInput</name>
     <message>
-        <location filename="qml/AudioInput.qml" line="21"/>
+        <location filename="qml/AudioInput.qml" line="19"/>
         <source>Mute microphone</source>
         <translation>Mute mikrofon</translation>
     </message>
     <message>
-        <location filename="qml/AudioInput.qml" line="26"/>
+        <location filename="qml/AudioInput.qml" line="24"/>
         <source>Reconnect automatically</source>
         <translation>Tilslut automatisk</translation>
     </message>
     <message>
-        <location filename="qml/AudioInput.qml" line="41"/>
+        <location filename="qml/AudioInput.qml" line="39"/>
         <source>System</source>
         <translation>System</translation>
     </message>
     <message>
-        <location filename="qml/AudioInput.qml" line="48"/>
+        <location filename="qml/AudioInput.qml" line="46"/>
         <source>Device</source>
         <translation>Enhed</translation>
     </message>
     <message>
-        <location filename="qml/AudioInput.qml" line="65"/>
+        <location filename="qml/AudioInput.qml" line="63"/>
         <source>Sound limitation</source>
         <translation>Lyd afgrænsning</translation>
     </message>
     <message>
-        <location filename="qml/AudioInput.qml" line="98"/>
+        <location filename="qml/AudioInput.qml" line="96"/>
         <source>Adjust the sliders such that when you speak the voice exceeds the green field, but when you are quiet the background noise is in the red field.</source>
         <translation>Juster slideren således at feltet når det grønne når du snakker, men når du er stille, er baggrundstøjen&#xa0;i&#xa0;det røde felt.</translation>
     </message>
     <message>
-        <location filename="qml/AudioInput.qml" line="110"/>
+        <location filename="qml/AudioInput.qml" line="108"/>
         <source>Compression</source>
         <translation>Kompression</translation>
     </message>
     <message>
-        <location filename="qml/AudioInput.qml" line="128"/>
+        <location filename="qml/AudioInput.qml" line="126"/>
         <source>Quality</source>
         <translation>Lyd kvalitet</translation>
     </message>
     <message>
-        <location filename="qml/AudioInput.qml" line="132"/>
+        <location filename="qml/AudioInput.qml" line="130"/>
         <source>Quality of compression (peak bandwidth)</source>
         <translation>Kompressionskvalitet (maksimal båndbredde)</translation>
     </message>
     <message>
-        <location filename="qml/AudioInput.qml" line="151"/>
+        <location filename="qml/AudioInput.qml" line="148"/>
         <source>Audio per packet</source>
         <translation>Lyd pr. pakke</translation>
     </message>
     <message>
-        <location filename="qml/AudioInput.qml" line="155"/>
+        <location filename="qml/AudioInput.qml" line="152"/>
         <source>How many audio frames to send per packet</source>
         <translation>Hvor mange lydrammer der skal sendes pr. pakke</translation>
+    </message>
+    <message>
+        <location filename="qml/AudioInput.qml" line="181"/>
+        <source>RNNoise</source>
+        <translation>AI drevet støjreducering</translation>
     </message>
 </context>
 <context>
     <name>AudioOutput</name>
     <message>
-        <location filename="qml/AudioOutput.qml" line="21"/>
+        <location filename="qml/AudioOutput.qml" line="19"/>
         <source>Mute speakers</source>
         <translation>Mute hovedtelefon</translation>
     </message>
     <message>
-        <location filename="qml/AudioOutput.qml" line="26"/>
+        <location filename="qml/AudioOutput.qml" line="24"/>
         <source>Reconnect automatically</source>
         <translation>Tilslut&#xa0;automatisk</translation>
     </message>
     <message>
-        <location filename="qml/AudioOutput.qml" line="41"/>
+        <location filename="qml/AudioOutput.qml" line="39"/>
         <source>System</source>
         <translation>System</translation>
     </message>
     <message>
-        <location filename="qml/AudioOutput.qml" line="48"/>
+        <location filename="qml/AudioOutput.qml" line="46"/>
         <source>Device</source>
         <translation>Enhed</translation>
     </message>
     <message>
-        <location filename="qml/AudioOutput.qml" line="65"/>
+        <location filename="qml/AudioOutput.qml" line="63"/>
         <source>Audio output</source>
         <translation>Lyd output</translation>
     </message>
     <message>
-        <location filename="qml/AudioOutput.qml" line="83"/>
+        <location filename="qml/AudioOutput.qml" line="81"/>
         <source>Volume</source>
         <translation>Lydstyrke</translation>
     </message>
     <message>
-        <location filename="qml/AudioOutput.qml" line="87"/>
+        <location filename="qml/AudioOutput.qml" line="85"/>
         <source>Volume of incoming speech</source>
         <translation>Volumen af ​​indkommende tale</translation>
     </message>
     <message>
-        <location filename="qml/AudioOutput.qml" line="105"/>
+        <location filename="qml/AudioOutput.qml" line="103"/>
         <source>Output delay</source>
         <translation>Output forsinkelse</translation>
     </message>
     <message>
-        <location filename="qml/AudioOutput.qml" line="109"/>
+        <location filename="qml/AudioOutput.qml" line="107"/>
         <source>Amount of data to buffer</source>
         <translation>Mængden af ​​data, der skal buffer</translation>
     </message>
     <message>
-        <location filename="qml/AudioOutput.qml" line="128"/>
+        <location filename="qml/AudioOutput.qml" line="126"/>
         <source>Attenuate applications by...</source>
         <translation>Dæmp andre applicationer med...</translation>
     </message>
     <message>
-        <location filename="qml/AudioOutput.qml" line="132"/>
+        <location filename="qml/AudioOutput.qml" line="130"/>
         <source>Attenuation of other applications during speech</source>
         <translation>Dæmpning af andre applikationer under talen</translation>
     </message>
     <message>
-        <location filename="qml/AudioOutput.qml" line="144"/>
+        <location filename="qml/AudioOutput.qml" line="142"/>
         <source>while other users talk</source>
         <translation>Når andre snakker</translation>
     </message>
     <message>
-        <location filename="qml/AudioOutput.qml" line="149"/>
+        <location filename="qml/AudioOutput.qml" line="147"/>
         <source>If checked Bubbles lowers the volume of other applications while other users talk</source>
         <translation>Hvis dette er markeret, sænker Bubbles lydstyrken for andre applikationer, mens andre brugere taler</translation>
     </message>
     <message>
-        <location filename="qml/AudioOutput.qml" line="154"/>
+        <location filename="qml/AudioOutput.qml" line="152"/>
         <source>while you talk</source>
         <translation>Når jeg snakker</translation>
     </message>
     <message>
-        <location filename="qml/AudioOutput.qml" line="159"/>
+        <location filename="qml/AudioOutput.qml" line="157"/>
         <source>If checked Bubbles lowers the volume of other applications while you talk</source>
         <translation>Hvis dette er markeret, reducerer Bubbles lyden af ​​andre applikationer, mens du taler</translation>
     </message>
@@ -239,64 +244,64 @@
 <context>
     <name>CertificateAuth</name>
     <message>
-        <location filename="qml/page/CertificateAuth.qml" line="24"/>
+        <location filename="qml/page/CertificateAuth.qml" line="22"/>
         <source>Certificate Authentication</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/CertificateAuth.qml" line="42"/>
+        <location filename="qml/page/CertificateAuth.qml" line="40"/>
         <source>Authenticating to servers without using passwords</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/CertificateAuth.qml" line="73"/>
+        <location filename="qml/page/CertificateAuth.qml" line="71"/>
         <source>Bubbles can use certificates to authenticate with servers. Using certificates avoids passwords, meaning you don&apos;t need to disclose any password to the remote site. It also enables very easy user registration and a client side friends list independent of servers.
 While Bubbles can work without certificates, the majority of servers will expect you to have one.
 Creating a new certificate automatically is sufficient for most use cases. But Bubbles also supports certificates representing trust in the users ownership of an email address. These certificates are issued by third parties.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/CertificateAuth.qml" line="80"/>
+        <location filename="qml/page/CertificateAuth.qml" line="78"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/CertificateAuth.qml" line="80"/>
+        <location filename="qml/page/CertificateAuth.qml" line="78"/>
         <source>Email</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/CertificateAuth.qml" line="80"/>
+        <location filename="qml/page/CertificateAuth.qml" line="78"/>
         <source>Issuer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/CertificateAuth.qml" line="80"/>
+        <location filename="qml/page/CertificateAuth.qml" line="78"/>
         <source>Expiry Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/CertificateAuth.qml" line="93"/>
+        <location filename="qml/page/CertificateAuth.qml" line="91"/>
         <source>Current Certificate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/CertificateAuth.qml" line="126"/>
+        <location filename="qml/page/CertificateAuth.qml" line="124"/>
         <source>Create a new certificate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/CertificateAuth.qml" line="126"/>
+        <location filename="qml/page/CertificateAuth.qml" line="124"/>
         <source>Import a certificate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/CertificateAuth.qml" line="126"/>
+        <location filename="qml/page/CertificateAuth.qml" line="124"/>
         <source>Export current certificate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/CertificateAuth.qml" line="138"/>
+        <location filename="qml/page/CertificateAuth.qml" line="136"/>
         <source>Automatic Certificate Creation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -304,28 +309,28 @@ Creating a new certificate automatically is sufficient for most use cases. But B
 <context>
     <name>CertificateManager</name>
     <message>
-        <location filename="qml/CertificateManager.qml" line="64"/>
+        <location filename="qml/CertificateManager.qml" line="62"/>
         <source>Back</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qml/CertificateManager.qml" line="75"/>
+        <location filename="qml/CertificateManager.qml" line="73"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/CertificateManager.qml" line="89"/>
-        <location filename="qml/CertificateManager.qml" line="95"/>
+        <location filename="qml/CertificateManager.qml" line="87"/>
+        <location filename="qml/CertificateManager.qml" line="93"/>
         <source>Error</source>
         <translation type="unfinished">Fejl</translation>
     </message>
     <message>
-        <location filename="qml/CertificateManager.qml" line="90"/>
+        <location filename="qml/CertificateManager.qml" line="88"/>
         <source>Invalid subject name of email. Please choose valid values.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/CertificateManager.qml" line="96"/>
+        <location filename="qml/CertificateManager.qml" line="94"/>
         <source>There was an error generating your certificate. Please try again.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -394,7 +399,7 @@ Creating a new certificate automatically is sufficient for most use cases. But B
 <context>
     <name>Classes</name>
     <message>
-        <location filename="qml/Classes.qml" line="24"/>
+        <location filename="qml/Classes.qml" line="22"/>
         <source>Class name</source>
         <translation>Klassens navn</translation>
     </message>
@@ -407,7 +412,7 @@ Creating a new certificate automatically is sufficient for most use cases. But B
         <translation type="vanished">Du blev nægtet adgang til denne klasse</translation>
     </message>
     <message>
-        <location filename="qml/Classes.qml" line="88"/>
+        <location filename="qml/Classes.qml" line="90"/>
         <source>Go to class</source>
         <translation>Gå til time</translation>
     </message>
@@ -428,52 +433,52 @@ Creating a new certificate automatically is sufficient for most use cases. But B
 <context>
     <name>ExportCertificate</name>
     <message>
-        <location filename="qml/page/ExportCertificate.qml" line="23"/>
+        <location filename="qml/page/ExportCertificate.qml" line="21"/>
         <source>Export Certificate</source>
         <translation>Eksportcertifikat</translation>
     </message>
     <message>
-        <location filename="qml/page/ExportCertificate.qml" line="39"/>
+        <location filename="qml/page/ExportCertificate.qml" line="37"/>
         <source>Make a backup of your certificate</source>
         <translation>Lav en sikkerhedskopi af dit certifikat</translation>
     </message>
     <message>
-        <location filename="qml/page/ExportCertificate.qml" line="70"/>
+        <location filename="qml/page/ExportCertificate.qml" line="68"/>
         <source>If you ever lose your current certificate, which will happen if your computer suffers a hardware failure or you reinstall your machine, you will no longer be able to authenticate to any server you are registered on. It is therefore &lt;b&gt;mandatory&lt;/b&gt; that you make a backup of your certificate. We strongly recommend you store this backup on removable storage, such as a USB flash drive.&lt;br&gt;Note that this file will not be encrypted, and if anyone gains access to it, they will be able to impersonate you, so take good care of it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ExportCertificate.qml" line="87"/>
+        <location filename="qml/page/ExportCertificate.qml" line="85"/>
         <source>Export to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ExportCertificate.qml" line="94"/>
+        <location filename="qml/page/ExportCertificate.qml" line="92"/>
         <source>Save As...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ExportCertificate.qml" line="102"/>
+        <location filename="qml/page/ExportCertificate.qml" line="100"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ExportCertificate.qml" line="102"/>
+        <location filename="qml/page/ExportCertificate.qml" line="100"/>
         <source>Email</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ExportCertificate.qml" line="102"/>
+        <location filename="qml/page/ExportCertificate.qml" line="100"/>
         <source>Issuer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ExportCertificate.qml" line="102"/>
+        <location filename="qml/page/ExportCertificate.qml" line="100"/>
         <source>Expiry Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ExportCertificate.qml" line="115"/>
+        <location filename="qml/page/ExportCertificate.qml" line="113"/>
         <source>Certificate Details</source>
         <translation type="unfinished"></translation>
     </message>
@@ -481,17 +486,17 @@ Creating a new certificate automatically is sufficient for most use cases. But B
 <context>
     <name>FinishCertificate</name>
     <message>
-        <location filename="qml/page/FinishCertificate.qml" line="23"/>
+        <location filename="qml/page/FinishCertificate.qml" line="21"/>
         <source>Finish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/FinishCertificate.qml" line="41"/>
+        <location filename="qml/page/FinishCertificate.qml" line="39"/>
         <source>Certificate-based authentication is ready for use</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/FinishCertificate.qml" line="72"/>
+        <location filename="qml/page/FinishCertificate.qml" line="70"/>
         <source>Press Next one more time to finish. Enjoy using Bubbles with strong authentication.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -499,58 +504,58 @@ Creating a new certificate automatically is sufficient for most use cases. But B
 <context>
     <name>ImportCertificate</name>
     <message>
-        <location filename="qml/page/ImportCertificate.qml" line="24"/>
+        <location filename="qml/page/ImportCertificate.qml" line="22"/>
         <source>Import Certificate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ImportCertificate.qml" line="42"/>
+        <location filename="qml/page/ImportCertificate.qml" line="40"/>
         <source>PKCS #12 Certificate Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ImportCertificate.qml" line="73"/>
+        <location filename="qml/page/ImportCertificate.qml" line="71"/>
         <source>Bubbles can import certificates stored in PKCS #12 format. This is the format used when exporting a key from Bubbles, and also when exporting keys from Firefox, Internet Explorer, Opera etc.
 If the file is password protected, you will need the password to import the certificate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ImportCertificate.qml" line="90"/>
+        <location filename="qml/page/ImportCertificate.qml" line="88"/>
         <source>Import from</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ImportCertificate.qml" line="97"/>
+        <location filename="qml/page/ImportCertificate.qml" line="95"/>
         <source>Open...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ImportCertificate.qml" line="113"/>
+        <location filename="qml/page/ImportCertificate.qml" line="111"/>
         <source>Password</source>
         <translation type="unfinished">Adgangskode</translation>
     </message>
     <message>
-        <location filename="qml/page/ImportCertificate.qml" line="123"/>
+        <location filename="qml/page/ImportCertificate.qml" line="121"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ImportCertificate.qml" line="123"/>
+        <location filename="qml/page/ImportCertificate.qml" line="121"/>
         <source>Email</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ImportCertificate.qml" line="123"/>
+        <location filename="qml/page/ImportCertificate.qml" line="121"/>
         <source>Issuer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ImportCertificate.qml" line="123"/>
+        <location filename="qml/page/ImportCertificate.qml" line="121"/>
         <source>Expiry Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ImportCertificate.qml" line="136"/>
+        <location filename="qml/page/ImportCertificate.qml" line="134"/>
         <source>Current Certificate</source>
         <translation type="unfinished"></translation>
     </message>
@@ -558,22 +563,22 @@ If the file is password protected, you will need the password to import the cert
 <context>
     <name>LineEditDialog</name>
     <message>
-        <location filename="qml/dialog/LineEditDialog.qml" line="60"/>
+        <location filename="qml/dialog/LineEditDialog.qml" line="55"/>
         <source>Your password</source>
         <translation>Dit kodeord</translation>
     </message>
     <message>
-        <location filename="qml/dialog/LineEditDialog.qml" line="60"/>
+        <location filename="qml/dialog/LineEditDialog.qml" line="55"/>
         <source>Your username</source>
         <translation>Dit brugernavn</translation>
     </message>
     <message>
-        <location filename="qml/dialog/LineEditDialog.qml" line="95"/>
+        <location filename="qml/dialog/LineEditDialog.qml" line="90"/>
         <source>OK</source>
         <translation>Slet</translation>
     </message>
     <message>
-        <location filename="qml/dialog/LineEditDialog.qml" line="99"/>
+        <location filename="qml/dialog/LineEditDialog.qml" line="94"/>
         <source>Cancel</source>
         <translation>Fortryd</translation>
     </message>
@@ -1054,12 +1059,12 @@ If the file is password protected, you will need the password to import the cert
 <context>
     <name>MessageDialog</name>
     <message>
-        <location filename="qml/dialog/MessageDialog.qml" line="68"/>
+        <location filename="qml/dialog/MessageDialog.qml" line="66"/>
         <source>OK</source>
         <translation>Slet</translation>
     </message>
     <message>
-        <location filename="qml/dialog/MessageDialog.qml" line="73"/>
+        <location filename="qml/dialog/MessageDialog.qml" line="71"/>
         <source>Cancel</source>
         <translation>Fortryd</translation>
     </message>
@@ -1067,28 +1072,28 @@ If the file is password protected, you will need the password to import the cert
 <context>
     <name>NewCertificate</name>
     <message>
-        <location filename="qml/page/NewCertificate.qml" line="23"/>
+        <location filename="qml/page/NewCertificate.qml" line="21"/>
         <source>New Certificate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/NewCertificate.qml" line="41"/>
+        <location filename="qml/page/NewCertificate.qml" line="39"/>
         <source>Generate a new certificate for strong authentication</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/NewCertificate.qml" line="72"/>
+        <location filename="qml/page/NewCertificate.qml" line="70"/>
         <source>Bubbles will now generate a strong certificate for authentication to servers.
 If you wish, you may provide some additional information to be stored in the certificate, which will be presented to servers when you connect. If you provide a valid email address, you can upgrade to a CA issued email certificate later on, which provides strong identification.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/NewCertificate.qml" line="88"/>
+        <location filename="qml/page/NewCertificate.qml" line="86"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/NewCertificate.qml" line="93"/>
+        <location filename="qml/page/NewCertificate.qml" line="91"/>
         <source>Email</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1096,27 +1101,27 @@ If you wish, you may provide some additional information to be stored in the cer
 <context>
     <name>PasswordManager</name>
     <message>
-        <location filename="qml/PasswordManager.qml" line="20"/>
+        <location filename="qml/PasswordManager.qml" line="18"/>
         <source>Please connect to a server before adding access tokens</source>
         <translation>Opret forbindelse til en server, inden du tilføjer adgangstokener</translation>
     </message>
     <message>
-        <location filename="qml/PasswordManager.qml" line="92"/>
+        <location filename="qml/PasswordManager.qml" line="90"/>
         <source>Delete</source>
         <translation>Slet</translation>
     </message>
     <message>
-        <location filename="qml/PasswordManager.qml" line="130"/>
+        <location filename="qml/PasswordManager.qml" line="128"/>
         <source>Edit</source>
         <translation>Redigere</translation>
     </message>
     <message>
-        <location filename="qml/PasswordManager.qml" line="167"/>
+        <location filename="qml/PasswordManager.qml" line="163"/>
         <source>Add a token</source>
         <translation>Tilføj et token</translation>
     </message>
     <message>
-        <location filename="qml/PasswordManager.qml" line="180"/>
+        <location filename="qml/PasswordManager.qml" line="176"/>
         <source>This is an editable list of access tokens on the connected server. An access token is a text string, which can be used as a password for very simple access management on channels. Bubbles will remember the tokens you&apos;ve used and resend them to the server next time you reconnect, so you don&apos;t have to enter these every time.</source>
         <translation>Dette er en redigerbar liste af kodeord&#xa0;på dine tilsluttede serverer, der sikre at du har tilladelse til at tilslutte din skoles virtuelle rum.</translation>
     </message>
@@ -1156,17 +1161,17 @@ If you wish, you may provide some additional information to be stored in the cer
 <context>
     <name>ReplaceCertificate</name>
     <message>
-        <location filename="qml/page/ReplaceCertificate.qml" line="23"/>
+        <location filename="qml/page/ReplaceCertificate.qml" line="21"/>
         <source>Replace Certificate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ReplaceCertificate.qml" line="41"/>
+        <location filename="qml/page/ReplaceCertificate.qml" line="39"/>
         <source>Replace existing certificate with new certificate?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ReplaceCertificate.qml" line="72"/>
+        <location filename="qml/page/ReplaceCertificate.qml" line="70"/>
         <source>You already have a certificate stored in Bubbles, and you are about to replace it.
 If you are upgrading to a certificate issued to you by a trusted CA and the email addresses match your current certificate, this is completely safe, and servers you connect to will automatically recognize the strong certificate for your email address.
 If this is not the case, you will no longer be recognized by any server you previously have authenticated with. If you haven&apos;t been registered on any server yet, this is nothing to worry about.
@@ -1174,32 +1179,32 @@ Are you sure you wish to replace your certificate?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ReplaceCertificate.qml" line="91"/>
+        <location filename="qml/page/ReplaceCertificate.qml" line="89"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ReplaceCertificate.qml" line="91"/>
+        <location filename="qml/page/ReplaceCertificate.qml" line="89"/>
         <source>Email</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ReplaceCertificate.qml" line="91"/>
+        <location filename="qml/page/ReplaceCertificate.qml" line="89"/>
         <source>Issuer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ReplaceCertificate.qml" line="91"/>
+        <location filename="qml/page/ReplaceCertificate.qml" line="89"/>
         <source>Expiry Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ReplaceCertificate.qml" line="97"/>
+        <location filename="qml/page/ReplaceCertificate.qml" line="95"/>
         <source>Current Certificate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/page/ReplaceCertificate.qml" line="132"/>
+        <location filename="qml/page/ReplaceCertificate.qml" line="130"/>
         <source>New Certificate</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1207,7 +1212,7 @@ Are you sure you wish to replace your certificate?</source>
 <context>
     <name>Rooms</name>
     <message>
-        <location filename="qml/Rooms.qml" line="219"/>
+        <location filename="qml/Rooms.qml" line="221"/>
         <source>Join room</source>
         <translation>Deltag i værelset</translation>
     </message>
@@ -1215,12 +1220,12 @@ Are you sure you wish to replace your certificate?</source>
 <context>
     <name>Schools</name>
     <message>
-        <location filename="qml/Schools.qml" line="20"/>
+        <location filename="qml/Schools.qml" line="18"/>
         <source>Forward</source>
         <translation>Frem</translation>
     </message>
     <message>
-        <location filename="qml/Schools.qml" line="35"/>
+        <location filename="qml/Schools.qml" line="33"/>
         <source>School name</source>
         <translation>Skole navn</translation>
     </message>
@@ -1233,7 +1238,7 @@ Are you sure you wish to replace your certificate?</source>
         <translation type="vanished">Du blev nægtet adgang til denne skole</translation>
     </message>
     <message>
-        <location filename="qml/Schools.qml" line="95"/>
+        <location filename="qml/Schools.qml" line="97"/>
         <source>Go to school</source>
         <translation>Gå i skole</translation>
     </message>
@@ -1241,47 +1246,47 @@ Are you sure you wish to replace your certificate?</source>
 <context>
     <name>ServerTableModel</name>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="87"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="94"/>
         <source>Server Name</source>
         <translation>Server navn</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="90"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="97"/>
         <source>Delay</source>
         <translation>Forsinkelse</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="93"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="100"/>
         <source>Users</source>
         <translation>Brugere</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="476"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="447"/>
         <source>Invalid username</source>
         <translation>Ugyldigt brugernavn</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="477"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="448"/>
         <source>You connected with an invalid username, please try another one.</source>
         <translation>Du har forbindelse til et ugyldigt brugernavn. Prøv et andet.</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="482"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="453"/>
         <source>Username in use</source>
         <translation>Brugernavn i brug</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="483"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="454"/>
         <source>That username is already in use, please try another username.</source>
         <translation>Dette brugernavn er allerede i brug, prøv et andet brugernavn.</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="488"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="459"/>
         <source>Wrong certificate or password</source>
         <translation>Forkert certifikat eller adgangskode</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="489"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="460"/>
         <source>Wrong certificate or password for registered user. If you are
 certain this user is protected by a password please retry.
 Otherwise abort and check your certificate and username.</source>
@@ -1290,32 +1295,32 @@ visse denne bruger er beskyttet af en adgangskode, prøv igen.
 Ellers afbryder og tjek dit certifikat og brugernavn.</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="496"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="467"/>
         <source>Wrong password</source>
         <translation>Forkert kodeord</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="497"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="468"/>
         <source>Wrong server password for unregistered user account, please try again.</source>
         <translation>Forkert serveradgangskode til uregistreret brugerkonto, prøv igen.</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="764"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="735"/>
         <source>Warning</source>
         <translation>Advarsel</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="764"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="735"/>
         <source>Connection lost</source>
         <translation>Forbindelse afbrudt</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="770"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="741"/>
         <source>Information</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="770"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="741"/>
         <source>Connection restored</source>
         <translation>Forbindelsen gendannet</translation>
     </message>
@@ -1323,42 +1328,42 @@ Ellers afbryder og tjek dit certifikat og brugernavn.</translation>
 <context>
     <name>Servers</name>
     <message>
-        <location filename="qml/Servers.qml" line="20"/>
+        <location filename="qml/Servers.qml" line="18"/>
         <source>Forward</source>
         <translation>Frem</translation>
     </message>
     <message>
-        <location filename="qml/Servers.qml" line="53"/>
+        <location filename="qml/Servers.qml" line="51"/>
         <source>Disconnect</source>
         <translation>Koble fra</translation>
     </message>
     <message>
-        <location filename="qml/Servers.qml" line="53"/>
+        <location filename="qml/Servers.qml" line="51"/>
         <source>Connect</source>
         <translation>Opret forbindelse</translation>
     </message>
     <message>
-        <location filename="qml/Servers.qml" line="69"/>
+        <location filename="qml/Servers.qml" line="67"/>
         <source>Add New...</source>
         <translation>Tilføj ny...</translation>
     </message>
     <message>
-        <location filename="qml/Servers.qml" line="74"/>
+        <location filename="qml/Servers.qml" line="72"/>
         <source>Edit...</source>
         <translation>Redigere...</translation>
     </message>
     <message>
-        <location filename="qml/Servers.qml" line="78"/>
+        <location filename="qml/Servers.qml" line="76"/>
         <source>Remove</source>
         <translation>Fjern</translation>
     </message>
     <message>
-        <location filename="qml/Servers.qml" line="80"/>
+        <location filename="qml/Servers.qml" line="78"/>
         <source>Delete Server</source>
         <translation>Slet server</translation>
     </message>
     <message>
-        <location filename="qml/Servers.qml" line="81"/>
+        <location filename="qml/Servers.qml" line="79"/>
         <source>Are you sure you want to delete </source>
         <translation>Er du sikker på, at du vil slette </translation>
     </message>
@@ -1371,32 +1376,32 @@ Ellers afbryder og tjek dit certifikat og brugernavn.</translation>
         <translation>Bubbles</translation>
     </message>
     <message>
-        <location filename="qml/main.qml" line="35"/>
+        <location filename="qml/main.qml" line="37"/>
         <source>Back</source>
         <translation>Tilbage</translation>
     </message>
     <message>
-        <location filename="qml/main.qml" line="50"/>
+        <location filename="qml/main.qml" line="52"/>
         <source>Servers</source>
         <translation>Servere</translation>
     </message>
     <message>
-        <location filename="qml/main.qml" line="50"/>
+        <location filename="qml/main.qml" line="52"/>
         <source>Audio Input</source>
         <translation>Lydindgang</translation>
     </message>
     <message>
-        <location filename="qml/main.qml" line="50"/>
+        <location filename="qml/main.qml" line="52"/>
         <source>Audio Output</source>
         <translation>Lydudgang</translation>
     </message>
     <message>
-        <location filename="qml/main.qml" line="50"/>
+        <location filename="qml/main.qml" line="52"/>
         <source>Password Manager</source>
         <translation>Adgangskodeadministrator</translation>
     </message>
     <message>
-        <location filename="qml/main.qml" line="50"/>
+        <location filename="qml/main.qml" line="52"/>
         <source>Certificate Manager</source>
         <translation>Certifikat Manager</translation>
     </message>
