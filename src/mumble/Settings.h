@@ -183,7 +183,7 @@ struct Settings {
 	QString qsTTSLanguage;
 	int iQuality, iMinLoudness, iVoiceHold, iJitterBufferSize;
 	int iNoiseSuppress;
-    bool bDenoise = true;
+    bool bDenoise = false;
 	quint64 uiAudioInputChannelMask;
 
 	// Idle auto actions

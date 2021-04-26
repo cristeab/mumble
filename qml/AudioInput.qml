@@ -132,7 +132,6 @@ Page {
     }
     CustomSlider {
         id: framesSlider
-
         anchors {
             top: qualitySlider.bottom
             topMargin: Theme.windowMargin
@@ -154,6 +153,7 @@ Page {
         }
     }
     Label {
+        id: compressionInfoLabel
         anchors {
             top: framesSlider.bottom
             topMargin: Theme.windowMargin
@@ -168,5 +168,18 @@ Page {
         text: audioDevices.bitRateText
         color: audioDevices.bitRateAlarm ? Theme.errorColor : Theme.textColor
         font.pointSize: appWin.isBig ? Theme.bigLabelFontSize : Theme.labelFontSize
+    }
+    CustomCheckBox {
+        anchors {
+            top: compressionInfoLabel.bottom
+            topMargin: 2 * Theme.windowMargin
+            left: parent.left
+            leftMargin: 2 * Theme.windowMargin
+            right: parent.right
+            rightMargin: 2 * Theme.windowMargin
+        }
+        text: qsTr("RNNoise")
+        checked: servers.enableRnnoise
+        onCheckedChanged: servers.enableRnnoise = checked
     }
 }

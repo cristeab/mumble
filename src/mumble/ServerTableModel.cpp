@@ -19,6 +19,8 @@ ServerTableModel::ServerTableModel(QObject *parent) : QAbstractTableModel(parent
 {
     setObjectName(QString::fromUtf8("servers"));
 
+    setEnableRnnoise(g.s.bDenoise);
+
     connect(_dns, &QDnsLookup::finished, this, &ServerTableModel::onCustomDnsLookUpFinished);
 
     _socket4 = new QUdpSocket(this);
@@ -838,4 +840,17 @@ bool ServerTableModel::updateServerAddress(const QString &name, const QHostAddre
         }
     }
     return rc;
+}
+
+bool ServerTableModel::enableRnnoise() const
+{
+    return g.s.bDenoise;
+}
+
+void ServerTableModel::setEnableRnnoise(bool enable)
+{
+    if (g.s.bDenoise != enable) {
+        g.s.bDenoise = enable;
+        emit enableRnnoiseChanged();
+    }
 }

@@ -56,6 +56,8 @@ class ServerTableModel : public QAbstractTableModel
     QML_READABLE_PROPERTY(QString, currentUsername, setCurrentUsername, QString())
     QML_CONSTANT_PROPERTY(QString, superUserName, QString::fromUtf8("SuperUser"))
 
+    Q_PROPERTY(bool enableRnnoise READ enableRnnoise WRITE setEnableRnnoise NOTIFY enableRnnoiseChanged)
+
 public:
     struct ServerItem {
         QString name;
@@ -116,12 +118,16 @@ public:
     void onChannelAllowedChanged(int id, bool allowed);
     void onUserDisconnected(const QString &username);
 
+    bool enableRnnoise() const;
+    void setEnableRnnoise(bool enable);
+
 signals:
     void schoolsAvailable();
     void currentChannelAllowedChanged(bool allowed);
     void showDialog(const QString &title, const QString &msg, bool okCancel);
     void closeDialog();
     void resetServersView();
+    void enableRnnoiseChanged();
 
 private:
     enum { NAME = 0, DELAY, USERS, COLUMN_COUNT };
