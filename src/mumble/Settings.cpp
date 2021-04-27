@@ -219,28 +219,6 @@ Settings::Settings() {
 	qRegisterMetaTypeStreamOperators<ShortcutTarget> ("ShortcutTarget");
 	qRegisterMetaType<QVariant> ("QVariant");
 
-	atTransmit = VAD;
-	bTransmitPosition = false;
-	bMute = bDeaf = false;
-	bTTS = true;
-	bTTSMessageReadBack = false;
-	iTTSVolume = 75;
-	iTTSThreshold = 250;
-	qsTTSLanguage = QString();
-	iQuality = 40000;
-	fVolume = 1.0f;
-	fOtherVolume = 0.5f;
-	bAttenuateOthersOnTalk = false;
-	bAttenuateOthers = false;
-	bAttenuateUsersOnPrioritySpeak = false;
-	bOnlyAttenuateSameOutput = false;
-	bAttenuateLoopbacks = false;
-	iMinLoudness = 1000;
-	iVoiceHold = 50;
-	iJitterBufferSize = 1;
-	iFramesPerPacket = 2;
-	iNoiseSuppress = -30;
-    bDenoise = false;
 	uiAudioInputChannelMask = 0xffffffffffffffffULL;
 
 	// Idle auto actions
@@ -349,10 +327,6 @@ Settings::Settings() {
 	bShowPTTButtonWindow = false;
 
 	// Network settings
-	bTCPCompat = false;
-	bQoS = true;
-	bReconnect = true;
-	bAutoConnect = false;
 	ptProxyType = NoProxy;
 	usProxyPort = 0;
 	iMaxInFlightTCPPings = 4;
