@@ -528,7 +528,7 @@ void ServerTableModel::onUserModelChanged()
 
 void ServerTableModel::onChannelJoined(Channel *channel, const QString &userName, unsigned int session)
 {
-    qDebug() << "onChannelJoined" << channel << userName << session;
+    qDebug() << "onChannelJoined: ch ID" << channel->iId << ", session" << session << ", user" << userName;
     const auto type = RoomsModel::channelType(channel);
     switch (type) {
     case RoomsModel::ChannelType::Room: {
@@ -613,13 +613,12 @@ bool ServerTableModel::gotoClass(int index)
 
 bool ServerTableModel::joinRoom(int index, const QString &username)
 {
-    qDebug() << "Join room" << index << username;
     auto *ch = _roomsModel->channel(index);
     bool rc = false;
     if (nullptr != ch) {
         _channelActionIndex = index;
         const auto session = _roomsModel->userSession(username);
-        qDebug() << "User session" << session << "channel ID" << ch->iId;
+        qDebug() << "joinRoom: ch ID" << ch->iId << ", session" << session;
         g.sh->joinChannel(session, ch->iId);//make sure the error message is shown
         isAllowed(ch);
         rc = true;
