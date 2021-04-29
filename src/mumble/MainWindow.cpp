@@ -1120,26 +1120,6 @@ void MainWindow::setupView(bool toggle_minimize) {
 	}
 }
 
-void MainWindow::on_qaServerConnect_triggered(bool autoconnect) {
-	ConnectDialog *cd = new ConnectDialog(this, autoconnect);
-	int res = cd->exec();
-
-	if (cd->qsServer.isEmpty() || (cd->usPort==0) || cd->qsUsername.isEmpty())
-		res = QDialog::Rejected;
-
-	if (res == QDialog::Accepted) {
-		recreateServerHandler();
-		qsDesiredChannel = QString();
-		rtLast = MumbleProto::Reject_RejectType_None;
-		bRetryServer = true;
-		qaServerDisconnect->setEnabled(true);
-		g.l->log(Log::Information, tr("Connecting to server %1.").arg(Log::msgColor(Qt::escape(cd->qsServer), Log::Server)));
-		g.sh->setConnectionInfo(cd->qsServer, cd->usPort, cd->qsUsername, cd->qsPassword);
-		g.sh->start(QThread::TimeCriticalPriority);
-	}
-	delete cd;
-}
-
 void MainWindow::on_Reconnect_timeout() {
 	if (g.sh->isRunning())
 		return;
@@ -2827,6 +2807,8 @@ void MainWindow::serverConnected() {
 #ifdef Q_OS_WIN
 	TaskList::addToRecentList(g.s.qsLastServer, uname, host, port);
 #endif
+
+    emit serverConnectedEvent();
 }
 
 void MainWindow::serverDisconnected(QAbstractSocket::SocketError err, QString reason) {
@@ -2967,48 +2949,6 @@ void MainWindow::serverDisconnected(QAbstractSocket::SocketError err, QString re
 #endif
 
         emit serverDisconnectedEvent(rtLast, reason);
-        /*bool matched = true;
-		switch (rtLast) {
-			case MumbleProto::Reject_RejectType_InvalidUsername:
-				uname = QInputDialog::getText(this, tr("Invalid username"),
-				                              tr("You connected with an invalid username, please try another one."),
-				                              QLineEdit::Normal, uname, &ok, wf);
-				break;
-			case MumbleProto::Reject_RejectType_UsernameInUse:
-				uname = QInputDialog::getText(this, tr("Username in use"),
-				                              tr("That username is already in use, please try another username."),
-				                              QLineEdit::Normal, uname, &ok, wf);
-				break;
-			case MumbleProto::Reject_RejectType_WrongUserPW:
-				pw = QInputDialog::getText(this,
-				                           tr("Wrong certificate or password"),
-				                           tr("Wrong certificate or password for registered user. If you are\n"
-				                              "certain this user is protected by a password please retry.\n"
-				                              "Otherwise abort and check your certificate and username."),
-				                           QLineEdit::Password, pw, &ok, wf);
-				break;
-			case MumbleProto::Reject_RejectType_WrongServerPW:
-				pw = QInputDialog::getText(this,
-				                           tr("Wrong password"),
-				                           tr("Wrong server password for unregistered user account, please try again."),
-				                           QLineEdit::Password, pw, &ok, wf);
-				break;
-			default:
-				matched = false;
-				break;
-		}
-		if (ok && matched) {
-			if (! g.s.bSuppressIdentity)
-				g.db->setPassword(host, port, uname, pw);
-			qaServerDisconnect->setEnabled(true);
-			g.sh->setConnectionInfo(host, port, uname, pw);
-			on_Reconnect_timeout();
-		} else if (!matched && g.s.bReconnect && ! reason.isEmpty()) {
-			qaServerDisconnect->setEnabled(true);
-			if (bRetryServer) {
-				qtReconnect->start();
-			}
-        }*/
 	}
     qstiIcon->setToolTip(tr("Bubbles -- %1").arg(QLatin1String(MUMBLE_RELEASE)));
 	AudioInput::setMaxBandwidth(-1);

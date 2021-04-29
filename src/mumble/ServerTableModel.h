@@ -46,6 +46,7 @@ class ServerTableModel : public QAbstractTableModel
     QML_WRITABLE_PROPERTY(QString, dlgTextLabel, setDlgTextLabel, QString())
     QML_WRITABLE_PROPERTY(QString, dlgText, setDlgText, QString())
     QML_WRITABLE_PROPERTY(bool, dlgIsPassword, setDlgIsPassword, false)
+    QML_WRITABLE_PROPERTY(bool, showBusy, setShowBusy, false)
 
     QML_WRITABLE_PROPERTY(QStringList, schoolNameList, setSchoolNameList, QStringList())
     QML_WRITABLE_PROPERTY(QStringList, classNameList, setClassNameList, QStringList())
@@ -89,7 +90,7 @@ public:
     Q_INVOKABLE void removeServer();
     Q_INVOKABLE void startPingTick(bool start);
     Q_INVOKABLE bool isReachable(int row) {
-        return isValidIndex(row) ? (0 < _servers.at(row).totalUsers) : false;
+        return isValidServerIndex(row) ? (0 < _servers.at(row).totalUsers) : false;
     }
     Q_INVOKABLE bool connectServer();
     Q_INVOKABLE bool disconnectServer();
@@ -103,8 +104,10 @@ public:
     Q_INVOKABLE bool joinRoomInternal();
 
     Q_INVOKABLE QString currentServerName() const {
-        return isValidIndex(_currentIndex) ? _servers.at(_currentIndex).name : QString();
+        return isValidServerIndex(_currentIndex) ? _servers.at(_currentIndex).name : QString();
     }
+
+    Q_INVOKABLE void cancelReconnect();
 
     int rowCount(const QModelIndex & = QModelIndex()) const override;
     int columnCount(const QModelIndex & = QModelIndex()) const override;
@@ -114,6 +117,7 @@ public:
 
     void onServerDisconnectedEvent(MumbleProto::Reject_RejectType rtLast,
                                    const QString &reason);
+    void onServerConnectedEvent();
     void onUserModelChanged();
     void onChannelJoined(Channel *channel, const QString &username, unsigned int session);
     void onChannelAllowedChanged(int id, bool allowed);
@@ -138,8 +142,14 @@ private:
     enum { NAME = 0, DELAY, USERS, COLUMN_COUNT };
     enum { TICK_PERIOD_MS = 1000, TICK_THRESHOLD_US = 1000000ULL, GRACE_PINGS = 4,
            INVALID_INDEX = -1 };
-    bool isValidIndex(int index) const {
+    bool isValidServerIndex(int index) const {
         return ((index >= 0) && (index < _servers.count()));
+    }
+    bool isValidSchoolIndex(int index) const {
+        return ((index >= 0) && (index < _schoolModelItems.count()));
+    }
+    bool isValidClassIndex(int index) const {
+        return ((index >= 0) && (index < _classModelItems.count()));
     }
     void load();
     void save();
@@ -150,12 +160,17 @@ private:
     static void recreateServerHandler();
     void isAllowed(Channel *ch);
     void pingServer(ServerItem *srv);
-    void testConnectivity();
     void defaultDnsLookUp();
     void customDnsLookUp();
     void onCustomDnsLookUpFinished();
+
     bool updateServerAddress(int index, const QHostAddress &host);
     bool updateServerAddress(const QString &name, const QHostAddress &host);
+
+    void updateSchools(const ModelItem *rootItem);
+    void updateClasses(const ModelItem *rootItem);
+    void updateRooms(const ModelItem *rootItem);
+    void clearModels();
 
     QList<ServerItem> _servers;
     QTimer _pingTick;

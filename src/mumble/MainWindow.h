@@ -90,7 +90,7 @@ class MainWindow : public QMainWindow, public MessageHandler, public Ui::MainWin
 		VoiceRecorderDialog *voiceRecorderDialog;
 
 		MumbleProto::Reject_RejectType rtLast;
-		bool bRetryServer;
+        bool bRetryServer = true;
 		QString qsDesiredChannel;
 
 		bool bSuppressAskOnQuit;
@@ -181,7 +181,6 @@ class MainWindow : public QMainWindow, public MessageHandler, public Ui::MainWin
 
 	public slots:
 		void on_qmServer_aboutToShow();
-		void on_qaServerConnect_triggered(bool autoconnect = false);
 		void on_qaServerDisconnect_triggered();
 		void on_qaServerBanList_triggered();
 		void on_qaServerUserList_triggered();
@@ -301,6 +300,7 @@ class MainWindow : public QMainWindow, public MessageHandler, public Ui::MainWin
         //signals used by the new UI
         void serverDisconnectedEvent(MumbleProto::Reject_RejectType rtLast,
                                      const QString &reason);
+        void serverConnectedEvent();
         void userModelChanged();
         void channelJoined(Channel *channel, const QString &userName, unsigned int session);
         void showDialog(const QString &title, const QString &msg);

@@ -85,10 +85,8 @@ void RoomsModel::insertUser(Channel *channel, const QString &username, unsigned 
     qInfo() << "Insert user" << username << session;
     const auto type = channelType(channel);
     if (ChannelType::Room == type) {
-        //insert session if needed
-        if (!_sessions.contains(username)) {
-            _sessions[username] = session;
-        }
+        //insert or replace session
+        _sessions[username] = session;
         //remove user from previous room
         for (auto &roomInfo: _rooms) {
             if (roomInfo.users.contains(username)) {

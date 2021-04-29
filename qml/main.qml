@@ -265,4 +265,47 @@ ApplicationWindow {
             }
         }
     }
+
+    Component {
+        id: busyIndicatorComp
+        Page {
+            Component.onCompleted: busyIndicator.visible = true
+            background: Rectangle {
+                color: "#80000000"
+            }
+            Label {
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    verticalCenter: parent.verticalCenter
+                    verticalCenterOffset: -10 * Theme.windowMargin
+                }
+                color: Theme.textColor
+                wrapMode: Text.WordWrap
+                width: parent.width
+                horizontalAlignment: Text.AlignHCenter
+                text: qsTr("Connection lost, retrying to connect...")
+                font.pointSize: appWin.isBig ? Theme.bigHeaderFontSize : Theme.headerFontSize
+            }
+            BusyIndicator {
+                id: busyIndicator
+                anchors.centerIn: parent
+                running: true
+            }
+            Button {
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    verticalCenter: parent.verticalCenter
+                    verticalCenterOffset: 10 * Theme.windowMargin
+                }
+                text: qsTr("Cancel")
+                onClicked: servers.cancelReconnect()
+            }
+        }
+    }
+    Loader {
+        id: busyIndicatorLoader
+        anchors.fill: parent
+        sourceComponent: busyIndicatorComp
+        active: servers.showBusy
+    }
 }

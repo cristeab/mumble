@@ -176,8 +176,6 @@ Page {
             topMargin: 2 * Theme.windowMargin
             left: parent.left
             leftMargin: 2 * Theme.windowMargin
-            right: parent.right
-            rightMargin: 2 * Theme.windowMargin
         }
         text: qsTr("RNNoise")
         checked: servers.enableRnnoise
@@ -190,8 +188,6 @@ Page {
             topMargin: 2 * Theme.windowMargin
             left: parent.left
             leftMargin: 2 * Theme.windowMargin
-            right: parent.right
-            rightMargin: 2 * Theme.windowMargin
         }
         text: qsTr("Enable TCP Mode")
         checked: servers.enableTcpMode

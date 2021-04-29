@@ -151,7 +151,7 @@ struct Settings {
 	enum IdleAction { Nothing, Deafen, Mute };
 	typedef QPair<QList<QSslCertificate>, QSslKey> KeyPair;
 
-	AudioTransmit atTransmit;
+    AudioTransmit atTransmit = VAD;
 	quint64 uiDoublePush;
 	quint64 pttHold;
 
@@ -165,13 +165,15 @@ struct Settings {
 	QString qsTxAudioCueOn;
 	QString qsTxAudioCueOff;
 
-	bool bTransmitPosition;
-	bool bMute, bDeaf;
-	bool bTTS;
+    bool bTransmitPosition = false;
+    bool bMute = false;
+    bool bDeaf = false;
+    bool bTTS = true;
 	bool bUserTop;
 	bool bWhisperFriends;
-	bool bTTSMessageReadBack;
-	int iTTSVolume, iTTSThreshold;
+    bool bTTSMessageReadBack = false;
+    int iTTSVolume = 75;
+    int iTTSThreshold = 250;
 	/// The Text-to-Speech language to use. This setting overrides
 	/// the default language for the Text-to-Speech engine, which
 	/// is usually inferred from the current locale.
@@ -181,9 +183,12 @@ struct Settings {
 	/// The setting is currently only supported by the speech-dispatcher
 	///backend.
 	QString qsTTSLanguage;
-	int iQuality, iMinLoudness, iVoiceHold, iJitterBufferSize;
-	int iNoiseSuppress;
-    bool bDenoise = false;
+    int iQuality = 40000;
+    int iMinLoudness = 1000;
+    int iVoiceHold = 50;
+    int iJitterBufferSize = 1;
+    int iNoiseSuppress = -30;
+    bool bDenoise = true;
 	quint64 uiAudioInputChannelMask;
 
 	// Idle auto actions
@@ -193,15 +198,15 @@ struct Settings {
 
 	VADSource vsVAD;
 	float fVADmin, fVADmax;
-	int iFramesPerPacket;
+    int iFramesPerPacket = 2;
 	QString qsAudioInput, qsAudioOutput;
-	float fVolume;
-	float fOtherVolume;
-	bool bAttenuateOthersOnTalk;
-	bool bAttenuateOthers;
-	bool bAttenuateUsersOnPrioritySpeak;
-	bool bOnlyAttenuateSameOutput;
-	bool bAttenuateLoopbacks;
+    float fVolume = 1.0f;
+    float fOtherVolume = 0.5f;
+    bool bAttenuateOthersOnTalk = false;
+    bool bAttenuateOthers = false;
+    bool bAttenuateUsersOnPrioritySpeak = false;
+    bool bOnlyAttenuateSameOutput = false;
+    bool bAttenuateLoopbacks = false;
 	int iOutputDelay;
 	bool bUseOpusMusicEncoding;
 
@@ -327,10 +332,10 @@ struct Settings {
 
 	// Network settings
 	enum ProxyType { NoProxy, HttpProxy, Socks5Proxy };
-	bool bTCPCompat;
-	bool bReconnect;
-	bool bAutoConnect;
-	bool bQoS;
+    bool bTCPCompat = true;
+    bool bReconnect = true;
+    bool bAutoConnect = false;
+    bool bQoS = true;
 	ProxyType ptProxyType;
 	QString qsProxyHost, qsProxyUsername, qsProxyPassword;
 	unsigned short usProxyPort;
