@@ -394,15 +394,12 @@ bool ServerTableModel::disconnectServer()
     }
     qDebug() << "Connected server index" << _connectedServerIndex;
 
-    //don't clear models when reconnecting
     setConnectedServerIndex(INVALID_INDEX);
     setConnectedClassIndex(INVALID_INDEX);
     setSchoolNameList(QStringList());
     setClassNameList(QStringList());
-    if (nullptr != _roomsModel) {
-        _roomsModel->clear();
-    }
     setCurrentUsername(QString());
+    clearModels();
 
     return true;
 }
@@ -866,7 +863,7 @@ void ServerTableModel::updateSchools(const ModelItem *rootItem)
     qInfo() << "updateSchools" << rootItem->qlChildren.size();
     _schoolNameList.clear();
     _schoolModelItems.clear();
-    for (auto *child: rootItem->qlChildren) {
+    for (auto *child: qAsConst(rootItem->qlChildren)) {
         const auto type = RoomsModel::channelType(child->cChan);
         if (RoomsModel::ChannelType::School == type) {
             _schoolNameList << child->cChan->qsName;
@@ -883,7 +880,7 @@ void ServerTableModel::updateClasses(const ModelItem *rootItem)
     qInfo() << "updateClasses" << rootItem->qlChildren.size();
     _classModelItems.clear();
     _classNameList.clear();
-    for (auto *child: rootItem->qlChildren) {
+    for (auto *child: qAsConst(rootItem->qlChildren)) {
         if ((nullptr == child) || (nullptr == child->cChan)) {
             continue;
         }
@@ -902,7 +899,7 @@ void ServerTableModel::updateRooms(const ModelItem *rootItem)
 {
     qInfo() << "updateRooms" << rootItem->qlChildren.size();
     _roomsModel->clear();
-    for (auto *child: rootItem->qlChildren) {
+    for (auto *child: qAsConst(rootItem->qlChildren)) {
         if ((nullptr == child) || (nullptr == child->cChan)) {
             continue;
         }
@@ -932,5 +929,7 @@ void ServerTableModel::clearModels()
     _schoolModelItems.clear();
     _classModelItems.clear();
     _classNameList.clear();
-    _roomsModel->clear();
+    if (nullptr != _roomsModel) {
+        _roomsModel->clear();
+    }
 }
