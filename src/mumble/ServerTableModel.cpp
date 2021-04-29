@@ -435,6 +435,8 @@ void ServerTableModel::onServerDisconnectedEvent(MumbleProto::Reject_RejectType 
 {
     qDebug() << "onServerDisconnectedEvent" << rtLast << reason;
 
+    clearModels();
+
     QString uname, pw, host;
     unsigned short port;
     g.sh->getConnectionInfo(host, port, uname, pw);
@@ -505,6 +507,8 @@ void ServerTableModel::onUserModelChanged()
             if (nullptr != rootItem) {
                 updateClasses(rootItem);
             }
+        } else {
+            qDebug() << "No current schoole";
         }
         //update rooms for the current class
         const auto currentClassIndex = _classNameList.indexOf(_currentClassName);
@@ -514,6 +518,8 @@ void ServerTableModel::onUserModelChanged()
             if (nullptr != rootItem) {
                 updateRooms(rootItem);
             }
+        } else {
+            qDebug() << "No current class";
         }
     } else {
         qWarning() << "Cannot get user model";
@@ -915,9 +921,17 @@ void ServerTableModel::updateRooms(const ModelItem *rootItem)
                 }
             }
             _roomsModel->append(roomInfo, sessions);
-            qDebug() << "Room" << roomInfo.name << "has" << roomInfo.users;
         } else {
             qWarning() << "Unknown channel type" << static_cast<int>(type);
         }
     }
+}
+
+void ServerTableModel::clearModels()
+{
+    _schoolNameList.clear();
+    _schoolModelItems.clear();
+    _classModelItems.clear();
+    _classNameList.clear();
+    _roomsModel->clear();
 }

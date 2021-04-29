@@ -167,6 +167,7 @@ private:
     void updateSchools(const ModelItem *rootItem);
     void updateClasses(const ModelItem *rootItem);
     void updateRooms(const ModelItem *rootItem);
+    void clearModels();
 
     QList<ServerItem> _servers;
     QTimer _pingTick;
