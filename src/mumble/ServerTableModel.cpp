@@ -55,7 +55,7 @@ QVariant ServerTableModel::data(const QModelIndex &index, int role) const
     case Qt::DisplayRole:
         //[[fallthrough]];
     case Qt::EditRole:
-        if (isValidIndex(row)) {
+        if (isValidServerIndex(row)) {
             switch (col) {
             case NAME: {
                 const auto name = _servers.at(row).name;
@@ -108,7 +108,7 @@ QVariant ServerTableModel::headerData(int section, Qt::Orientation orientation, 
 
 void ServerTableModel::resetServer()
 {
-    if (isValidIndex(_currentIndex)) {
+    if (isValidServerIndex(_currentIndex)) {
         const auto &srv = _servers.at(_currentIndex);
         setHostname(srv.hostname);
         setPort(srv.port);
@@ -127,7 +127,7 @@ void ServerTableModel::resetServer()
 void ServerTableModel::changeServer()
 {
     emit layoutAboutToBeChanged();
-    if (isValidIndex(_currentIndex)) {
+    if (isValidServerIndex(_currentIndex)) {
         auto &server = _servers[_currentIndex];
         server.hostname = _hostname;
         server.port = _port;
@@ -150,7 +150,7 @@ void ServerTableModel::changeServer()
 
 void ServerTableModel::removeServer()
 {
-    if (isValidIndex(_currentIndex)) {
+    if (isValidServerIndex(_currentIndex)) {
         emit layoutAboutToBeChanged();
         _servers.removeAt(_currentIndex);
         emit layoutChanged();
@@ -168,7 +168,7 @@ void ServerTableModel::startPingTick(bool start)
     qDebug() << "startPingTick" << start;
     if (start) {
         _pingTick.start();
-    } else if (!isValidIndex(_reconnectServerIndex)) {
+    } else if (!isValidServerIndex(_reconnectServerIndex)) {
         _pingTick.stop();
     }
 }
@@ -327,7 +327,7 @@ void ServerTableModel::setStats(ServerItem *si, double delayUs, int users, int t
 bool ServerTableModel::connectServer()
 {
     qInfo() << "Connect" << _currentIndex;
-    if (!isValidIndex(_currentIndex)) {
+    if (!isValidServerIndex(_currentIndex)) {
         qCritical() << "Invalid index" << _currentIndex;
         return false;
     }
@@ -337,7 +337,7 @@ bool ServerTableModel::connectServer()
         qDebug() << "Cannot connect: nothing to do";
         return true;//should not happen
     }
-    if (isValidIndex(_connectedServerIndex)) {
+    if (isValidServerIndex(_connectedServerIndex)) {
         qInfo() << "Disconnect current" << _connectedServerIndex;
         if (!disconnectServer()) {
             return false;
@@ -414,7 +414,7 @@ void ServerTableModel::onLineEditDlgAccepted()
     } else {
         setUsername(_dlgText);
     }
-    if (isValidIndex(_currentIndex)) {
+    if (isValidServerIndex(_currentIndex)) {
         auto &server = _servers[_currentIndex];
         server.username = _username;
         server.password = _password;
@@ -488,17 +488,30 @@ void ServerTableModel::onUserModelChanged()
 {
     auto *userModel = g.mw->pmModel;
     if (nullptr != userModel) {
-        _schoolNameList.clear();
-        _schoolModelItems.clear();
+        //update schools
         const auto *rootItem = userModel->rootItem();
-        for (auto *child: rootItem->qlChildren) {
-            _schoolNameList << child->cChan->qsName;
-            _schoolModelItems << child;
+        if (nullptr != rootItem) {
+            updateSchools(rootItem);
+            if (1 == _schoolNameList.size()) {
+                emit schoolsAvailable();
+                qDebug() << "schoolsAvailable";
+            }
         }
-        emit schoolNameListChanged();
-        if (1 == _schoolNameList.size()) {
-            emit schoolsAvailable();
-            qDebug() << "onUserModelChanged";
+        //update classes for the current school
+        const auto currentSchoolIndex = _schoolNameList.indexOf(_currentSchoolName);
+        if (isValidSchoolIndex(currentSchoolIndex)) {
+            auto *rootItem = _schoolModelItems.at(currentSchoolIndex);
+            if (nullptr != rootItem) {
+                updateClasses(rootItem);
+            }
+        }
+        //update rooms for the current class
+        const auto currentClassIndex = _classNameList.indexOf(_currentClassName);
+        if (isValidClassIndex(currentClassIndex)) {
+            const auto *rootItem = _classModelItems.at(currentClassIndex);
+            if (nullptr != rootItem) {
+                updateRooms(rootItem);
+            }
         }
     } else {
         qWarning() << "Cannot get user model";
@@ -598,7 +611,7 @@ bool ServerTableModel::joinRoom(int index, const QString &username)
     if (nullptr != ch) {
         _channelActionIndex = index;
         const auto session = _roomsModel->userSession(username);
-        qDebug() << "joinChannel" << session << ch->iId;
+        qDebug() << "User session" << session << "channel ID" << ch->iId;
         g.sh->joinChannel(session, ch->iId);//make sure the error message is shown
         isAllowed(ch);
         rc = true;
@@ -637,18 +650,7 @@ bool ServerTableModel::gotoSchoolInternal()
     if ((0 <= _channelActionIndex) && (_channelActionIndex < _schoolModelItems.size())) {
         const auto *rootItem = _schoolModelItems.at(_channelActionIndex);
         if (nullptr != rootItem) {
-            _classModelItems.clear();
-            _classNameList.clear();
-            for (auto *child: rootItem->qlChildren) {
-                const auto type = RoomsModel::channelType(child->cChan);
-                if (RoomsModel::ChannelType::Class == type) {
-                    _classModelItems << child;
-                    _classNameList << child->cChan->qsName;
-                } else {
-                    qWarning() << "Unknown channel type" << static_cast<int>(type);
-                }
-            }
-            emit classNameListChanged();
+            updateClasses(rootItem);
             setCurrentSchoolName(_schoolNameList.at(_channelActionIndex));
             rc = true;
         } else {
@@ -667,27 +669,7 @@ bool ServerTableModel::gotoClassInternal()
     if ((0 <= _channelActionIndex) && (_channelActionIndex < _classModelItems.size())) {
         const auto *rootItem = _classModelItems.at(_channelActionIndex);
         if (nullptr != rootItem) {
-            _roomsModel->clear();
-            for (auto *child: rootItem->qlChildren) {
-                const auto type = RoomsModel::channelType(child->cChan);
-                if (RoomsModel::ChannelType::Room == type) {
-                    RoomsModel::RoomInfo roomInfo;
-                    roomInfo.channel = child->cChan;
-                    roomInfo.name = child->cChan->qsName;
-                    QHash<QString, unsigned int> sessions;
-                    for (auto *user: qAsConst(child->qlChildren)) {
-                        if ((nullptr != user) && (nullptr != user->pUser)) {
-                            const auto username = user->pUser->qsName;
-                            roomInfo.users << username;
-                            sessions[username] = user->pUser->uiSession;
-                        }
-                    }
-                    _roomsModel->append(roomInfo, sessions);
-                    qDebug() << "Room" << roomInfo.name << "has" << roomInfo.users;
-                } else {
-                    qWarning() << "Unknown channel type" << static_cast<int>(type);
-                }
-            }
+            updateRooms(rootItem);
             setCurrentClassName(_classNameList.at(_channelActionIndex));
             rc = true;
         } else {
@@ -732,12 +714,12 @@ void ServerTableModel::testConnectivity()
             break;
         }
     }
-    if (connLost && isValidIndex(_connectedServerIndex) && !isValidIndex(_reconnectServerIndex)) {
+    if (connLost && isValidServerIndex(_connectedServerIndex) && !isValidServerIndex(_reconnectServerIndex)) {
         _reconnectServerIndex = _connectedServerIndex;
         emit resetServersView();
         disconnectServer();
         emit showDialog(tr("Warning"), tr("Connection lost"), false);
-    } else if (!connLost && isValidIndex(_reconnectServerIndex)) {
+    } else if (!connLost && isValidServerIndex(_reconnectServerIndex)) {
         emit closeDialog();//close previous dialog if any
         _currentIndex = _reconnectServerIndex;
         _reconnectServerIndex = INVALID_INDEX;
@@ -756,7 +738,7 @@ void ServerTableModel::defaultDnsLookUp()
                 qInfo() << "Server hostname is an IP address";
             } else {
                 QHostInfo::lookupHost(srv.hostname, this, [this, i](const QHostInfo &hi) {
-                    if (!isValidIndex(i)) {
+                    if (!isValidServerIndex(i)) {
                         return;
                     }
                     const auto addrList = hi.addresses();
@@ -813,7 +795,7 @@ void ServerTableModel::onCustomDnsLookUpFinished()
 bool ServerTableModel::updateServerAddress(int index, const QHostAddress &host)
 {
     bool rc = false;
-    if (isValidIndex(index) && !host.isNull()) {
+    if (isValidServerIndex(index) && !host.isNull()) {
         const auto &addr = host.toString();
         if (!addr.isEmpty()) {
             _servers[index].address = addr;
@@ -869,5 +851,62 @@ void ServerTableModel::setEnableTcpMode(bool enable)
     if (g.s.bTCPCompat != enable) {
         g.s.bTCPCompat = enable;
         emit enableTcpModeChanged();
+    }
+}
+
+void ServerTableModel::updateSchools(const ModelItem *rootItem)
+{
+    _schoolNameList.clear();
+    _schoolModelItems.clear();
+    for (auto *child: rootItem->qlChildren) {
+        const auto type = RoomsModel::channelType(child->cChan);
+        if (RoomsModel::ChannelType::School == type) {
+            _schoolNameList << child->cChan->qsName;
+            _schoolModelItems << child;
+        } else {
+            qWarning() << "Unknown channel type" << static_cast<int>(type);
+        }
+    }
+    emit schoolNameListChanged();
+}
+
+void ServerTableModel::updateClasses(const ModelItem *rootItem)
+{
+    _classModelItems.clear();
+    _classNameList.clear();
+    for (auto *child: rootItem->qlChildren) {
+        const auto type = RoomsModel::channelType(child->cChan);
+        if (RoomsModel::ChannelType::Class == type) {
+            _classModelItems << child;
+            _classNameList << child->cChan->qsName;
+        } else {
+            qWarning() << "Unknown channel type" << static_cast<int>(type);
+        }
+    }
+    emit classNameListChanged();
+}
+
+void ServerTableModel::updateRooms(const ModelItem *rootItem)
+{
+    _roomsModel->clear();
+    for (auto *child: rootItem->qlChildren) {
+        const auto type = RoomsModel::channelType(child->cChan);
+        if (RoomsModel::ChannelType::Room == type) {
+            RoomsModel::RoomInfo roomInfo;
+            roomInfo.channel = child->cChan;
+            roomInfo.name = child->cChan->qsName;
+            QHash<QString, unsigned int> sessions;
+            for (auto *user: qAsConst(child->qlChildren)) {
+                if ((nullptr != user) && (nullptr != user->pUser)) {
+                    const auto username = user->pUser->qsName;
+                    roomInfo.users << username;
+                    sessions[username] = user->pUser->uiSession;
+                }
+            }
+            _roomsModel->append(roomInfo, sessions);
+            qDebug() << "Room" << roomInfo.name << "has" << roomInfo.users;
+        } else {
+            qWarning() << "Unknown channel type" << static_cast<int>(type);
+        }
     }
 }

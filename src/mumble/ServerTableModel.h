@@ -89,7 +89,7 @@ public:
     Q_INVOKABLE void removeServer();
     Q_INVOKABLE void startPingTick(bool start);
     Q_INVOKABLE bool isReachable(int row) {
-        return isValidIndex(row) ? (0 < _servers.at(row).totalUsers) : false;
+        return isValidServerIndex(row) ? (0 < _servers.at(row).totalUsers) : false;
     }
     Q_INVOKABLE bool connectServer();
     Q_INVOKABLE bool disconnectServer();
@@ -103,7 +103,7 @@ public:
     Q_INVOKABLE bool joinRoomInternal();
 
     Q_INVOKABLE QString currentServerName() const {
-        return isValidIndex(_currentIndex) ? _servers.at(_currentIndex).name : QString();
+        return isValidServerIndex(_currentIndex) ? _servers.at(_currentIndex).name : QString();
     }
 
     int rowCount(const QModelIndex & = QModelIndex()) const override;
@@ -138,8 +138,14 @@ private:
     enum { NAME = 0, DELAY, USERS, COLUMN_COUNT };
     enum { TICK_PERIOD_MS = 1000, TICK_THRESHOLD_US = 1000000ULL, GRACE_PINGS = 4,
            INVALID_INDEX = -1 };
-    bool isValidIndex(int index) const {
+    bool isValidServerIndex(int index) const {
         return ((index >= 0) && (index < _servers.count()));
+    }
+    bool isValidSchoolIndex(int index) const {
+        return ((index >= 0) && (index < _schoolModelItems.count()));
+    }
+    bool isValidClassIndex(int index) const {
+        return ((index >= 0) && (index < _classModelItems.count()));
     }
     void load();
     void save();
@@ -154,8 +160,13 @@ private:
     void defaultDnsLookUp();
     void customDnsLookUp();
     void onCustomDnsLookUpFinished();
+
     bool updateServerAddress(int index, const QHostAddress &host);
     bool updateServerAddress(const QString &name, const QHostAddress &host);
+
+    void updateSchools(const ModelItem *rootItem);
+    void updateClasses(const ModelItem *rootItem);
+    void updateRooms(const ModelItem *rootItem);
 
     QList<ServerItem> _servers;
     QTimer _pingTick;

@@ -698,6 +698,7 @@ void MainWindow::msgChannelState(const MumbleProto::ChannelState &msg) {
 			pp = pp->cParent;
 		}
 		pmModel->moveChannel(c, p);
+        emit userModelChanged();
 	}
 
 	if (msg.has_name())
@@ -720,8 +721,10 @@ void MainWindow::msgChannelState(const MumbleProto::ChannelState &msg) {
 			if (l)
 				ql << l;
 		}
-		if (! ql.isEmpty())
+        if (! ql.isEmpty()) {
 			pmModel->linkChannels(c, ql);
+            emit userModelChanged();
+        }
 	}
 	if (msg.links_remove_size()) {
 		QList<Channel *> ql;
@@ -730,8 +733,10 @@ void MainWindow::msgChannelState(const MumbleProto::ChannelState &msg) {
 			if (l)
 				ql << l;
 		}
-		if (! ql.isEmpty())
+        if (! ql.isEmpty()) {
 			pmModel->unlinkChannels(c, ql);
+            emit userModelChanged();
+        }
 	}
 	if (msg.links_add_size()) {
 		QList<Channel *> ql;
@@ -740,8 +745,10 @@ void MainWindow::msgChannelState(const MumbleProto::ChannelState &msg) {
 			if (l)
 				ql << l;
 		}
-		if (! ql.isEmpty())
+        if (! ql.isEmpty()) {
 			pmModel->linkChannels(c, ql);
+            emit userModelChanged();
+        }
 	}
 
 	if (msg.has_max_users()) {
