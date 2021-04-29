@@ -350,6 +350,7 @@ bool ServerTableModel::connectServer()
     g.sh->start(QThread::TimeCriticalPriority);
     setConnectedServerIndex(_currentIndex);
     setCurrentUsername(srv.username);
+    g.mw->bRetryServer = true;
     qDebug() << "Connected server index" << _connectedServerIndex;
 
     return true;
@@ -476,6 +477,9 @@ void ServerTableModel::onServerDisconnectedEvent(MumbleProto::Reject_RejectType 
         g.mw->qaServerDisconnect->setEnabled(true);
         if (g.mw->bRetryServer) {
             g.mw->qtReconnect->start();
+            qInfo() << "Reconnect start";
+        } else {
+            qWarning() << "Reconnect server disabled";
         }
     }
 }

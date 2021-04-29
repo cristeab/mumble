@@ -1120,26 +1120,6 @@ void MainWindow::setupView(bool toggle_minimize) {
 	}
 }
 
-void MainWindow::on_qaServerConnect_triggered(bool autoconnect) {
-	ConnectDialog *cd = new ConnectDialog(this, autoconnect);
-	int res = cd->exec();
-
-	if (cd->qsServer.isEmpty() || (cd->usPort==0) || cd->qsUsername.isEmpty())
-		res = QDialog::Rejected;
-
-	if (res == QDialog::Accepted) {
-		recreateServerHandler();
-		qsDesiredChannel = QString();
-		rtLast = MumbleProto::Reject_RejectType_None;
-		bRetryServer = true;
-		qaServerDisconnect->setEnabled(true);
-		g.l->log(Log::Information, tr("Connecting to server %1.").arg(Log::msgColor(Qt::escape(cd->qsServer), Log::Server)));
-		g.sh->setConnectionInfo(cd->qsServer, cd->usPort, cd->qsUsername, cd->qsPassword);
-		g.sh->start(QThread::TimeCriticalPriority);
-	}
-	delete cd;
-}
-
 void MainWindow::on_Reconnect_timeout() {
 	if (g.sh->isRunning())
 		return;
