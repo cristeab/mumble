@@ -500,6 +500,7 @@ void ServerTableModel::onUserModelChanged()
         //update classes for the current school
         const auto currentSchoolIndex = _schoolNameList.indexOf(_currentSchoolName);
         if (isValidSchoolIndex(currentSchoolIndex)) {
+            qDebug() << "Current school idx" << currentSchoolIndex;
             auto *rootItem = _schoolModelItems.at(currentSchoolIndex);
             if (nullptr != rootItem) {
                 updateClasses(rootItem);
@@ -508,6 +509,7 @@ void ServerTableModel::onUserModelChanged()
         //update rooms for the current class
         const auto currentClassIndex = _classNameList.indexOf(_currentClassName);
         if (isValidClassIndex(currentClassIndex)) {
+            qDebug() << "Current school idx" << currentClassIndex;
             const auto *rootItem = _classModelItems.at(currentClassIndex);
             if (nullptr != rootItem) {
                 updateRooms(rootItem);
@@ -856,6 +858,7 @@ void ServerTableModel::setEnableTcpMode(bool enable)
 
 void ServerTableModel::updateSchools(const ModelItem *rootItem)
 {
+    qInfo() << "updateSchools" << rootItem->qlChildren.size();
     _schoolNameList.clear();
     _schoolModelItems.clear();
     for (auto *child: rootItem->qlChildren) {
@@ -872,9 +875,13 @@ void ServerTableModel::updateSchools(const ModelItem *rootItem)
 
 void ServerTableModel::updateClasses(const ModelItem *rootItem)
 {
+    qInfo() << "updateClasses" << rootItem->qlChildren.size();
     _classModelItems.clear();
     _classNameList.clear();
     for (auto *child: rootItem->qlChildren) {
+        if ((nullptr == child) || (nullptr == child->cChan)) {
+            continue;
+        }
         const auto type = RoomsModel::channelType(child->cChan);
         if (RoomsModel::ChannelType::Class == type) {
             _classModelItems << child;
@@ -888,8 +895,12 @@ void ServerTableModel::updateClasses(const ModelItem *rootItem)
 
 void ServerTableModel::updateRooms(const ModelItem *rootItem)
 {
+    qInfo() << "updateRooms" << rootItem->qlChildren.size();
     _roomsModel->clear();
     for (auto *child: rootItem->qlChildren) {
+        if ((nullptr == child) || (nullptr == child->cChan)) {
+            continue;
+        }
         const auto type = RoomsModel::channelType(child->cChan);
         if (RoomsModel::ChannelType::Room == type) {
             RoomsModel::RoomInfo roomInfo;
