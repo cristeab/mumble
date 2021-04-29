@@ -334,6 +334,8 @@ int main(int argc, char **argv) {
     // Connect signals
     QObject::connect(g.mw, &MainWindow::serverDisconnectedEvent, srv,
                      &ServerTableModel::onServerDisconnectedEvent);
+    QObject::connect(g.mw, &MainWindow::serverConnectedEvent, srv,
+                     &ServerTableModel::onServerConnectedEvent);
     QObject::connect(g.mw, &MainWindow::userModelChanged, srv,
                      &ServerTableModel::onUserModelChanged);
     QObject::connect(g.mw, &MainWindow::channelJoined, srv,

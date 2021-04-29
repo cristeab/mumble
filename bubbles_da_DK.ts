@@ -158,12 +158,12 @@
         <translation>Hvor mange lydrammer der skal sendes pr. pakke</translation>
     </message>
     <message>
-        <location filename="qml/AudioInput.qml" line="182"/>
+        <location filename="qml/AudioInput.qml" line="180"/>
         <source>RNNoise</source>
         <translation>AI drevet støjreducering</translation>
     </message>
     <message>
-        <location filename="qml/AudioInput.qml" line="196"/>
+        <location filename="qml/AudioInput.qml" line="192"/>
         <source>Enable TCP Mode</source>
         <translation>Tillad TCP tilstand</translation>
     </message>
@@ -591,472 +591,472 @@ If the file is password protected, you will need the password to import the cert
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="src/mumble/main.cpp" line="505"/>
+        <location filename="src/mumble/main.cpp" line="364"/>
         <source>Welcome to Bubbles.</source>
         <translation>Velkommen til Bubbles.</translation>
     </message>
     <message>
-        <location filename="src/mumble/main.cpp" line="594"/>
+        <location filename="src/mumble/main.cpp" line="453"/>
         <source>Skipping version check in debug mode.</source>
         <translation>Spring over versionskontrol i fejlretningstilstand.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="75"/>
+        <location filename="src/mumble/Messages.cpp" line="77"/>
         <source>Invalid username</source>
         <translation>Ugyldigt brugernavn</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="78"/>
+        <location filename="src/mumble/Messages.cpp" line="80"/>
         <source>Username in use</source>
         <translation>Brugernavn i brug</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="81"/>
+        <location filename="src/mumble/Messages.cpp" line="83"/>
         <source>Wrong certificate or password</source>
         <translation>Forkert certifikat eller adgangskode</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="84"/>
+        <location filename="src/mumble/Messages.cpp" line="86"/>
         <source>Wrong password</source>
         <translation>Forkert kodeord</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="87"/>
+        <location filename="src/mumble/Messages.cpp" line="89"/>
         <source>Your account information can not be verified currently. Please try again later</source>
         <translation>Dine kontooplysninger kan ikke bekræftes i øjeblikket. Prøv igen senere</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="147"/>
+        <location filename="src/mumble/Messages.cpp" line="150"/>
         <source>Bubbles: %1</source>
         <oldsource>Mumble: %1</oldsource>
         <translation>Bubbles: %1</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="195"/>
+        <location filename="src/mumble/Messages.cpp" line="199"/>
         <source>You were denied %1 privileges in %2.</source>
         <translation>Du blev nægtet %1 privilegier %2.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="198"/>
+        <location filename="src/mumble/Messages.cpp" line="202"/>
         <source>%3 was denied %1 privileges in %2.</source>
         <translation>%3 blev nægtet %1 privilegier %2.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="204"/>
+        <location filename="src/mumble/Messages.cpp" line="208"/>
         <source>Denied: Cannot modify SuperUser.</source>
         <translation>Afvist: Kan ikke ændre SuperUser.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="209"/>
+        <location filename="src/mumble/Messages.cpp" line="213"/>
         <source>Denied: Invalid channel name.</source>
         <translation>Afvist: Ugyldigt kanalnavn.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="214"/>
+        <location filename="src/mumble/Messages.cpp" line="218"/>
         <source>Denied: Text message too long.</source>
         <translation>Afvist: Tekstbeskeden er for lang.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="237"/>
+        <location filename="src/mumble/Messages.cpp" line="241"/>
         <source>Denied: Operation not permitted in temporary channel.</source>
         <translation>Afvist: Drift er ikke tilladt i midlertidig kanal.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="245"/>
+        <location filename="src/mumble/Messages.cpp" line="249"/>
         <source>You need a certificate to perform this operation.</source>
         <translation>Du har brug for et certifikat for at udføre denne handling.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="248"/>
+        <location filename="src/mumble/Messages.cpp" line="252"/>
         <source>%1 does not have a certificate.</source>
         <translation>%1 har ikke et certifikat.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="255"/>
+        <location filename="src/mumble/Messages.cpp" line="259"/>
         <source>Invalid username: %1.</source>
         <translation>Ugyldigt brugernavn:%1.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="258"/>
+        <location filename="src/mumble/Messages.cpp" line="262"/>
         <source>Invalid username.</source>
         <translation>Ugyldigt brugernavn.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="264"/>
+        <location filename="src/mumble/Messages.cpp" line="268"/>
         <source>Channel is full.</source>
         <translation>Kanalen er fuld.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="269"/>
+        <location filename="src/mumble/Messages.cpp" line="273"/>
         <source>Channel nesting limit reached.</source>
         <translation>Kanalindlejringsgrænsen er nået.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="274"/>
+        <location filename="src/mumble/Messages.cpp" line="278"/>
         <source>Channel count limit reached. Need to delete channels before creating new ones.</source>
         <translation>Grænsen for antal kanaler er nået. Nødvendigt at slette kanaler, før du opretter nye.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="280"/>
+        <location filename="src/mumble/Messages.cpp" line="284"/>
         <source>Denied: %1.</source>
         <translation>Afvist: %1.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="283"/>
+        <location filename="src/mumble/Messages.cpp" line="287"/>
         <source>Permission denied.</source>
         <translation>Adgang nægtet.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="290"/>
+        <location filename="src/mumble/Messages.cpp" line="294"/>
         <source>Error</source>
         <translation>Fejl</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="359"/>
+        <location filename="src/mumble/Messages.cpp" line="364"/>
         <source>You joined %1.</source>
         <translation>Du sluttede dig til %1.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="361"/>
+        <location filename="src/mumble/Messages.cpp" line="366"/>
         <source>You were moved to %1 by %2.</source>
         <translation>Du blev flyttet til %1 af %2.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="365"/>
-        <location filename="src/mumble/Messages.cpp" line="367"/>
+        <location filename="src/mumble/Messages.cpp" line="370"/>
+        <location filename="src/mumble/Messages.cpp" line="372"/>
         <source>You moved %1 to %2.</source>
         <translation>Du flyttede %1 til %2.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="372"/>
+        <location filename="src/mumble/Messages.cpp" line="377"/>
         <source>%1 entered channel.</source>
         <translation>%1 indtastede kanal.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="374"/>
+        <location filename="src/mumble/Messages.cpp" line="379"/>
         <source>%1 moved to %2.</source>
         <translation>%1 flyttet til %2.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="378"/>
+        <location filename="src/mumble/Messages.cpp" line="383"/>
         <source>%1 moved in from %2 by %3.</source>
         <translation>%1 flyttede ind fra %2 med %3.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="380"/>
+        <location filename="src/mumble/Messages.cpp" line="385"/>
         <source>%1 moved to %2 by %3.</source>
         <translation>%1 flyttet til%2 med %3.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="386"/>
+        <location filename="src/mumble/Messages.cpp" line="391"/>
         <source>%1 is recording</source>
         <translation>%1 optager</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="398"/>
+        <location filename="src/mumble/Messages.cpp" line="403"/>
         <source>%1 renamed to %2 by %3.</source>
         <translation>%1 omdøbt til %2 af %3.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="401"/>
+        <location filename="src/mumble/Messages.cpp" line="406"/>
         <source>%1 renamed to %2.</source>
         <translation>%1 omdøbt til %2.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="426"/>
+        <location filename="src/mumble/Messages.cpp" line="431"/>
         <source>%1 is now muted and deafened.</source>
         <translation>%1 er nu slået fra og døvt.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="428"/>
+        <location filename="src/mumble/Messages.cpp" line="433"/>
         <source>%1 is now muted.</source>
         <translation>%1 er nu slået fra.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="430"/>
+        <location filename="src/mumble/Messages.cpp" line="435"/>
         <source>%1 is now unmuted.</source>
         <translation>Lyden af %1 er nu slået til.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="441"/>
+        <location filename="src/mumble/Messages.cpp" line="446"/>
         <source>Recording started</source>
         <translation>Optagelsen startede</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="443"/>
+        <location filename="src/mumble/Messages.cpp" line="448"/>
         <source>Recording stopped</source>
         <translation>Optagelsen stoppet</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="447"/>
+        <location filename="src/mumble/Messages.cpp" line="452"/>
         <source>%1 started recording.</source>
         <translation>%1 startede optagelsen.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="449"/>
+        <location filename="src/mumble/Messages.cpp" line="454"/>
         <source>%1 stopped recording.</source>
         <translation>%1 stoppede optagelsen.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="459"/>
+        <location filename="src/mumble/Messages.cpp" line="464"/>
         <source>You revoked your priority speaker status.</source>
         <translation>Du tilbagekaldte din prioriterede højttalerstatus.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="461"/>
+        <location filename="src/mumble/Messages.cpp" line="466"/>
         <source>You assumed priority speaker status.</source>
         <translation>Du antog prioritetshøjttalerstatus.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="465"/>
+        <location filename="src/mumble/Messages.cpp" line="470"/>
         <source>%1 revoked your priority speaker status.</source>
         <translation>%1 tilbagekaldte din prioritets højttalerstatus.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="467"/>
+        <location filename="src/mumble/Messages.cpp" line="472"/>
         <source>%1 gave you priority speaker status.</source>
         <translation>%1 gav dig prioritetshøjttalerstatus.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="471"/>
+        <location filename="src/mumble/Messages.cpp" line="476"/>
         <source>You revoked priority speaker status for %1.</source>
         <translation>Du tilbagekaldte prioritets højttalerstatus for%1.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="473"/>
+        <location filename="src/mumble/Messages.cpp" line="478"/>
         <source>You gave priority speaker status to %1.</source>
         <translation>Du prioriterede højttalerstatus til %1.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="477"/>
+        <location filename="src/mumble/Messages.cpp" line="482"/>
         <source>%1 revoked own priority speaker status.</source>
         <translation>%1 tilbagekaldte egen prioritets højttalerstatus.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="479"/>
+        <location filename="src/mumble/Messages.cpp" line="484"/>
         <source>%1 assumed priority speaker status.</source>
         <translation>%1 antog prioritetshøjttalerstatus.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="483"/>
+        <location filename="src/mumble/Messages.cpp" line="488"/>
         <source>%1 revoked priority speaker status for %2.</source>
         <translation>%1 tilbagekaldte prioritets højttalerstatus for %2.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="485"/>
+        <location filename="src/mumble/Messages.cpp" line="490"/>
         <source>%1 gave priority speaker status to %2.</source>
         <translation>%1 prioriterede højttalerstatus til %2.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="504"/>
+        <location filename="src/mumble/Messages.cpp" line="509"/>
         <source>You were muted and deafened by %1.</source>
         <translation>Du blev dæmpet og døvet af %1.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="506"/>
+        <location filename="src/mumble/Messages.cpp" line="511"/>
         <source>You were unmuted and undeafened by %1.</source>
         <translation>Du blev ignoreret og uberørt af %1.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="510"/>
+        <location filename="src/mumble/Messages.cpp" line="515"/>
         <source>You were muted by %1.</source>
         <translation>Du blev dæmpet af %1.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="512"/>
+        <location filename="src/mumble/Messages.cpp" line="517"/>
         <source>You were unmuted by %1.</source>
         <translation>Du blev ignoreret af %1.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="517"/>
+        <location filename="src/mumble/Messages.cpp" line="522"/>
         <source>You were undeafened by %1.</source>
         <translation>Du blev uhørt af %1.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="523"/>
+        <location filename="src/mumble/Messages.cpp" line="528"/>
         <source>You were suppressed.</source>
         <translation>Du blev undertrykt.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="526"/>
+        <location filename="src/mumble/Messages.cpp" line="531"/>
         <source>You were unsuppressed.</source>
         <translation>Du var ikke undertrykt.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="528"/>
+        <location filename="src/mumble/Messages.cpp" line="533"/>
         <source>You were unsuppressed by %1.</source>
         <translation>Du blev ikke undertrykt af %1.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="535"/>
+        <location filename="src/mumble/Messages.cpp" line="540"/>
         <source>You muted and deafened %1.</source>
         <translation>Du dæmpede og døvede %1.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="537"/>
+        <location filename="src/mumble/Messages.cpp" line="542"/>
         <source>You unmuted and undeafened %1.</source>
         <translation>Du har slået lyden af ​​og uafgjort på %1.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="541"/>
+        <location filename="src/mumble/Messages.cpp" line="546"/>
         <source>You muted %1.</source>
         <translation>Du dæmpede %1.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="543"/>
+        <location filename="src/mumble/Messages.cpp" line="548"/>
         <source>You unmuted %1.</source>
         <translation>Du slår lyden til for %1.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="548"/>
+        <location filename="src/mumble/Messages.cpp" line="553"/>
         <source>You undeafened %1.</source>
         <translation>Du har uafdøvet %1.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="555"/>
+        <location filename="src/mumble/Messages.cpp" line="560"/>
         <source>You suppressed %1.</source>
         <translation>Du undertrykte %1.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="557"/>
+        <location filename="src/mumble/Messages.cpp" line="562"/>
         <source>You unsuppressed %1.</source>
         <translation>Du har ikke undertrykt %1.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="562"/>
+        <location filename="src/mumble/Messages.cpp" line="567"/>
         <source>%1 muted and deafened by %2.</source>
         <translation>%1 dæmpet og døvet af %2.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="564"/>
+        <location filename="src/mumble/Messages.cpp" line="569"/>
         <source>%1 unmuted and undeafened by %2.</source>
         <translation>%1 er ikke slået til og ikke-øredøvet af %2.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="568"/>
+        <location filename="src/mumble/Messages.cpp" line="573"/>
         <source>%1 muted by %2.</source>
         <translation>%1 dæmpet af %2.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="570"/>
+        <location filename="src/mumble/Messages.cpp" line="575"/>
         <source>%1 unmuted by %2.</source>
         <translation>%1 er ikke slået til af %2.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="575"/>
+        <location filename="src/mumble/Messages.cpp" line="580"/>
         <source>%1 undeafened by %2.</source>
         <translation>%1 ubeskyttet af %2.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="582"/>
+        <location filename="src/mumble/Messages.cpp" line="587"/>
         <source>%1 suppressed by %2.</source>
         <translation>%1 undertrykt af %2.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="584"/>
+        <location filename="src/mumble/Messages.cpp" line="589"/>
         <source>%1 unsuppressed by %2.</source>
         <translation>%1 ikke undertrykt af %2.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="625"/>
+        <location filename="src/mumble/Messages.cpp" line="629"/>
         <source>You were kicked and banned from the server by %1: %2.</source>
         <translation>Du blev sparket og udelukket fra serveren af %1:%2.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="628"/>
+        <location filename="src/mumble/Messages.cpp" line="632"/>
         <source>You were kicked from the server by %1: %2.</source>
         <translation>Du blev sparket fra serveren af %1:%2.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="633"/>
+        <location filename="src/mumble/Messages.cpp" line="637"/>
         <source>%3 was kicked and banned from the server by %1: %2.</source>
         <translation>%3 blev sparket og udelukket fra serveren af %1:%2.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="636"/>
+        <location filename="src/mumble/Messages.cpp" line="640"/>
         <source>%3 was kicked from the server by %1: %2.</source>
         <translation>%3 blev sparket fra serveren af %1:%2.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="641"/>
+        <location filename="src/mumble/Messages.cpp" line="645"/>
         <source>%1 left channel and disconnected.</source>
         <translation>%1 venstre kanal og afbrudt.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="644"/>
+        <location filename="src/mumble/Messages.cpp" line="648"/>
         <source>%1 disconnected.</source>
         <translation>%1 afbrudt.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="757"/>
+        <location filename="src/mumble/Messages.cpp" line="770"/>
         <source>Protocol violation. Server sent remove for occupied channel.</source>
         <translation>Protokolovertrædelse. Server sendt fjern for optaget kanal.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="774"/>
-        <location filename="src/mumble/Messages.cpp" line="775"/>
+        <location filename="src/mumble/Messages.cpp" line="787"/>
+        <location filename="src/mumble/Messages.cpp" line="788"/>
         <source>Server</source>
         <comment>message from</comment>
         <translatorcomment>besked fra</translatorcomment>
         <translation>Server</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="779"/>
+        <location filename="src/mumble/Messages.cpp" line="792"/>
         <source>(Tree) </source>
         <translation>(Træ) </translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="781"/>
+        <location filename="src/mumble/Messages.cpp" line="794"/>
         <source>(Channel) </source>
         <translation>(Kanal) </translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="783"/>
+        <location filename="src/mumble/Messages.cpp" line="796"/>
         <source>(Private) </source>
         <translation>(Privat) </translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="788"/>
+        <location filename="src/mumble/Messages.cpp" line="801"/>
         <source>%2%1: %3</source>
         <translation>%2%1: %3</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="789"/>
+        <location filename="src/mumble/Messages.cpp" line="802"/>
         <source>Message from %1</source>
         <translation>Besked fra %1</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="941"/>
+        <location filename="src/mumble/Messages.cpp" line="962"/>
         <source>Failed to load Opus, it will not be available for audio encoding/decoding.</source>
         <translation>Kunne ikke indlæse Opus, det vil ikke være tilgængeligt til lydkodning / dekodning.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="972"/>
+        <location filename="src/mumble/Messages.cpp" line="993"/>
         <source>Unable to find matching CELT codecs with other clients. You will not be able to talk to all users.</source>
         <translation>Kan ikke finde matchende CELT-codecs med andre klienter. Du kan ikke tale med alle brugere.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="999"/>
+        <location filename="src/mumble/Messages.cpp" line="1022"/>
         <source>The server requests minimum client version %1</source>
         <translation>Serveren anmoder om minimum klientversion %1</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="1003"/>
+        <location filename="src/mumble/Messages.cpp" line="1026"/>
         <source>The server requests positional audio be enabled.</source>
         <translation>Serveren anmoder om, at positionslyd aktiveres.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="1005"/>
+        <location filename="src/mumble/Messages.cpp" line="1028"/>
         <source>The server requests positional audio be disabled.</source>
         <translation>Serveren anmoder om, at positionslyd deaktiveres.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="1009"/>
+        <location filename="src/mumble/Messages.cpp" line="1032"/>
         <source>The server requests Push-to-Talk be enabled.</source>
         <translation>Serveren anmoder om, at Push-to-Talk skal aktiveres.</translation>
     </message>
     <message>
-        <location filename="src/mumble/Messages.cpp" line="1011"/>
+        <location filename="src/mumble/Messages.cpp" line="1034"/>
         <source>The server requests Push-to-Talk be disabled.</source>
         <translation>Serveren anmoder om, at Push-to-Talk deaktiveres.</translation>
     </message>
@@ -1134,12 +1134,12 @@ If you wish, you may provide some additional information to be stored in the cer
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="src/mumble/main.cpp" line="721"/>
+        <location filename="src/mumble/main.cpp" line="565"/>
         <source>Failed to restart Bubbles</source>
         <translation>Kunne ikke genstarte Bubbles</translation>
     </message>
     <message>
-        <location filename="src/mumble/main.cpp" line="722"/>
+        <location filename="src/mumble/main.cpp" line="566"/>
         <source>Bubbles failed to restart itself. Please restart it manually.</source>
         <translation>Bubbles kunne ikke genstarte sig selv. Genstart det manuelt.</translation>
     </message>
@@ -1147,18 +1147,18 @@ If you wish, you may provide some additional information to be stored in the cer
 <context>
     <name>QObject</name>
     <message>
-        <location filename="src/mumble/main.cpp" line="533"/>
-        <location filename="src/mumble/main.cpp" line="581"/>
+        <location filename="src/mumble/main.cpp" line="392"/>
+        <location filename="src/mumble/main.cpp" line="440"/>
         <source>Warning</source>
         <translation>Advarsel</translation>
     </message>
     <message>
-        <location filename="src/mumble/main.cpp" line="533"/>
+        <location filename="src/mumble/main.cpp" line="392"/>
         <source>Please make sure the audio devices are correctly setup</source>
         <translation>Sørg for, at lydenhederne er korrekt konfigureret</translation>
     </message>
     <message>
-        <location filename="src/mumble/main.cpp" line="579"/>
+        <location filename="src/mumble/main.cpp" line="438"/>
         <source>Your certificate is about to expire. You need to renew it, or you will no longer be able to connect to servers you are registered on.</source>
         <translation>Dit certifikat udløber. Du skal forny den, ellers kan du ikke længere oprette forbindelse til servere, du er registreret på.</translation>
     </message>
@@ -1266,32 +1266,32 @@ Are you sure you wish to replace your certificate?</source>
         <translation>Brugere</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="447"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="451"/>
         <source>Invalid username</source>
         <translation>Ugyldigt brugernavn</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="448"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="452"/>
         <source>You connected with an invalid username, please try another one.</source>
         <translation>Du har forbindelse til et ugyldigt brugernavn. Prøv et andet.</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="453"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="457"/>
         <source>Username in use</source>
         <translation>Brugernavn i brug</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="454"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="458"/>
         <source>That username is already in use, please try another username.</source>
         <translation>Dette brugernavn er allerede i brug, prøv et andet brugernavn.</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="459"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="463"/>
         <source>Wrong certificate or password</source>
         <translation>Forkert certifikat eller adgangskode</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="460"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="464"/>
         <source>Wrong certificate or password for registered user. If you are
 certain this user is protected by a password please retry.
 Otherwise abort and check your certificate and username.</source>
@@ -1300,34 +1300,30 @@ visse denne bruger er beskyttet af en adgangskode, prøv igen.
 Ellers afbryder og tjek dit certifikat og brugernavn.</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="467"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="471"/>
         <source>Wrong password</source>
         <translation>Forkert kodeord</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="468"/>
+        <location filename="src/mumble/ServerTableModel.cpp" line="472"/>
         <source>Wrong server password for unregistered user account, please try again.</source>
         <translation>Forkert serveradgangskode til uregistreret brugerkonto, prøv igen.</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="735"/>
         <source>Warning</source>
-        <translation>Advarsel</translation>
+        <translation type="vanished">Advarsel</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="735"/>
         <source>Connection lost</source>
-        <translation>Forbindelse afbrudt</translation>
+        <translation type="vanished">Forbindelse afbrudt</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="741"/>
         <source>Information</source>
-        <translation>Information</translation>
+        <translation type="vanished">Information</translation>
     </message>
     <message>
-        <location filename="src/mumble/ServerTableModel.cpp" line="741"/>
         <source>Connection restored</source>
-        <translation>Forbindelsen gendannet</translation>
+        <translation type="vanished">Forbindelsen gendannet</translation>
     </message>
 </context>
 <context>
@@ -1441,6 +1437,16 @@ Ellers afbryder og tjek dit certifikat og brugernavn.</translation>
         <location filename="qml/main.qml" line="218"/>
         <source>Select file to export certificate to</source>
         <translation>Vælg fil, du vil eksportere certifikat til</translation>
+    </message>
+    <message>
+        <location filename="qml/main.qml" line="286"/>
+        <source>Connection lost, retrying to connect...</source>
+        <translation>Forbindelsen mistet, forsøger igen at oprette forbindelse...</translation>
+    </message>
+    <message>
+        <location filename="qml/main.qml" line="300"/>
+        <source>Cancel</source>
+        <translation>Fortryd</translation>
     </message>
 </context>
 </TS>
