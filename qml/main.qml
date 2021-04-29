@@ -273,6 +273,19 @@ ApplicationWindow {
             background: Rectangle {
                 color: "#80000000"
             }
+            Label {
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    verticalCenter: parent.verticalCenter
+                    verticalCenterOffset: -10 * Theme.windowMargin
+                }
+                color: Theme.textColor
+                wrapMode: Text.WordWrap
+                width: parent.width
+                horizontalAlignment: Text.AlignHCenter
+                text: qsTr("Connection lost, retrying to connect...")
+                font.pointSize: appWin.isBig ? Theme.bigHeaderFontSize : Theme.headerFontSize
+            }
             BusyIndicator {
                 id: busyIndicator
                 anchors.centerIn: parent

@@ -160,7 +160,6 @@ private:
     static void recreateServerHandler();
     void isAllowed(Channel *ch);
     void pingServer(ServerItem *srv);
-    void testConnectivity();
     void defaultDnsLookUp();
     void customDnsLookUp();
     void onCustomDnsLookUpFinished();
