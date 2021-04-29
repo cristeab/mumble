@@ -46,6 +46,7 @@ class ServerTableModel : public QAbstractTableModel
     QML_WRITABLE_PROPERTY(QString, dlgTextLabel, setDlgTextLabel, QString())
     QML_WRITABLE_PROPERTY(QString, dlgText, setDlgText, QString())
     QML_WRITABLE_PROPERTY(bool, dlgIsPassword, setDlgIsPassword, false)
+    QML_WRITABLE_PROPERTY(bool, showBusy, setShowBusy, false)
 
     QML_WRITABLE_PROPERTY(QStringList, schoolNameList, setSchoolNameList, QStringList())
     QML_WRITABLE_PROPERTY(QStringList, classNameList, setClassNameList, QStringList())
@@ -106,6 +107,8 @@ public:
         return isValidServerIndex(_currentIndex) ? _servers.at(_currentIndex).name : QString();
     }
 
+    Q_INVOKABLE void cancelReconnect();
+
     int rowCount(const QModelIndex & = QModelIndex()) const override;
     int columnCount(const QModelIndex & = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role) const override;
@@ -114,6 +117,7 @@ public:
 
     void onServerDisconnectedEvent(MumbleProto::Reject_RejectType rtLast,
                                    const QString &reason);
+    void onServerConnectedEvent();
     void onUserModelChanged();
     void onChannelJoined(Channel *channel, const QString &username, unsigned int session);
     void onChannelAllowedChanged(int id, bool allowed);

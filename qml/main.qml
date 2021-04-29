@@ -265,4 +265,34 @@ ApplicationWindow {
             }
         }
     }
+
+    Component {
+        id: busyIndicatorComp
+        Page {
+            Component.onCompleted: busyIndicator.visible = true
+            background: Rectangle {
+                color: "#80000000"
+            }
+            BusyIndicator {
+                id: busyIndicator
+                anchors.centerIn: parent
+                running: true
+            }
+            Button {
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    verticalCenter: parent.verticalCenter
+                    verticalCenterOffset: 10 * Theme.windowMargin
+                }
+                text: qsTr("Cancel")
+                onClicked: servers.cancelReconnect()
+            }
+        }
+    }
+    Loader {
+        id: busyIndicatorLoader
+        anchors.fill: parent
+        sourceComponent: busyIndicatorComp
+        active: servers.showBusy
+    }
 }

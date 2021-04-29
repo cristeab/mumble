@@ -300,6 +300,7 @@ class MainWindow : public QMainWindow, public MessageHandler, public Ui::MainWin
         //signals used by the new UI
         void serverDisconnectedEvent(MumbleProto::Reject_RejectType rtLast,
                                      const QString &reason);
+        void serverConnectedEvent();
         void userModelChanged();
         void channelJoined(Channel *channel, const QString &userName, unsigned int session);
         void showDialog(const QString &title, const QString &msg);

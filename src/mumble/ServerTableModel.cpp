@@ -427,6 +427,11 @@ void ServerTableModel::onLineEditDlgAccepted()
     g.mw->on_Reconnect_timeout();
 }
 
+void ServerTableModel::onServerConnectedEvent()
+{
+    setShowBusy(false);
+}
+
 void ServerTableModel::onServerDisconnectedEvent(MumbleProto::Reject_RejectType rtLast,
                                                  const QString &reason)
 {
@@ -474,8 +479,9 @@ void ServerTableModel::onServerDisconnectedEvent(MumbleProto::Reject_RejectType 
     }
     if (g.s.bReconnect && !reason.isEmpty()) {
         g.mw->qaServerDisconnect->setEnabled(true);
-        if (g.mw->bRetryServer) {
+        if (g.mw->bRetryServer && (nullptr != g.mw->qtReconnect)) {
             g.mw->qtReconnect->start();
+            setShowBusy(true);
             qInfo() << "Reconnect start";
         } else {
             qWarning() << "Reconnect server disabled";
@@ -932,4 +938,15 @@ void ServerTableModel::clearModels()
     if (nullptr != _roomsModel) {
         _roomsModel->clear();
     }
+}
+
+void ServerTableModel::cancelReconnect()
+{
+    setShowBusy(false);
+    if (nullptr != g.mw->qtReconnect) {
+        g.mw->qtReconnect->stop();
+        qInfo() << "Reconnect stop";
+    }
+    disconnectServer();
+    emit resetServersView();
 }
