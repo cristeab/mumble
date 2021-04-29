@@ -56,6 +56,7 @@ void MainWindow::msgAuthenticate(const MumbleProto::Authenticate &) {
 }
 
 void MainWindow::msgBanList(const MumbleProto::BanList &msg) {
+    qDebug() << "msgBanList" << QString::fromStdString(msg.DebugString());
 	if (banEdit) {
 		banEdit->reject();
 		delete banEdit;
@@ -66,6 +67,7 @@ void MainWindow::msgBanList(const MumbleProto::BanList &msg) {
 }
 
 void MainWindow::msgReject(const MumbleProto::Reject &msg) {
+    qDebug() << "msgReject" << QString::fromStdString(msg.DebugString());
 	rtLast = msg.type();
 
 	QString reason;
@@ -97,6 +99,7 @@ void MainWindow::msgReject(const MumbleProto::Reject &msg) {
 }
 
 void MainWindow::msgServerSync(const MumbleProto::ServerSync &msg) {
+    qDebug() << "msgServerSync" << QString::fromStdString(msg.DebugString());
 	g.sh->sendPing(); // Send initial ping to establish UDP connection
 
 	g.uiSession = msg.session();
@@ -160,6 +163,7 @@ void MainWindow::msgServerSync(const MumbleProto::ServerSync &msg) {
 
 
 void MainWindow::msgServerConfig(const MumbleProto::ServerConfig &msg) {
+    qDebug() << "msgServerConfig" << QString::fromStdString(msg.DebugString());
 	if (msg.has_welcome_text()) {
 		QString str = u8(msg.welcome_text());
 		if (!str.isEmpty()) {
@@ -167,7 +171,7 @@ void MainWindow::msgServerConfig(const MumbleProto::ServerConfig &msg) {
             qInfo() << "Welcome message:" << str;
 		}
 	}
-    qDebug() << "msgServerConfig";
+    qDebug() << "msgServerConfig" << QString::fromStdString(msg.DebugString());
 	if (msg.has_max_bandwidth())
 		AudioInput::setMaxBandwidth(msg.max_bandwidth());
 	if (msg.has_allow_html())
@@ -181,7 +185,7 @@ void MainWindow::msgServerConfig(const MumbleProto::ServerConfig &msg) {
 }
 
 void MainWindow::msgPermissionDenied(const MumbleProto::PermissionDenied &msg) {
-    qDebug() << "msgPermissionDenied" << msg.type();
+    qDebug() << "msgPermissionDenied" << QString::fromStdString(msg.DebugString());
     QString errMsg;
 	switch (msg.type()) {
 		case MumbleProto::PermissionDenied_DenyType_Permission: {
@@ -291,7 +295,8 @@ void MainWindow::msgPermissionDenied(const MumbleProto::PermissionDenied &msg) {
     }
 }
 
-void MainWindow::msgUDPTunnel(const MumbleProto::UDPTunnel &) {
+void MainWindow::msgUDPTunnel(const MumbleProto::UDPTunnel &msg) {
+    qDebug() << "msgUDPTunnel" << QString::fromStdString(msg.DebugString());
 }
 
 void MainWindow::msgUserState(const MumbleProto::UserState &msg) {
@@ -300,7 +305,7 @@ void MainWindow::msgUserState(const MumbleProto::UserState &msg) {
 	ClientUser *pDst = ClientUser::get(msg.session());
 	Channel *channel = NULL;
 
-    qDebug() << "msgUserState";
+    qDebug() << "msgUserState" << QString::fromStdString(msg.DebugString());
 
 	if (msg.has_channel_id()) {
 		channel = Channel::get(msg.channel_id());
@@ -614,10 +619,9 @@ void MainWindow::msgUserRemove(const MumbleProto::UserRemove &msg) {
 	ACTOR_INIT;
 	SELF_INIT;
 
-	QString reason = Qt::escape(u8(msg.reason()));
+    qDebug() << "msgUserRemove" << QString::fromStdString(msg.DebugString());
+    const auto reason = Qt::escape(u8(msg.reason()));
     QString errMsg;
-
-    qDebug() << "msgUserRemove" << reason;
 
 	if (pDst == pSelf) {
 		bRetryServer = false;
@@ -658,12 +662,13 @@ void MainWindow::msgChannelState(const MumbleProto::ChannelState &msg) {
 	if (! msg.has_channel_id())
 		return;
 
-    qDebug() << "msgChannelState";
+    qDebug() << "msgChannelState" << QString::fromStdString(msg.DebugString());
 
 	Channel *c = Channel::get(msg.channel_id());
 	Channel *p = msg.has_parent() ? Channel::get(msg.parent()) : NULL;
 
 	if (!c) {
+        qDebug() << "Channel changed";
 		// Addresses channel does not exist so create it
 		if (p && msg.has_name()) {
 			c = pmModel->addChannel(msg.channel_id(), p, u8(msg.name()));
@@ -681,6 +686,7 @@ void MainWindow::msgChannelState(const MumbleProto::ChannelState &msg) {
 	}
 
 	if (p) {
+        qDebug() << "Channel moved";
 		// Channel move
 		Channel *pp = p;
 		while (pp) {
@@ -744,7 +750,7 @@ void MainWindow::msgChannelState(const MumbleProto::ChannelState &msg) {
 }
 
 void MainWindow::msgChannelRemove(const MumbleProto::ChannelRemove &msg) {
-    qDebug() << "msgChannelRemove";
+    qDebug() << "msgChannelRemove" << QString::fromStdString(msg.DebugString());
 	Channel *c = Channel::get(msg.channel_id());
 	if (c && (c->iId != 0)) {
 		if (c->bFiltered) {
@@ -765,7 +771,7 @@ void MainWindow::msgTextMessage(const MumbleProto::TextMessage &msg) {
 	ACTOR_INIT;
 	QString target;
 
-    qDebug() << "msgTextMessage";
+    qDebug() << "msgTextMessage" << QString::fromStdString(msg.DebugString());
 
 	// Silently drop the message if this user is set to "ignore"
 	if (pSrc && pSrc->bLocalIgnore)
@@ -790,6 +796,7 @@ void MainWindow::msgTextMessage(const MumbleProto::TextMessage &msg) {
 }
 
 void MainWindow::msgACL(const MumbleProto::ACL &msg) {
+    qDebug() << "msgACL" << QString::fromStdString(msg.DebugString());
 	if (aclEdit) {
 		aclEdit->reject();
 		delete aclEdit;
@@ -802,6 +809,7 @@ void MainWindow::msgACL(const MumbleProto::ACL &msg) {
 }
 
 void MainWindow::msgQueryUsers(const MumbleProto::QueryUsers &msg) {
+    qDebug() << "msgQueryUsers" << QString::fromStdString(msg.DebugString());
 	if (aclEdit)
 		aclEdit->returnQuery(msg);
 }
@@ -810,6 +818,7 @@ void MainWindow::msgPing(const MumbleProto::Ping &) {
 }
 
 void MainWindow::msgCryptSetup(const MumbleProto::CryptSetup &msg) {
+    qDebug() << "msgCryptSetup" << QString::fromStdString(msg.DebugString());
 	ConnectionPtr c= g.sh->cConnection;
 	if (! c)
 		return;
@@ -836,7 +845,8 @@ void MainWindow::msgContextAction(const MumbleProto::ContextAction &) {
 }
 
 void MainWindow::msgContextActionModify(const MumbleProto::ContextActionModify &msg) {
-	if (msg.has_operation() && msg.operation() == MumbleProto::ContextActionModify_Operation_Remove) {
+    qDebug() << "msgContextActionModify" << QString::fromStdString(msg.DebugString());
+    if (msg.has_operation() && msg.operation() == MumbleProto::ContextActionModify_Operation_Remove) {
 		removeContextAction(msg);
 		return;
 	}
@@ -857,7 +867,7 @@ void MainWindow::msgContextActionModify(const MumbleProto::ContextActionModify &
 }
 
 void MainWindow::removeContextAction(const MumbleProto::ContextActionModify &msg) {
-    qDebug() << "removeContextAction";
+    qDebug() << "removeContextAction" << QString::fromStdString(msg.DebugString());
 	QString action = u8(msg.action());
 
 	QSet<QAction *> qs;
@@ -876,6 +886,7 @@ void MainWindow::removeContextAction(const MumbleProto::ContextActionModify &msg
 }
 
 void MainWindow::msgVersion(const MumbleProto::Version &msg) {
+    qDebug() << "msgVersion" << QString::fromStdString(msg.DebugString());
 	if (msg.has_version())
 		g.sh->uiVersion = msg.version();
 	if (msg.has_release())
@@ -888,19 +899,21 @@ void MainWindow::msgVersion(const MumbleProto::Version &msg) {
 }
 
 void MainWindow::msgUserList(const MumbleProto::UserList &msg) {
-	if (userEdit) {
+    qDebug() << "msgUserList" << QString::fromStdString(msg.DebugString());
+    /*if (userEdit) {
 		userEdit->reject();
 		delete userEdit;
 		userEdit = NULL;
 	}
 	userEdit = new UserEdit(msg, this);
-	userEdit->show();
+    userEdit->show();*/
 }
 
 void MainWindow::msgVoiceTarget(const MumbleProto::VoiceTarget &) {
 }
 
 void MainWindow::msgPermissionQuery(const MumbleProto::PermissionQuery &msg) {
+    qDebug() << "msgPermissionQuery" << QString::fromStdString(msg.DebugString());
 	Channel *current = pmModel->getChannel(qtvUsers->currentIndex());
 
 	if (msg.flush()) {
@@ -929,6 +942,7 @@ void MainWindow::msgPermissionQuery(const MumbleProto::PermissionQuery &msg) {
 }
 
 void MainWindow::msgCodecVersion(const MumbleProto::CodecVersion &msg) {
+    qDebug() << "msgCodecVersion" << QString::fromStdString(msg.DebugString());
 	int alpha = msg.has_alpha() ? msg.alpha() : -1;
 	int beta = msg.has_beta() ? msg.beta() : -1;
 	bool pref = msg.prefer_alpha();
@@ -978,6 +992,7 @@ void MainWindow::msgCodecVersion(const MumbleProto::CodecVersion &msg) {
 }
 
 void MainWindow::msgUserStats(const MumbleProto::UserStats &msg) {
+    qDebug() << "msgUserStats" << QString::fromStdString(msg.DebugString());
 	UserInformation *ui = qmUserInformations.value(msg.session());
 	if (ui) {
 		ui->update(msg);
@@ -995,6 +1010,7 @@ void MainWindow::msgRequestBlob(const MumbleProto::RequestBlob &) {
 }
 
 void MainWindow::msgSuggestConfig(const MumbleProto::SuggestConfig &msg) {
+    qDebug() << "msgSuggestConfig" << QString::fromStdString(msg.DebugString());
 	if (msg.has_version() && (msg.version() > MumbleVersion::getRaw())) {
 		g.l->log(Log::Warning, tr("The server requests minimum client version %1").arg(MumbleVersion::toString(msg.version())));
 	}
