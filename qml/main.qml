@@ -291,7 +291,7 @@ ApplicationWindow {
                 anchors.centerIn: parent
                 running: true
             }
-            Button {
+            CustomButton {
                 anchors {
                     horizontalCenter: parent.horizontalCenter
                     verticalCenter: parent.verticalCenter
