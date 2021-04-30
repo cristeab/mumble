@@ -14,8 +14,7 @@ Button {
         color: control.textColor
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        leftPadding: Theme.windowMargin / 2
-        rightPadding: Theme.windowMargin / 2
+        padding: Theme.windowMargin / 2
     }
     background: Rectangle {
         color: control.pressed ? Qt.darker(control.backgroundColor) : control.backgroundColor
