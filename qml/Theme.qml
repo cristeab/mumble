@@ -7,16 +7,17 @@ QtObject {
     readonly property real dialogMargin: 80
     readonly property real windowMargin: 10
 
-    readonly property real labelFontSize: 12
-    readonly property real titleFontSize: 13
-    readonly property real headerFontSize: 15
+    readonly property real labelFontSize: 14
+    readonly property real titleFontSize: 15
+    readonly property real headerFontSize: 17
     readonly property real buttonIconWidth: 35
+
+    readonly property real bigLabelFontSize: 17
+    readonly property real bigTitleFontSize: 18
+    readonly property real bigHeaderFontSize: 20
+
     readonly property real tabIconWidth: 50
     readonly property real smallTabIconWidth: 40
-
-    readonly property real bigLabelFontSize: 16
-    readonly property real bigTitleFontSize: 17
-    readonly property real bigHeaderFontSize: 19
 
     readonly property real sliderWidth: 26
     readonly property real rectRadius: 5

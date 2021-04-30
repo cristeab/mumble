@@ -12,19 +12,18 @@ Page {
     Row {
         anchors {
             top: parent.top
-            topMargin: Theme.windowMargin
+            topMargin: 1.5 * Theme.windowMargin
             left: parent.left
-            leftMargin: Theme.windowMargin
+            leftMargin: 2 * Theme.windowMargin
         }
         visible: (servers.currentClassIndex === servers.connectedClassIndex)
         spacing: Theme.windowMargin
-        CustomTabButton {
+        CustomImageButton {
             id: micBtn
-            icon {
-                source: servers.roomsModel.microphoneOff ? "qrc:/img/microphone-off.svg" : "qrc:/img/microphone.svg"
-                width: 0.8 * Theme.smallTabIconWidth
-                height: Theme.smallTabIconWidth
-            }
+            scale: servers.roomsModel.microphoneOff ? 1.45 : 1
+            source: servers.roomsModel.microphoneOff ? "qrc:/img/microphone-off.svg" : "qrc:/img/microphone.svg"
+            width: 0.8 * Theme.smallTabIconWidth
+            height: Theme.smallTabIconWidth
             onClicked: {
                 servers.roomsModel.microphoneOff = !servers.roomsModel.microphoneOff
                 if (servers.roomsModel.speakerOff) {
@@ -35,14 +34,12 @@ Page {
                 }
             }
         }
-        CustomTabButton {
+        CustomImageButton {
             id: volBtn
             property bool changeMic: false
-            icon {
-                source: servers.roomsModel.speakerOff ? "qrc:/img/volume-off.svg" : "qrc:/img/volume.svg"
-                width: Theme.smallTabIconWidth
-                height: Theme.smallTabIconWidth
-            }
+            source: servers.roomsModel.speakerOff ? "qrc:/img/volume-off.svg" : "qrc:/img/volume.svg"
+            width: Theme.smallTabIconWidth
+            height: Theme.smallTabIconWidth
             onClicked: {
                 servers.roomsModel.speakerOff = !servers.roomsModel.speakerOff
                 if (volBtn.changeMic) {
@@ -89,7 +86,7 @@ Page {
             bottom: joinBtn.top
         }
         cellWidth: roomsGrid.width / 4
-        cellHeight: 250
+        cellHeight: 400
         currentIndex: 0
         clip: true
         boundsBehavior: ListView.StopAtBounds
