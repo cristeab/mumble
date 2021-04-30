@@ -67,7 +67,7 @@ ApplicationWindow {
             verticalCenter: parent.verticalCenter
         }
         width: childrenRect.width
-        spacing: 2 * Theme.windowMargin
+        spacing: 3 * Theme.windowMargin
 
         Repeater {
             model: bar.names.length
@@ -279,14 +279,14 @@ ApplicationWindow {
                     verticalCenter: parent.verticalCenter
                     verticalCenterOffset: -10 * Theme.windowMargin
                 }
-                color: Theme.textColor
+                color: Theme.separatorColor
                 wrapMode: Text.WordWrap
                 width: parent.width
                 horizontalAlignment: Text.AlignHCenter
                 text: qsTr("Connection lost, retrying to connect...")
                 font.pointSize: appWin.isBig ? Theme.bigHeaderFontSize : Theme.headerFontSize
             }
-            BusyIndicator {
+            CustomBusyIndicator {
                 id: busyIndicator
                 anchors.centerIn: parent
                 running: true
@@ -298,6 +298,7 @@ ApplicationWindow {
                     verticalCenterOffset: 10 * Theme.windowMargin
                 }
                 text: qsTr("Cancel")
+                textColor: Theme.separatorColor
                 onClicked: servers.cancelReconnect()
             }
         }
