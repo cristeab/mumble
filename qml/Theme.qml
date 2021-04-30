@@ -10,12 +10,12 @@ QtObject {
     readonly property real labelFontSize: 14
     readonly property real titleFontSize: 15
     readonly property real headerFontSize: 17
+
+    readonly property real bigLabelFontSize: 20
+    readonly property real bigTitleFontSize: 21
+    readonly property real bigHeaderFontSize: 23
+
     readonly property real buttonIconWidth: 35
-
-    readonly property real bigLabelFontSize: 17
-    readonly property real bigTitleFontSize: 18
-    readonly property real bigHeaderFontSize: 20
-
     readonly property real tabIconWidth: 60
     readonly property real smallTabIconWidth: 40
 
