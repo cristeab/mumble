@@ -46,6 +46,7 @@
         <file alias="qml/custom/CustomTabButton.qml">../../qml/custom/CustomTabButton.qml</file>
         <file alias="qml/custom/CustomBackground.qml">../../qml/custom/CustomBackground.qml</file>
         <file alias="qml/custom/CustomDialogBackground.qml">../../qml/custom/CustomDialogBackground.qml</file>
+        <file alias="qml/custom/CustomBusyIndicator.qml">../../qml/custom/CustomBusyIndicator.qml</file>
         <file alias="qml/custom/CustomImageButton.qml">../../qml/custom/CustomImageButton.qml</file>
         <file alias="qml/dialog/AddEditServer.qml">../../qml/dialog/AddEditServer.qml</file>
         <file alias="qml/dialog/LineEditDialog.qml">../../qml/dialog/LineEditDialog.qml</file>

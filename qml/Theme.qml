@@ -16,7 +16,7 @@ QtObject {
     readonly property real bigTitleFontSize: 18
     readonly property real bigHeaderFontSize: 20
 
-    readonly property real tabIconWidth: 50
+    readonly property real tabIconWidth: 60
     readonly property real smallTabIconWidth: 40
 
     readonly property real sliderWidth: 26
