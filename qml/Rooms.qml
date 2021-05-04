@@ -173,7 +173,7 @@ Page {
                 }
             }
 
-            enabled: (servers.roomsModel.currentRoomIndex !== roomsGrid.currentIndex) || (servers.currentClassIndex !== servers.connectedClassIndex)
+            enabled: (0 <= roomsGrid.currentIndex) && ((servers.roomsModel.currentRoomIndex !== roomsGrid.currentIndex) || (servers.currentClassIndex !== servers.connectedClassIndex))
             text: qsTr("Join room")
             onClicked: joinBtn.joinAction(roomsGrid.currentIndex)
         }
