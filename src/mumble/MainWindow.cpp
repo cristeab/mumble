@@ -834,8 +834,8 @@ void MainWindow::openUrl(const QUrl &url) {
 		delete qs;
 		return;
 	}
-	if (url.scheme() != QLatin1String("mumble")) {
-        g.l->log(Log::Warning, tr("URL scheme is not 'mumble'"));
+    if (url.scheme() != QLatin1String("bubbles")) {
+        g.l->log(Log::Warning, tr("URL scheme is not 'bubbles'"));
 		return;
 	}
 
@@ -861,7 +861,7 @@ void MainWindow::openUrl(const QUrl &url) {
 	        (major > thismajor) || // No future version
 	        (major == thismajor && minor > thisminor) ||
 	        (major == thismajor && minor == thisminor && patch > thispatch)) {
-		g.l->log(Log::Warning, tr("This version of Mumble can't handle URLs for Mumble version %1.%2.%3").arg(major).arg(minor).arg(patch));
+        g.l->log(Log::Warning, tr("This version of Bubbles can't handle URLs for Bubbles version %1.%2.%3").arg(major).arg(minor).arg(patch));
 		return;
 	}
 

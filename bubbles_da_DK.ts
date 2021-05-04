@@ -77,17 +77,17 @@
         <translation>Tilføj token</translation>
     </message>
     <message>
-        <location filename="qml/dialog/AddEditToken.qml" line="33"/>
+        <location filename="qml/dialog/AddEditToken.qml" line="35"/>
         <source>Token</source>
         <translation>Polet</translation>
     </message>
     <message>
-        <location filename="qml/dialog/AddEditToken.qml" line="67"/>
+        <location filename="qml/dialog/AddEditToken.qml" line="69"/>
         <source>OK</source>
         <translation>Slet</translation>
     </message>
     <message>
-        <location filename="qml/dialog/AddEditToken.qml" line="71"/>
+        <location filename="qml/dialog/AddEditToken.qml" line="73"/>
         <source>Cancel</source>
         <translation>Fortryd</translation>
     </message>
@@ -568,22 +568,22 @@ If the file is password protected, you will need the password to import the cert
 <context>
     <name>LineEditDialog</name>
     <message>
-        <location filename="qml/dialog/LineEditDialog.qml" line="55"/>
+        <location filename="qml/dialog/LineEditDialog.qml" line="57"/>
         <source>Your password</source>
         <translation>Dit kodeord</translation>
     </message>
     <message>
-        <location filename="qml/dialog/LineEditDialog.qml" line="55"/>
+        <location filename="qml/dialog/LineEditDialog.qml" line="57"/>
         <source>Your username</source>
         <translation>Dit brugernavn</translation>
     </message>
     <message>
-        <location filename="qml/dialog/LineEditDialog.qml" line="90"/>
+        <location filename="qml/dialog/LineEditDialog.qml" line="92"/>
         <source>OK</source>
         <translation>Slet</translation>
     </message>
     <message>
-        <location filename="qml/dialog/LineEditDialog.qml" line="94"/>
+        <location filename="qml/dialog/LineEditDialog.qml" line="96"/>
         <source>Cancel</source>
         <translation>Fortryd</translation>
     </message>
@@ -754,7 +754,8 @@ If the file is password protected, you will need the password to import the cert
         <location filename="src/mumble/Log.cpp" line="372"/>
         <source>[Date changed to %1]
 </source>
-        <translation>[Dato ændret til %1]</translation>
+        <translation>[Dato ændret til %1]
+</translation>
     </message>
 </context>
 <context>
@@ -1229,6 +1230,705 @@ If the file is password protected, you will need the password to import the cert
         <source>The server requests Push-to-Talk be disabled.</source>
         <translation>Serveren anmoder om, at Push-to-Talk deaktiveres.</translation>
     </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="97"/>
+        <location filename="src/mumble/MainWindow.cpp" line="2785"/>
+        <source>Root</source>
+        <translation>Rod</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="118"/>
+        <source>&amp;User</source>
+        <translation>&amp;Bruger</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="119"/>
+        <source>&amp;Channel</source>
+        <translation>&amp;Kanal</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="121"/>
+        <source>&amp;Developer</source>
+        <translation>&amp;Udvikler</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="157"/>
+        <source>Push-to-Talk</source>
+        <comment>Global Shortcut</comment>
+        <translation>Tryk for at tale</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="159"/>
+        <source>Push and hold this button to send voice.</source>
+        <comment>Global Shortcut</comment>
+        <translation>Tryk og hold på denne knap for at sende stemme.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="160"/>
+        <source>This configures the push-to-talk button, and as long as you hold this button down, you will transmit voice.</source>
+        <comment>Global Shortcut</comment>
+        <translation>Dette konfigurerer push-to-talk-knappen, og så længe du holder denne knap nede, sender du stemme.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="163"/>
+        <source>Reset Audio Processor</source>
+        <comment>Global Shortcut</comment>
+        <translation>Nulstil lydprocessor</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="166"/>
+        <source>Mute Self</source>
+        <comment>Global Shortcut</comment>
+        <translation>Dæmp selv</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="168"/>
+        <source>Set self-mute status.</source>
+        <comment>Global Shortcut</comment>
+        <translation>Indstil status for selvdæmpning.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="169"/>
+        <source>This will set or toggle your muted status. If you turn this off, you will also disable self-deafen.</source>
+        <comment>Global Shortcut</comment>
+        <translation>Dette indstiller eller skifter din dæmpede status. Hvis du slukker for dette, vil du også deaktivere selvdøvende.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="171"/>
+        <source>Deafen Self</source>
+        <comment>Global Shortcut</comment>
+        <translation>Døv selv</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="173"/>
+        <source>Set self-deafen status.</source>
+        <comment>Global Shortcut</comment>
+        <translation>Indstil status for selvdøvende tilstand.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="174"/>
+        <source>This will set or toggle your deafened status. If you turn this on, you will also enable self-mute.</source>
+        <comment>Global Shortcut</comment>
+        <translation>Dette indstiller eller skifter din døvede status. Hvis du aktiverer dette, vil du også aktivere selvdæmpning.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="176"/>
+        <source>Unlink Plugin</source>
+        <comment>Global Shortcut</comment>
+        <translation>Fjern link til plugin</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="179"/>
+        <source>Push-to-Mute</source>
+        <comment>Global Shortcut</comment>
+        <translation>Push-to-Mute</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="182"/>
+        <source>Join Channel</source>
+        <comment>Global Shortcut</comment>
+        <translation>Deltag i kanalen</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="184"/>
+        <location filename="src/mumble/MainWindow.cpp" line="210"/>
+        <source>Use in conjunction with Whisper to.</source>
+        <comment>Global Shortcut</comment>
+        <translation>Brug sammen med Whisper to.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="186"/>
+        <source>Toggle Overlay</source>
+        <comment>Global Shortcut</comment>
+        <translation>Skift overlay</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="188"/>
+        <source>Toggle state of in-game overlay.</source>
+        <comment>Global Shortcut</comment>
+        <translation>Skift tilstand af overlay i spillet.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="189"/>
+        <source>This will switch the states of the in-game overlay.</source>
+        <comment>Global Shortcut</comment>
+        <translation>Dette skifter tilstanden for overlayet i spillet.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="192"/>
+        <source>Toggle Minimal</source>
+        <comment>Global Shortcut</comment>
+        <translation>Skift Minimal</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="195"/>
+        <source>Volume Up (+10%)</source>
+        <comment>Global Shortcut</comment>
+        <translation>Lydstyrke op (+ 10%)</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="198"/>
+        <source>Volume Down (-10%)</source>
+        <comment>Global Shortcut</comment>
+        <translation>Lydstyrke ned (-10%)</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="202"/>
+        <location filename="src/mumble/MainWindow.cpp" line="370"/>
+        <location filename="src/mumble/MainWindow.cpp" line="2953"/>
+        <source>Bubbles -- %1</source>
+        <translation>Bubbles -- %1</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="205"/>
+        <source>Whisper/Shout</source>
+        <translation>Hvisk / råb</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="208"/>
+        <source>Link Channel</source>
+        <comment>Global Shortcut</comment>
+        <translation>Link kanal</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="212"/>
+        <source>Cycle Transmit Mode</source>
+        <comment>Global Shortcut</comment>
+        <translation>Cyklus transmissionstilstand</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="215"/>
+        <source>Set Transmit Mode to Push-To-Talk</source>
+        <comment>Global Shortcut</comment>
+        <translation>Indstil transmissionstilstand til Push-To-Talk</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="218"/>
+        <source>Set Transmit Mode to Continuous</source>
+        <comment>Global Shortcut</comment>
+        <translation>Indstil transmissionstilstand til kontinuerlig</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="221"/>
+        <source>Set Transmit Mode to VAD</source>
+        <comment>Global Shortcut</comment>
+        <translation>Indstil transmissionstilstand til VAD</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="224"/>
+        <source>Send Text Message</source>
+        <comment>Global Shortcut</comment>
+        <translation>Send tekstbesked</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="227"/>
+        <source>Send Clipboard Text Message</source>
+        <comment>Global Shortcut</comment>
+        <translation>Send udklipsholder tekstbesked</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="229"/>
+        <source>This will send your Clipboard content to the channel you are currently in.</source>
+        <comment>Global Shortcut</comment>
+        <translation>Dette sender dit udklipsholderindhold til den kanal, du er i øjeblikket.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="242"/>
+        <source>&amp;Window</source>
+        <translation>&amp;Vindue</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="244"/>
+        <location filename="src/mumble/MainWindow.cpp" line="429"/>
+        <source>Minimize</source>
+        <translation>Minimer</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="244"/>
+        <source>Ctrl+M</source>
+        <translation>Ctrl+M</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="293"/>
+        <location filename="src/mumble/MainWindow.cpp" line="3042"/>
+        <source>&lt;center&gt;Not connected&lt;/center&gt;</source>
+        <translation>&lt;center&gt; Ikke forbundet &lt;/center&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="317"/>
+        <source>Continuous</source>
+        <translation>Sammenhængende</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="318"/>
+        <source>Voice Activity</source>
+        <translation>Stemmeaktivitet</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="319"/>
+        <source>Push-to-Talk</source>
+        <translation>Tryk for at tale</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="368"/>
+        <source>Bubbles - Minimal View -- %1</source>
+        <translation>Bubbles - Minimal visning --%1</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="427"/>
+        <source>Bubbles is currently connected to a server. Do you want to Close or Minimize it?</source>
+        <translation>Bubbles er i øjeblikket forbundet til en server. Vil du lukke eller minimere det?</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="428"/>
+        <source>Close</source>
+        <translation>Tæt</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="430"/>
+        <source>Cancel</source>
+        <translation>Fortryd</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="735"/>
+        <source>Save Image As...</source>
+        <translation>Gem billede som...</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="741"/>
+        <source>Clear</source>
+        <translation>Klar</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="750"/>
+        <source>Save Image File</source>
+        <translation>Gem billedfil</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="750"/>
+        <location filename="src/mumble/MainWindow.cpp" line="3152"/>
+        <source>Images (*.png *.jpg *.jpeg)</source>
+        <translation>Billeder (* .png * .jpg * .jpeg)</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="768"/>
+        <source>Could not save image: %1</source>
+        <translation>Kunne ikke gemme billedet:%1</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="814"/>
+        <source>Opening URL %1</source>
+        <translation>Åbner URL %1</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="818"/>
+        <source>File does not exist</source>
+        <translation>Filen eksisterer ikke</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="826"/>
+        <source>File is not a configuration file.</source>
+        <translation>Fil er ikke en konfigurationsfil.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="832"/>
+        <source>Settings merged from file.</source>
+        <translation>Indstillinger flettet fra fil.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="838"/>
+        <source>URL scheme is not &apos;bubbles&apos;</source>
+        <oldsource>URL scheme is not &apos;mumble&apos;</oldsource>
+        <translation>URL-ordningen er ikke &apos;bubbles&apos;</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="864"/>
+        <source>This version of Bubbles can&apos;t handle URLs for Bubbles version %1.%2.%3</source>
+        <oldsource>This version of Mumble can&apos;t handle URLs for Mumble version %1.%2.%3</oldsource>
+        <translation>Denne version af Bubbles kan ikke håndtere webadresser til Bubbles version%1.%2.%3</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="900"/>
+        <source>Connecting to %1</source>
+        <translation>Opretter forbindelse til %1</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="900"/>
+        <source>Enter username</source>
+        <translation>Indtast brugernavn</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="915"/>
+        <source>Connecting to server %1.</source>
+        <translation>Opretter forbindelse til server %1.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1126"/>
+        <source>Reconnecting.</source>
+        <translation>Forbinder igen.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1166"/>
+        <source>Change your comment</source>
+        <translation>Skift din kommentar</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1180"/>
+        <location filename="src/mumble/MainWindow.cpp" line="1629"/>
+        <source>Register yourself as %1</source>
+        <translation>Registrer dig selv som %1</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1180"/>
+        <location filename="src/mumble/MainWindow.cpp" line="1629"/>
+        <source>&lt;p&gt;You are about to register yourself on this server. This action cannot be undone, and your username cannot be changed once this is done. You will forever be known as &apos;%1&apos; on this server.&lt;/p&gt;&lt;p&gt;Are you sure you want to register yourself?&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Du er ved at registrere dig selv på denne server. Denne handling kan ikke fortrydes, og dit brugernavn kan ikke ændres, når dette er gjort. Du vil altid blive kendt som &apos;%1&apos; på denne server. &lt;/p&gt; &lt;p&gt; Er du sikker på, at du vil registrere dig selv?&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1190"/>
+        <location filename="src/mumble/MainWindow.cpp" line="2664"/>
+        <location filename="src/mumble/MainWindow.cpp" line="2686"/>
+        <source>Transmit Mode set to Continuous</source>
+        <translation>Sendemodus indstillet til Kontinuerlig</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1195"/>
+        <location filename="src/mumble/MainWindow.cpp" line="2656"/>
+        <location filename="src/mumble/MainWindow.cpp" line="2696"/>
+        <source>Transmit Mode set to Voice Activity</source>
+        <translation>Sendefunktion indstillet til Stemmeaktivitet</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1200"/>
+        <location filename="src/mumble/MainWindow.cpp" line="2660"/>
+        <location filename="src/mumble/MainWindow.cpp" line="2676"/>
+        <source>Transmit Mode set to Push-to-Talk</source>
+        <translation>Sendemodus indstillet til Push-to-Talk</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1286"/>
+        <source>&lt;h2&gt;Version&lt;/h2&gt;&lt;p&gt;Protocol %1&lt;/p&gt;</source>
+        <translation>&lt;h2&gt; Version&lt;/h2&gt; &lt;p&gt; Protoko l%1&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1289"/>
+        <source>&lt;p&gt;No build information or OS version available&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Ingen build-oplysninger eller OS-version tilgængelig&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1291"/>
+        <source>&lt;p&gt;%1 (%2)&lt;br /&gt;%3&lt;/p&gt;</source>
+        <translation>&lt;p&gt;%1 (%2)&lt;br /&gt;%3&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1307"/>
+        <source>The connection is encrypted and authenticated using %1 and uses %2 as the key exchange mechanism (%3)</source>
+        <translation>Forbindelsen krypteres og godkendes ved hjælp af %1 og bruger %2 som nøgleudvekslingsmekanisme (%3)</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1314"/>
+        <source>The connection is encrypted using %1, with %2 for message authentication and %3 as the key exchange mechanism (%4)</source>
+        <translation>Forbindelsen krypteres med %1, med %2 til meddelelsesgodkendelse og %3 som nøgleudvekslingsmekanisme (%4)</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1325"/>
+        <source>The connection is secured by the cipher suite that OpenSSL identifies as %1</source>
+        <translation>Forbindelsen er sikret af den chifferpakke, som OpenSSL identificerer som %1</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1331"/>
+        <source>&lt;p&gt;The connection provides perfect forward secrecy&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Forbindelsen giver perfekt hemmeligholdelse fremad&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1333"/>
+        <source>&lt;p&gt;The connection does not provide perfect forward secrecy&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Forbindelsen giver ikke perfekt fremadrettet hemmeligholdelse&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1337"/>
+        <source>&lt;h2&gt;Control channel&lt;/h2&gt;&lt;p&gt;The connection uses %1&lt;/p&gt;%2%3&lt;p&gt;%4 ms average latency (%5 deviation)&lt;/p&gt;&lt;p&gt;Remote host %6 (port %7)&lt;/p&gt;</source>
+        <translation>&lt;h2&gt;Kontrolkanal &lt;/h2&gt;&lt;p&gt; Forbindelsen bruger %1&lt;/p&gt;%2%​3 &lt;p&gt;%4 ms gennemsnitlig ventetid (%5 afvigelse) &lt;/p&gt; &lt;p&gt; Fjernhost %6 ( port %7) &lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1352"/>
+        <source>&lt;p&gt;Connected users: %1/%2&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Forbundne brugere: %1/%2&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1358"/>
+        <source>Voice channel is sent over control channel</source>
+        <translation>Stemmekanal sendes over kontrolkanalen</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1360"/>
+        <source>&lt;h2&gt;Voice channel&lt;/h2&gt;&lt;p&gt;Encrypted with 128 bit OCB-AES128&lt;br /&gt;%1 ms average latency (%4 deviation)&lt;/p&gt;</source>
+        <translation>&lt;h2&gt;Stemmekanal&lt;/h2&gt; &lt;p&gt;Krypteret med 128 bit OCB-AES128&lt;br /&gt;%1 ms gennemsnitlig ventetid (%4 afvigelse)&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1367"/>
+        <source>UDP Statistics</source>
+        <translation>UDP-statistik</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1367"/>
+        <source>To Server</source>
+        <translation>Til server</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1367"/>
+        <source>From Server</source>
+        <translation>Fra server</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1367"/>
+        <source>Good</source>
+        <translation>Godt</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1367"/>
+        <source>Late</source>
+        <translation>Sent</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1367"/>
+        <source>Lost</source>
+        <translation>Faret vild</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1367"/>
+        <source>Resync</source>
+        <translation>Resync</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1371"/>
+        <source>&lt;h2&gt;Audio bandwidth&lt;/h2&gt;&lt;p&gt;Maximum %1 kbit/s&lt;br /&gt;Current %2 kbit/s&lt;br /&gt;Codec: %3&lt;/p&gt;</source>
+        <translation>&lt;h2&gt; Audiobåndbredde &lt;/h2&gt; &lt;p&gt; Maksimum %1 kbit / s &lt;br /&gt; Aktuel %2 kbit / s &lt;br /&gt; Codec: %3 &lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1373"/>
+        <source>Bubbles Server Information</source>
+        <translation>Bubbles-serveroplysninger</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1377"/>
+        <location filename="src/mumble/MainWindow.cpp" line="2918"/>
+        <source>&amp;View Certificate</source>
+        <translation>&amp;Vis certifikat</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1631"/>
+        <source>Register user %1</source>
+        <translation>Registrer bruger %1</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1631"/>
+        <source>&lt;p&gt;You are about to register %1 on the server. This action cannot be undone, the username cannot be changed, and as a registered user, %1 will have access to the server even if you change the server password.&lt;/p&gt;&lt;p&gt;From this point on, %1 will be authenticated with the certificate currently in use.&lt;/p&gt;&lt;p&gt;Are you sure you want to register %1?&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Du er ved at registrere %1 på serveren. Denne handling kan ikke fortrydes, brugernavnet kan ikke ændres, og som en registreret bruger har %1 adgang til serveren, selvom du ændrer serveradgangskoden.&lt;/p&gt;&lt;p&gt; Fra dette tidspunkt vil %1 være godkendt med det certifikat, der aktuelt er i brug.&lt;/p&gt;&lt;p&gt;Er du sikker på, at du vil registrere %1?&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1671"/>
+        <source>Kicking user %1</source>
+        <translation>Sparker bruger %1</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1671"/>
+        <location filename="src/mumble/MainWindow.cpp" line="1690"/>
+        <source>Enter reason</source>
+        <translation>Indtast grund</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1690"/>
+        <source>Banning user %1</source>
+        <translation>Forbyder bruger %1</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1712"/>
+        <source>Sending message to %1</source>
+        <translation>Afsender besked til %1</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1742"/>
+        <source>View comment on user %1</source>
+        <translation>Se kommentar til bruger %1</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1757"/>
+        <source>Are you sure you want to reset the comment of user %1?</source>
+        <translation>Er du sikker på, at du vil nulstille kommentaren fra bruger %1?</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1773"/>
+        <source>Are you sure you want to reset the avatar of user %1?</source>
+        <translation>Er du sikker på, at du vil nulstille avataren for bruger %1?</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1817"/>
+        <location filename="src/mumble/MainWindow.cpp" line="1821"/>
+        <location filename="src/mumble/MainWindow.cpp" line="2714"/>
+        <source>To %1: %2</source>
+        <translation>Til %1:%2</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1817"/>
+        <location filename="src/mumble/MainWindow.cpp" line="2714"/>
+        <source>Message to channel %1</source>
+        <translation>Besked til kanal %1</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="1821"/>
+        <source>Message to %1</source>
+        <translation>Besked til %1</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="2001"/>
+        <source>Are you sure you want to delete %1 and all its sub-channels?</source>
+        <translation>Er du sikker på, at du vil slette %1 og alle dens underkanaler?</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="2072"/>
+        <source>Sending message to channel %1</source>
+        <translation>Afsender besked til kanal %1</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="2244"/>
+        <source>Unmuted and undeafened.</source>
+        <translation>Uempet og uafdøvet.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="2246"/>
+        <source>Unmuted.</source>
+        <translation>Ikke slået til.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="2248"/>
+        <source>Muted.</source>
+        <translation>Dæmpet.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="2279"/>
+        <source>Muted and deafened.</source>
+        <translation>Dæmpet og døvet.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="2281"/>
+        <source>Deafened.</source>
+        <translation>Døvdøvet.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="2284"/>
+        <source>Undeafened.</source>
+        <translation>Udøvet.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="2331"/>
+        <source>Restart Bubbles?</source>
+        <translation>Genstarte Bubbles?</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="2332"/>
+        <source>Some settings will only apply after a restart of Bubbles. Restart Bubbles now?</source>
+        <translation>Nogle indstillinger gælder kun efter en genstart af Bubbles. Genstarte Bubbles nu?</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="2383"/>
+        <source>About Qt</source>
+        <translation>Om Qt</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="2779"/>
+        <source>Connected.</source>
+        <translation>Forbundet.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="2893"/>
+        <source>SSL Verification failed: %1</source>
+        <translation>SSL-bekræftelse mislykkedes: %1</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="2898"/>
+        <source>&lt;li&gt;Server certificate digest (SHA-1):	%1&lt;/li&gt;</source>
+        <translation>&lt;li&gt;Servercertifikatfordøjelse (SHA-1):	%1&lt;/li&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="2901"/>
+        <source>&lt;b&gt;WARNING:&lt;/b&gt; The server presented a certificate that was different from the stored one.</source>
+        <translation>&lt;b&gt;ADVARSEL:&lt;/b&gt; Serveren præsenterede et certifikat, der var forskelligt fra det lagrede.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="2902"/>
+        <source>&lt;li&gt;Expected certificate digest (SHA-1):	%1&lt;/li&gt;</source>
+        <translation>&lt;li&gt;Forventet certifikatfordøjelset (SHA-1):	%1&lt;/li&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="2904"/>
+        <source>Server presented a certificate which failed verification.</source>
+        <translation>Serveren præsenterede et certifikat, der mislykkedes verifikationen.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="2911"/>
+        <source>&lt;p&gt;%1&lt;/p&gt;&lt;ul&gt;%2&lt;/ul&gt;&lt;p&gt;The specific errors with this certificate are:&lt;/p&gt;&lt;ol&gt;%3&lt;/ol&gt;&lt;p&gt;Do you wish to accept this certificate anyway?&lt;br /&gt;(It will also be stored so you won&apos;t be asked this again.)&lt;/p&gt;</source>
+        <translation>&lt;p&gt;%1&lt;/p&gt;&lt;ul&gt;%2&lt;/ul&gt; &lt;p&gt; De specifikke fejl med dette certifikat er: &lt;/p&gt;&lt;ol&gt;%3&lt;/ol&gt;&lt;p&gt;Vil du acceptere dette certifikat alligevel?&lt;br /&gt;(Det gemmes også, så du ikke bliver bedt om det igen.)&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="2935"/>
+        <source>SSL Version mismatch</source>
+        <translation>SSL-version uoverensstemmelse</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="2935"/>
+        <source>This server is using an older encryption standard, and is no longer supported by modern versions of Bubbles.</source>
+        <translation>Denne server bruger en ældre krypteringsstandard og understøttes ikke længere af moderne versioner af Bubbles.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="2941"/>
+        <location filename="src/mumble/MainWindow.cpp" line="2959"/>
+        <source>Server connection failed: %1.</source>
+        <translation>Serverforbindelse mislykkedes: %1.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="2943"/>
+        <source>Disconnected from server.</source>
+        <translation>Afbrudt fra serveren.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="2961"/>
+        <source>Server connection failed.</source>
+        <translation>Serverforbindelsen mislykkedes.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="3048"/>
+        <source>&lt;center&gt;Type message to channel &apos;%1&apos; here&lt;/center&gt;</source>
+        <translation>&lt;center&gt; Skriv besked til kanal &apos;%1&apos; her&lt;/center&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="3051"/>
+        <source>&lt;center&gt;Type message to user &apos;%1&apos; here&lt;/center&gt;</source>
+        <translation>&lt;center&gt; Skriv besked til brugeren &apos;%1&apos; her &lt;/center&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="3152"/>
+        <source>Choose image file</source>
+        <translation>Vælg billedfil</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="3159"/>
+        <location filename="src/mumble/MainWindow.cpp" line="3176"/>
+        <location filename="src/mumble/MainWindow.cpp" line="3185"/>
+        <source>Failed to load image</source>
+        <translation>Billedet kunne ikke indlæses</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="3159"/>
+        <source>Could not open file for reading.</source>
+        <translation>Kunne ikke åbne filen til læsning.</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/MainWindow.cpp" line="3176"/>
+        <location filename="src/mumble/MainWindow.cpp" line="3185"/>
+        <source>Image format not recognized.</source>
+        <translation>Billedformat genkendes ikke.</translation>
+    </message>
 </context>
 <context>
     <name>MessageDialog</name>
@@ -1386,7 +2086,7 @@ Are you sure you wish to replace your certificate?</source>
 <context>
     <name>Rooms</name>
     <message>
-        <location filename="qml/Rooms.qml" line="218"/>
+        <location filename="qml/Rooms.qml" line="178"/>
         <source>Join room</source>
         <translation>Deltag i værelset</translation>
     </message>
