@@ -37,7 +37,12 @@ Dialog {
     LabelToolTip {
         id: controlLabel
         text: control.text
-        anchors.fill: parent
+        anchors {
+            top: parent.top
+            topMargin: Theme.windowMargin
+            bottom: parent.bottom
+        }
+        width: parent.width
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         wrapMode: Text.WordWrap

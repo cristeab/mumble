@@ -11,6 +11,7 @@ Bubbles - Mumble clone with touch screen support for Windows
     * MUMBLE_PROTOC: path to protoc compiler, e.g. E:\projects\vcpkg\installed\x64-windows-static-md\tools\protobuf\protoc.exe
     * PROTOBUF_PATH: path to the root folder where protobuf include and lib folders reside, e.g. E:\projects\vcpkg\installed\x64-windows-static-md
     * OPENSSL_PATH: path to openSSL libraries. It is recommended to use the version bundled with Qt5, e.g. C:\Qt\Tools\OpenSSL\Win_x64
+- In QtCreator select the Release build and make sure that the build directory is set to <root>/build folder
 - In order to compile the application, open in QtCreator the main project file, main.pro and start the compilation. The application executable and additional DLLs are generated in build folder.
 - Generate the installer by starting from a command window build-bubbles.bat script. The installer can also be found in build folder.
 
