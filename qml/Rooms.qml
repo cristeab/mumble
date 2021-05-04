@@ -7,54 +7,7 @@ Page {
 
     background: CustomBackground {}
 
-    Component.onCompleted: roomsGrid.currentIndex = 0
-
-    Row {
-        anchors {
-            top: parent.top
-            topMargin: 1.5 * Theme.windowMargin
-            left: parent.left
-            leftMargin: 2 * Theme.windowMargin
-        }
-        visible: (servers.currentClassIndex === servers.connectedClassIndex)
-        spacing: Theme.windowMargin
-        CustomImageButton {
-            id: micBtn
-            scale: servers.roomsModel.microphoneOff ? 1.45 : 1
-            source: servers.roomsModel.microphoneOff ? "qrc:/img/microphone-off.svg" : "qrc:/img/microphone.svg"
-            width: 0.8 * Theme.smallTabIconWidth
-            height: Theme.smallTabIconWidth
-            onClicked: {
-                servers.roomsModel.microphoneOff = !servers.roomsModel.microphoneOff
-                if (servers.roomsModel.speakerOff) {
-                    servers.roomsModel.speakerOff = false
-                }
-                if (servers.roomsModel.microphoneOff) {
-                    volBtn.changeMic = false
-                }
-            }
-        }
-        CustomImageButton {
-            id: volBtn
-            property bool changeMic: false
-            source: servers.roomsModel.speakerOff ? "qrc:/img/volume-off.svg" : "qrc:/img/volume.svg"
-            width: Theme.smallTabIconWidth
-            height: Theme.smallTabIconWidth
-            onClicked: {
-                servers.roomsModel.speakerOff = !servers.roomsModel.speakerOff
-                if (volBtn.changeMic) {
-                    servers.roomsModel.microphoneOff = !servers.roomsModel.microphoneOff
-                    return
-                }
-                if (!servers.roomsModel.microphoneOff) {
-                    servers.roomsModel.microphoneOff = true
-                    volBtn.changeMic = true
-                } else {
-                    volBtn.changeMic = false
-                }
-            }
-        }
-    }
+    Component.onCompleted: roomsGrid.currentIndex = -1
 
     Label {
         anchors {
@@ -92,7 +45,7 @@ Page {
             bottom: joinBtn.top
         }
         cellWidth: roomsGrid.width / 4
-        cellHeight: 400
+        cellHeight: roomsGrid.height / 2
         currentIndex: 0
         clip: true
         boundsBehavior: ListView.StopAtBounds
