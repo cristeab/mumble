@@ -91,7 +91,6 @@ void RoomsModel::insertUser(Channel *channel, const QString &username, unsigned 
         for (auto &roomInfo: _rooms) {
             if (roomInfo.users.contains(username)) {
                 roomInfo.users.removeAll(username);
-                emit forceLayout();
                 qDebug() << "Removed" << username << "from room" << roomInfo.name;
                 break;
             }
@@ -104,7 +103,6 @@ void RoomsModel::insertUser(Channel *channel, const QString &username, unsigned 
                 roomInfo.users << username;
                 emit layoutChanged();
                 setCurrentRoomIndex(INVALID_INDEX);//invalidate index
-                emit forceLayout();
                 qDebug() << "Added" << username << "to room" << roomInfo.name;
                 return;
             }

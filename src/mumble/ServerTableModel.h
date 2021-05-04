@@ -102,6 +102,7 @@ public:
     Q_INVOKABLE bool gotoSchoolInternal();
     Q_INVOKABLE bool gotoClassInternal();
     Q_INVOKABLE bool joinRoomInternal();
+    Q_INVOKABLE void updateConnectedClassRooms();
 
     Q_INVOKABLE QString currentServerName() const {
         return isValidServerIndex(_currentIndex) ? _servers.at(_currentIndex).name : QString();

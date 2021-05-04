@@ -429,6 +429,9 @@ void ServerTableModel::onLineEditDlgAccepted()
 void ServerTableModel::onServerConnectedEvent()
 {
     setShowBusy(false);
+    QTimer::singleShot(2000, this, [this]() {
+        updateConnectedClassRooms();
+    });
 }
 
 void ServerTableModel::onServerDisconnectedEvent(MumbleProto::Reject_RejectType rtLast,
@@ -675,7 +678,7 @@ bool ServerTableModel::gotoSchoolInternal()
 bool ServerTableModel::gotoClassInternal()
 {
     bool rc = false;
-    if ((0 <= _channelActionIndex) && (_channelActionIndex < _classModelItems.size())) {
+    if (isValidClassIndex(_channelActionIndex)) {
         const auto *rootItem = _classModelItems.at(_channelActionIndex);
         if (nullptr != rootItem) {
             updateRooms(rootItem);
@@ -705,6 +708,12 @@ bool ServerTableModel::joinRoomInternal()
     }
     _channelActionIndex = -1;
     return rc;
+}
+
+void ServerTableModel::updateConnectedClassRooms()
+{
+    _channelActionIndex = _connectedClassIndex;
+    gotoClassInternal();
 }
 
 void ServerTableModel::onUserDisconnected(const QString &username)
