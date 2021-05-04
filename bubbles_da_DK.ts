@@ -589,6 +589,175 @@ If the file is password protected, you will need the password to import the cert
     </message>
 </context>
 <context>
+    <name>Log</name>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="115"/>
+        <source>Debug</source>
+        <translation>Fejlfinde</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="116"/>
+        <source>Critical</source>
+        <translation>Kritisk</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="117"/>
+        <source>Warning</source>
+        <translation>Advarsel</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="118"/>
+        <source>Information</source>
+        <translation>Information</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="119"/>
+        <source>Server Connected</source>
+        <translation>Server tilsluttet</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="120"/>
+        <source>Server Disconnected</source>
+        <translation>Server afbrudt</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="121"/>
+        <source>User Joined Server</source>
+        <translation>Brugertilsluttet server</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="122"/>
+        <source>User Left Server</source>
+        <translation>Bruger venstre server</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="123"/>
+        <source>User recording state changed</source>
+        <translation>Brugeroptagelsestilstand ændret</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="124"/>
+        <source>User kicked (you or by you)</source>
+        <translation>Bruger sparket (dig eller af dig)</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="125"/>
+        <source>User kicked</source>
+        <translation>Bruger sparket</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="126"/>
+        <source>You self-muted</source>
+        <translation>Du dæmper selv</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="127"/>
+        <source>Other self-muted/deafened</source>
+        <translation>Andre selvdæmpede / døvede</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="128"/>
+        <source>User muted (you)</source>
+        <translation>Bruger dæmpet (dig)</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="129"/>
+        <source>User muted (by you)</source>
+        <translation>Brugerdæmpet (af dig)</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="130"/>
+        <source>User muted (other)</source>
+        <translation>Brugerdæmpet (andet)</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="131"/>
+        <source>User Joined Channel</source>
+        <translation>Brugertilmeldt kanal</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="132"/>
+        <source>User Left Channel</source>
+        <translation>Bruger venstre kanal</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="133"/>
+        <source>Permission Denied</source>
+        <translation>Adgang nægtet</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="134"/>
+        <source>Text Message</source>
+        <translation>Tekstbesked</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="135"/>
+        <source>You self-unmuted</source>
+        <translation>Du er selvdæmpet</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="136"/>
+        <source>You self-deafened</source>
+        <translation>Du er selvdøvet</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="137"/>
+        <source>You self-undeafened</source>
+        <translation>Du er uudøvet</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="138"/>
+        <source>User renamed</source>
+        <translation>Bruger omdøbt</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="139"/>
+        <source>You Joined Channel</source>
+        <translation>Du blev medlem af kanalen</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="140"/>
+        <source>You Joined Channel (moved)</source>
+        <translation>Du blev medlem af kanalen (flyttet)</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="141"/>
+        <source>User connected and entered channel</source>
+        <translation>Brugerforbundet og indtastet kanal</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="142"/>
+        <source>User left channel and disconnected</source>
+        <translation>Bruger forlod kanal og afbrudt</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="143"/>
+        <source>Private text message</source>
+        <translation>Privat tekstbesked</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="202"/>
+        <source>the server</source>
+        <translation>serveren</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="313"/>
+        <source>[[ Invalid size ]]</source>
+        <translation>[[Ugyldig størrelse]]</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="326"/>
+        <source>[[ Text object too large to display ]]</source>
+        <translation>[[Tekstobjekt for stort til at blive vist]]</translation>
+    </message>
+    <message>
+        <location filename="src/mumble/Log.cpp" line="372"/>
+        <source>[Date changed to %1]
+</source>
+        <translation>[Dato ændret til %1]</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="src/mumble/main.cpp" line="364"/>
@@ -1064,12 +1233,12 @@ If the file is password protected, you will need the password to import the cert
 <context>
     <name>MessageDialog</name>
     <message>
-        <location filename="qml/dialog/MessageDialog.qml" line="66"/>
+        <location filename="qml/dialog/MessageDialog.qml" line="71"/>
         <source>OK</source>
         <translation>Slet</translation>
     </message>
     <message>
-        <location filename="qml/dialog/MessageDialog.qml" line="71"/>
+        <location filename="qml/dialog/MessageDialog.qml" line="76"/>
         <source>Cancel</source>
         <translation>Fortryd</translation>
     </message>
@@ -1217,7 +1386,7 @@ Are you sure you wish to replace your certificate?</source>
 <context>
     <name>Rooms</name>
     <message>
-        <location filename="qml/Rooms.qml" line="221"/>
+        <location filename="qml/Rooms.qml" line="218"/>
         <source>Join room</source>
         <translation>Deltag i værelset</translation>
     </message>
