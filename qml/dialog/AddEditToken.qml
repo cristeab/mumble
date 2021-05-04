@@ -23,6 +23,8 @@ Dialog {
     }
     onRejected: control.cleanup()
     Component.onCompleted: control.visible = true
+    modal: true
+    closePolicy: Popup.CloseOnEscape
 
     CustomTextField {
         id: tokenTextField

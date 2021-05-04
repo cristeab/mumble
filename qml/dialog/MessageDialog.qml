@@ -33,7 +33,7 @@ Dialog {
     onRejected: control.destroy()
     visible: "" !== controlLabel.text
     modal: true
-    closePolicy: Popup.NoAutoClose
+    closePolicy: Popup.CloseOnEscape
     LabelToolTip {
         id: controlLabel
         text: control.text

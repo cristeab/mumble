@@ -30,6 +30,8 @@ Dialog {
         control.cleanup()
     }
     Component.onCompleted: control.visible = true
+    modal: true
+    closePolicy: Popup.CloseOnEscape
 
     Column {
         id: dlgColumn

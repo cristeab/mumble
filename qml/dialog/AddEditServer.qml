@@ -35,7 +35,7 @@ Dialog {
     title: (-1 === servers.currentIndex) ? qsTr("Add Server") : qsTr("Edit Server")
     modal: true
     visible: false
-    closePolicy: Popup.NoAutoClose
+    closePolicy: Popup.CloseOnEscape
 
     onAccepted: {
         if (!control.validate()) {
