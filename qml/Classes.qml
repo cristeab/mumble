@@ -91,10 +91,12 @@ Page {
         CustomBackButton {
         }
         CustomButton {
+            anchors.verticalCenter: fwBtn.verticalCenter
             text: qsTr("Go to class")
             onClicked: goBtn.gotoAction()
         }
         CustomForwardButton {
+            id: fwBtn
             visible: (0 <= servers.connectedClassIndex) && (0 < servers.classNameList.length)
             onClicked: tabView.push("qrc:/qml/Rooms.qml")
         }

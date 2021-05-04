@@ -6,8 +6,8 @@ CustomTabButton {
     visible: (1 < tabView.depth) && (0 === bar.currentButtonIndex)
     text: qsTr("Back")
     icon {
-        width: Theme.buttonIconWidth
-        height: Theme.buttonIconWidth
+        width: 1.5 * Theme.buttonIconWidth
+        height: 1.5 * Theme.buttonIconWidth
         source: "qrc:/img/chevron-circle-left.svg"
     }
     onClicked: tabView.pop()

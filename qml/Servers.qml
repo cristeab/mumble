@@ -34,6 +34,7 @@ Page {
         }
         spacing: 2 * Theme.windowMargin
         CustomButton {
+            anchors.verticalCenter: fwBtn.verticalCenter
             enabled: servers.isReachable(servers.currentIndex)
             text: connectBtnRow.isConnected ? qsTr("Disconnect") : qsTr("Connect")
             onClicked: {
@@ -45,6 +46,7 @@ Page {
             }
         }
         CustomForwardButton {
+            id: fwBtn
             visible: (0 <= servers.connectedServerIndex) && (0 < servers.schoolNameList.length)
             onClicked: tabView.push("qrc:/qml/Schools.qml")
         }

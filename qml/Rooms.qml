@@ -162,9 +162,11 @@ Page {
         }
         spacing: 2 * Theme.windowMargin
         CustomBackButton {
+            id: backBtn
         }
         CustomButton {
             id: joinBtn
+            anchors.verticalCenter: backBtn.verticalCenter
             function joinAction(idx) {
                 if (servers.joinRoom(idx, servers.username)) {
                     servers.connectedClassIndex = servers.currentClassIndex
