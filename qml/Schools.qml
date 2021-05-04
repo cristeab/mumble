@@ -9,21 +9,6 @@ Page {
 
     background: CustomBackground {}
 
-    CustomTabButton {
-        anchors {
-            top: parent.top
-            right: parent.right
-        }
-        visible: (0 <= servers.connectedServerIndex) && (0 < servers.classNameList.length)
-        text: qsTr("Forward")
-        icon {
-            width: Theme.buttonIconWidth
-            height: Theme.buttonIconWidth
-            source: "qrc:/img/chevron-circle-right.svg"
-        }
-        onClicked: tabView.push("qrc:/qml/Classes.qml")
-    }
-
     ListView {
         id: schoolList
 
@@ -82,7 +67,7 @@ Page {
         }
     }
 
-    CustomButton {
+    Row {
         id: goBtn
 
         function gotoAction() {
@@ -94,7 +79,16 @@ Page {
             bottom: parent.bottom
             bottomMargin: Theme.windowMargin
         }
-        text: qsTr("Go to school")
-        onClicked: goBtn.gotoAction()
+        spacing: 2 * Theme.windowMargin
+        CustomBackButton {
+        }
+        CustomButton {
+            text: qsTr("Go to school")
+            onClicked: goBtn.gotoAction()
+        }
+        CustomForwardButton {
+            visible: (0 <= servers.connectedServerIndex) && (0 < servers.classNameList.length)
+            onClicked: tabView.push("qrc:/qml/Classes.qml")
+        }
     }
 }

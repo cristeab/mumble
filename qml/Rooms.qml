@@ -36,7 +36,7 @@ Page {
             leftMargin: 2 * Theme.windowMargin
             right: parent.right
             rightMargin: 2 * Theme.windowMargin
-            bottom: joinBtn.top
+            bottom: joinBtnRow.top
         }
         cellWidth: roomsGrid.width / 4
         cellHeight: roomsGrid.height / 2
@@ -153,22 +153,27 @@ Page {
             }
         }
     }
-    CustomButton {
-        id: joinBtn
-
-        function joinAction(idx) {
-            if (servers.joinRoom(idx, servers.username)) {
-                servers.connectedClassIndex = servers.currentClassIndex
-            }
-        }
-
-        enabled: (servers.roomsModel.currentRoomIndex !== roomsGrid.currentIndex) || (servers.currentClassIndex !== servers.connectedClassIndex)
+    Row {
+        id: joinBtnRow
         anchors {
             left: roomsGrid.left
             bottom: parent.bottom
             bottomMargin: Theme.windowMargin
         }
-        text: qsTr("Join room")
-        onClicked: joinBtn.joinAction(roomsGrid.currentIndex)
+        spacing: 2 * Theme.windowMargin
+        CustomBackButton {
+        }
+        CustomButton {
+            id: joinBtn
+            function joinAction(idx) {
+                if (servers.joinRoom(idx, servers.username)) {
+                    servers.connectedClassIndex = servers.currentClassIndex
+                }
+            }
+
+            enabled: (servers.roomsModel.currentRoomIndex !== roomsGrid.currentIndex) || (servers.currentClassIndex !== servers.connectedClassIndex)
+            text: qsTr("Join room")
+            onClicked: joinBtn.joinAction(roomsGrid.currentIndex)
+        }
     }
 }

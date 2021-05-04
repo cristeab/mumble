@@ -9,21 +9,6 @@ Page {
 
     background: CustomBackground {}
 
-    CustomTabButton {
-        anchors {
-            top: parent.top
-            right: parent.right
-        }
-        visible: (0 <= servers.connectedServerIndex) && (0 < servers.schoolNameList.length)
-        text: qsTr("Forward")
-        icon {
-            width: Theme.buttonIconWidth
-            height: Theme.buttonIconWidth
-            source: "qrc:/img/chevron-circle-right.svg"
-        }
-        onClicked: tabView.push("qrc:/qml/Schools.qml")
-    }
-
     CustomTableView {
         id: srvTbl
         anchors {
@@ -33,34 +18,41 @@ Page {
             leftMargin: 2 * Theme.windowMargin
             right: parent.right
             rightMargin: 2 * Theme.windowMargin
-            bottom: connectBtn.top
+            bottom: connectBtnRow.top
             bottomMargin: Theme.windowMargin
         }
     }
-    CustomButton {
-        id: connectBtn
+    Row {
+        id: connectBtnRow
 
         property bool isConnected: servers.currentIndex === servers.connectedServerIndex
 
-        enabled: servers.isReachable(servers.currentIndex)
         anchors {
             left: srvTbl.left
             bottom: parent.bottom
             bottomMargin: Theme.windowMargin
         }
-        text: connectBtn.isConnected ? qsTr("Disconnect") : qsTr("Connect")
-        onClicked: {
-            if (connectBtn.isConnected) {
-                servers.disconnectServer()
-            } else {
-                servers.connectServer()
+        spacing: 2 * Theme.windowMargin
+        CustomButton {
+            enabled: servers.isReachable(servers.currentIndex)
+            text: connectBtnRow.isConnected ? qsTr("Disconnect") : qsTr("Connect")
+            onClicked: {
+                if (connectBtnRow.isConnected) {
+                    servers.disconnectServer()
+                } else {
+                    servers.connectServer()
+                }
             }
+        }
+        CustomForwardButton {
+            visible: (0 <= servers.connectedServerIndex) && (0 < servers.schoolNameList.length)
+            onClicked: tabView.push("qrc:/qml/Schools.qml")
         }
     }
     Row {
         anchors {
             right: srvTbl.right
-            bottom: connectBtn.bottom
+            bottom: connectBtnRow.bottom
         }
         spacing: Theme.windowMargin
         CustomButton {
@@ -68,7 +60,7 @@ Page {
             onClicked: addEditServerDlg.addNewServer()
         }
         CustomButton {
-            enabled: !connectBtn.isConnected
+            enabled: !connectBtnRow.isConnected
             text: qsTr("Edit...")
             onClicked: addEditServerDlg.editServer()
         }

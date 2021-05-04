@@ -75,7 +75,7 @@ Page {
         }
     }
 
-    CustomButton {
+    Row {
         id: goBtn
 
         function gotoAction() {
@@ -87,7 +87,16 @@ Page {
             bottom: parent.bottom
             bottomMargin: Theme.windowMargin
         }
-        text: qsTr("Go to class")
-        onClicked: goBtn.gotoAction()
+        spacing: 2 * Theme.windowMargin
+        CustomBackButton {
+        }
+        CustomButton {
+            text: qsTr("Go to class")
+            onClicked: goBtn.gotoAction()
+        }
+        CustomForwardButton {
+            visible: (0 <= servers.connectedClassIndex) && (0 < servers.classNameList.length)
+            onClicked: tabView.push("qrc:/qml/Rooms.qml")
+        }
     }
 }

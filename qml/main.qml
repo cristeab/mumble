@@ -27,22 +27,6 @@ ApplicationWindow {
         fillMode: Image.PreserveAspectCrop
     }
 
-    CustomTabButton {
-        id: backBtn
-        anchors {
-            top: parent.top
-            left: parent.left
-        }
-        visible: (1 < tabView.depth) && (0 === bar.currentButtonIndex)
-        text: qsTr("Back")
-        icon {
-            width: Theme.buttonIconWidth
-            height: Theme.buttonIconWidth
-            source: "qrc:/img/chevron-circle-left.svg"
-        }
-        onClicked: tabView.pop()
-    }
-
     Column {
         id: bar
 
