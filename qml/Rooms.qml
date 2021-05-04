@@ -69,6 +69,12 @@ Page {
         elide: Text.ElideRight
     }
 
+    Connections {
+        target: servers.roomsModel
+        function onForceLayout() {
+            roomsGrid.forceLayout()
+        }
+    }
     GridView {
         id: roomsGrid
 

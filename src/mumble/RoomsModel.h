@@ -44,6 +44,9 @@ public:
     static ChannelType channelType(Channel *channel);
     unsigned int userSession(const QString &username) const;
 
+signals:
+    void forceLayout();
+
 private:
     enum { INVALID_INDEX = -1 };
     void onMicrophoneOffChanged();
