@@ -3,7 +3,6 @@ Makefile
 *.Release
 debug/
 release/
-asio/
 local/
 indent.sh
 *.pdb
